@@ -1005,3 +1005,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   .att-tile { flex-basis: calc((100% - 20px) / 3); width: auto; max-width: 85px; }
   .rep-done .tag { font-size: 15px; padding: 6px 10px; }
 }
+/* „Trimite” rămâne apăsabil când lipsește ceva (arată ce lipsește); fără efect de hover cât e inactiv; câmpul focusat nu ajunge sub nav */
+.rep .btn.ghost:hover { transform: none; box-shadow: none; }
+.rep input, .rep textarea, .rep button.field { scroll-margin-top: calc(var(--promo-h) + var(--nav-h) + 24px); }
+.rep .rep-msg { text-align: center; }

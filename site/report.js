@@ -32,7 +32,7 @@
 
   /* ---------- email (câmp ca în calculator, cu × pentru ștergere) ---------- */
   function syncEmail() { emailX.hidden = !email.value; }
-  email.addEventListener('input', function () { emailF.classList.remove('is-bad'); syncEmail(); sync(); });
+  email.addEventListener('input', function () { emailF.classList.remove('is-bad'); msg.textContent = ''; syncEmail(); sync(); });
   email.addEventListener('blur', function () { var v = email.value.trim(); emailF.classList.toggle('is-bad', !!v && !EMAIL_RE.test(v)); });
   emailX.addEventListener('click', function (ev) { ev.preventDefault(); email.value = ''; syncEmail(); emailF.classList.remove('is-bad'); email.focus(); sync(); });
 
@@ -44,6 +44,7 @@
   }
   function marcheaza() { opts.forEach(function (o, i) { o.classList.toggle('is-hi', i === hi); }); }
   function alege(o) {
+    subF.classList.remove('is-bad'); msg.textContent = '';
     subiect = o.getAttribute('data-v'); subT.textContent = o.textContent.trim(); subT.classList.remove('ph'); subF.classList.add('is-set');
     opts.forEach(function (x) { x.setAttribute('aria-selected', x === o ? 'true' : 'false'); });
     deschide(false); subF.focus(); start(); sync();
@@ -68,7 +69,7 @@
     hint.classList.toggle('is-bad', peste); hint.classList.toggle('is-typing', !peste && n > 0);
     hint.textContent = n ? n + '/' + MAX_DESC + ' de caractere' : 'Maxim ' + MAX_DESC + ' de caractere';
   }
-  desc.addEventListener('input', function () { syncDesc(); sync(); });
+  desc.addEventListener('input', function () { msg.textContent = ''; syncDesc(); sync(); });
 
   /* ---------- atașamente ---------- */
   var fmtMB = function (b) { return (b / MB).toLocaleString('ro-RO', { maximumFractionDigits: 1 }) + ' MB'; };
@@ -160,7 +161,20 @@
     var n = desc.value.trim().length;
     return EMAIL_RE.test(email.value.trim()) && !!subiect && n > 0 && desc.value.length <= MAX_DESC && !files.some(function (f) { return f.st === 'up' || f.st === 'new'; }) && !busy;
   }
-  function sync() { var ok = gata(); go.disabled = !ok; go.classList.toggle('ghost', !ok); }
+  /* butonul arată inactiv până e totul completat, dar rămâne apăsabil: la click spunem exact ce lipsește */
+  function sync() { var ok = gata(); go.disabled = busy; go.classList.toggle('ghost', !ok); go.setAttribute('aria-disabled', ok ? 'false' : 'true'); }
+  function ceLipseste() {
+    var lipsa = [], primul = null, v = email.value.trim();
+    if (!EMAIL_RE.test(v)) { emailF.classList.add('is-bad'); lipsa.push(v ? 'un email valid' : 'emailul'); primul = primul || email; }
+    if (!subiect) { subF.classList.add('is-bad'); lipsa.push('subiectul'); primul = primul || subF; }
+    if (!desc.value.trim()) { area.classList.add('is-bad'); hint.classList.add('is-bad'); hint.textContent = 'Descrierea e obligatorie'; lipsa.push('descrierea'); primul = primul || desc; }
+    else if (desc.value.length > MAX_DESC) { lipsa.push('o descriere de maxim ' + MAX_DESC + ' de caractere'); primul = primul || desc; }
+    var t = lipsa.length ? 'Completează ' + lipsa.join(', ').replace(/, ([^,]*)$/, ' și $1') + '.' : '';
+    if (files.some(function (f) { return f.st === 'up' || f.st === 'new'; })) t = (t ? t + ' ' : '') + 'Așteaptă să se termine încărcarea fișierelor.';
+    msg.textContent = t;
+    if (primul) primul.focus();
+    T('report_failed', { reason: 'incomplet' });
+  }
 
   function txt(id) { var f = document.getElementById(id); if (!f || !f.classList.contains('is-set')) return ''; var t = f.querySelector('.txt'); return t ? t.textContent.trim() : ''; }
   function val(id) { var el = document.getElementById(id); return el && el.value ? el.value.trim() : ''; }
@@ -177,7 +191,8 @@
 
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
-    if (!gata()) { sync(); return; }
+    if (busy) return;
+    if (!gata()) { ceLipseste(); return; }
     var ok = files.filter(function (f) { return f.st === 'ok' && f.path; });
     var body = { action: 'trimite', draft: draft, email: email.value.trim(), subiect: subiect, descriere: desc.value.trim(), fisiere: ok.map(function (f) { return f.path; }), context: context(), ph_id: (window.track && window.track.distinctId && window.track.distinctId()) || null, hp: hp.value };
     var fin = function (nr) {
