@@ -919,7 +919,89 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   .promo { font-size: 12px; line-height: 16px; padding: 0 20px; }
   .promo .promo-sep { display: none; }
   .promo [data-promo-l]::before { content: "· "; }
-  /* click pe bandă / „Creează cont”: titlul secțiunii nu mai rămâne sub nav */
+  /* click pe bandă: titlul secțiunii nu mai rămâne sub nav */
   .early { scroll-margin-top: 60px; }
 }
 @media (max-width: 380px) { .promo { font-size: 11px; padding: 0 12px; } }
+
+/* ---------- Raportează o problemă (Figma 2156:38279): același card ca „Calculează doza” ---------- */
+.report { --rep-pt: 120px; padding-top: var(--rep-pt); scroll-margin-top: calc(var(--promo-h) + var(--nav-h) + 16px - var(--rep-pt)); }
+.report .wrap { display: flex; justify-content: center; }
+.rep.calc { margin: 0 auto; }
+.rep .calc-head { justify-content: center; text-align: center; }
+.rep .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.rep .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.rep #r-email { font-size: 16px; }
+.rep .field.is-bad small { color: #b4232f; }
+.rep button.field { font: inherit; color: inherit; }
+.rep #r-subiect-f .txt:not(.ph) { color: #242c3c; }
+.rep .plist li.opt .nm { color: #242c3c; }
+.rep .plist li.opt[aria-selected="true"] { background: var(--surface-2); }
+
+/* descrierea (Figma 2156:37719) */
+.rep-desc { display: grid; gap: 4px; text-align: left; }
+.rep .area { display: block; height: 175px; padding: 12px 16px; background: var(--surface-2); border: 2px solid transparent; border-radius: 14px; cursor: text; transition: border-color 0.15s, background 0.15s; }
+.rep .area:hover { background: #e6efff; }
+.rep .area:focus-within { background: #fff; border-color: #242c3c; }
+.rep .area textarea { display: block; width: 100%; height: 100%; padding: 0; margin: 0; border: 0; outline: none; resize: none; background: transparent; font: inherit; font-size: 16px; font-weight: 500; line-height: 24px; color: #242c3c; }
+.rep .area textarea::placeholder { color: #3f4b66; opacity: 1; }
+.rep .area.is-bad, .rep .area.is-bad:focus-within { background: #fff1f2; border-color: var(--pink); }
+.rep-desc .hint { margin: 0; font-size: 13px; font-weight: 500; line-height: 16px; color: #3f4b66; }
+.rep-desc .hint.is-typing { color: #7994ab; }
+.rep-desc .hint.is-bad { color: #b4232f; }
+
+/* atașamente (Figma 2156:37616) */
+.att { display: flex; flex-direction: column; gap: 16px; padding: 16px; background: var(--surface-2); border-radius: 12px; text-align: left; transition: background 0.15s; }
+.att.is-bad { background: #fff1f2; }
+.att-top { display: flex; align-items: center; gap: 10px; }
+.att-ic { flex: 0 0 40px; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 99px; background: #fff; color: #242c3c; }
+.att-ic svg { width: 20px; height: 20px; }
+.att-t { margin: 0; font-size: 16px; line-height: 20px; color: #3f4b66; }
+.att-t b { font-weight: 600; color: var(--fg); }
+.att.is-bad .att-t b { color: #b4232f; }
+.att-d { display: grid; gap: 2px; padding-left: 50px; }
+.att-d p { margin: 0; font-size: 15px; font-weight: 500; line-height: 20px; color: #242c3c; }
+.att-d .att-err { color: #b4232f; }
+.att-d .att-err[hidden] { display: none; }
+.att-list { display: flex; flex-wrap: wrap; gap: 10px; }
+.att-list[hidden] { display: none; }
+.att-tile { position: relative; flex: 0 0 85px; width: 85px; height: 85px; border-radius: 18px; background: #fff; overflow: hidden; }
+.att-tile.is-hidden { display: none; }
+.att-tile img, .att-tile video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.att-tile.is-up img, .att-tile.is-up video { opacity: 0.45; }
+.att-tile .vid { position: absolute; left: 6px; bottom: 6px; padding: 1px 6px; border-radius: 99px; background: rgba(17, 17, 17, 0.7); color: #fff; font-size: 11px; font-weight: 600; line-height: 16px; }
+.att-tile .bar { position: absolute; left: 50%; bottom: 12px; width: 61px; height: 3px; margin-left: -30.5px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.att-tile .bar i { display: block; height: 100%; width: 0; background: var(--fg); transition: width 0.2s; }
+.att-tile .rm { position: absolute; top: 6px; right: 6px; width: 20px; height: 20px; padding: 0; border: 0; border-radius: 99px; background: var(--surface-2); color: #3f4b66; display: grid; place-items: center; cursor: pointer; }
+.att-tile .rm svg { width: 12px; height: 12px; }
+.att-tile .rm:hover { background: #e6efff; color: var(--fg); }
+.att-tile.is-err { background: #f6f9ff; outline: 2px solid var(--pink); outline-offset: -2px; }
+.att-tile.is-err .rm { background: #f04438; color: #fff; }
+.att-act { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+.att-act:has(.att-more:not([hidden])) { justify-content: space-between; }
+.att-btn, .att-more { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 36px; padding: 0 14px; border: 0; border-radius: 99px; font: inherit; font-size: 14px; font-weight: 500; line-height: 24px; cursor: pointer; white-space: nowrap; }
+.att-btn { padding: 0 12px; background: var(--fg); color: #fff; }
+.att-btn svg { width: 20px; height: 20px; }
+.att-btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+.att-more { background: #fff; color: var(--fg); }
+.att-more[hidden] { display: none; }
+.rep.is-busy .att, .rep.is-busy .field, .rep.is-busy .area { pointer-events: none; opacity: 0.7; }
+
+/* mesaj + stare trimis */
+.rep-msg { margin: 0; font-size: 14px; line-height: 20px; color: #b4232f; }
+.rep-msg:empty { display: none; }
+.rep-done { display: grid; justify-items: center; gap: 10px; padding: 8px 0 4px; text-align: center; }
+.rep-done[hidden] { display: none; }
+.rep-done .tag { font-size: 18px; padding: 6px 12px; white-space: normal; }
+.rep-done p { margin: 0; font-size: 15px; line-height: 22px; color: var(--muted); overflow-wrap: anywhere; }
+.rep-done p b { color: var(--fg); font-weight: 600; }
+.rep-done .att-more { background: var(--surface-2); margin-top: 4px; }
+.rep.is-done > :not(.calc-head):not(.rep-done) { display: none; }
+
+@media (max-width: 1100px) { .report { --rep-pt: 90px; } }
+@media (max-width: 700px) {
+  .report { --rep-pt: 72px; }
+  .att-d { padding-left: 0; }
+  .att-tile { flex-basis: calc((100% - 20px) / 3); width: auto; max-width: 85px; }
+  .rep-done .tag { font-size: 15px; padding: 6px 10px; }
+}

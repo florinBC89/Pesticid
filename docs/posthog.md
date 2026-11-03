@@ -84,6 +84,16 @@ Pâlnie: `search_started → search_field_set → search_result_shown → search
 
 Identificare: la `onb_account_created` apelăm `posthog.identify(user_id, { plan, judet })` și `alias` cu id-ul anonim de pe site, ca pâlnia site → app să rămână legată. `judet` doar dacă îl cerem în onboarding, niciodată adresa.
 
+### E. Raportează o problemă (`report_`)
+| Eveniment | Când | Proprietăți | |
+|---|---|---|---|
+| `report_form_started` | primul focus / alegere în formular | — | |
+| `report_attachment_added` | un fișier s-a urcat cu succes | `tip: img|vid` | |
+| `report_submitted` | raport primit de server | `subiect`, `fisiere` (număr) | conținutul descrierii NU se trimite în PostHog |
+| `report_failed` | eroare la urcare sau trimitere | `reason: upload|rate|email|network|…` | |
+
+Butonul din nav („Am o problemă”, înlocuiește „Creează cont”) trimite `hero_cta_clicked` cu `cta: nav_am_o_problema`.
+
 ## Ce urmărim în dashboard-ul inițial
 
 1. **Activare**: % din sesiuni cu `calc_result_shown` sau `search_calc_result_shown`. Ținta primelor săptămâni: 25%.

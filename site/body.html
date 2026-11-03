@@ -2,7 +2,7 @@
   <a class="promo" id="promo" href="#acces-timpuriu"><span>Early bird <b>Abonamentele PRO și AGRONOM</b> <span class="promo-sep">-</span> <span data-promo-l>Campanie valabilă</span> <b data-promo-t>20 de zile</b></span></a>
   <div class="wrap">
     <a class="logo" href="#top" aria-label="Pesticid">Pestic<span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span>d</a>
-    <a class="btn" href="#acces-timpuriu">Creează cont</a>
+    <a class="btn" href="#raporteaza">Am o problemă</a>
   </div>
 </header>
 
@@ -233,6 +233,54 @@
           </form>
         </article>
       </div>
+    </div>
+  </section>
+
+  <section class="report" id="raporteaza">
+    <div class="wrap">
+      <form class="calc rep reveal" id="rep" novalidate aria-labelledby="rep-title">
+        <div class="calc-head"><h3 id="rep-title">Vreau să raportez o problemă</h3></div>
+        <label class="field has-input" id="r-email-f" for="r-email"><span class="col"><small>Emailul tău</small><span class="val"><input id="r-email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="Adresa ta de email" maxlength="254"><button type="button" class="x" aria-label="Șterge emailul" hidden>×</button></span></span></label>
+        <div class="sel" id="r-subiect-s">
+          <button type="button" class="field" id="r-subiect-f" aria-haspopup="listbox" aria-expanded="false" aria-controls="r-subiect-list"><span class="col"><small>Subiectul</small><span class="val"><span class="txt ph" id="r-subiect-t">Alege subiectul problemei</span></span></span><i class="chev" aria-hidden="true"></i></button>
+          <div class="dd" hidden><ul class="plist" id="r-subiect-list" role="listbox" aria-label="Subiectul">
+            <li class="opt" role="option" data-v="calculator"><span class="nm"><span>Calculatorul de doză</span></span></li>
+            <li class="opt" role="option" data-v="cautare"><span class="nm"><span>Căutarea de produse</span></span></li>
+            <li class="opt" role="option" data-v="date"><span class="nm"><span>O doză sau un produs pare greșit</span></span></li>
+            <li class="opt" role="option" data-v="inscriere"><span class="nm"><span>Înscrierea / emailul</span></span></li>
+            <li class="opt" role="option" data-v="altceva"><span class="nm"><span>Altceva</span></span></li>
+          </ul></div>
+        </div>
+        <div class="rep-desc">
+          <label class="area" for="r-desc"><span class="sr-only">Descrierea problemei</span><textarea id="r-desc" rows="6" placeholder="Descrie în detaliu problema ta"></textarea></label>
+          <p class="hint" id="r-desc-h">Maxim 2000 de caractere</p>
+        </div>
+        <div class="att" id="r-att">
+          <div class="att-top">
+            <span class="att-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10a2 2 0 0 1 2 2v16l-3-2-2 2-2-2-2 2-2-2-3 2V5a2 2 0 0 1 2-2Z"/><path d="M9 8h6M9 12h6" opacity=".55"/></svg></span>
+            <p class="att-t"><b>Atașează poză/video</b> ca să înțelegem ce nu merge</p>
+          </div>
+          <div class="att-d">
+            <p>Doar JPG, PNG (max. 10MB) și video MP4, MOV (max. 20MB)</p>
+            <p>Maxim 5 fișiere, 50MB în total</p>
+            <p class="att-err" role="alert" hidden></p>
+          </div>
+          <div class="att-list" id="r-att-list" hidden></div>
+          <div class="att-act">
+            <button type="button" class="att-more" id="r-att-more" hidden>Vezi mai mult</button>
+            <button type="button" class="att-btn" id="r-att-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5" opacity=".55"/></svg><span>Atașează</span></button>
+          </div>
+          <input type="file" id="r-file" accept="image/jpeg,image/png,video/mp4,video/quicktime,.jpg,.jpeg,.png,.mp4,.mov" multiple hidden>
+        </div>
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn ghost" id="r-go" type="submit" disabled><span>Trimite</span><svg class="arr" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <p class="rep-msg" id="r-msg" role="status" aria-live="polite"></p>
+        <div class="rep-done" id="r-done" hidden>
+          <span class="tag lime">Am primit raportul <b id="r-done-nr"></b></span>
+          <p>Mulțumim! Îți răspundem pe <b id="r-done-email"></b> cât de repede putem.</p>
+          <button type="button" class="att-more" id="r-again">Trimite alt raport</button>
+        </div>
+      </form>
     </div>
   </section>
 </main>

@@ -180,7 +180,7 @@
   /* PostHog: secțiunea de acces timpuriu intră în ecran · CTA-ul din nav */
   var early2 = document.getElementById('acces-timpuriu');
   if (early2 && 'IntersectionObserver' in window) { var seen = false; var ioW = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting && !seen) { seen = true; if (window.track) window.track('waitlist_viewed', {}); ioW.disconnect(); } }); }, { threshold: 0.25 }); ioW.observe(early2); }
-  var navCta = document.querySelector('.nav .btn'); if (navCta) navCta.addEventListener('click', function () { if (window.track) window.track('hero_cta_clicked', { cta: 'nav_creeaza_cont' }); });
+  var navCta = document.querySelector('.nav .btn'); if (navCta) navCta.addEventListener('click', function () { if (window.track) window.track('hero_cta_clicked', { cta: 'nav_am_o_problema' }); });
 
   /* butoanele „Log in” etc. nu fac nimic deocamdată (fluxul de cont vine mai târziu) */
   document.querySelectorAll('[data-soon]').forEach(function (el) {

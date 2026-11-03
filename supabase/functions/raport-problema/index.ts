@@ -1,0 +1,234 @@
+// Pesticid — „Raportează o problemă” din site.
+// Acțiuni (POST, JSON):
+//   { action: "url", draft, nume, tip, marime }        → link semnat de upload în bucket-ul privat `rapoarte` (browserul urcă direct)
+//   { action: "sterge", draft, path }                  → șterge un fișier atașat din ciornă (omul a apăsat ×)
+//   { action: "trimite", draft, email, subiect, descriere, fisiere: [path], context, ph_id, hp }
+//                                                      → verifică fișierele (mărime + primii octeți), salvează raportul,
+//                                                        trimite emailul (Resend) și adaugă un rând în Google Sheet
+//   { action: "curata" } + x-webhook-secret            → pg_cron zilnic: șterge ciornele abandonate (>1 zi) și fișierele rapoartelor (>90 zile)
+// Limite: max 5 fișiere, 50 MB în total; JPG/PNG max 10 MB, MP4/MOV max 20 MB.
+// Secrete: RESEND_API_KEY (deja setat); în Vault: webhook_secret, gsheet_url, gsheet_token (opțional; fără ele nu scrie în Sheet).
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+
+const SB = Deno.env.get("SUPABASE_URL")!;
+const KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const RESEND_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
+const TO = Deno.env.get("RAPORT_TO") ?? "bostan.florin89@gmail.com";
+const FROM = Deno.env.get("RAPORT_FROM") ?? "Pesticid · Rapoarte <rapoarte@pesticid.info>";
+const BUCKET = "rapoarte";
+const H = { apikey: KEY, Authorization: `Bearer ${KEY}`, "Content-Type": "application/json" };
+const CORS = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "POST, OPTIONS", "Access-Control-Allow-Headers": "content-type, apikey, authorization, x-client-info" };
+
+const MB = 1024 * 1024;
+const MAX_FILES = 5, MAX_TOTAL = 50 * MB, MAX_IMG = 10 * MB, MAX_VID = 20 * MB;
+const TIPURI: Record<string, "img" | "vid"> = { "image/jpeg": "img", "image/png": "img", "video/mp4": "vid", "video/quicktime": "vid" };
+const EXT: Record<string, string> = { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", mp4: "video/mp4", mov: "video/quicktime" };
+const SUBIECTE: Record<string, string> = {
+  calculator: "Calculatorul de doză", cautare: "Căutarea de produse", date: "O doză sau un produs pare greșit",
+  inscriere: "Înscrierea / emailul", altceva: "Altceva",
+};
+const LINK_ZILE = 90; // linkurile din email și din Sheet țin cât timp păstrăm fișierele
+
+const json = (status: number, body: unknown) => new Response(JSON.stringify(body), { status, headers: { ...CORS, "Content-Type": "application/json" } });
+const esc = (s: unknown) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
+const isUuid = (s: unknown) => typeof s === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
+const EMAIL_RE = /^[^@\s]+@[^@\s.]+(\.[^@\s.]+)*\.[a-z]{2,}$/i;
+const fmtMB = (b: number) => (b / MB).toLocaleString("ro-RO", { maximumFractionDigits: 1 }) + " MB";
+
+async function rest(path: string, init: RequestInit = {}) {
+  const r = await fetch(`${SB}/rest/v1/${path}`, { ...init, headers: { ...H, Prefer: "return=representation", ...(init.headers ?? {}) } });
+  if (!r.ok) throw new Error(`REST ${path.split("?")[0]}: ${r.status} ${(await r.text()).slice(0, 200)}`);
+  const t = await r.text();
+  return t ? JSON.parse(t) : null;
+}
+async function count(path: string) {
+  const r = await fetch(`${SB}/rest/v1/${path}`, { headers: { ...H, Prefer: "count=exact", Range: "0-0" } });
+  return Number((r.headers.get("content-range") ?? "0/0").split("/")[1]) || 0;
+}
+async function rpc(name: string, args: Record<string, unknown> = {}) {
+  const r = await fetch(`${SB}/rest/v1/rpc/${name}`, { method: "POST", headers: H, body: JSON.stringify(args) });
+  return r.ok ? String((await r.json()) ?? "") : "";
+}
+async function ipHash(req: Request) {
+  const ip = (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || req.headers.get("cf-connecting-ip") || "";
+  const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(ip + "|pesticid-rapoarte"));
+  return Array.from(new Uint8Array(d)).slice(0, 16).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+const since = (min: number) => new Date(Date.now() - min * 60000).toISOString();
+
+function tipDin(nume: string, tip: string) {
+  if (TIPURI[tip]) return tip;
+  const ext = (nume.split(".").pop() ?? "").toLowerCase();
+  return EXT[ext] ?? "";
+}
+function numeSigur(nume: string) {
+  const base = nume.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9.]+/g, "-").replace(/^-+|-+$/g, "");
+  return (base || "fisier").slice(-60);
+}
+
+/* primii octeți ai fișierului urcat: verificăm că e chiar JPG / PNG / MP4 / MOV, nu doar că așa pretinde numele */
+async function inspecteaza(path: string): Promise<{ marime: number; ok: boolean }> {
+  const r = await fetch(`${SB}/storage/v1/object/authenticated/${BUCKET}/${path}`, { headers: { apikey: KEY, Authorization: `Bearer ${KEY}`, Range: "bytes=0-15" } });
+  if (!r.ok && r.status !== 206) return { marime: 0, ok: false };
+  const b = new Uint8Array(await r.arrayBuffer());
+  const total = Number((r.headers.get("content-range") ?? "").split("/")[1]) || Number(r.headers.get("content-length")) || b.length;
+  const s = (i: number, n: number) => String.fromCharCode(...b.slice(i, i + n));
+  const jpg = b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff;
+  const png = b[0] === 0x89 && s(1, 3) === "PNG";
+  const vid = ["ftyp", "moov", "mdat", "wide", "free", "skip"].includes(s(4, 4));
+  return { marime: total, ok: jpg || png || vid };
+}
+async function semneaza(path: string) {
+  const r = await fetch(`${SB}/storage/v1/object/sign/${BUCKET}/${path}`, { method: "POST", headers: H, body: JSON.stringify({ expiresIn: LINK_ZILE * 86400 }) });
+  if (!r.ok) return "";
+  const j = await r.json();
+  return j.signedURL ? `${SB}/storage/v1${j.signedURL}` : "";
+}
+async function stergeObiecte(paths: string[]) {
+  for (let i = 0; i < paths.length; i += 100) {
+    await fetch(`${SB}/storage/v1/object/${BUCKET}`, { method: "DELETE", headers: H, body: JSON.stringify({ prefixes: paths.slice(i, i + 100) }) });
+  }
+}
+
+/* ---------------------------------------------------------------- acțiuni */
+async function actUrl(req: Request, b: Record<string, unknown>) {
+  if (!isUuid(b.draft)) return json(400, { error: "draft" });
+  const nume = String(b.nume ?? "").slice(0, 200), marime = Number(b.marime) || 0;
+  const tip = tipDin(nume, String(b.tip ?? ""));
+  if (!tip) return json(400, { error: "tip", mesaj: "Acceptăm doar poze JPG, PNG și video MP4, MOV." });
+  const max = TIPURI[tip] === "img" ? MAX_IMG : MAX_VID;
+  if (marime <= 0 || marime > max) return json(400, { error: "marime", mesaj: `Fișierul e prea mare (max. ${max / MB} MB).` });
+  const ip = await ipHash(req);
+  if (await count(`rapoarte_fisiere?ip_hash=eq.${ip}&creat_at=gte.${since(60)}&select=path`) >= 40) return json(429, { error: "rate", mesaj: "Prea multe fișiere într-un timp scurt. Încearcă din nou mai târziu." });
+  const existente: { marime: number }[] = await rest(`rapoarte_fisiere?draft=eq.${b.draft}&sters_at=is.null&raport_id=is.null&select=marime`);
+  if (existente.length >= MAX_FILES) return json(400, { error: "prea_multe", mesaj: `Poți atașa maxim ${MAX_FILES} fișiere.` });
+  if (existente.reduce((s, f) => s + Number(f.marime), 0) + marime > MAX_TOTAL) return json(400, { error: "total", mesaj: "Fișierele depășesc 50 MB în total." });
+  const path = `${b.draft}/${Date.now().toString(36)}-${numeSigur(nume)}`;
+  const s = await fetch(`${SB}/storage/v1/object/upload/sign/${BUCKET}/${path}`, { method: "POST", headers: H, body: "{}" });
+  if (!s.ok) return json(502, { error: "storage", mesaj: "Nu am putut pregăti încărcarea. Încearcă din nou." });
+  const { url } = await s.json();
+  await rest("rapoarte_fisiere", { method: "POST", body: JSON.stringify({ path, draft: b.draft, nume, tip, marime, ip_hash: ip }) });
+  return json(200, { path, url: `${SB}/storage/v1${url}`, tip });
+}
+
+async function actSterge(b: Record<string, unknown>) {
+  if (!isUuid(b.draft) || typeof b.path !== "string" || !b.path.startsWith(`${b.draft}/`)) return json(400, { error: "path" });
+  const rows = await rest(`rapoarte_fisiere?path=eq.${encodeURIComponent(b.path)}&draft=eq.${b.draft}&raport_id=is.null&select=path`);
+  if (!rows.length) return json(200, { ok: true });
+  await stergeObiecte([b.path]);
+  await rest(`rapoarte_fisiere?path=eq.${encodeURIComponent(b.path)}`, { method: "PATCH", body: JSON.stringify({ sters_at: new Date().toISOString() }) });
+  return json(200, { ok: true });
+}
+
+async function actTrimite(req: Request, b: Record<string, unknown>) {
+  if (b.hp) return json(200, { ok: true, nr: "000000" }); // câmpul ascuns e completat doar de roboți
+  const email = String(b.email ?? "").trim(), subiect = String(b.subiect ?? ""), descriere = String(b.descriere ?? "").trim();
+  if (!EMAIL_RE.test(email) || email.length > 254) return json(400, { error: "email", mesaj: "Adresa de email nu pare validă." });
+  if (!SUBIECTE[subiect]) return json(400, { error: "subiect", mesaj: "Alege un subiect." });
+  if (!descriere || descriere.length > 2000) return json(400, { error: "descriere", mesaj: "Descrierea trebuie să aibă între 1 și 2000 de caractere." });
+  const ip = await ipHash(req);
+  if (await count(`rapoarte_probleme?ip_hash=eq.${ip}&creat_at=gte.${since(60)}&select=id`) >= 5) return json(429, { error: "rate", mesaj: "Ai trimis deja mai multe rapoarte. Încearcă din nou peste o oră." });
+  if (await count(`rapoarte_probleme?creat_at=gte.${since(60)}&select=id`) >= 60) return json(429, { error: "rate", mesaj: "Primim multe rapoarte acum. Încearcă din nou peste câteva minute." });
+
+  // fișierele: doar cele urcate în ciorna acestui formular, verificate pe server
+  const cerute = Array.isArray(b.fisiere) ? (b.fisiere as unknown[]).filter((p) => typeof p === "string").slice(0, MAX_FILES) as string[] : [];
+  let fisiere: { path: string; nume: string; tip: string; marime: number }[] = [];
+  if (cerute.length) {
+    if (!isUuid(b.draft)) return json(400, { error: "draft" });
+    const rows: { path: string; nume: string; tip: string }[] = await rest(`rapoarte_fisiere?draft=eq.${b.draft}&sters_at=is.null&raport_id=is.null&select=path,nume,tip`);
+    const respinse: string[] = [];
+    for (const r of rows.filter((r) => cerute.includes(r.path))) {
+      const i = await inspecteaza(r.path);
+      const max = TIPURI[r.tip] === "img" ? MAX_IMG : MAX_VID;
+      if (i.ok && i.marime > 0 && i.marime <= max) fisiere.push({ ...r, marime: i.marime }); else respinse.push(r.path);
+    }
+    let total = 0;
+    fisiere = fisiere.filter((f) => (total += f.marime) <= MAX_TOTAL || (respinse.push(f.path), false));
+    if (respinse.length) { await stergeObiecte(respinse); await rest(`rapoarte_fisiere?path=in.(${respinse.map((p) => `"${p}"`).join(",")})`, { method: "PATCH", body: JSON.stringify({ sters_at: new Date().toISOString() }) }); }
+  }
+
+  const ctx = (b.context && typeof b.context === "object" ? b.context : {}) as Record<string, unknown>;
+  const context: Record<string, string> = {};
+  for (const k of ["pagina", "dispozitiv", "ecran", "limba", "tab", "produs", "cultura", "tinta", "doza", "suprafata", "apa"]) if (ctx[k] != null && ctx[k] !== "") context[k] = String(ctx[k]).slice(0, 300);
+  const [raport] = await rest("rapoarte_probleme", { method: "POST", body: JSON.stringify({ email, subiect, descriere, context, ip_hash: ip, ph_id: b.ph_id ? String(b.ph_id).slice(0, 80) : null }) });
+  if (fisiere.length) await rest(`rapoarte_fisiere?path=in.(${fisiere.map((f) => `"${f.path}"`).join(",")})`, { method: "PATCH", body: JSON.stringify({ raport_id: raport.id }) });
+  const linkuri = await Promise.all(fisiere.map(async (f) => ({ ...f, url: await semneaza(f.path) })));
+
+  const erori: string[] = [];
+  const upd: Record<string, unknown> = {};
+  // 1. emailul către echipă (Reply = răspunzi direct omului)
+  try {
+    if (!RESEND_KEY) throw new Error("RESEND_API_KEY lipsă");
+    const randuri = [["Nr. raport", `#${raport.nr}`], ["Subiect", SUBIECTE[subiect]], ["Email", email], ...Object.entries(context).map(([k, v]) => [k[0].toUpperCase() + k.slice(1), v])];
+    const html = `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:22px;color:#111;max-width:640px">
+<h2 style="margin:0 0 12px;font-size:20px">Problemă raportată · ${esc(SUBIECTE[subiect])}</h2>
+<div style="white-space:pre-wrap;background:#f0f4fe;border-radius:12px;padding:14px 16px;margin-bottom:16px">${esc(descriere)}</div>
+<table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;font-size:14px">${randuri.map(([k, v]) => `<tr><td style="padding:6px 12px 6px 0;color:#5a6478;white-space:nowrap;vertical-align:top">${esc(k)}</td><td style="padding:6px 0;vertical-align:top">${esc(v)}</td></tr>`).join("")}</table>
+${linkuri.length ? `<h3 style="margin:20px 0 8px;font-size:16px">Fișiere atașate (${linkuri.length})</h3>${linkuri.map((f) => `<div style="margin:0 0 10px">${TIPURI[f.tip] === "img" && f.url ? `<a href="${esc(f.url)}"><img src="${esc(f.url)}" width="160" alt="" style="display:block;max-width:160px;border-radius:8px;margin-bottom:4px"></a>` : ""}<a href="${esc(f.url)}" style="color:#111">${esc(f.nume)}</a> <span style="color:#5a6478">· ${fmtMB(f.marime)}</span></div>`).join("")}<p style="color:#5a6478;font-size:12px">Linkurile sunt private și funcționează ${LINK_ZILE} de zile; apoi fișierele se șterg automat.</p>` : ""}
+</div>`;
+    const r = await fetch("https://api.resend.com/emails", {
+      method: "POST", headers: { Authorization: `Bearer ${RESEND_KEY}`, "Content-Type": "application/json", "Idempotency-Key": `raport/${raport.id}` },
+      body: JSON.stringify({ from: FROM, to: [TO], reply_to: email, subject: `[Pesticid #${raport.nr}] ${SUBIECTE[subiect]}: ${descriere.replace(/\s+/g, " ").slice(0, 60)}`, html, tags: [{ name: "tip", value: "raport-problema" }, { name: "subiect", value: subiect }] }),
+    });
+    if (!r.ok) throw new Error(`Resend ${r.status}: ${(await r.text()).slice(0, 200)}`);
+    upd.trimis_at = new Date().toISOString();
+  } catch (e) { erori.push(String((e as Error).message ?? e)); }
+
+  // 2. rândul din Google Sheet (Apps Script web app); fără URL configurat se sare peste
+  try {
+    const url = await rpc("config_secret", { p_name: "gsheet_url" });
+    if (url) {
+      const token = await rpc("config_secret", { p_name: "gsheet_token" });
+      const r = await fetch(url, {
+        method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, redirect: "follow",
+        body: JSON.stringify({
+          token, nr: `#${raport.nr}`, data: new Date(raport.creat_at).toLocaleString("ro-RO", { timeZone: "Europe/Bucharest" }),
+          subiect: SUBIECTE[subiect], status: "Nou", email, descriere,
+          fisiere: linkuri.length, linkuri: linkuri.map((f) => f.url).join("\n"),
+          pagina: context.pagina ?? "", dispozitiv: context.dispozitiv ?? "", ecran: context.ecran ?? "",
+          produs: context.produs ?? "", cultura: context.cultura ?? "", tinta: context.tinta ?? "", doza: context.doza ?? "",
+        }),
+      });
+      const t = await r.text();
+      if (!r.ok || !/^ok/.test(t.trim())) throw new Error(`Sheet ${r.status}: ${t.slice(0, 120)}`);
+      upd.sheet_at = new Date().toISOString();
+    }
+  } catch (e) { erori.push(String((e as Error).message ?? e)); }
+
+  if (erori.length) upd.eroare = erori.join(" | ").slice(0, 500);
+  if (Object.keys(upd).length) await rest(`rapoarte_probleme?id=eq.${raport.id}`, { method: "PATCH", body: JSON.stringify(upd) });
+  return json(200, { ok: true, nr: raport.nr, fisiere: fisiere.length });
+}
+
+async function actCurata(req: Request) {
+  const secret = await rpc("webhook_secret");
+  if (!secret || req.headers.get("x-webhook-secret") !== secret) return json(401, { error: "unauthorized" });
+  const azi = new Date().toISOString();
+  const orfane: { path: string }[] = await rest(`rapoarte_fisiere?raport_id=is.null&sters_at=is.null&creat_at=lt.${since(24 * 60)}&select=path&limit=1000`);
+  const vechi: { path: string }[] = await rest(`rapoarte_fisiere?raport_id=not.is.null&sters_at=is.null&creat_at=lt.${since(90 * 24 * 60)}&select=path&limit=1000`);
+  const toate = [...orfane, ...vechi].map((r) => r.path);
+  if (toate.length) {
+    await stergeObiecte(toate);
+    for (let i = 0; i < toate.length; i += 100) await rest(`rapoarte_fisiere?path=in.(${toate.slice(i, i + 100).map((p) => `"${p}"`).join(",")})`, { method: "PATCH", body: JSON.stringify({ sters_at: azi }) });
+  }
+  return json(200, { ok: true, orfane: orfane.length, vechi: vechi.length });
+}
+
+Deno.serve(async (req: Request) => {
+  if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS });
+  if (req.method !== "POST") return json(405, { error: "POST only" });
+  let b: Record<string, unknown>;
+  try { b = await req.json(); } catch { return json(400, { error: "JSON invalid" }); }
+  try {
+    switch (b.action) {
+      case "url": return await actUrl(req, b);
+      case "sterge": return await actSterge(b);
+      case "trimite": return await actTrimite(req, b);
+      case "curata": return await actCurata(req);
+      default: return json(400, { error: "action" });
+    }
+  } catch (e) {
+    console.error(e);
+    return json(500, { error: "server", mesaj: "A apărut o eroare. Încearcă din nou." });
+  }
+});

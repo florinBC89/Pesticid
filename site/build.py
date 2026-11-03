@@ -8,6 +8,7 @@ js = (root / 'main.js').read_text(encoding='utf-8')
 calc = (root / 'calc.js').read_text(encoding='utf-8')
 search = (root / 'search.js').read_text(encoding='utf-8')
 analytics = (root / 'analytics.js').read_text(encoding='utf-8')
+report = (root / 'report.js').read_text(encoding='utf-8')
 env = (root / '..' / 'app' / '.env').read_text() if (root / '..' / 'app' / '.env').exists() else ''
 phkey = env.split('VITE_POSTHOG_KEY=')[1].split()[0] if 'VITE_POSTHOG_KEY=' in env else ''
 ph = f'<meta name="pesticid-posthog" data-key="{phkey}" data-host="https://eu.i.posthog.com">' if phkey else ''
@@ -34,6 +35,7 @@ index = f'''<!doctype html>
 <script src="main.js"></script>
 <script src="calc.js"></script>
 <script src="search.js"></script>
+<script src="report.js"></script>
 </body>
 </html>
 '''
@@ -56,6 +58,9 @@ preview = f'''<title>Pesticid</title>
 </script>
 <script>
 {search}
+</script>
+<script>
+{report}
 </script>
 '''
 (root / 'preview.html').write_text(preview, encoding='utf-8')
