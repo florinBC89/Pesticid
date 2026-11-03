@@ -119,9 +119,9 @@ b, strong { font-weight: 600; color: var(--fg); }
 /* banda de campanie (early bird): stă sus, în nav, cât timp campania e activă; dispare la final */
 :root { --promo-h: 40px; }
 .no-promo { --promo-h: 0px; }
-.promo { display: flex; align-items: center; justify-content: center; height: var(--promo-h); padding: 0 16px; background: #ceee58; color: var(--fg); font-size: 14px; line-height: 18px; text-align: center; text-decoration: none; overflow: hidden; }
+.promo { display: flex; align-items: center; justify-content: center; height: var(--promo-h); padding: 0 16px; background: #ceee58; color: var(--fg); font-size: 14px; line-height: 18px; text-align: center; text-decoration: none; overflow: hidden; transition: background 0.2s; }
 .promo b { font-weight: 600; }
-@media (hover: hover) { .promo:hover > span { text-decoration: underline; text-underline-offset: 3px; } }
+@media (hover: hover) { .promo:hover { background: #bfe13f; } }
 .promo:focus-visible { outline: 2px solid var(--fg); outline-offset: -4px; }
 .no-promo .promo { display: none; }
 .nav .wrap {
