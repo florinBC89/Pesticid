@@ -1,0 +1,19 @@
+# dependențe și build-uri
+node_modules/
+app/dist/
+app/dist-preview/
+emails/out/
+__pycache__/
+*.pyc
+
+# chei locale (cheile publice se pun la deploy ca variabile de mediu)
+.env
+.env.*
+!.env.example
+
+# fișiere generate
+site/preview.html
+supabase/import/anf_2026_10/out/
+
+# sistem
+.DS_Store

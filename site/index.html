@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ro" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pesticid — Calculator de doză pentru pesticide</title>
+<meta name="description" content="Calculator de doză pentru pesticide: alegi cultura, dăunătorul și suprafața și primești produsele omologate cu doza exactă.">
+<meta name="theme-color" content="#cedbf6">
+<meta name="pesticid-supabase" data-url="https://rpwmfhlmdscjpcrqqmyf.supabase.co" data-key="sb_publishable_dDXZs-VnJo6ixr4fsymcOA_BouLzIn0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Pesticid">Pestic<span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span>d</a>
+    <a class="btn" href="#acces-timpuriu">Creează cont</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-clip"><div class="hero-bg" data-src="assets/hero-camp.webp" data-parallax="0.28" data-parallax-top role="img" aria-label="Rânduri de cultură la apus"></div></div>
+    <div class="wrap">
+      <div class="hero-copy">
+        <h1>Calculează doza corectă pentru <b>toate pesticidele</b></h1>
+        <p class="lead">Sau <b>caută produse, culturi sau dăunători</b>, iar noi îți arătăm <b>toate produsele omologate cu doza exactă, cantitatea totală și recomandări complete</b></p>
+        <div class="tabs" role="tablist" aria-label="Mod de lucru">
+          <button class="tab is-on" type="button" role="tab" aria-selected="true">Calculează Doza</button>
+          <button class="tab" type="button" role="tab" aria-selected="false">Caută Produse</button>
+        </div>
+        <div class="calc" role="group" aria-label="Calculator pesticide">
+          <div class="calc-head">
+            <h3>Calculator pesticide</h3>
+            <p class="calc-hint" id="c-hint">Se încarcă produsele…</p>
+          </div>
+          <label class="field has-input" id="f-bloc"><span class="col"><small>Bloc fizic</small><span class="val"><input id="c-bloc" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="ID-ul blocului fizic" maxlength="12"><button type="button" class="x" aria-label="Șterge blocul fizic" hidden>×</button></span></span></label>
+          <div class="sel" id="s-produs">
+            <label class="field has-input is-off" id="f-produs" for="c-produs">
+              <span class="col"><small>Produs</small><span class="val"><input id="c-produs" type="text" autocomplete="off" spellcheck="false" placeholder="Se încarcă…" disabled role="combobox" aria-expanded="false" aria-controls="c-produs-list"><span class="txt" hidden></span><button type="button" class="x" aria-label="Șterge produsul" hidden>×</button></span></span>
+              <span class="tag xs tagr" hidden></span><i class="chev" aria-hidden="true"></i>
+            </label>
+            <div class="dd" hidden><ul class="plist" id="c-produs-list" role="listbox"></ul></div>
+          </div>
+          <div class="sel" id="s-cultura">
+            <label class="field has-input is-off" id="f-cultura" for="c-cultura">
+              <span class="col"><small>Cultură</small><span class="val"><input id="c-cultura" type="text" autocomplete="off" spellcheck="false" placeholder="Selectează produsul mai întâi" disabled role="combobox" aria-expanded="false" aria-controls="c-cultura-list"><span class="txt" hidden></span><button type="button" class="x" aria-label="Șterge cultura" hidden>×</button></span></span>
+              <span class="tag xs cnt" hidden></span><i class="chev" aria-hidden="true"></i>
+            </label>
+            <div class="dd" hidden><ul class="plist" id="c-cultura-list" role="listbox"></ul></div>
+          </div>
+          <div class="sel" id="s-tinta">
+            <label class="field has-input is-off" id="f-tinta" for="c-tinta">
+              <span class="col"><small>Dăunător / boală / buruiană</small><span class="val"><input id="c-tinta" type="text" autocomplete="off" spellcheck="false" placeholder="Selectează cultura mai întâi" disabled role="combobox" aria-expanded="false" aria-controls="c-tinta-list"><span class="txt" hidden></span><button type="button" class="x" aria-label="Șterge dăunătorul" hidden>×</button></span></span>
+              <span class="tag xs cnt" hidden></span><i class="chev" aria-hidden="true"></i>
+            </label>
+            <div class="dd" hidden><ul class="plist" id="c-tinta-list" role="listbox"></ul></div>
+          </div>
+          <div class="row">
+            <div class="field is-ro" id="c-doza-om" aria-live="polite"><span class="col"><small>Doză omologată</small><span class="val"><span class="txt ph" id="c-doza-om-v">Se completează după dăunător</span></span></span></div>
+            <label class="field has-input has-unit is-off" id="f-doza"><span class="col"><small>Doza ta</small><span class="val"><input id="c-doza" type="text" inputmode="decimal" autocomplete="off" placeholder="Doza ta" disabled><b class="unit" id="c-doza-u"></b><button type="button" class="x" aria-label="Șterge doza" hidden>×</button></span></span></label>
+          </div>
+          <div class="row">
+            <label class="field has-input has-unit" id="f-ha"><span class="col"><small>Suprafață</small><span class="val"><input id="c-ha" type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 100"><b class="unit">ha</b><button type="button" class="x" aria-label="Șterge suprafața" hidden>×</button></span></span></label>
+            <label class="field has-input has-unit" id="f-apa"><span class="col"><small>Volum de apă</small><span class="val"><input id="c-apa" type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 200"><b class="unit">L/ha</b><button type="button" class="x" aria-label="Șterge volumul de apă" hidden>×</button></span></span></label>
+          </div>
+          <p class="doza-msg" id="c-doza-msg" role="status"></p>
+          <p class="doza">Doză <span class="tag muted">Omologată</span> alege un produs din cele omologate</p>
+          <button class="btn ghost" id="c-go" type="button" disabled><span>Calculează</span><svg class="arr" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <div class="calc-res" id="c-res" hidden>
+            <h4>Rezultat calculat</h4>
+            <div class="cards" id="c-cards"></div>
+            <p class="calc-note"></p>
+            <p class="res-foot">Odată ce platforma va fi funcțională, aceste rezultate pot fi salvate în Registrele tale.</p>
+          </div>
+        </div>
+        <div class="search" id="search" role="group" aria-label="Căutare avansată: cultură, dăunător, produs" hidden>
+          <div class="sbar">
+            <div class="sfield" data-k="c">
+              <label class="field has-input" id="f-sc" for="s-c">
+                <span class="col"><small>Cultură</small><span class="val"><i class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21V9M12 9c-3 0-5-2-5-5 3 0 5 2 5 5zM12 9c3 0 5-2 5-5-3 0-5 2-5 5zM12 15c-3 0-5-2-5-5 3 0 5 2 5 5zM12 15c3 0 5-2 5-5-3 0-5 2-5 5z"/></svg></i><input id="s-c" type="text" autocomplete="off" spellcheck="false" placeholder="Scrie sau alege cultura…" role="combobox" aria-expanded="false" aria-controls="s-dd" aria-autocomplete="list"><span class="txt" hidden></span><button type="button" class="x" aria-label="Șterge" hidden>×</button></span></span>
+              </label>
+            </div>
+            <div class="sfield" data-k="t">
+              <label class="field has-input" id="f-st" for="s-t">
+                <span class="col"><small>Dăunător / boală / buruiană</small><span class="val"><i class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="5"/><path d="M12 8V5M7 10l-3-2M17 10l3-2M7 15H4M17 15h3M8 19l-2 2M16 19l2 2"/></svg></i><input id="s-t" type="text" autocomplete="off" spellcheck="false" placeholder="Scrie sau alege dăunătorul…" role="combobox" aria-expanded="false" aria-controls="s-dd" aria-autocomplete="list"><span class="txt" hidden></span><button type="button" class="x" aria-label="Șterge" hidden>×</button></span></span>
+              </label>
+            </div>
+            <div class="sfield" data-k="p">
+              <label class="field has-input" id="f-sp" for="s-p">
+                <span class="col"><small>Produs (opțional)</small><span class="val"><i class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6v3l2 3v12H7V9l2-3z"/><path d="M9 13h6"/></svg></i><input id="s-p" type="text" autocomplete="off" spellcheck="false" placeholder="Toate produsele omologate" role="combobox" aria-expanded="false" aria-controls="s-dd" aria-autocomplete="list"><span class="txt" hidden></span><button type="button" class="x" aria-label="Șterge" hidden>×</button></span></span>
+              </label>
+            </div>
+            <button class="ichip" type="button" aria-label="Dictează (în curând)" title="În curând" data-soon><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg></button>
+            <button class="ichip" type="button" aria-label="Scanează eticheta (în curând)" title="În curând" data-soon><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/></svg></button>
+            <button class="sgo" id="s-go" type="button" disabled>Caută</button>
+            <div class="sdd" id="s-dd" role="listbox" hidden></div>
+          </div>
+          <div class="sres" id="s-res" aria-live="polite" hidden></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="wrap">
+      <div class="grid">
+        <div class="stat reveal">
+          <div class="ico" aria-hidden="true"><img src="assets/icon-produse.webp" alt="" width="146" height="146" loading="lazy"></div>
+          <div><div class="num" data-count="450" data-suffix="+">450+</div><div class="lbl">Produse <b class="tag">Omologate</b></div></div>
+        </div>
+        <div class="stat reveal" data-delay="1">
+          <div class="ico" aria-hidden="true"><img src="assets/icon-culturi.webp" alt="" width="146" height="146" loading="lazy"></div>
+          <div><div class="num" data-count="150" data-suffix="+">150+</div><div class="lbl">Culturi agricole</div></div>
+        </div>
+        <div class="stat reveal" data-delay="2">
+          <div class="ico" aria-hidden="true"><img src="assets/icon-daunatori.webp" alt="" width="146" height="146" loading="lazy"></div>
+          <div><div class="num" data-count="350" data-suffix="+">350+</div><div class="lbl">Dăunători și boli</div></div>
+        </div>
+        <div class="stat reveal" data-delay="3">
+          <div class="ico" aria-hidden="true"><img src="assets/icon-date.webp" alt="" width="146" height="146" loading="lazy"></div>
+          <div><div class="num txt">Date<br>actualizate</div><div class="lbl">Din surse oficiale <b>ANF, UE</b></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="who">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Pentru cine este <b>Pesticid?</b></h2>
+        <p>Soluția simplă și rapidă <b>pentru toți profesioniștii din agricultură</b></p>
+      </div>
+      <div class="cards">
+        <article class="card reveal">
+          <div class="ph" data-parallax="0.12" style="background-image:url('assets/card-fermieri.webp')" role="img" aria-label="Fermier în lanul de porumb"></div>
+          <div class="box"><h3>Fermieri mici, mijlocii și mari</h3><p>Calculezi rapid doza corectă <b>pentru orice cultură și eviți greșelile.</b></p></div>
+        </article>
+        <article class="card reveal" data-delay="1">
+          <div class="ph" data-parallax="0.12" style="background-image:url('assets/card-consultanti.webp')" role="img" aria-label="Consultant la birou, cu laptop și notițe"></div>
+          <div class="box"><h3>Consultanți agricoli</h3><p>Oferi recomandări precise clienților tăi <b>pe baza produselor omologate</b></p></div>
+        </article>
+        <article class="card reveal" data-delay="2">
+          <div class="ph" data-parallax="0.12" style="background-image:url('assets/card-companii.webp')" role="img" aria-label="Parcele agricole văzute din dronă"></div>
+          <div class="box"><h3>Companii agricole</h3><p>Standardizezi recomandările și gestionezi <b>tratamentele pentru toate fermele din portofoliu</b></p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="wrap">
+      <div class="panel">
+        <div class="section-head reveal">
+          <h2>Cum <b>funcționează?</b></h2>
+        </div>
+        <ol class="steps">
+          <li class="step">
+            <div class="step-top"><span class="n">1</span><span class="arrow" aria-hidden="true"><img class="ar-h" src="assets/arrow-right.svg" alt="" width="89" height="23"><img class="ar-v" src="assets/arrow-down.svg" alt="" width="23" height="51"></span></div>
+            <div class="step-txt"><h3>Selectezi cultura</h3><p>Alegi cultura ta din lista disponibilă.</p></div>
+          </li>
+          <li class="step">
+            <div class="step-top"><span class="n">2</span><span class="arrow" aria-hidden="true"><img class="ar-h" src="assets/arrow-right.svg" alt="" width="89" height="23"><img class="ar-v" src="assets/arrow-down.svg" alt="" width="23" height="51"></span></div>
+            <div class="step-txt"><h3>Alegi dăunătorul</h3><p>Dăunătorul, boala sau buruiana pe care vrei să o combați.</p></div>
+          </li>
+          <li class="step">
+            <div class="step-top"><span class="n">3</span><span class="arrow" aria-hidden="true"><img class="ar-h" src="assets/arrow-right.svg" alt="" width="89" height="23"><img class="ar-v" src="assets/arrow-down.svg" alt="" width="23" height="51"></span></div>
+            <div class="step-txt"><h3>Introduci suprafața</h3><p>Hectarele tratate, volumul de apă și capacitatea rezervorului.</p></div>
+          </li>
+          <li class="step">
+            <div class="step-top"><span class="n">4</span></div>
+            <div class="step-txt"><h3>Primești toate recomandările</h3><p>Produsele omologate, doza exactă, cantitatea totală și câtă soluție pui în fiecare rezervor.</p></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="early" id="acces-timpuriu" data-campaign-end="2026-11-19T23:59:59+02:00">
+    <div class="photo-bg" data-parallax="0.25" style="background-image:url('assets/hero-vie.webp')" role="img" aria-label="Plantație de viță de vie"></div>
+    <div class="wrap">
+      <div class="section-head early-head reveal">
+        <span class="tag tip sm">Acces timpuriu</span>
+        <h2>Fii printre <b>primii care folosesc Pesticid</b></h2>
+        <p>Înscrie-te <b>pe lista de așteptare și poți primi acces la abonamentele PRO sau AGRONOM</b></p>
+        <div class="countdown" id="countdown">Campanie disponibilă <b data-cd>20 de zile</b></div>
+      </div>
+      <div class="offers">
+        <article class="offer reveal " data-plan="pro">
+          <div class="offer-body">
+            <span class="tag lime">Early PRO <b>Farmers 100</b></span>
+            <div class="offer-head">
+              <h3>6 luni PRO gratuit</h3>
+              <div class="save-box"><strong>Salvezi 54 Euro</strong><span>6 luni x <b>9 Euro</b>/lună</span></div>
+            </div>
+            <p class="intro">Primii <b>100 fermieri</b> care se înscriu primesc <b>PRO 6 luni gratuit fără card bancar, doar rezervându-și locul</b></p>
+            <ul class="perks">
+            <li><img class="ck" src="assets/check.svg" alt="" width="22" height="22"><span>Registru completat <b>automat</b> din fiecare <b>calcul pentru tratamente</b></span></li>
+            <li><img class="ck" src="assets/check.svg" alt="" width="22" height="22"><span>Export PDF pentru <b>Control APIA/ANF</b></span></li>
+            <li><img class="ck" src="assets/check.svg" alt="" width="22" height="22"><span>Alerte <b>Produse, Doze și Restricții Control</b></span></li>
+            <li><img class="ck" src="assets/check.svg" alt="" width="22" height="22"><span>Tank mix cu 2–3 dăunători sau boli + ordinea de umplere</span></li>
+            <li><img class="ck" src="assets/check.svg" alt="" width="22" height="22"><span>Istoric pe <b>parcele + timp de pauză</b> per parcelă</span></li>
+            <li><img class="ck" src="assets/check.svg" alt="" width="22" height="22"><span>Alertă când un <b>produs din magazia ta e retras</b></span></li>
+            </ul>
+          </div>
+          <form class="reserve" novalidate data-plan="pro">
+            <label class="field email">
+              <small>Email</small>
+              <input type="email" name="email" id="email-pro" placeholder="Adresa ta de email" autocomplete="email" inputmode="email" required>
+            </label>
+            <button class="btn-cta" type="submit"><span>Rezerv loc</span><img src="assets/arrow-cta.svg" alt="" width="23" height="23"></button>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+          </form>
+        </article>
+        <article class="offer reveal " data-plan="agronom">
+          <div class="offer-body">
+            <span class="tag tip">Early AGRONOM <b>20 Partners</b></span>
+            <div class="offer-head">
+              <h3>3 luni AGRONOM gratuit</h3>
+              <div class="save-box"><strong>Salvezi 87 Euro</strong><span>3 luni x <b>29 Euro</b>/lună</span></div>
+            </div>
+            <p class="intro">Primii <b>20 de consultanți agricoli</b> înscriși <b>primesc 3 luni AGRONOM gratuit fără card bancar</b></p>
+            <ul class="perks">
+            <li><img class="ck" src="assets/check.svg" alt="" width="22" height="22"><span><b>Tot ce găsești în PRO</b> + Management <b>Multi-fermă</b></span></li>
+            <li><img class="ck" src="assets/check.svg" alt="" width="22" height="22"><span>Până la <b>15 ferme, fiecare cu Registrul ei</b></span></li>
+            <li><img class="ck" src="assets/check.svg" alt="" width="22" height="22"><span><b>Rapoarte pe Sezon și Client, produse, costuri/ha, rezistență</b></span></li>
+            <li><img class="ck" src="assets/check.svg" alt="" width="22" height="22"><span><b>Recomandări</b> trimise fermierilor (WhatsApp/Telegram)</span></li>
+            <li><img class="ck" src="assets/check.svg" alt="" width="22" height="22"><span>Suport prioritar și <b>implicare în Dezvoltarea Pesticid</b></span></li>
+            <li><img class="ck" src="assets/check.svg" alt="" width="22" height="22"><span>Acces <b>API la cerere</b></span></li>
+            </ul>
+          </div>
+          <form class="reserve" novalidate data-plan="agronom">
+            <label class="field email">
+              <small>Email</small>
+              <input type="email" name="email" id="email-agronom" placeholder="Adresa ta de email" autocomplete="email" inputmode="email" required>
+            </label>
+            <button class="btn-cta" type="submit"><span>Rezerv loc</span><img src="assets/arrow-cta.svg" alt="" width="23" height="23"></button>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+          </form>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="spick" id="spick" role="dialog" aria-modal="true" aria-labelledby="sp-title" hidden>
+  <div class="ph"><button class="back" type="button" id="sp-back" aria-label="Înapoi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><h4 id="sp-title"></h4></div>
+  <label class="field has-input is-on" id="sp-f" for="sp-in"><span class="col"><small id="sp-l"></small><span class="val"><i class="ico" id="sp-i"></i><input id="sp-in" type="text" autocomplete="off" spellcheck="false" placeholder="" role="combobox" aria-expanded="true" aria-controls="sp-list"><button type="button" class="x" id="sp-x" aria-label="Șterge" hidden>×</button></span></span></label>
+  <div class="list" id="sp-list" role="listbox"></div>
+  <button class="sgo" id="sp-go" type="button" disabled>Caută</button>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="cols reveal">
+      <div><h4>Companie</h4><ul><li><a href="#" data-soon>Despre noi</a></li><li><a href="#" data-soon>Noutăți</a></li><li><a href="#" data-soon>Contact</a></li></ul></div>
+      <div><h4>Resurse</h4><ul><li><a href="#" data-soon>Centru de ajutor</a></li><li><a href="#" data-soon>Suport</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="#" data-soon>Termeni și condiții</a></li><li><a href="#" data-soon>Confidențialitate</a></li><li><a href="#" data-soon>Cookies</a></li><li><a href="#" data-soon>Licențe</a></li></ul></div>
+    </div>
+    <div class="bottom reveal">
+      <span>© 2026 Pesticid. Toate drepturile rezervate.</span>
+      <div class="social">
+        <a href="#" data-soon aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.2 8.3L23 22h-6.6l-5.2-6.8L5.3 22H2.1l7.7-8.8L1.7 2h6.8l4.7 6.2L18.9 2Zm-1.1 18h1.8L7.2 3.9H5.3L17.8 20Z"/></svg></a>
+        <a href="#" data-soon aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6.5 0H13v1.7c.6-1.1 2-2 4-2 4.2 0 5 2.7 5 6.3V21h-4v-5.3c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21h-4V9Z"/></svg></a>
+        <a href="#" data-soon aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8h3.3Z"/></svg></a>
+        <a href="#" data-soon aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.7.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg></a>
+        <a href="#" data-soon aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 7.2c-.3-1-1-1.8-2-2C19.2 4.7 12 4.7 12 4.7s-7.2 0-9 .5c-1 .2-1.7 1-2 2C.5 9 .5 12 .5 12s0 3 .5 4.8c.3 1 1 1.8 2 2 1.8.5 9 .5 9 .5s7.2 0 9-.5c1-.2 1.7-1 2-2 .5-1.8.5-4.8.5-4.8s0-3-.5-4.8ZM9.7 15.1V8.9l6 3.1-6 3.1Z"/></svg></a>
+        <a href="#" data-soon aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.2v12.4a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.8 5.8 0 1 0 5 5.7V9.2c1.3.9 2.8 1.4 4.4 1.4V7.4c-1.4 0-2.6-.6-3.3-1.6Z"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="wordmark" aria-hidden="true">
+    <span class="logo">Pestic<span class="dots"><i></i><i></i><i></i><i></i></span>d</span>
+  </div>
+</footer>
+
+<script src="analytics.js"></script>
+<script src="main.js"></script>
+<script src="calc.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

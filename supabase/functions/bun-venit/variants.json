@@ -1,0 +1,109 @@
+{
+  "config": {
+    "site_url": "https://pesticid.info",
+    "calc_url": "https://pesticid.info/#calculator",
+    "assets_url": "https://pesticid.info/emails/assets",
+    "url_twitter": "https://pesticid.info",
+    "url_linkedin": "https://pesticid.info",
+    "url_facebook": "https://pesticid.info",
+    "url_tiktok": "https://pesticid.info",
+    "company_line": "Pesticid · România",
+    "unsubscribe_url": "https://pesticid.info/dezabonare?email={{email}}",
+    "email": "fermier@exemplu.ro",
+    "stat_produse": "284",
+    "stat_culturi": "100+",
+    "stat_tinte": "350+",
+    "calc_produs": "DECIS EXPERT 100 EC",
+    "calc_tip": "Insecticid",
+    "calc_cultura": "Grâu",
+    "calc_tinta": "Afide (păduchi de frunze)",
+    "calc_ha": "180 ha",
+    "calc_apa": "200 L/ha",
+    "calc_doza": "0,0625 L/ha",
+    "calc_nota": "pauză 30 zile · aplicare foliară"
+  },
+  "bullets": {
+    "pro": [
+      "Registru completat <b>automat</b> din fiecare <b>calcul pentru tratamente</b>",
+      "Export PDF pentru <b>Control APIA/ANF</b>",
+      "Alerte <b>Produse, Doze și Restricții</b> <b>Control</b>",
+      "Tank mix cu 2–3 dăunători sau boli + ordinea de umplere",
+      "Istoric pe <b>parcele + timp de pauză</b> per parcelă",
+      "Alertă când un <b>produs din magazia ta e retras</b>"
+    ],
+    "agronom": [
+      "<b>Tot ce găsești în PRO</b> + Management <b>Multi-fermă</b>",
+      "Până la <b>15 ferme, fiecare cu Registrul ei</b>",
+      "<b>Rapoarte pe Sezon și Client, produse, costuri/ha, rezistență</b>",
+      "<b>Recomandări</b> trimise fermierilor (WhatsApp/Telegram)",
+      "Suport prioritar și <b>implicare în Dezvoltarea Pesticid</b>",
+      "Acces <b>API la cerere</b>"
+    ]
+  },
+  "variants": [
+    {
+      "id": "pro-6",
+      "nume": "PRO · primii 100 · 6 luni gratuit",
+      "plan": "pro", "rang_max": 100,
+      "subject": "Te-ai calificat: 6 luni PRO gratuit la Pesticid",
+      "preheader": "Ești printre primii 100 de fermieri care testează Pesticid. Până la lansare, calculatorul e al tău.",
+      "hero_tag": "Te-ai calificat pentru Abonament PRO",
+      "intro": "Salutare! <b>Ne bucurăm că vrei să faci parte din primii 100 de fermieri care vor să testeze platforma Pesticid!</b> Până la lansare bucură-te de Calculatorul nostru!",
+      "second_headline": "Ești printre <b>primii care folosesc Pesticid!</b>",
+      "second_text": "După <b>Lansarea Platformei vei beneficia de acest Abonament 6 luni PRO Gratuit</b>",
+      "offer_tag": "Early PRO Farmers 100", "offer_tag_bg": "#ceee58",
+      "offer_title": "6 luni PRO gratuit",
+      "offer_save": "Salvezi 54 Euro",
+      "offer_calc": "6 luni x <b>9 Euro</b>/lună",
+      "bullets": "pro"
+    },
+    {
+      "id": "pro-3",
+      "nume": "PRO · după primii 100 · 3 luni gratuit",
+      "plan": "pro", "rang_max": null,
+      "subject": "Primele 100 de locuri s-au ocupat, dar ți-am păstrat 3 luni PRO gratuit",
+      "preheader": "Ai prins 3 luni PRO gratuit la lansare. Până atunci, calculatorul Pesticid e deschis pentru tine.",
+      "hero_tag": "Te-ai calificat pentru Abonament PRO",
+      "intro": "Salutare! <b>Primele 100 de locuri s-au ocupat, dar ți-am păstrat 3 luni PRO gratuit!</b> Până la lansare bucură-te de Calculatorul nostru!",
+      "second_headline": "<b>100 de Fermieri</b> s-au calificat deja!<br>Tu te-ai calificat <b>doar pentru 3 luni</b>",
+      "second_text": "După <b>Lansarea Platformei vei beneficia de acest Abonament 3 luni PRO Gratuit</b>",
+      "offer_tag": "Early PRO Farmers", "offer_tag_bg": "#ceee58",
+      "offer_title": "3 luni PRO gratuit",
+      "offer_save": "Salvezi 27 Euro",
+      "offer_calc": "3 luni x <b>9 Euro</b>/lună",
+      "bullets": "pro"
+    },
+    {
+      "id": "agronom-3",
+      "nume": "AGRONOM · primii 20 · 3 luni gratuit",
+      "plan": "agronom", "rang_max": 20,
+      "subject": "Te-ai calificat: 3 luni AGRONOM gratuit la Pesticid",
+      "preheader": "Ești printre primii 20 de consultanți agricoli care testează Pesticid. Până la lansare, calculatorul e al tău.",
+      "hero_tag": "Te-ai calificat pentru Abonament AGRONOM",
+      "intro": "Salutare! <b>Ne bucurăm că vrei să faci parte din primii 20 de consultanți agricoli care vor să testeze platforma Pesticid!</b> Până la lansare bucură-te de Calculatorul nostru!",
+      "second_headline": "Ești printre <b>primii care folosesc Pesticid!</b>",
+      "second_text": "După <b>Lansarea Platformei vei beneficia de acest Abonament 3 luni AGRONOM Gratuit</b>",
+      "offer_tag": "Early AGRONOM Partners", "offer_tag_bg": "#ffad60",
+      "offer_title": "3 luni AGRONOM gratuit",
+      "offer_save": "Salvezi 87 Euro",
+      "offer_calc": "3 luni x <b>29 Euro</b>/lună",
+      "bullets": "agronom"
+    },
+    {
+      "id": "agronom-45",
+      "nume": "AGRONOM · după primii 20 · 45 de zile gratuit",
+      "plan": "agronom", "rang_max": null,
+      "subject": "Primele 20 de locuri s-au ocupat, dar ți-am păstrat 45 de zile AGRONOM gratuit",
+      "preheader": "Ai prins 45 de zile AGRONOM gratuit la lansare. Până atunci, calculatorul Pesticid e deschis pentru tine.",
+      "hero_tag": "Te-ai calificat pentru Abonament AGRONOM",
+      "intro": "Salutare! <b>Primele 20 de locuri s-au ocupat, dar ți-am păstrat 45 de zile AGRONOM gratuit!</b> Până la lansare bucură-te de Calculatorul nostru!",
+      "second_headline": "<b>20 de Consultanți agricoli</b> s-au calificat deja!<br>Tu te-ai calificat <b>doar pentru 45 de zile</b>",
+      "second_text": "După <b>Lansarea Platformei vei beneficia de acest Abonament 45 de zile AGRONOM Gratuit</b>",
+      "offer_tag": "Early AGRONOM Partners", "offer_tag_bg": "#ffad60",
+      "offer_title": "45 de zile AGRONOM gratuit",
+      "offer_save": "Salvezi 43,5 Euro",
+      "offer_calc": "45 de zile x <b>29 Euro</b>/lună",
+      "bullets": "agronom"
+    }
+  ]
+}
