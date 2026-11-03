@@ -118,7 +118,7 @@ b, strong { font-weight: 600; color: var(--fg); }
   background: linear-gradient(180deg, var(--bg) 0, var(--bg) calc(var(--promo-h) + var(--nav-h)), rgba(206, 219, 246, 0.85) calc(var(--promo-h) + var(--nav-h) + var(--nav-fade) * 0.4), rgba(206, 219, 246, 0) 100%);
 }
 /* banda de campanie (early bird): stă sus, în nav, cât timp campania e activă; dispare la final */
-:root { --promo-h: 40px; --nav-h: 112px; --nav-fade: 50px; }
+:root { --promo-h: 40px; --nav-h: 112px; --nav-fade: 30px; }
 .no-promo { --promo-h: 0px; }
 .promo { display: flex; align-items: center; justify-content: center; height: var(--promo-h); padding: 0 16px; background: #ceee58; color: var(--fg); font-size: 14px; line-height: 18px; text-align: center; text-decoration: none; overflow: hidden; transition: background 0.2s; }
 .promo b { font-weight: 600; }
@@ -748,7 +748,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 /* ---------- tabletă ---------- */
 @media (max-width: 1100px) {
   .nav .wrap { height: 96px; padding-left: max(28px, env(safe-area-inset-left, 0px)); padding-right: max(28px, env(safe-area-inset-right, 0px)); }
-  :root { --nav-h: 96px; --nav-fade: 64px; }
+  :root { --nav-h: 96px; --nav-fade: 44px; }
   .hero { padding-top: calc(190px + var(--promo-h)); }
   .hero .lead { max-width: 600px; }  /* aliniat cu lățimea calculatorului (640px) */
   .sc-cols { grid-template-columns: minmax(0, 1fr); }
@@ -802,7 +802,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 /* ---------- mobil ---------- */
 @media (max-width: 700px) {
   .nav .wrap { height: 78px; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
-  :root { --nav-h: 78px; --nav-fade: 50px; }
+  :root { --nav-h: 78px; --nav-fade: 30px; }
   .nav .btn { height: 52px; min-width: 136px; font-size: 15px; }
   .logo { font-size: 24px; }
   .hero { min-height: 0; padding-top: calc(140px + var(--promo-h)); padding-bottom: 56px; }
