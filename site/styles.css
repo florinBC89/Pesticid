@@ -114,9 +114,9 @@ b, strong { font-weight: 600; color: var(--fg); }
   height: calc(var(--promo-h) + var(--nav-h) + var(--nav-fade));
   z-index: -1;
   pointer-events: none;
-  /* plin sub banda verde; gradientul începe la 10% din înălțimea butonului „Creează cont” (butonul e centrat în bară)
+  /* plin sub banda verde; gradientul începe la 6% din înălțimea butonului „Creează cont” (butonul e centrat în bară)
      și se termină la --nav-fade sub bară. --nav-h, --nav-btn-h și --nav-fade sunt pe breakpoint. */
-  --fade-start: calc(var(--promo-h) + (var(--nav-h) - var(--nav-btn-h)) / 2 + var(--nav-btn-h) * 0.1);
+  --fade-start: calc(var(--promo-h) + (var(--nav-h) - var(--nav-btn-h)) / 2 + var(--nav-btn-h) * 0.06);
   --fade-end: calc(var(--promo-h) + var(--nav-h) + var(--nav-fade));
   background: linear-gradient(180deg, var(--bg) 0, var(--bg) var(--fade-start), rgba(206, 219, 246, 0.85) calc(var(--fade-start) + (var(--fade-end) - var(--fade-start)) * 0.4), rgba(206, 219, 246, 0) 100%);
 }
