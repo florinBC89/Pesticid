@@ -112,13 +112,15 @@
     if (f.path && FN) fetch(FN, { method: 'POST', headers: hdr(), body: JSON.stringify({ action: 'sterge', draft: draft, path: f.path }) }).catch(function () {});
     eroareAtt(''); render();
   }
+  function ro(e, implicit) { return e && e.ro && e.message ? e.message : implicit; }
+  function eroare(m) { var e = new Error(m); e.ro = true; return e; }
   function hdr() { return { 'Content-Type': 'application/json', apikey: KEY, Authorization: 'Bearer ' + KEY }; }
 
   function urca(f) {
     f.st = 'up'; render();
     if (!FN) { f.st = 'ok'; f.el.classList.remove('is-up'); f.bar.parentNode.remove(); render(); return; } // mod demo, fără Supabase
     fetch(FN, { method: 'POST', headers: hdr(), body: JSON.stringify({ action: 'url', draft: draft, nume: f.file.name, tip: f.tip, marime: f.file.size }) })
-      .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.mesaj || 'Nu am putut urca fișierul.'); return j; }); })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw eroare(j.mesaj || 'Nu am putut urca fișierul. Încearcă din nou.'); return j; }); })
       .then(function (j) {
         f.path = j.path;
         return new Promise(function (ok, fail) {
@@ -126,8 +128,8 @@
           var x = new XMLHttpRequest(); f.xhr = x;
           x.open('PUT', j.url); x.setRequestHeader('apikey', KEY); x.setRequestHeader('x-upsert', 'false');
           x.upload.onprogress = function (e) { if (e.lengthComputable) f.bar.style.width = Math.round(e.loaded / e.total * 100) + '%'; };
-          x.onload = function () { f.xhr = null; (x.status >= 200 && x.status < 300) ? ok() : fail(new Error('Nu am putut urca fișierul.')); };
-          x.onerror = function () { f.xhr = null; fail(new Error('Nu am putut urca fișierul. Verifică internetul și încearcă din nou.')); };
+          x.onload = function () { f.xhr = null; (x.status >= 200 && x.status < 300) ? ok() : fail(eroare('Nu am putut urca fișierul. Încearcă din nou.')); };
+          x.onerror = function () { f.xhr = null; fail(eroare('Nu am putut urca fișierul. Verifică internetul și încearcă din nou.')); };
           x.onabort = function () { f.xhr = null; fail(null); };
           x.send(fd);
         });
@@ -136,7 +138,7 @@
       .catch(function (e) {
         if (!e) return; // anulat de om (a apăsat ×)
         f.st = 'err'; f.el.classList.remove('is-up'); f.el.classList.add('is-err'); if (f.bar) f.bar.parentNode.remove();
-        eroareAtt(e.message); T('report_failed', { reason: 'upload' }); render();
+        eroareAtt(ro(e, 'Nu am putut urca fișierul. Verifică internetul și încearcă din nou.')); T('report_failed', { reason: 'upload' }); render();
       });
   }
 
@@ -204,11 +206,11 @@
     if (!FN) { fin('DEMO00'); return; }
     busy = true; form.classList.add('is-busy'); msg.textContent = ''; sync(); go.querySelector('span').textContent = 'Se trimite…';
     fetch(FN, { method: 'POST', headers: hdr(), body: JSON.stringify(body) })
-      .then(function (r) { return r.json().then(function (j) { if (!r.ok) { var e = new Error(j.mesaj || 'Nu am putut trimite raportul.'); e.code = j.error || r.status; throw e; } return j; }); })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var e = eroare(j.mesaj || 'Nu am putut trimite raportul. Încearcă din nou.'); e.code = j.error || r.status; throw e; } return j; }); })
       .then(function (j) { fin(j.nr); })
       .catch(function (e) {
         T('report_failed', { reason: String(e.code || 'network') });
-        msg.textContent = (e && e.message && !/fetch|network/i.test(e.message)) ? e.message : 'Nu am putut trimite raportul. Verifică internetul și încearcă din nou.';
+        msg.textContent = ro(e, 'Nu am putut trimite raportul. Verifică internetul și încearcă din nou.');
       })
       .finally(function () { busy = false; form.classList.remove('is-busy'); go.querySelector('span').textContent = 'Trimite'; sync(); });
   });

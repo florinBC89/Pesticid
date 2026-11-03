@@ -14,8 +14,7 @@ phkey = env.split('VITE_POSTHOG_KEY=')[1].split()[0] if 'VITE_POSTHOG_KEY=' in e
 ph = f'<meta name="pesticid-posthog" data-key="{phkey}" data-host="https://eu.i.posthog.com">' if phkey else ''
 sbkey = (root / '..' / 'app' / '.env').read_text().split('VITE_SUPABASE_ANON_KEY=')[1].split()[0] if (root / '..' / 'app' / '.env').exists() else ''
 sb = f'<meta name="pesticid-supabase" data-url="https://rpwmfhlmdscjpcrqqmyf.supabase.co" data-key="{sbkey}">' if sbkey else ''
-# doar formularul „Raportează o problemă” e activ și în previzualizare (rezervarea de loc rămâne demo, ca testele să nu umple lista)
-rep = f'<meta name="pesticid-raport" data-url="https://rpwmfhlmdscjpcrqqmyf.supabase.co" data-key="{sbkey}">' if sbkey else ''
+# previzualizarea (Artifact) nu se poate conecta la Supabase: acolo formularele rămân în mod demonstrativ
 fonts = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">'
 desc = 'Calculator de doză pentru pesticide: alegi cultura, dăunătorul și suprafața și primești produsele omologate cu doza exactă.'
 index = f'''<!doctype html>
@@ -44,7 +43,6 @@ index = f'''<!doctype html>
 (root / 'index.html').write_text(index, encoding='utf-8')
 preview = f'''<title>Pesticid</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-{rep}
 {fonts}
 <style>
 {css}
