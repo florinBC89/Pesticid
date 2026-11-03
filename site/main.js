@@ -111,6 +111,22 @@
     cdEl.textContent = text;
     box.firstChild.nodeValue = zile >= 1 ? 'Campanie disponibilă ' : 'Campania se încheie în ';
   }
+  /* banda early bird din nav: aceeași dată de final ca secțiunea; în ultima zi arată ore și minute; după final dispare */
+  var promo = document.getElementById('promo');
+  function tickPromo() {
+    if (!promo || !early) return;
+    var end = new Date(early.getAttribute('data-campaign-end')).getTime();
+    if (isNaN(end)) return;
+    var left = end - Date.now();
+    if (left <= 0) { document.documentElement.classList.add('no-promo'); return; }
+    var min = Math.floor(left / 60000), ore = Math.floor(min / 60), zile = Math.floor(ore / 24);
+    var l = promo.querySelector('[data-promo-l]'), t = promo.querySelector('[data-promo-t]');
+    if (zile >= 1) { l.textContent = 'Campanie valabilă'; t.textContent = plural(zile + 1, 'zi', 'zile', 'zile'); }
+    else { l.textContent = 'Expiră în'; t.textContent = ore >= 1 ? plural(ore, 'oră', 'ore', 'ore') + ' - ' + plural(min % 60, 'min', 'min', 'min') : plural(Math.max(1, min), 'min', 'min', 'min'); }
+  }
+  tickPromo();
+  setInterval(tickPromo, 30000);
+  if (promo) promo.addEventListener('click', function () { if (window.track) window.track('promo_bar_clicked', { text: promo.textContent.replace(/\s+/g, ' ').trim() }); });
   tickCountdown();
   setInterval(tickCountdown, 30000);
 
