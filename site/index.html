@@ -205,11 +205,14 @@
             </ul>
           </div>
           <form class="reserve" novalidate data-plan="pro">
-            <label class="field email">
-              <small>Email</small>
-              <input type="email" name="email" id="email-pro" placeholder="Adresa ta de email" autocomplete="email" inputmode="email" required>
+            <label class="field email" for="email-pro">
+              <span class="col"><small>Email</small><input type="email" name="email" id="email-pro" placeholder="Adresa ta de email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required></span>
             </label>
-            <button class="btn-cta" type="submit"><span>Rezerv loc</span><img src="assets/arrow-cta.svg" alt="" width="23" height="23"></button>
+            <button class="btn-cta" type="submit" disabled><span>Rezerv loc</span><svg class="arr" width="23" height="23" viewBox="0 0 23 23" fill="none" aria-hidden="true"><path d="M3.11328 11.5C3.11328 11.897 3.43508 12.2188 3.83203 12.2188L17.4301 12.2188L12.9071 16.7418C12.6264 17.0225 12.6264 17.4775 12.9071 17.7582C13.1878 18.0389 13.6429 18.0389 13.9236 17.7582L19.6736 12.0082C19.8084 11.8734 19.8841 11.6906 19.8841 11.5C19.8841 11.3094 19.8084 11.1266 19.6736 10.9918L13.9236 5.24177C13.6429 4.96108 13.1878 4.96108 12.9071 5.24177C12.6264 5.52246 12.6264 5.97754 12.9071 6.25823L17.4301 10.7813L3.83203 10.7813C3.43508 10.7813 3.11328 11.103 3.11328 11.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
+            <div class="reserve-done" hidden>
+              <span class="tag lime">Te-ai calificat pentru Abonament PRO</span>
+              <p>Ți-am trimis detaliile pe <b data-done-email></b></p>
+            </div>
             <p class="form-msg" role="status" aria-live="polite"></p>
           </form>
         </article>
@@ -231,11 +234,14 @@
             </ul>
           </div>
           <form class="reserve" novalidate data-plan="agronom">
-            <label class="field email">
-              <small>Email</small>
-              <input type="email" name="email" id="email-agronom" placeholder="Adresa ta de email" autocomplete="email" inputmode="email" required>
+            <label class="field email" for="email-agronom">
+              <span class="col"><small>Email</small><input type="email" name="email" id="email-agronom" placeholder="Adresa ta de email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required></span>
             </label>
-            <button class="btn-cta" type="submit"><span>Rezerv loc</span><img src="assets/arrow-cta.svg" alt="" width="23" height="23"></button>
+            <button class="btn-cta" type="submit" disabled><span>Rezerv loc</span><svg class="arr" width="23" height="23" viewBox="0 0 23 23" fill="none" aria-hidden="true"><path d="M3.11328 11.5C3.11328 11.897 3.43508 12.2188 3.83203 12.2188L17.4301 12.2188L12.9071 16.7418C12.6264 17.0225 12.6264 17.4775 12.9071 17.7582C13.1878 18.0389 13.6429 18.0389 13.9236 17.7582L19.6736 12.0082C19.8084 11.8734 19.8841 11.6906 19.8841 11.5C19.8841 11.3094 19.8084 11.1266 19.6736 10.9918L13.9236 5.24177C13.6429 4.96108 13.1878 4.96108 12.9071 5.24177C12.6264 5.52246 12.6264 5.97754 12.9071 6.25823L17.4301 10.7813L3.83203 10.7813C3.43508 10.7813 3.11328 11.103 3.11328 11.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
+            <div class="reserve-done" hidden>
+              <span class="tag tip">Te-ai calificat pentru Abonament AGRONOM</span>
+              <p>Ți-am trimis detaliile pe <b data-done-email></b></p>
+            </div>
             <p class="form-msg" role="status" aria-live="polite"></p>
           </form>
         </article>

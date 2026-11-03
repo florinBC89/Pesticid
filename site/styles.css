@@ -524,33 +524,36 @@ b, strong { font-weight: 600; color: var(--fg); }
 .perks .ck { flex: 0 0 22px; width: 22px; height: 22px; }
 .perks b { font-weight: 600; }
 
-.reserve { display: grid; grid-template-columns: minmax(0, 1fr) 153px; gap: 10px; align-items: stretch; }
-.reserve .field.email { min-height: 60px; padding: 10px 16px 12px; border-radius: 14px; gap: 2px; }
-.reserve .field.email::after { content: none; }
-.reserve .field.email small { font-weight: 500; }
-.reserve input {
-  border: 0; background: transparent; padding: 0; margin: 0; width: 100%; min-width: 0;
-  font: inherit; font-size: 18px; line-height: 1.2; color: var(--fg); outline: none;
-}
-.reserve input::placeholder { color: var(--fg); opacity: 1; }
-.reserve .field.email:focus-within { border-color: var(--teal); }
+.reserve { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: stretch; }
+/* câmpul de email arată ca restul câmpurilor (calculator / căutare) */
+.reserve .field.email { cursor: text; }
+.reserve .field.email input { font-size: 18px; font-weight: 500; color: #242c3c; }
+.reserve .field.email input::placeholder { color: #242c3c; font-weight: 400; }
+.reserve .field.email:focus-within input::placeholder { color: #868fa2; }
 .reserve.is-error .field.email { border-color: var(--pink); background: #fff1f2; }
 .btn-cta {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  height: 60px; padding: 13px 22px; border: 0; border-radius: 14px;
-  background: var(--fg); color: #fff; font-weight: 600; font-size: 15px; white-space: nowrap;
-  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), opacity 0.2s;
+  min-height: 64px; padding: 0 24px; border: 0; border-radius: 14px;
+  background: var(--fg); color: #fff; font: inherit; font-weight: 600; font-size: 16px; white-space: nowrap; cursor: pointer;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.2s, color 0.2s;
 }
-.btn-cta img { width: 23px; height: 23px; transition: transform 0.25s var(--ease); }
-.btn-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18); }
-.btn-cta:hover img { transform: translateX(3px); }
-.btn-cta[disabled] { opacity: 0.6; cursor: default; transform: none; box-shadow: none; }
+.btn-cta .arr { flex: 0 0 23px; color: #fff; transition: transform 0.25s var(--ease), color 0.2s; }
+.btn-cta:not([disabled]):hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18); }
+.btn-cta:not([disabled]):hover .arr { transform: translateX(3px); }
+/* fără email valid: butonul e inactiv (fundal deschis, săgeată lime) */
+.btn-cta[disabled] { background: var(--surface-2); color: var(--fg); cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-cta[disabled] .arr { color: #a9cf2f; }
+.reserve.is-busy .btn-cta { opacity: 0.7; cursor: progress; }
 .form-msg { grid-column: 1 / -1; font-size: 14px; line-height: 20px; color: var(--muted); min-height: 0; }
 .form-msg:empty { display: none; }
-.form-msg.ok { color: #1f6b2e; }
 .form-msg.err { color: #b4232f; }
-.reserve.is-done .field.email, .reserve.is-done .btn-cta { display: none; }
-.reserve.is-done .form-msg { font-size: 16px; line-height: 24px; padding: 14px 16px; border-radius: 14px; background: #eef9d6; color: #1f5a1a; }
+/* după rezervare: formularul e înlocuit de eticheta de calificare */
+.reserve-done { grid-column: 1 / -1; display: grid; justify-items: center; gap: 8px; padding: 12px 0 4px; text-align: center; }
+.reserve-done[hidden] { display: none; }
+.reserve-done .tag { font-size: 18px; padding: 6px 12px; white-space: normal; }
+.reserve-done p { margin: 0; font-size: 14px; line-height: 20px; color: var(--muted); overflow-wrap: anywhere; }
+.reserve-done p b { color: var(--fg); font-weight: 600; }
+.reserve.is-done .field.email, .reserve.is-done .btn-cta, .reserve.is-done .form-msg { display: none; }
 
 /* ---------- footer ---------- */
 .footer { padding-top: 120px; }
@@ -768,7 +771,6 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   .offers { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 19px; margin-top: 50px; }
   .offer-head { flex-direction: column; align-items: flex-start; gap: 8px; }
   .reserve { grid-template-columns: minmax(0, 1fr); }
-  .reserve .field.email, .btn-cta { min-height: 61px; height: auto; }
   .footer { padding-top: 90px; }
 }
 
@@ -892,4 +894,9 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   .step .arrow { opacity: 1; transform: none; transition: none; }
   [data-parallax] { transform: none !important; }
   .card .ph, .btn, .stat, .card .box, .step .n, .step { transition: none; }
+}
+
+/* rezervare reușită pe telefon: eticheta de calificare încape pe un rând */
+@media (max-width: 480px) {
+  .reserve-done .tag { font-size: 15px; padding: 6px 10px; }
 }

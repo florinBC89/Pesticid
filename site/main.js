@@ -117,32 +117,47 @@
   /* formularul „Rezerv loc”: validare + trimitere la Supabase (rpc rezerva_loc); fără configurare → mod demo */
   var cfg = document.querySelector('meta[name="pesticid-supabase"]');
   var sbUrl = cfg && cfg.getAttribute('data-url'), sbKey = cfg && cfg.getAttribute('data-key');
+  var EMAIL_RE = /^[^@\s]+@[^@\s.]+(\.[^@\s.]+)*\.[a-z]{2,}$/i;
   document.querySelectorAll('form.reserve').forEach(function (f) {
     var input = f.querySelector('input'), msg = f.querySelector('.form-msg'), btn = f.querySelector('.btn-cta');
-    var plan = f.getAttribute('data-plan');
+    var doneBox = f.querySelector('.reserve-done'), doneEmail = f.querySelector('[data-done-email]');
+    var plan = f.getAttribute('data-plan'), busy = false;
     var T = function (n, p) { if (window.track) window.track(n, p); }, formStarted = false;
+    /* „Rezerv loc” e activ doar când în câmp e o adresă de email validă */
+    var sync = function () { btn.disabled = busy || !EMAIL_RE.test((input.value || '').trim()); };
     input.addEventListener('focus', function () { if (formStarted) return; formStarted = true; T('waitlist_form_started', { plan: plan }); });
-    input.addEventListener('input', function () { f.classList.remove('is-error'); msg.textContent = ''; msg.className = 'form-msg'; });
+    input.addEventListener('input', function () { f.classList.remove('is-error'); msg.textContent = ''; msg.className = 'form-msg'; sync(); });
+    input.addEventListener('change', sync);
+    setTimeout(sync, 300); /* completarea automată a browserului nu declanșează mereu „input” */
+    sync();
     f.addEventListener('submit', function (ev) {
       ev.preventDefault();
       var email = (input.value || '').trim();
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) {
-        f.classList.add('is-error'); msg.textContent = 'Scrie o adresă de email validă, de exemplu nume@ferma.ro.'; msg.className = 'form-msg err'; input.focus(); T('waitlist_failed', { plan: plan, reason: 'invalid_email' }); return;
-      }
+      if (busy || !EMAIL_RE.test(email)) { sync(); return; }
       var done = function () {
         var st = window.track ? window.track.state : {}; T('waitlist_submitted', { plan: plan, had_calc_result: !!st.had_calc_result, had_search_result: !!st.had_search_result, calc_started: !!st.calc_started });
-        f.classList.add('is-done'); msg.className = 'form-msg ok';
-        msg.textContent = 'Locul tău e rezervat (' + (plan === 'pro' ? 'PRO, 6 luni gratuit' : 'AGRONOM, 3 luni gratuit') + '). Te anunțăm pe ' + email + ' când deschidem accesul.';
+        if (doneEmail) doneEmail.textContent = email;
+        f.classList.add('is-done'); if (doneBox) doneBox.hidden = false;
       };
       if (!sbUrl || !sbKey) { done(); return; }
-      btn.disabled = true; msg.textContent = 'Se trimite…'; msg.className = 'form-msg';
+      busy = true; f.classList.add('is-busy'); sync(); btn.setAttribute('aria-busy', 'true');
       fetch(sbUrl + '/rest/v1/rpc/rezerva_loc', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'apikey': sbKey, 'Authorization': 'Bearer ' + sbKey },
         body: JSON.stringify({ p_email: email, p_plan: plan, p_sursa: 'site:acces-timpuriu', p_ph_id: (window.track && window.track.distinctId()) || null })
-      }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); done(); })
-        .catch(function (e) { T('waitlist_failed', { plan: plan, reason: /409/.test(String(e && e.message)) ? 'duplicate' : 'network' }); msg.textContent = 'Nu am putut trimite acum. Încearcă din nou în câteva secunde.'; msg.className = 'form-msg err'; })
-        .finally(function () { btn.disabled = false; });
+      }).then(function (r) {
+        if (r.ok) { done(); return; }
+        return r.json().catch(function () { return {}; }).then(function (j) { var e = new Error('HTTP ' + r.status); e.body = j; throw e; });
+      }).catch(function (e) {
+          var txt = String((e && e.body && (e.body.message || e.body.hint)) || (e && e.message) || '');
+          var reason = /prea multe|rate|429/i.test(txt) ? 'rate_limited' : /email/i.test(txt) && /400/.test(String(e && e.message)) ? 'invalid_email' : 'network';
+          T('waitlist_failed', { plan: plan, reason: reason });
+          f.classList.add('is-error'); msg.className = 'form-msg err';
+          msg.textContent = reason === 'rate_limited' ? 'Prea multe înscrieri de pe această conexiune. Încearcă din nou peste câteva minute.'
+            : reason === 'invalid_email' ? 'Adresa de email nu pare validă. Verific-o și încearcă din nou.'
+            : 'Nu am putut trimite acum. Încearcă din nou în câteva secunde.';
+        })
+        .finally(function () { busy = false; f.classList.remove('is-busy'); btn.removeAttribute('aria-busy'); sync(); });
     });
   });
 
