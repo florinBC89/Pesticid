@@ -18,7 +18,9 @@ const ASSETS = (Deno.env.get("EMAIL_ASSETS_URL") ?? "https://rpwmfhlmdscjpcrqqmy
 const SITE = (Deno.env.get("SITE_URL") ?? "https://pesticid.info").replace(/\/$/, "");
 const FONT = "Arial,Helvetica,sans-serif";
 // numele fișierelor din bucket-ul Storage „emails” diferă de cele din șablon (urcate manual)
-const ASSET_MAP: Record<string, string> = { "logo.png": "Logo-Pesticid.png", "icon-date.png": "date.png", "linkedin.png": "Linkedin.png", "twitter.png": "Twitter.png", "calc.png": "calculator.png", "hero-camp.jpg": "Hero newsletter image.jpg", "hero-vie.jpg": "Second image from newsletter.jpg" };
+const ASSET_MAP: Record<string, string> = { "logo.png": "Logo-Pesticid.png", "icon-date.png": "date.png", "linkedin.png": "Linkedin.png", "twitter.png": "Twitter.png", "calc.png": "calculator.png", "hero-camp.jpg": "Hero newsletter image.jpg", "hero-vie.jpg": "Second image from newsletter.jpg",
+  // dark theme (afișate doar de clienții cu prefers-color-scheme: dark / Outlook data-ogsc)
+  "logo-white.png": "Logo-Pesticid-white.png", "twitter-white.png": "Twitter-white.png", "linkedin-white.png": "Linkedin-white.png", "footer-dark.jpg": "Footer-image-dark.jpg" };
 
 type Row = { id: number; email: string; plan: string; trimis_at: string | null };
 type Variant = Record<string, string | number | null> & { id: string; plan: string; rang_max: number | null; subject: string; bullets: string };
