@@ -33,6 +33,8 @@ const json = (status: number, body: unknown) => new Response(JSON.stringify(body
 const esc = (s: unknown) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
 const isUuid = (s: unknown) => typeof s === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
 const EMAIL_RE = /^[^@\s]+@[^@\s.]+(\.[^@\s.]+)*\.[a-z]{2,}$/i;
+// textul care începe cu = + - @ (sau tab/CR) ar fi interpretat de Google Sheets ca formulă → îl forțăm text cu apostrof
+const celula = (v: unknown) => { const t = String(v ?? ""); return /^[=+\-@\t\r]/.test(t) ? "'" + t : t; };
 const fmtMB = (b: number) => (b / MB).toLocaleString("ro-RO", { maximumFractionDigits: 1 }) + " MB";
 
 async function rest(path: string, init: RequestInit = {}) {
@@ -181,13 +183,13 @@ ${linkuri.length ? `<h3 style="margin:20px 0 8px;font-size:16px">Fișiere atașa
       const token = await rpc("config_secret", { p_name: "gsheet_token" });
       const r = await fetch(url, {
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, redirect: "follow",
-        body: JSON.stringify({
-          token, nr: `#${raport.nr}`, data: new Date(raport.creat_at).toLocaleString("ro-RO", { timeZone: "Europe/Bucharest" }),
+        body: JSON.stringify(Object.fromEntries(Object.entries({
+          nr: `#${raport.nr}`, data: new Date(raport.creat_at).toLocaleString("ro-RO", { timeZone: "Europe/Bucharest" }),
           subiect: SUBIECTE[subiect], status: "Nou", email, descriere,
           fisiere: linkuri.length, linkuri: linkuri.map((f) => f.url).join("\n"),
           pagina: context.pagina ?? "", dispozitiv: context.dispozitiv ?? "", ecran: context.ecran ?? "",
           produs: context.produs ?? "", cultura: context.cultura ?? "", tinta: context.tinta ?? "", doza: context.doza ?? "",
-        }),
+        }).map(([k, v]) => [k, typeof v === "string" ? celula(v) : v]).concat([["token", token]]))),
       });
       const t = await r.text();
       if (!r.ok || !/^ok/.test(t.trim())) throw new Error(`Sheet ${r.status}: ${t.slice(0, 120)}`);

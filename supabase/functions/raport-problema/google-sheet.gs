@@ -1,7 +1,9 @@
+/** @OnlyCurrentDoc */
 /**
  * Pesticid — rapoartele din „Raportează o problemă” → Google Sheet.
  * Se lipește în Google Sheet: Extensions (Extensii) → Apps Script, apoi Deploy → New deployment → Web app
  * (Execute as: Me · Who has access: Anyone). URL-ul web app-ului se salvează în Vault ca `gsheet_url`.
+ * @OnlyCurrentDoc (prima linie): scriptul are acces DOAR la acest Sheet, nu la restul fișierelor din Drive.
  * TOKEN trebuie să fie identic cu secretul `gsheet_token` din Vault (nu îl pune în Git).
  */
 const TOKEN = 'LIPESTE_AICI_TOKENUL';
@@ -27,6 +29,9 @@ function foaie_() {
   return sh;
 }
 
+// textul care începe cu = + - @ ar fi interpretat ca formulă → îl forțăm text
+function celula_(v) { const t = v == null ? '' : String(v); return /^[=+\-@\t\r]/.test(t) ? "'" + t : t; }
+
 function doPost(e) {
   let d;
   try { d = JSON.parse(e.postData.contents); } catch (err) { return ContentService.createTextOutput('bad json'); }
@@ -35,7 +40,7 @@ function doPost(e) {
   lock.waitLock(10000);
   try {
     const sh = foaie_();
-    sh.appendRow([d.nr, d.data, d.subiect, d.status || 'Nou', d.email, d.descriere, d.fisiere, d.linkuri, d.pagina, d.dispozitiv, d.ecran, d.produs, d.cultura, d.tinta, d.doza]);
+    sh.appendRow([d.nr, d.data, d.subiect, d.status || 'Nou', d.email, d.descriere, Number(d.fisiere) || 0, d.linkuri, d.pagina, d.dispozitiv, d.ecran, d.produs, d.cultura, d.tinta, d.doza].map(function (v, i) { return i === 6 ? v : celula_(v); }));
     sh.getRange(sh.getLastRow(), 6, 1, 3).setWrap(true);
   } finally { lock.releaseLock(); }
   return ContentService.createTextOutput('ok');
