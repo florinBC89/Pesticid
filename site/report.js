@@ -5,7 +5,7 @@
 (function () {
   var form = document.getElementById('rep');
   if (!form) return;
-  var cfg = document.querySelector('meta[name="pesticid-supabase"]');
+  var cfg = document.querySelector('meta[name="pesticid-raport"]') || document.querySelector('meta[name="pesticid-supabase"]');
   var SB = cfg && cfg.getAttribute('data-url'), KEY = cfg && cfg.getAttribute('data-key');
   var FN = SB ? SB + '/functions/v1/raport-problema' : '';
   var MB = 1024 * 1024, MAX_FILES = 5, MAX_TOTAL = 50 * MB, MAX_IMG = 10 * MB, MAX_VID = 20 * MB, MAX_DESC = 2000, VIZIBILE = 3;
