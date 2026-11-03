@@ -8,7 +8,7 @@
   var cfg = document.querySelector('meta[name="pesticid-raport"]') || document.querySelector('meta[name="pesticid-supabase"]');
   var SB = cfg && cfg.getAttribute('data-url'), KEY = cfg && cfg.getAttribute('data-key');
   var FN = SB ? SB + '/functions/v1/raport-problema' : '';
-  var MB = 1024 * 1024, MAX_FILES = 5, MAX_TOTAL = 50 * MB, MAX_IMG = 10 * MB, MAX_VID = 20 * MB, MAX_DESC = 2000, VIZIBILE = 3;
+  var MIN_DESC = 10, MB = 1024 * 1024, MAX_FILES = 5, MAX_TOTAL = 50 * MB, MAX_IMG = 10 * MB, MAX_VID = 20 * MB, MAX_DESC = 2000, VIZIBILE = 3;
   var EXT = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', mp4: 'video/mp4', mov: 'video/quicktime' };
   var TIP = { 'image/jpeg': 'img', 'image/png': 'img', 'video/mp4': 'vid', 'video/quicktime': 'vid' };
   var EMAIL_RE = /^[^@\s]+@[^@\s.]+(\.[^@\s.]+)*\.[a-z]{2,}$/i;
@@ -67,7 +67,8 @@
     var n = desc.value.length, peste = n > MAX_DESC;
     area.classList.toggle('is-bad', peste);
     hint.classList.toggle('is-bad', peste); hint.classList.toggle('is-typing', !peste && n > 0);
-    hint.textContent = n ? n + '/' + MAX_DESC + ' de caractere' : 'Maxim ' + MAX_DESC + ' de caractere';
+    var util = desc.value.trim().length;
+    hint.textContent = !n ? 'Minim ' + MIN_DESC + ', maxim ' + MAX_DESC + ' de caractere' : (util < MIN_DESC ? n + '/' + MAX_DESC + ' de caractere · minim ' + MIN_DESC : n + '/' + MAX_DESC + ' de caractere');
   }
   desc.addEventListener('input', function () { msg.textContent = ''; syncDesc(); sync(); });
 
@@ -161,7 +162,7 @@
   /* ---------- „Trimite”: activ doar cu email valid, subiect, descriere și fără fișiere în curs de urcare ---------- */
   function gata() {
     var n = desc.value.trim().length;
-    return EMAIL_RE.test(email.value.trim()) && !!subiect && n > 0 && desc.value.length <= MAX_DESC && !files.some(function (f) { return f.st === 'up' || f.st === 'new'; }) && !busy;
+    return EMAIL_RE.test(email.value.trim()) && !!subiect && n >= MIN_DESC && desc.value.length <= MAX_DESC && !files.some(function (f) { return f.st === 'up' || f.st === 'new'; }) && !busy;
   }
   /* butonul arată inactiv până e totul completat, dar rămâne apăsabil: la click spunem exact ce lipsește */
   function sync() { var ok = gata(); go.disabled = busy; go.classList.toggle('ghost', !ok); go.setAttribute('aria-disabled', ok ? 'false' : 'true'); }
@@ -170,6 +171,7 @@
     if (!EMAIL_RE.test(v)) { emailF.classList.add('is-bad'); lipsa.push(v ? 'un email valid' : 'emailul'); primul = primul || email; }
     if (!subiect) { subF.classList.add('is-bad'); lipsa.push('subiectul'); primul = primul || subF; }
     if (!desc.value.trim()) { area.classList.add('is-bad'); hint.classList.add('is-bad'); hint.textContent = 'Descrierea e obligatorie'; lipsa.push('descrierea'); primul = primul || desc; }
+    else if (desc.value.trim().length < MIN_DESC) { area.classList.add('is-bad'); hint.classList.add('is-bad'); lipsa.push('o descriere de cel puțin ' + MIN_DESC + ' caractere'); primul = primul || desc; }
     else if (desc.value.length > MAX_DESC) { lipsa.push('o descriere de maxim ' + MAX_DESC + ' de caractere'); primul = primul || desc; }
     var t = lipsa.length ? 'Completează ' + lipsa.join(', ').replace(/, ([^,]*)$/, ' și $1') + '.' : '';
     if (files.some(function (f) { return f.st === 'up' || f.st === 'new'; })) t = (t ? t + ' ' : '') + 'Așteaptă să se termine încărcarea fișierelor.';

@@ -35,6 +35,21 @@ const isUuid = (s: unknown) => typeof s === "string" && /^[0-9a-f]{8}-[0-9a-f]{4
 const EMAIL_RE = /^[^@\s]+@[^@\s.]+(\.[^@\s.]+)*\.[a-z]{2,}$/i;
 // textul care începe cu = + - @ (sau tab/CR) ar fi interpretat de Google Sheets ca formulă → îl forțăm text cu apostrof
 const celula = (v: unknown) => { const t = String(v ?? ""); return /^[=+\-@\t\r]/.test(t) ? "'" + t : t; };
+/* text liber venit din browser: fără caractere de control / invizibile / de inversare a direcției (pot ascunde linkuri
+   sau extensii de fișier), fără zeci de rânduri goale; NFC ca diacriticele să arate la fel peste tot */
+const interval = (r: number[][]) => r.map(([a, b]) => String.fromCharCode(a) + "-" + String.fromCharCode(b)).join("");
+const INVIZIBILE = new RegExp("[" + interval([[0x200b, 0x200f], [0x202a, 0x202e], [0x2060, 0x2069], [0x2028, 0x2029], [0xfeff, 0xfeff], [0xad, 0xad]]) + "]", "g");
+const CONTROL = new RegExp("[" + interval([[0x00, 0x08], [0x0b, 0x0c], [0x0e, 0x1f], [0x7f, 0x9f]]) + "]", "g");
+const SPATIU_LA_CAPAT = new RegExp("[ " + String.fromCharCode(0xa0) + "]+\n", "g");
+function curata(v: unknown, max: number, multiline = true) {
+  let t = String(v ?? "").normalize("NFC").replace(INVIZIBILE, "").replace(/\r\n?/g, "\n").replace(CONTROL, "");
+  t = multiline ? t.replace(/\t/g, " ").replace(SPATIU_LA_CAPAT, "\n").replace(/\n{3,}/g, "\n\n") : t.replace(/\s+/g, " ");
+  return t.trim().slice(0, max);
+}
+/* linkurile din text nu mai sunt clickabile în Gmail / Sheets: https://site.com → hxxps://site[.]com */
+const dezarmeaza = (t: string) => t
+  .replace(/\b(h)(ttps?:\/\/)/gi, (_m, h, rest) => `${h}xx${rest.slice(2)}`)
+  .replace(/\b((?:[a-z0-9-]+\.)+[a-z]{2,24})\b/gi, (m) => m.replace(/\./g, "[.]"));
 const fmtMB = (b: number) => (b / MB).toLocaleString("ro-RO", { maximumFractionDigits: 1 }) + " MB";
 
 async function rest(path: string, init: RequestInit = {}) {
@@ -63,8 +78,9 @@ function tipDin(nume: string, tip: string) {
   const ext = (nume.split(".").pop() ?? "").toLowerCase();
   return EXT[ext] ?? "";
 }
+const DIACRITICE = new RegExp("[" + interval([[0x0300, 0x036f]]) + "]", "g");
 function numeSigur(nume: string) {
-  const base = nume.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9.]+/g, "-").replace(/^-+|-+$/g, "");
+  const base = nume.normalize("NFD").replace(DIACRITICE, "").toLowerCase().replace(/[^a-z0-9.]+/g, "-").replace(/^-+|-+$/g, "");
   return (base || "fisier").slice(-60);
 }
 
@@ -95,7 +111,7 @@ async function stergeObiecte(paths: string[]) {
 /* ---------------------------------------------------------------- acțiuni */
 async function actUrl(req: Request, b: Record<string, unknown>) {
   if (!isUuid(b.draft)) return json(400, { error: "draft" });
-  const nume = String(b.nume ?? "").slice(0, 200), marime = Number(b.marime) || 0;
+  const nume = curata(b.nume, 200, false) || "fisier", marime = Number(b.marime) || 0;
   const tip = tipDin(nume, String(b.tip ?? ""));
   if (!tip) return json(400, { error: "tip", mesaj: "Acceptăm doar poze JPG, PNG și video MP4, MOV." });
   const max = TIPURI[tip] === "img" ? MAX_IMG : MAX_VID;
@@ -124,10 +140,11 @@ async function actSterge(b: Record<string, unknown>) {
 
 async function actTrimite(req: Request, b: Record<string, unknown>) {
   if (b.hp) return json(200, { ok: true, nr: "000000" }); // câmpul ascuns e completat doar de roboți
-  const email = String(b.email ?? "").trim(), subiect = String(b.subiect ?? ""), descriere = String(b.descriere ?? "").trim();
+  const email = curata(b.email, 254, false), subiect = String(b.subiect ?? ""), descriere = curata(b.descriere, 2000);
   if (!EMAIL_RE.test(email) || email.length > 254) return json(400, { error: "email", mesaj: "Adresa de email nu pare validă." });
   if (!SUBIECTE[subiect]) return json(400, { error: "subiect", mesaj: "Alege un subiect." });
-  if (!descriere || descriere.length > 2000) return json(400, { error: "descriere", mesaj: "Descrierea trebuie să aibă între 1 și 2000 de caractere." });
+  if (descriere.length < 10) return json(400, { error: "descriere", mesaj: "Descrie problema în cel puțin 10 caractere." });
+  if (String(b.descriere ?? "").length > 2000) return json(400, { error: "descriere", mesaj: "Descrierea poate avea maxim 2000 de caractere." });
   const ip = await ipHash(req);
   if (await count(`rapoarte_probleme?ip_hash=eq.${ip}&creat_at=gte.${since(60)}&select=id`) >= 5) return json(429, { error: "rate", mesaj: "Ai trimis deja mai multe rapoarte. Încearcă din nou peste o oră." });
   if (await count(`rapoarte_probleme?creat_at=gte.${since(60)}&select=id`) >= 60) return json(429, { error: "rate", mesaj: "Primim multe rapoarte acum. Încearcă din nou peste câteva minute." });
@@ -151,7 +168,7 @@ async function actTrimite(req: Request, b: Record<string, unknown>) {
 
   const ctx = (b.context && typeof b.context === "object" ? b.context : {}) as Record<string, unknown>;
   const context: Record<string, string> = {};
-  for (const k of ["pagina", "dispozitiv", "ecran", "limba", "tab", "produs", "cultura", "tinta", "doza", "suprafata", "apa"]) if (ctx[k] != null && ctx[k] !== "") context[k] = String(ctx[k]).slice(0, 300);
+  for (const k of ["pagina", "dispozitiv", "ecran", "limba", "tab", "produs", "cultura", "tinta", "doza", "suprafata", "apa"]) if (ctx[k] != null && ctx[k] !== "") { const v = curata(ctx[k], 300, false); if (v) context[k] = v; }
   const [raport] = await rest("rapoarte_probleme", { method: "POST", body: JSON.stringify({ email, subiect, descriere, context, ip_hash: ip, ph_id: b.ph_id ? String(b.ph_id).slice(0, 80) : null }) });
   if (fisiere.length) await rest(`rapoarte_fisiere?path=in.(${fisiere.map((f) => `"${f.path}"`).join(",")})`, { method: "PATCH", body: JSON.stringify({ raport_id: raport.id }) });
   const linkuri = await Promise.all(fisiere.map(async (f) => ({ ...f, url: await semneaza(f.path) })));
@@ -161,16 +178,16 @@ async function actTrimite(req: Request, b: Record<string, unknown>) {
   // 1. emailul către echipă (Reply = răspunzi direct omului)
   try {
     if (!RESEND_KEY) throw new Error("RESEND_API_KEY lipsă");
-    const randuri = [["Nr. raport", `#${raport.nr}`], ["Subiect", SUBIECTE[subiect]], ["Email", email], ...Object.entries(context).map(([k, v]) => [k[0].toUpperCase() + k.slice(1), v])];
+    const randuri = [["Nr. raport", `#${raport.nr}`], ["Subiect", SUBIECTE[subiect]], ["Email", email], ...Object.entries(context).map(([k, v]) => [k[0].toUpperCase() + k.slice(1), k === "pagina" ? v : dezarmeaza(v)])];
     const html = `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:22px;color:#111;max-width:640px">
 <h2 style="margin:0 0 12px;font-size:20px">Problemă raportată · ${esc(SUBIECTE[subiect])}</h2>
-<div style="white-space:pre-wrap;background:#f0f4fe;border-radius:12px;padding:14px 16px;margin-bottom:16px">${esc(descriere)}</div>
+<div style="white-space:pre-wrap;background:#f0f4fe;border-radius:12px;padding:14px 16px;margin-bottom:16px">${esc(dezarmeaza(descriere))}</div>
 <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;font-size:14px">${randuri.map(([k, v]) => `<tr><td style="padding:6px 12px 6px 0;color:#5a6478;white-space:nowrap;vertical-align:top">${esc(k)}</td><td style="padding:6px 0;vertical-align:top">${esc(v)}</td></tr>`).join("")}</table>
 ${linkuri.length ? `<h3 style="margin:20px 0 8px;font-size:16px">Fișiere atașate (${linkuri.length})</h3>${linkuri.map((f) => `<div style="margin:0 0 10px">${TIPURI[f.tip] === "img" && f.url ? `<a href="${esc(f.url)}"><img src="${esc(f.url)}" width="160" alt="" style="display:block;max-width:160px;border-radius:8px;margin-bottom:4px"></a>` : ""}<a href="${esc(f.url)}" style="color:#111">${esc(f.nume)}</a> <span style="color:#5a6478">· ${fmtMB(f.marime)}</span></div>`).join("")}<p style="color:#5a6478;font-size:12px">Linkurile sunt private și funcționează ${LINK_ZILE} de zile; apoi fișierele se șterg automat.</p>` : ""}
 </div>`;
     const r = await fetch("https://api.resend.com/emails", {
       method: "POST", headers: { Authorization: `Bearer ${RESEND_KEY}`, "Content-Type": "application/json", "Idempotency-Key": `raport/${raport.id}` },
-      body: JSON.stringify({ from: FROM, to: [TO], reply_to: email, subject: `[Pesticid #${raport.nr}] ${SUBIECTE[subiect]}: ${descriere.replace(/\s+/g, " ").slice(0, 60)}`, html, tags: [{ name: "tip", value: "raport-problema" }, { name: "subiect", value: subiect }] }),
+      body: JSON.stringify({ from: FROM, to: [TO], reply_to: email, subject: `[Pesticid #${raport.nr}] ${SUBIECTE[subiect]}: ${dezarmeaza(descriere).replace(/\s+/g, " ").slice(0, 60)}`, html, tags: [{ name: "tip", value: "raport-problema" }, { name: "subiect", value: subiect }] }),
     });
     if (!r.ok) throw new Error(`Resend ${r.status}: ${(await r.text()).slice(0, 200)}`);
     upd.trimis_at = new Date().toISOString();
@@ -185,7 +202,7 @@ ${linkuri.length ? `<h3 style="margin:20px 0 8px;font-size:16px">Fișiere atașa
         method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, redirect: "follow",
         body: JSON.stringify(Object.fromEntries(Object.entries({
           nr: `#${raport.nr}`, data: new Date(raport.creat_at).toLocaleString("ro-RO", { timeZone: "Europe/Bucharest" }),
-          subiect: SUBIECTE[subiect], status: "Nou", email, descriere,
+          subiect: SUBIECTE[subiect], status: "Nou", email, descriere: dezarmeaza(descriere),
           fisiere: linkuri.length, linkuri: linkuri.map((f) => f.url).join("\n"),
           pagina: context.pagina ?? "", dispozitiv: context.dispozitiv ?? "", ecran: context.ecran ?? "",
           produs: context.produs ?? "", cultura: context.cultura ?? "", tinta: context.tinta ?? "", doza: context.doza ?? "",
