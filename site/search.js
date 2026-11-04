@@ -216,8 +216,11 @@
   document.addEventListener('mousedown', function (ev) { if (!dd.hidden && !bar.contains(ev.target)) closeDD(); });
 
   /* ---------- butonul Caută ---------- */
-  /* „Caută” devine activ doar cu toate cele trei câmpuri alese; alegerea unei valori afișează oricum fișa automat */
-  function goState(q) { return !!(sel.c && sel.t && sel.p); }
+  /* „Caută” devine activ doar cu toate cele trei câmpuri alese; alegerea unei valori afișează oricum fișa automat,
+     așa că butonul rămâne vizibil dar inactiv cât timp rezultatul afișat corespunde exact alegerilor */
+  var shownKey = '';
+  function selKey() { return [sel.c, sel.t, sel.p].join('|'); }
+  function goState(q) { return !!(sel.c && sel.t && sel.p) && !(shownKey === selKey() && !res.hidden); }
   function updateGo() {
     var q = active && !mobile() ? F[active].input.value : '';
     var on = goState(q); go.classList.toggle('is-on', on); go.disabled = !on;
@@ -280,9 +283,9 @@
   }
   function renderRes(scroll) {
     var key = (sel.p ? 'p' : '') + (sel.c ? 'c' : '') + (sel.t ? 't' : '');
-    if (!key || !D) { res.hidden = true; res.innerHTML = ''; return; }
+    if (!key || !D) { res.hidden = true; res.innerHTML = ''; shownKey = ''; updateGo(); return; }
     res.innerHTML = { c: cardC, t: cardT, p: cardP, ct: listCT, pc: listPC, pt: listPT, pct: cardPCT }[key]();
-    res.hidden = false;
+    res.hidden = false; shownKey = selKey(); updateGo();
     var rs0 = ctxRecs(); T(key === 'pct' ? 'search_calc_shown' : 'search_result_shown', { result_type: key, cultura_id: sel.c, tinta_id: sel.t, produs_id: sel.p, omologari: rs0.length, produse: distinct(rs0, 0).length, culturi: distinct(rs0, 1).length, probleme: distinct(rs0, 2).length });
     if (key === 'pct') initForm();
     if (scroll && mobile()) setTimeout(function () { res.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
