@@ -713,7 +713,7 @@ b, strong { font-weight: 600; color: var(--fg); }
 
 /* selector pe tot ecranul (mobil · Explorare B, 2108:22713) */
 .spick { position: fixed; inset: 0; z-index: 120; background: var(--surface); display: flex; flex-direction: column; padding: max(14px, env(safe-area-inset-top, 0px)) 16px max(16px, env(safe-area-inset-bottom, 0px)); text-align: left; }
-.spick .ph { display: flex; align-items: center; gap: 10px; padding: 8px 0 12px; }
+.spick .ph { display: flex; align-items: center; gap: 10px; padding: 8px 0 2px; } /* câmpul și recomandările urcă 10px spre titlu */
 .spick .back { width: 36px; height: 36px; border: 0; background: none; display: grid; place-items: center; cursor: pointer; margin-left: -8px; color: var(--fg); padding: 0; }
 .spick .back svg { width: 24px; height: 24px; }
 .spick .ph h4 { font-size: 20px; font-weight: 600; line-height: 1.2; }
