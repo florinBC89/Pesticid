@@ -13,7 +13,9 @@
   function showHero() { if (heroBg) heroBg.classList.add('is-in'); }
   if (heroBg) {
     heroBg.addEventListener('animationend', function () { heroBg.classList.add('is-done'); updateParallax(); });
-    var src = heroBg.getAttribute('data-src');
+    var src = heroBg.getAttribute('data-src'), src2x = heroBg.getAttribute('data-src-2x');
+    /* varianta de 3840px doar unde chiar se vede diferența: ecrane retina sau foarte late (peste ~2200 de pixeli reali) */
+    if (src2x && (window.innerWidth * (window.devicePixelRatio || 1)) > 2200) src = src2x;
     if (src) {
       var img = new Image();
       img.onload = function () { heroBg.style.backgroundImage = 'url("' + src + '")'; requestAnimationFrame(showHero); };
