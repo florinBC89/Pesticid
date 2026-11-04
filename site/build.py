@@ -25,6 +25,23 @@ index = f'''<!doctype html>
 <title>Pesticid — Calculator de doză pentru pesticide</title>
 <meta name="description" content="{desc}">
 <meta name="theme-color" content="#cedbf6">
+<link rel="canonical" href="https://pesticid.info/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Pesticid.info">
+<meta property="og:locale" content="ro_RO">
+<meta property="og:url" content="https://pesticid.info/">
+<meta property="og:title" content="Pesticid.info — Îți calculează doza">
+<meta property="og:description" content="{desc}">
+<meta property="og:image" content="https://pesticid.info/assets/og-image.jpg">
+<meta property="og:image:secure_url" content="https://pesticid.info/assets/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Pesticid.info — calculatorul de doză pentru pesticide">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pesticid.info — Îți calculează doza">
+<meta name="twitter:description" content="{desc}">
+<meta name="twitter:image" content="https://pesticid.info/assets/og-image.jpg">
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
