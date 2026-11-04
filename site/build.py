@@ -25,6 +25,11 @@ index = f'''<!doctype html>
 <title>Pesticid — Calculator de doză pentru pesticide</title>
 <meta name="description" content="{desc}">
 <meta name="theme-color" content="#cedbf6">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 {sb}
 {ph}
 {fonts}

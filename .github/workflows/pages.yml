@@ -28,7 +28,7 @@ jobs:
       - name: Pregătește fișierele publice
         run: |
           mkdir -p public
-          cp site/index.html site/styles.css site/analytics.js site/main.js site/calc.js site/search.js site/report.js public/
+          cp site/index.html site/styles.css site/analytics.js site/main.js site/calc.js site/search.js site/report.js site/favicon.ico site/site.webmanifest public/
           cp -r site/assets public/assets
           touch public/.nojekyll
       - uses: actions/configure-pages@v5
