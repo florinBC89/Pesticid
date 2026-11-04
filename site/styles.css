@@ -54,29 +54,9 @@ b, strong { font-weight: 600; color: var(--fg); }
   padding-right: var(--gutter-r);
 }
 
-/* ---------- logo ---------- */
-.logo {
-  display: inline-flex;
-  align-items: center;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  font-size: 28px;
-  color: var(--fg);
-  white-space: nowrap;
-}
-.logo .dots {
-  display: inline-grid;
-  grid-auto-rows: 0.18em;
-  width: 0.18em;
-  margin: 0 0.06em;
-  transform: translateY(0.02em);
-}
-.logo .dots i { display: block; }
-.logo .dots i:nth-child(1) { background: var(--lime); }
-.logo .dots i:nth-child(2) { background: var(--teal); }
-.logo .dots i:nth-child(3) { background: var(--orange); }
-.logo .dots i:nth-child(4) { background: var(--pink); }
+/* ---------- logo (Pesticid.info, SVG) ---------- */
+.logo { display: inline-flex; align-items: center; line-height: 0; }
+.logo img { display: block; width: 180px; height: auto; }
 
 /* ---------- buton ---------- */
 .btn {
@@ -606,11 +586,7 @@ b, strong { font-weight: 600; color: var(--fg); }
   display: flex;
   justify-content: center;
 }
-.wordmark .logo {
-  font-size: clamp(64px, 23.4vw, 420px);
-  letter-spacing: -0.05em;
-  line-height: 0.9;
-}
+.wordmark img { display: block; width: 100%; max-width: 1652px; height: auto; padding-inline: max(var(--gutter), 3.75vw); box-sizing: border-box; }
 
 /* ---------- animații la scroll ---------- */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
@@ -751,6 +727,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 
 /* ---------- tabletă ---------- */
 @media (max-width: 1100px) {
+  .logo img { width: 160px; }
   .nav .wrap { height: 96px; padding-left: max(28px, env(safe-area-inset-left, 0px)); padding-right: max(28px, env(safe-area-inset-right, 0px)); }
   :root { --nav-h: 96px; --nav-fade: 24px; }
   .hero { padding-top: calc(190px + var(--promo-h)); }
@@ -808,7 +785,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   .nav .wrap { height: 78px; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
   :root { --nav-h: 78px; --nav-btn-h: 52px; --nav-fade: 10px; }
   .nav .btn { height: 52px; min-width: 136px; font-size: 15px; }
-  .logo { font-size: 24px; }
+  .logo img { width: 132px; }
   .hero { min-height: 0; padding-top: calc(140px + var(--promo-h)); padding-bottom: 56px; }
   /* pe mobil fotografia urcă 200px și, când hero-ul se lungește cu rezultate, rămâne ancorată jos cu înălțime plafonată,
      ca să nu fie mărită de 6–7 ori (sursa are 1920×1251); deasupra ei continuă fundalul, în care fotografia se estompează */
