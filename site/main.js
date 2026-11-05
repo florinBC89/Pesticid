@@ -143,7 +143,7 @@
     var T = function (n, p) { if (window.track) window.track(n, p); }, formStarted = false;
     /* „Rezerv loc” e activ doar când în câmp e o adresă de email validă */
     var sync = function () { btn.disabled = busy || !EMAIL_RE.test((input.value || '').trim()); };
-    input.addEventListener('focus', function () { if (formStarted) return; formStarted = true; T('waitlist_form_started', { plan: plan }); });
+    input.addEventListener('focus', function () { if (window.antibot) window.antibot.pregateste(); if (formStarted) return; formStarted = true; T('waitlist_form_started', { plan: plan }); });
     input.addEventListener('input', function () { f.classList.remove('is-error'); msg.textContent = ''; msg.className = 'form-msg'; sync(); });
     input.addEventListener('change', sync);
     setTimeout(sync, 300); /* completarea automată a browserului nu declanșează mereu „input” */
@@ -159,19 +159,25 @@
       };
       if (!sbUrl || !sbKey) { done(); return; }
       busy = true; f.classList.add('is-busy'); sync(); btn.setAttribute('aria-busy', 'true');
-      fetch(sbUrl + '/rest/v1/rpc/rezerva_loc', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': sbKey, 'Authorization': 'Bearer ' + sbKey },
-        body: JSON.stringify({ p_email: email, p_plan: plan, p_sursa: 'site:acces-timpuriu', p_ph_id: (window.track && window.track.distinctId()) || null })
+      /* verificarea anti-robot (Turnstile) → Edge Function `rezerva` (verifică tokenul, apoi salvează înscrierea) */
+      var AB = window.antibot;
+      (AB ? AB.token(f, 'rezerva') : Promise.resolve(null)).catch(function (e) { e.antibot = true; throw e; }).then(function (tk) {
+        return fetch(sbUrl + '/functions/v1/rezerva', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': sbKey, 'Authorization': 'Bearer ' + sbKey },
+          body: JSON.stringify({ email: email, plan: plan, sursa: 'site:acces-timpuriu', ph_id: (window.track && window.track.distinctId()) || null, token: tk })
+        });
       }).then(function (r) {
         if (r.ok) { done(); return; }
         return r.json().catch(function () { return {}; }).then(function (j) { var e = new Error('HTTP ' + r.status); e.body = j; throw e; });
       }).catch(function (e) {
-          var txt = String((e && e.body && (e.body.message || e.body.hint)) || (e && e.message) || '');
-          var reason = /prea multe|rate|429/i.test(txt) ? 'rate_limited' : /email/i.test(txt) && /400/.test(String(e && e.message)) ? 'invalid_email' : 'network';
+          var txt = String((e && e.body && (e.body.error || e.body.message || e.body.hint)) || (e && e.message) || '');
+          var reason = e && e.antibot ? 'antibot' : /antibot/.test(txt) ? 'antibot_server' : /prea multe|rate|429/i.test(txt) ? 'rate_limited' : /email/i.test(txt) && /400/.test(String(e && e.message)) ? 'invalid_email' : 'network';
           T('waitlist_failed', { plan: plan, reason: reason });
           f.classList.add('is-error'); msg.className = 'form-msg err';
-          msg.textContent = reason === 'rate_limited' ? 'Prea multe înscrieri de pe această conexiune. Încearcă din nou peste câteva minute.'
+          msg.textContent = reason === 'antibot' ? window.antibot.mesaj(e)
+            : reason === 'antibot_server' ? 'Verificarea anti-robot nu a trecut. Reîncarcă pagina și încearcă din nou.'
+            : reason === 'rate_limited' ? 'Prea multe înscrieri de pe această conexiune. Încearcă din nou peste câteva minute.'
             : reason === 'invalid_email' ? 'Adresa de email nu pare validă. Verific-o și încearcă din nou.'
             : 'Nu am putut trimite acum. Încearcă din nou în câteva secunde.';
         })

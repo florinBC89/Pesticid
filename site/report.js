@@ -27,7 +27,7 @@
   };
   var draft = uuid(), subiect = '', files = [], extins = false, busy = false, started = false;
 
-  function start() { if (started) return; started = true; T('report_form_started'); }
+  function start() { if (window.antibot) window.antibot.pregateste(); if (started) return; started = true; T('report_form_started'); }
   [email, desc].forEach(function (el) { el.addEventListener('focus', start); });
 
   /* ---------- email (câmp ca în calculator, cu × pentru ștergere) ---------- */
@@ -207,12 +207,14 @@
     };
     if (!FN) { fin('DEMO00'); return; }
     busy = true; form.classList.add('is-busy'); msg.textContent = ''; sync(); go.querySelector('span').textContent = 'Se trimite…';
-    fetch(FN, { method: 'POST', headers: hdr(), body: JSON.stringify(body) })
+    var AB = window.antibot;
+    (AB ? AB.token(form, 'raport') : Promise.resolve(null)).catch(function (e) { e.code = 'antibot'; e.mesajRo = AB.mesaj(e); throw e; })
+      .then(function (tk) { body.token = tk; return fetch(FN, { method: 'POST', headers: hdr(), body: JSON.stringify(body) }); })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var e = eroare(j.mesaj || 'Nu am putut trimite raportul. Încearcă din nou.'); e.code = j.error || r.status; throw e; } return j; }); })
       .then(function (j) { fin(j.nr); })
       .catch(function (e) {
         T('report_failed', { reason: String(e.code || 'network') });
-        msg.textContent = ro(e, 'Nu am putut trimite raportul. Verifică internetul și încearcă din nou.');
+        msg.textContent = e.mesajRo || ro(e, 'Nu am putut trimite raportul. Verifică internetul și încearcă din nou.');
       })
       .finally(function () { busy = false; form.classList.remove('is-busy'); go.querySelector('span').textContent = 'Trimite'; sync(); });
   });

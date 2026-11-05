@@ -2,17 +2,18 @@
 // Acțiuni (POST, JSON):
 //   { action: "url", draft, nume, tip, marime }        → link semnat de upload în bucket-ul privat `rapoarte` (browserul urcă direct)
 //   { action: "sterge", draft, path }                  → șterge un fișier atașat din ciornă (omul a apăsat ×)
-//   { action: "trimite", draft, email, subiect, descriere, fisiere: [path], context, ph_id, hp }
+//   { action: "trimite", draft, email, subiect, descriere, fisiere: [path], context, ph_id, hp, token }   (token = Turnstile, verificat la Cloudflare)
 //                                                      → verifică fișierele (mărime + primii octeți), salvează raportul,
 //                                                        trimite emailul (Resend) și adaugă un rând în Google Sheet
 //   { action: "curata" } + x-webhook-secret            → pg_cron zilnic: șterge ciornele abandonate (>1 zi) și fișierele rapoartelor (>90 zile)
 // Limite: max 5 fișiere, 50 MB în total; JPG/PNG max 10 MB, MP4/MOV max 20 MB.
-// Secrete: RESEND_API_KEY (deja setat); în Vault: webhook_secret, gsheet_url, gsheet_token (opțional; fără ele nu scrie în Sheet).
+// Secrete: RESEND_API_KEY (deja setat), TURNSTILE_SECRET; în Vault: webhook_secret, gsheet_url, gsheet_token (opțional; fără ele nu scrie în Sheet).
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 const SB = Deno.env.get("SUPABASE_URL")!;
 const KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const RESEND_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
+const TS_SECRET = Deno.env.get("TURNSTILE_SECRET") ?? "";
 const TO = Deno.env.get("RAPORT_TO") ?? "bostan.florin89@gmail.com";
 const FROM = Deno.env.get("RAPORT_FROM") ?? "Pesticid · Rapoarte <rapoarte@pesticid.info>";
 const BUCKET = "rapoarte";
@@ -138,6 +139,31 @@ async function actSterge(b: Record<string, unknown>) {
   return json(200, { ok: true });
 }
 
+const GAZDE = ["pesticid.info", "www.pesticid.info", "florinbc89.github.io"];
+
+/* verificarea tokenului la Cloudflare; dacă Cloudflare nu răspunde deloc (rar), lăsăm cererea să treacă —
+   limitele pe IP și pe minut rămân oricum active, iar un atacator nu poate provoca el căderea Cloudflare */
+async function turnstile(token: unknown, ip: string, action: string): Promise<{ ok: boolean; coduri: string[] }> {
+  if (!TS_SECRET) return { ok: false, coduri: ["secret-lipsa"] };
+  const t = typeof token === "string" ? token : "";
+  if (!t || t.length > 2048) return { ok: false, coduri: ["token-lipsa"] };
+  const f = new FormData();
+  f.append("secret", TS_SECRET); f.append("response", t); if (ip) f.append("remoteip", ip);
+  let j: Record<string, unknown>;
+  try {
+    const r = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body: f, signal: AbortSignal.timeout(8000) });
+    j = await r.json();
+  } catch (e) {
+    console.error("turnstile indisponibil", e);
+    return { ok: true, coduri: ["cloudflare-indisponibil"] };
+  }
+  const coduri = (j["error-codes"] as string[]) ?? [];
+  if (!j.success) return { ok: false, coduri };
+  if (j.hostname && !GAZDE.includes(String(j.hostname))) return { ok: false, coduri: ["gazda"] };
+  if (j.action && j.action !== action) return { ok: false, coduri: ["action"] };
+  return { ok: true, coduri };
+}
+
 async function actTrimite(req: Request, b: Record<string, unknown>) {
   if (b.hp) return json(200, { ok: true, nr: "000000" }); // câmpul ascuns e completat doar de roboți
   const email = curata(b.email, 254, false), subiect = String(b.subiect ?? ""), descriere = curata(b.descriere, 2000);
@@ -145,6 +171,11 @@ async function actTrimite(req: Request, b: Record<string, unknown>) {
   if (!SUBIECTE[subiect]) return json(400, { error: "subiect", mesaj: "Alege un subiect." });
   if (descriere.length < 10) return json(400, { error: "descriere", mesaj: "Descrie problema în cel puțin 10 caractere." });
   if (String(b.descriere ?? "").length > 2000) return json(400, { error: "descriere", mesaj: "Descrierea poate avea maxim 2000 de caractere." });
+  const v = await turnstile(b.token, (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim(), "raport");
+  if (!v.ok) {
+    if (v.coduri.includes("secret-lipsa")) console.error("TURNSTILE_SECRET lipsă");
+    return json(403, { error: "antibot", coduri: v.coduri, mesaj: "Verificarea anti-robot nu a trecut. Reîncarcă pagina și încearcă din nou." });
+  }
   const ip = await ipHash(req);
   if (await count(`rapoarte_probleme?ip_hash=eq.${ip}&creat_at=gte.${since(60)}&select=id`) >= 5) return json(429, { error: "rate", mesaj: "Ai trimis deja mai multe rapoarte. Încearcă din nou peste o oră." });
   if (await count(`rapoarte_probleme?creat_at=gte.${since(60)}&select=id`) >= 60) return json(429, { error: "rate", mesaj: "Primim multe rapoarte acum. Încearcă din nou peste câteva minute." });

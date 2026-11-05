@@ -14,6 +14,8 @@ phkey = env.split('VITE_POSTHOG_KEY=')[1].split()[0] if 'VITE_POSTHOG_KEY=' in e
 ph = f'<meta name="pesticid-posthog" data-key="{phkey}" data-host="https://eu.i.posthog.com">' if phkey else ''
 sbkey = (root / '..' / 'app' / '.env').read_text().split('VITE_SUPABASE_ANON_KEY=')[1].split()[0] if (root / '..' / 'app' / '.env').exists() else ''
 sb = f'<meta name="pesticid-supabase" data-url="https://rpwmfhlmdscjpcrqqmyf.supabase.co" data-key="{sbkey}">' if sbkey else ''
+# Turnstile (Cloudflare, anti-robot): cheia de site e publică; cheia secretă stă doar în Supabase (TURNSTILE_SECRET)
+ts = '<meta name="pesticid-turnstile" data-key="0x4AAAAAAF0iO2Yk4JMq4zBE">'
 # previzualizarea (Artifact) nu se poate conecta la Supabase: acolo formularele rămân în mod demonstrativ
 fonts = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">'
 desc = 'Calculator de doză pentru pesticide: alegi cultura, dăunătorul și suprafața și primești produsele omologate cu doza exactă.'
@@ -48,6 +50,7 @@ index = f'''<!doctype html>
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 {sb}
+{ts}
 {ph}
 {fonts}
 <link rel="stylesheet" href="styles.css">
@@ -55,6 +58,7 @@ index = f'''<!doctype html>
 <body>
 {body}
 <script src="analytics.js"></script>
+<script src="antibot.js"></script>
 <script src="main.js"></script>
 <script src="calc.js"></script>
 <script src="search.js"></script>

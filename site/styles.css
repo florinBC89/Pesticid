@@ -993,3 +993,8 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 .legal-note a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
 .reserve.is-done .legal-note { display: none; }
 .rep .legal-note { text-align: center; }
+
+/* Turnstile (anti-robot): cutia nu ocupă loc decât când Cloudflare cere o interacțiune */
+.ts-box { grid-column: 1 / -1; }
+.ts-box:not(.is-on) { position: absolute; width: 0; height: 0; overflow: hidden; }
+.ts-box.is-on { width: 100%; display: flex; justify-content: center; }
