@@ -82,7 +82,8 @@
           window.posthog.register(common);
           ready = true;
           queue.forEach(function (q) { window.posthog.capture(q[0], q[1]); }); queue = [];
-          if (consent == null) showBanner();
+          var adsLipsa = false; try { adsLipsa = !!document.querySelector('meta[name="pesticid-gads"]') && localStorage.getItem('pesticid.consent.ads') == null; } catch (e) {}
+          if (consent == null || adsLipsa) showBanner(); /* cine a acceptat înainte de reclame e întrebat o dată din nou */
         }
       });
     };
