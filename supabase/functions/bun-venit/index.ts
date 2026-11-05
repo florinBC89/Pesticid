@@ -22,7 +22,7 @@ const ASSET_MAP: Record<string, string> = { "logo.png": "Logo-Pesticid.png", "ic
   // dark theme (afișate doar de clienții cu prefers-color-scheme: dark / Outlook data-ogsc)
   "logo-white.png": "Logo-Pesticid-white.png", "twitter-white.png": "Twitter-white.png", "linkedin-white.png": "Linkedin-white.png", "footer-dark.jpg": "Footer-image-dark.jpg" };
 
-type Row = { id: number; email: string; plan: string; trimis_at: string | null };
+type Row = { id: number; email: string; plan: string; trimis_at: string | null; dezabonat_at: string | null };
 type Variant = Record<string, string | number | null> & { id: string; plan: string; rang_max: number | null; subject: string; bullets: string };
 const VARIANTS = spec.variants as Variant[];
 const CFG = spec.config as Record<string, string>;
@@ -36,11 +36,19 @@ function bulletRows(items: string[]) {
     `        <tr><td width="22" valign="top" style="padding:5px 10px 5px 0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td width="22" height="22" align="center" valign="middle" bgcolor="#ceee58" style="background-color:#ceee58;border-radius:11px;font-family:${FONT};font-size:12px;line-height:22px;font-weight:600;color:#111111;">&#10003;</td></tr></table></td><td valign="top" style="padding:5px 0;font-family:${FONT};font-size:16px;line-height:24px;font-weight:400;color:#111111;">${strong(t)}</td></tr>`
   ).join("\n");
 }
-function render(variant: Variant, email: string): string {
+/* linkul de dezabonare e semnat (HMAC cu webhook_secret), ca nimeni să nu poată dezabona pe altcineva doar știindu-i adresa;
+   același calcul ca în Edge Function `dezabonare` */
+async function dezToken(email: string) {
+  const k = await crypto.subtle.importKey("raw", new TextEncoder().encode(WEBHOOK_SECRET), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const mac = new Uint8Array(await crypto.subtle.sign("HMAC", k, new TextEncoder().encode("dezabonare|" + email.trim().toLowerCase())));
+  return btoa(String.fromCharCode(...mac)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "").slice(0, 32);
+}
+const dezQuery = async (email: string) => `email=${encodeURIComponent(email.trim().toLowerCase())}&t=${await dezToken(email)}`;
+function render(variant: Variant, email: string, dezQ: string): string {
   const v: Record<string, string> = { ...CFG };
   for (const k of Object.keys(variant)) v[k] = String(variant[k] ?? "");
   v.assets_url = ASSETS; v.site_url = SITE; v.calc_url = `${SITE}/#calculator`;
-  v.email = esc(email); v.unsubscribe_url = `${SITE}/dezabonare?email=${encodeURIComponent(email)}`;
+  v.email = esc(email); v.unsubscribe_url = `${SITE}/dezabonare/?${dezQ}`;
   v.bullets = bulletRows(BULLETS[variant.bullets]);
   for (const k of ["intro", "second_headline", "second_text", "offer_calc"]) v[k] = strong(v[k]);
   const sub = (_: string, key: string) => { if (!(key in v)) throw new Error(`token necunoscut în template: ${key}`); return v[key]; };
@@ -78,10 +86,11 @@ Deno.serve(async (req: Request) => {
   const id = Number(body.id ?? body.record?.id);
   if (!id) return json(400, { error: "id lipsă" });
 
-  const rows: Row[] = await rest(`lista_asteptare?id=eq.${id}&select=id,email,plan,trimis_at`);
+  const rows: Row[] = await rest(`lista_asteptare?id=eq.${id}&select=id,email,plan,trimis_at,dezabonat_at`);
   const row = rows[0];
   if (!row) return json(404, { error: "rând inexistent" });
   if (row.trimis_at) return json(200, { skipped: "deja trimis", id });
+  if (row.dezabonat_at) return json(200, { skipped: "dezabonat", id });
 
   // rangul pe plan = câți s-au înscris pe același plan până la (și inclusiv) acest rând
   const cnt = await fetch(`${SUPABASE_URL}/rest/v1/lista_asteptare?plan=eq.${encodeURIComponent(row.plan)}&id=lte.${row.id}&select=id`, {
@@ -89,7 +98,8 @@ Deno.serve(async (req: Request) => {
   });
   const rang = Number((cnt.headers.get("content-range") ?? "0/1").split("/")[1]) || 1;
   const variant = alegeVarianta(row.plan, rang);
-  const html = render(variant, row.email);
+  const dezQ = await dezQuery(row.email);
+  const html = render(variant, row.email, dezQ);
   if (body.dry) return json(200, { id, rang, varianta: variant.id, subject: variant.subject, html_length: html.length, dry: true });
   if (!RESEND_KEY) return json(500, { error: "RESEND_API_KEY lipsă" });
 
@@ -101,7 +111,7 @@ Deno.serve(async (req: Request) => {
     body: JSON.stringify({
       from: FROM, to: [row.email], subject: variant.subject, html,
       ...(REPLY_TO ? { reply_to: REPLY_TO } : {}),
-      headers: { "List-Unsubscribe": `<${SITE}/dezabonare?email=${encodeURIComponent(row.email)}>` },
+      headers: { "List-Unsubscribe": `<${SUPABASE_URL}/functions/v1/dezabonare?${dezQ}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" },
       tags: [{ name: "tip", value: "bun-venit" }, { name: "varianta", value: variant.id }, { name: "plan", value: row.plan }],
     }),
   });
