@@ -44,7 +44,8 @@
   track.register = function (props) { for (var k in props) common[k] = props[k]; if (ready && window.posthog) window.posthog.register(props); };
   track.state = state;
   track.consent = function (ok) {
-    try { localStorage.setItem('pesticid.consent', ok ? 'yes' : 'no'); } catch (e) {}
+    try { localStorage.setItem('pesticid.consent', ok ? 'yes' : 'no'); if (document.querySelector('meta[name="pesticid-gads"]')) localStorage.setItem('pesticid.consent.ads', ok ? 'yes' : 'no'); } catch (e) {}
+    try { document.dispatchEvent(new Event('pesticid:consent')); } catch (e) {} /* gads.js pornește tagul Google doar după acord */
     if (ok && ready && window.posthog) { window.posthog.set_config({ persistence: 'localStorage+cookie' }); if (Math.random() < 0.1 && window.posthog.startSessionRecording) window.posthog.startSessionRecording(); }
   };
   track.distinctId = function () { return ready && window.posthog ? window.posthog.get_distinct_id() : null; };
@@ -92,7 +93,8 @@
   /* banner minimal de consimțământ: doar pentru a trece de la memorie la cookie */
   function showBanner() {
     var b = document.createElement('div'); b.className = 'consent'; b.setAttribute('role', 'dialog'); b.setAttribute('aria-label', 'Cookie-uri');
-    b.innerHTML = '<p>Folosim statistici anonime ca să îmbunătățim calculatorul. Accepți un cookie ca să te recunoaștem la următoarea vizită?</p><div><button type="button" class="btn sm" data-ok>Accept</button><button type="button" class="btn sm ghost" data-no>Doar necesare</button></div>';
+    var ads = !!document.querySelector('meta[name="pesticid-gads"]');
+    b.innerHTML = '<p>Folosim statistici anonime ca să îmbunătățim calculatorul. ' + (ads ? 'Accepți cookie-uri ca să te recunoaștem la următoarea vizită și să măsurăm câte înscrieri aduc reclamele Google?' : 'Accepți un cookie ca să te recunoaștem la următoarea vizită?') + '</p><div><button type="button" class="btn sm" data-ok>Accept</button><button type="button" class="btn sm ghost" data-no>Doar necesare</button></div>';
     b.addEventListener('click', function (ev) { if (ev.target.closest('[data-ok]')) { track.consent(true); b.remove(); } else if (ev.target.closest('[data-no]')) { track.consent(false); b.remove(); } });
     document.body.appendChild(b);
   }

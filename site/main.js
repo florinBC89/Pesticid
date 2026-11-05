@@ -154,6 +154,7 @@
       if (busy || !EMAIL_RE.test(email)) { sync(); return; }
       var done = function () {
         var st = window.track ? window.track.state : {}; T('waitlist_submitted', { plan: plan, had_calc_result: !!st.had_calc_result, had_search_result: !!st.had_search_result, calc_started: !!st.calc_started });
+        if (window.gads && sbUrl) window.gads.conversie(plan); /* conversie Google Ads (doar cu acord la cookie-uri) */
         if (doneEmail) doneEmail.textContent = email;
         f.classList.add('is-done'); if (doneBox) doneBox.hidden = false;
       };

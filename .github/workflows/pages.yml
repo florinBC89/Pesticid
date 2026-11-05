@@ -28,7 +28,7 @@ jobs:
       - name: Pregătește fișierele publice
         run: |
           mkdir -p site-full
-          cp site/index.html site/styles.css site/analytics.js site/antibot.js site/main.js site/calc.js site/search.js site/report.js site/favicon.ico site/site.webmanifest site-full/
+          cp site/index.html site/styles.css site/analytics.js site/antibot.js site/gads.js site/main.js site/calc.js site/search.js site/report.js site/favicon.ico site/site.webmanifest site-full/
           cp -r site/assets site-full/assets
           cp -r site/dezabonare site-full/dezabonare
           cp -r site/confidentialitate site-full/confidentialitate
