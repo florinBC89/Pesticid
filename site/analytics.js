@@ -45,7 +45,7 @@
   track.state = state;
   track.consent = function (ok) {
     try { localStorage.setItem('pesticid.consent', ok ? 'yes' : 'no'); } catch (e) {}
-    if (ok && ready && window.posthog) window.posthog.set_config({ persistence: 'localStorage+cookie' });
+    if (ok && ready && window.posthog) { window.posthog.set_config({ persistence: 'localStorage+cookie' }); if (Math.random() < 0.1 && window.posthog.startSessionRecording) window.posthog.startSessionRecording(); }
   };
   track.distinctId = function () { return ready && window.posthog ? window.posthog.get_distinct_id() : null; };
   window.track = track;
@@ -74,7 +74,7 @@
         autocapture: false,
         capture_pageview: true,
         capture_pageleave: true,
-        disable_session_recording: Math.random() > 0.1,
+        disable_session_recording: consent !== 'yes' || Math.random() > 0.1, /* înregistrarea sesiunilor doar cu acord (GDPR), ~10% din vizite */
         session_recording: { maskAllInputs: true, maskTextSelector: 'input, .form-msg' },
         property_denylist: ['$current_url_email'],
         loaded: function () {

@@ -31,6 +31,7 @@ jobs:
           cp site/index.html site/styles.css site/analytics.js site/main.js site/calc.js site/search.js site/report.js site/favicon.ico site/site.webmanifest public/
           cp -r site/assets public/assets
           cp -r site/dezabonare public/dezabonare
+          cp -r site/confidentialitate public/confidentialitate
           touch public/.nojekyll
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

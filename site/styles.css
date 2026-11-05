@@ -987,3 +987,9 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 .rep .btn.ghost:hover { transform: none; box-shadow: none; }
 .rep input, .rep textarea, .rep button.field { scroll-margin-top: calc(var(--promo-h) + var(--nav-h) + 24px); }
 .rep .rep-msg { text-align: center; }
+
+/* rândul de confidențialitate sub formulare */
+.legal-note { grid-column: 1 / -1; margin: 0; font-size: 13px; line-height: 19px; color: var(--muted-2); text-align: left; }
+.legal-note a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+.reserve.is-done .legal-note { display: none; }
+.rep .legal-note { text-align: center; }
