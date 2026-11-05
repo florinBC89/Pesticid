@@ -86,6 +86,14 @@
     <li><b>Temei legal:</b> interesul legitim de a îmbunătăți calculatorul, pentru statisticile anonime, și consimțământul tău pentru cookie și înregistrare (art. 6 alin. 1 lit. f și a GDPR).</li>
   </ul>
 
+  <h3>Măsurarea reclamelor (Google Ads)</h3>
+  <ul>
+    <li><b>Doar dacă accepți</b> cookie-urile: când ajungi pe site dintr-o reclamă Google și te înscrii pe lista de așteptare, Google Ads află că acea reclamă a adus o înscriere. Așa știm ce reclame merită păstrate.</li>
+    <li>Nu trimitem la Google adresa ta de email și nici alte date din formulare. Nu folosim reclame personalizate și nici remarketing (nu te „urmăresc” reclamele noastre pe alte site-uri).</li>
+    <li><b>Fără acordul tău</b>, tagul Google nu se încarcă deloc.</li>
+    <li><b>Temei legal:</b> consimțământul tău (art. 6 alin. 1 lit. a GDPR), pe care îl poți retrage oricând din secțiunea <a href="#cookies">Cookies</a>.</li>
+  </ul>
+
   <h3>Emailurile pe care ți le trimitem</h3>
   <ul>
     <li>Aflăm dacă emailul a fost <b>livrat</b>, dacă a fost <b>respins</b> și dacă ai <b>apăsat pe un link</b> din el, ca să știm că emailurile ajung și sunt utile.</li>
@@ -103,6 +111,7 @@
     <tr><td>Fișierele atașate la rapoarte</td><td>90 de zile, apoi se șterg automat. Fișierele urcate dar netrimise se șterg după o zi.</td></tr>
     <tr><td>Rapoartele de problemă (textul)</td><td>Cel mult 12 luni de la rezolvare.</td></tr>
     <tr><td>Statistici de utilizare</td><td>Cel mult 12 luni.</td></tr>
+    <tr><td>Măsurarea reclamelor (Google Ads)</td><td>Cookie-urile Google Ads expiră după cel mult 90 de zile; datele din rapoartele Google Ads se păstrează conform politicii Google.</td></tr>
   </table></div>
 
   <h2 id="furnizori">4. Cine prelucrează datele pentru noi</h2>
@@ -112,7 +121,7 @@
     <tr><td>Supabase</td><td>baza de date, stocarea fișierelor atașate, funcțiile serverului</td><td>UE (Irlanda)</td></tr>
     <tr><td>Resend</td><td>trimiterea emailurilor</td><td>SUA</td></tr>
     <tr><td>PostHog</td><td>statistici de utilizare</td><td>UE (Germania)</td></tr>
-    <tr><td>Google (Gmail, Google Sheets, Google Fonts)</td><td>primirea și organizarea rapoartelor de problemă; fonturile site-ului</td><td>UE și SUA</td></tr>
+    <tr><td>Google (Gmail, Google Sheets, Google Fonts, Google Ads)</td><td>primirea și organizarea rapoartelor de problemă; fonturile site-ului; măsurarea înscrierilor aduse de reclame (doar cu acordul tău)</td><td>UE și SUA</td></tr>
     <tr><td>GitHub (GitHub Pages)</td><td>găzduirea site-ului</td><td>SUA</td></tr>
     <tr><td>Cloudflare (Turnstile)</td><td>verificarea anti-robot la trimiterea formularelor</td><td>SUA și rețeaua globală Cloudflare</td></tr>
   </table></div>
@@ -123,12 +132,13 @@
   <p>Pentru oricare dintre acestea, scrie-ne la <a href="mailto:bostan.florin89@gmail.com">bostan.florin89@gmail.com</a>. Răspundem în cel mult 30 de zile. Dacă nu ești mulțumit de răspuns, poți depune o plângere la <b>Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal</b> (<a href="https://www.dataprotection.ro" rel="noopener">www.dataprotection.ro</a>).</p>
 
   <h2 id="cookies">6. Cookies</h2>
-  <p>Site-ul nu folosește cookie-uri de publicitate. Fără acordul tău, nu salvăm niciun cookie de statistici.</p>
+  <p>Fără acordul tău, nu salvăm niciun cookie de statistici sau de reclame. Dacă apeși „Accept” în banner, folosim cookie-urile de mai jos.</p>
   <div class="tw"><table>
     <tr><th>Ce</th><th>Pentru ce</th><th>Când</th></tr>
     <tr><td>pesticid.consent (memorie locală)</td><td>ține minte dacă ai acceptat sau refuzat cookie-ul, ca să nu te întrebăm la fiecare vizită</td><td>după ce alegi în banner</td></tr>
     <tr><td>pesticid.site.param (memorie locală)</td><td>ține minte ultima suprafață și volumul de apă folosite în calculator</td><td>după un calcul</td></tr>
     <tr><td>ph_… (cookie și memorie locală PostHog)</td><td>recunoașterea dispozitivului în statistici, între vizite</td><td>doar dacă apeși „Accept”</td></tr>
+    <tr><td>_gcl_au, _gcl_aw și cookie-urile Google pe domeniile Google</td><td>legătura dintre un click pe o reclamă Google și o înscriere pe lista de așteptare (fără reclame personalizate)</td><td>doar dacă apeși „Accept”</td></tr>
   </table></div>
   <p>Îți poți schimba alegerea oricând:</p>
   <button class="btn sm ghost" id="lg-reset" type="button">Schimbă alegerea despre cookie-uri</button>
@@ -142,8 +152,8 @@
 </main>
 <script>
 document.getElementById('lg-reset').addEventListener('click', function () {
-  try { localStorage.removeItem('pesticid.consent'); Object.keys(localStorage).forEach(function (k) { if (/^ph_/.test(k)) localStorage.removeItem(k); }); } catch (e) {}
-  document.cookie.split(';').forEach(function (c) { var n = c.split('=')[0].trim(); if (/^ph_/.test(n)) document.cookie = n + '=; Max-Age=0; path=/'; });
+  try { localStorage.removeItem('pesticid.consent'); localStorage.removeItem('pesticid.consent.ads'); Object.keys(localStorage).forEach(function (k) { if (/^ph_/.test(k)) localStorage.removeItem(k); }); } catch (e) {}
+  document.cookie.split(';').forEach(function (c) { var n = c.split('=')[0].trim(); if (/^(ph_|_gcl_)/.test(n)) { document.cookie = n + '=; Max-Age=0; path=/'; document.cookie = n + '=; Max-Age=0; path=/; domain=.' + location.hostname.replace(/^www\./, ''); } });
   document.getElementById('lg-reset-ok').hidden = false;
 });
 </script>

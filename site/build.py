@@ -16,7 +16,7 @@ sbkey = (root / '..' / 'app' / '.env').read_text().split('VITE_SUPABASE_ANON_KEY
 sb = f'<meta name="pesticid-supabase" data-url="https://rpwmfhlmdscjpcrqqmyf.supabase.co" data-key="{sbkey}">' if sbkey else ''
 # Turnstile (Cloudflare, anti-robot): cheia de site e publică; cheia secretă stă doar în Supabase (TURNSTILE_SECRET)
 # Google Ads: ID-ul contului (AW-…) și eticheta conversiei „Rezervare loc”; goale → tagul nu se încarcă deloc
-GADS_ID, GADS_LABEL = '', ''
+GADS_ID, GADS_LABEL = 'AW-11117281329', 'Z5vnCLDRyrIdELGAkbUp'
 gads = f'<meta name="pesticid-gads" data-id="{GADS_ID}" data-label="{GADS_LABEL}">' if GADS_ID else ''
 ts = '<meta name="pesticid-turnstile" data-key="0x4AAAAAAF0iO2Yk4JMq4zBE">'
 # previzualizarea (Artifact) nu se poate conecta la Supabase: acolo formularele rămân în mod demonstrativ
