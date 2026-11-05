@@ -469,6 +469,8 @@ b, strong { font-weight: 600; color: var(--fg); }
   margin-top: 4px;
   padding: 5px 10px;
   border: 2px solid #ffad60;
+  background: #ffad60;
+  color: var(--fg);
   border-radius: 14px;
   display: flex;
   flex-wrap: wrap;
@@ -481,7 +483,7 @@ b, strong { font-weight: 600; color: var(--fg); }
   font-variant-numeric: tabular-nums;
 }
 .countdown b { font-weight: 600; }
-.countdown.is-over { border-color: var(--muted-2); color: var(--muted); }
+.countdown.is-over { border-color: var(--muted-2); background: none; color: var(--muted); }
 
 .offers {
   display: grid;
