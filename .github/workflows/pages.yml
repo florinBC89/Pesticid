@@ -32,6 +32,7 @@ jobs:
           cp -r site/assets public/assets
           cp -r site/dezabonare public/dezabonare
           cp -r site/confidentialitate public/confidentialitate
+          cp -r site/termeni public/termeni
           touch public/.nojekyll
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
