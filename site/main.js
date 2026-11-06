@@ -189,7 +189,36 @@
   /* PostHog: secțiunea de acces timpuriu intră în ecran · CTA-ul din nav */
   var early2 = document.getElementById('acces-timpuriu');
   if (early2 && 'IntersectionObserver' in window) { var seen = false; var ioW = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting && !seen) { seen = true; if (window.track) window.track('waitlist_viewed', {}); ioW.disconnect(); } }); }, { threshold: 0.25 }); ioW.observe(early2); }
-  var navCta = document.querySelector('.nav .btn'); if (navCta) navCta.addEventListener('click', function () { if (window.track) window.track('hero_cta_clicked', { cta: 'nav_am_o_problema' }); });
+  var navCta = document.querySelector('.nav .nav-btn'); if (navCta) navCta.addEventListener('click', function () { if (window.track) window.track('hero_cta_clicked', { cta: 'nav_am_o_problema' }); });
+
+  /* meniul de pe mobil / tabletă (Figma 2211:36299): hamburgerul deschide panoul; se închide la Escape, la click în afară sau pe un link */
+  var burger = document.querySelector('.nav .burger'), mmenu = document.getElementById('meniu-mobil');
+  if (burger && mmenu) {
+    var setMenu = function (open, focusBack) {
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      burger.setAttribute('aria-label', open ? 'Închide meniul' : 'Deschide meniul');
+      nav.classList.toggle('menu-open', open);
+      if (open) { mmenu.hidden = false; requestAnimationFrame(function () { mmenu.classList.add('is-open'); }); }
+      else { mmenu.classList.remove('is-open'); setTimeout(function () { if (!mmenu.classList.contains('is-open')) mmenu.hidden = true; }, reduce ? 0 : 220); }
+      if (!open && focusBack) burger.focus();
+    };
+    burger.addEventListener('click', function () {
+      var open = burger.getAttribute('aria-expanded') !== 'true';
+      setMenu(open);
+      if (open && window.track) window.track('mobile_menu_opened', {});
+    });
+    mmenu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+    var mmBtn = mmenu.querySelector('.mm-btn');
+    if (mmBtn) mmBtn.addEventListener('click', function () { if (window.track) window.track('hero_cta_clicked', { cta: 'menu_am_o_problema' }); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') setMenu(false, true); });
+    document.addEventListener('click', function (e) { if (burger.getAttribute('aria-expanded') === 'true' && !mmenu.contains(e.target) && !burger.contains(e.target)) setMenu(false); });
+    window.matchMedia('(min-width: 1381px)').addEventListener('change', function (m) { if (m.matches) setMenu(false); });
+  }
+
+  /* fără internet: un service worker mic arată pagina „Nu ai internet” (offline.html) în loc de eroarea browserului */
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+  }
 
   /* butoanele „Log in” etc. nu fac nimic deocamdată (fluxul de cont vine mai târziu) */
   document.querySelectorAll('[data-soon]').forEach(function (el) {

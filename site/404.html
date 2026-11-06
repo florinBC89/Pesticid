@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pagina nu există — AgroSphere</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Pagina căutată nu există.">
+<meta name="theme-color" content="#cedbf6">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  /* Figma 2211:35600 (404) / 2211:36452 (offline); mobil 2211:36344 / 2211:36484 */
+  :root { --bg: #cedbf6; --fg: #111; --muted: #3b3f4a; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; min-height: 100vh; min-height: 100svh; position: relative; overflow-x: hidden; background: var(--bg); color: var(--fg); font-family: "Inter", "SF Pro Display", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  /* fotografia din hero-ul site-ului: cerul ei are culoarea fundalului, deci se topește în pagină; orizontul stă la ~85% din înălțime */
+  .bg { position: absolute; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
+  .bg img { position: absolute; left: 50%; width: max(100%, 1729px); max-width: none; height: auto; top: calc(85% - 0.367 * max(100vw, 1729px)); transform: translateX(-50%);
+    -webkit-mask-image: linear-gradient(180deg, transparent 17%, #000 30%); mask-image: linear-gradient(180deg, transparent 17%, #000 30%); }
+  .logo { position: absolute; top: max(34px, env(safe-area-inset-top, 0px)); left: max(46px, env(safe-area-inset-left, 0px)); line-height: 0; }
+  .logo img { width: 220px; height: auto; display: block; }
+  main { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 179px 16px 260px; text-align: center; }
+  .ill { display: block; height: auto; }
+  .txt { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .tag { display: inline-flex; padding: 5px 10px; border-radius: 999px; background: #eaa86a; font-size: 14px; line-height: 17px; font-weight: 500; }
+  .code { margin: 0; font-size: 160px; line-height: 70px; font-weight: 600; letter-spacing: -2px; padding: 30px 0 32px; }
+  h1 { margin: 0; font-size: 60px; line-height: 70px; font-weight: 500; letter-spacing: -0.5px; }
+  p { margin: 0; font-size: 18px; line-height: 32px; color: var(--muted); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; height: 64px; padding: 13px 22px; border: 0; border-radius: 999px; background: var(--fg); color: #fff; font: inherit; font-size: 16px; font-weight: 600; text-decoration: none; cursor: pointer; transition: transform 0.25s, box-shadow 0.25s; }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,.18); }
+  .btn:focus-visible, a:focus-visible { outline: 3px solid #73e2d4; outline-offset: 3px; }
+  @media (max-width: 1100px) { .logo { left: max(28px, env(safe-area-inset-left, 0px)); } .logo img { width: 196px; } }
+  @media (max-width: 700px) {
+    .logo { top: max(23px, env(safe-area-inset-top, 0px)); left: max(20px, env(safe-area-inset-left, 0px)); }
+    .logo img { width: 173px; }
+    main { padding: 197px 20px 200px; }
+    .txt { gap: 10px; }
+    .code { font-size: 80px; padding: 0; letter-spacing: -1px; }
+    h1 { font-size: 30px; line-height: 70px; letter-spacing: 0; }
+    p { max-width: 300px; font-size: 18px; line-height: 27px; }
+    .bg img { transform: translateX(calc(-50% - 73px)); }
+  }
+  @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+</style>
+<style>
+  @media (max-width: 700px) { .ill { width: 132px; } }
+</style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"><img src="/assets/hero-camp.webp" srcset="/assets/hero-camp.webp 1920w, /assets/hero-camp-2x.webp 3840w" sizes="max(100vw, 1729px)" alt="" width="1920" height="1439"></div>
+  <a class="logo" href="/" aria-label="AgroSphere, pagina principală"><img src="/assets/logo-agrosphere.svg" alt="AgroSphere" width="1585" height="311"></a>
+  <main>
+    <img class="ill" src="/assets/err-puzzle.webp" alt="" width="314" height="297">
+    <div class="txt">
+      <span class="tag">Eroare</span>
+      <div class="code" aria-hidden="true">404</div>
+      <h1>Ceva nu a mers bine</h1>
+      <p>Reîncarcă pagina sau du-te înapoi pe Home page</p>
+    </div>
+    <a class="btn" href="/">Home page</a>
+  </main>
+</body>
+</html>

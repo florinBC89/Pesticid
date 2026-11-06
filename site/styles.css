@@ -117,6 +117,17 @@ b, strong { font-weight: 600; color: var(--fg); }
   padding-right: max(46px, env(safe-area-inset-right, 0px));
 }
 
+/* ---------- meniul principal (Figma 2210:34204): Calculator pesticide + instrumentele care vin „În curând” ---------- */
+.menu ul, .mmenu ul { list-style: none; margin: 0; padding: 0; }
+.menu ul { display: flex; align-items: center; gap: 24px; padding: 0 22px; }
+.menu-it { display: flex; flex-direction: column; justify-content: center; gap: 2px; height: 66px; font-size: 16px; line-height: 19px; white-space: nowrap; }
+.menu-it.is-on { font-weight: 600; color: var(--fg); }
+.menu-it.is-on:hover { text-decoration: underline; text-underline-offset: 4px; }
+.menu-it.is-soon { justify-content: flex-end; align-items: flex-start; color: var(--muted); cursor: default; }
+.soon { display: inline-flex; padding: 3px 8px; border-radius: 999px; background: #ceee58; color: var(--fg); font-size: 13px; line-height: 16px; font-weight: 400; white-space: nowrap; }
+.burger { display: none; }
+.mmenu { display: none; }
+
 /* ---------- hero ---------- */
 .hero {
   position: relative;
@@ -727,6 +738,31 @@ b, strong { font-weight: 600; color: var(--fg); }
 .spick .sgo { width: 100%; margin-top: 12px; }
 html.is-locked, html.is-locked body { overflow: hidden; }
 
+/* ---------- sub 1380px meniul nu mai încape pe un rând: hamburger + panou (Figma 2210:34545, 2211:36299) ---------- */
+@media (max-width: 1380px) {
+  .menu, .nav .nav-btn { display: none; }
+  .burger { display: inline-flex; flex-direction: column; justify-content: space-between; width: 44px; height: 44px; margin-right: -10px; padding: 12px 10px; border: 0; border-radius: 12px; background: none; color: var(--fg); }
+  .burger span { display: block; height: 3px; border-radius: 99px; background: currentColor; transition: transform 0.25s var(--ease), opacity 0.2s; }
+  .nav.menu-open .burger span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+  .nav.menu-open .burger span:nth-child(2) { opacity: 0; }
+  .nav.menu-open .burger span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+  .mmenu {
+    display: flex; flex-direction: column; gap: 82px;
+    position: absolute; top: calc(var(--promo-h) + var(--nav-h) - 8px + env(safe-area-inset-top, 0px)); right: max(10px, env(safe-area-inset-right, 0px));
+    width: min(293px, calc(100vw - 20px)); max-height: calc(100vh - var(--promo-h) - var(--nav-h) - 10px); max-height: calc(100dvh - var(--promo-h) - var(--nav-h) - 10px); overflow-y: auto;
+    padding: 20px; border-radius: var(--r-big) 0 var(--r-big) var(--r-big); background: var(--bg); box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+    opacity: 0; transform: translateY(-8px) scale(0.98); transform-origin: top right; transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+  }
+  .mmenu[hidden] { display: none !important; }
+  .mmenu.is-open { opacity: 1; transform: none; }
+  .mmenu ul { display: flex; flex-direction: column; gap: 30px; }
+  .mm-it { display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 20px; line-height: 24px; text-align: center; }
+  .mm-it.is-on { padding: 16px 15px; border-radius: 999px; background: var(--surface); font-weight: 600; color: var(--fg); }
+  .mm-it.is-soon { color: var(--muted); cursor: default; }
+  .mm-btn { width: 100%; }
+}
+@media (max-width: 1380px) and (prefers-reduced-motion: reduce) { .mmenu, .burger span { transition: none; } }
+
 /* ---------- tabletă ---------- */
 @media (max-width: 1100px) {
   .logo img { width: 196px; }
@@ -786,7 +822,6 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 @media (max-width: 700px) {
   .nav .wrap { height: 78px; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
   :root { --nav-h: 78px; --nav-btn-h: 52px; --nav-fade: 10px; }
-  .nav .btn { height: 52px; min-width: 136px; font-size: 15px; }
   .logo img { width: 160px; }
   .hero { min-height: 0; padding-top: calc(140px + var(--promo-h)); padding-bottom: 56px; }
   /* pe mobil fotografia urcă 200px și, când hero-ul se lungește cu rezultate, rămâne ancorată jos cu înălțime plafonată,
