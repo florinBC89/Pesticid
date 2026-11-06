@@ -12,7 +12,7 @@ const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const RESEND_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
 // secretul webhook-ului stă într-un singur loc: Vault (vault.webhook_secret), citit prin rpc-ul `webhook_secret` (doar service_role)
 let WEBHOOK_SECRET = Deno.env.get("WEBHOOK_SECRET") ?? "";
-const FROM = Deno.env.get("EMAIL_FROM") ?? "AgroSphere <bun-venit@pesticid.info>";
+const FROM = Deno.env.get("EMAIL_FROM") ?? "AgroSphere <bun-venit@agrosphere.eu>";
 const REPLY_TO = Deno.env.get("EMAIL_REPLY_TO") ?? "";
 const ASSETS = (Deno.env.get("EMAIL_ASSETS_URL") ?? "https://rpwmfhlmdscjpcrqqmyf.supabase.co/storage/v1/object/public/emails").replace(/\/$/, "");
 const SITE = (Deno.env.get("SITE_URL") ?? "https://agrosphere.eu").replace(/\/$/, "");
@@ -100,7 +100,7 @@ Deno.serve(async (req: Request) => {
   const variant = alegeVarianta(row.plan, rang);
   const dezQ = await dezQuery(row.email);
   const html = render(variant, row.email, dezQ);
-  if (body.dry) return json(200, { id, rang, varianta: variant.id, subject: variant.subject, html_length: html.length, dry: true });
+  if (body.dry) return json(200, { id, rang, varianta: variant.id, subject: variant.subject, from: FROM, site: SITE, html_length: html.length, dry: true });
   if (!RESEND_KEY) return json(500, { error: "RESEND_API_KEY lipsă" });
 
   // cheia de idempotență depinde de conținut: același email nu pleacă de două ori, dar o versiune nouă a șablonului poate fi retrimisă
