@@ -1,0 +1,58 @@
+<!-- Plan de fertilizare (model simplificat al Ministerului Mediului): doar azot, fără îngrășăminte organice deocamdată.
+     Folosește aceleași componente ca „Calculator pesticide” (.calc, .field, .row, .sel/.dd/.plist, .cstat). -->
+<div class="calc fp" id="fp" role="group" aria-labelledby="fp-title">
+  <div class="calc-head">
+    <h3 id="fp-title">Plan de fertilizare</h3>
+    <p class="calc-hint" id="fp-hint">Model simplificat · <b>azot (N)</b></p>
+  </div>
+
+  <p class="fp-sec">Planificat</p>
+  <div class="row">
+    <label class="field has-input" id="fp-f-bloc"><span class="col"><small>Bloc fizic nr.</small><span class="val"><input id="fp-bloc" type="text" inputmode="numeric" autocomplete="off" placeholder="ID-ul blocului fizic" maxlength="12"></span></span></label>
+    <label class="field has-input" id="fp-f-parc"><span class="col"><small>Nr. parcelă</small><span class="val"><input id="fp-parc" type="text" autocomplete="off" placeholder="ex. 1a" maxlength="12"></span></span></label>
+  </div>
+  <div class="row">
+    <label class="field has-input has-unit" id="fp-f-ha"><span class="col"><small>Suprafață</small><span class="val"><input id="fp-ha" type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 50"><b class="unit">ha</b></span></span></label>
+    <div class="sel" id="fp-s-cult">
+      <label class="field has-input" id="fp-f-cult" for="fp-cult">
+        <span class="col"><small>Cultura</small><span class="val"><input id="fp-cult" type="text" autocomplete="off" spellcheck="false" placeholder="Alege sau scrie cultura" role="combobox" aria-expanded="false" aria-controls="fp-cult-list"></span></span>
+        <i class="chev" aria-hidden="true"></i>
+      </label>
+      <div class="dd" hidden><ul class="plist" id="fp-cult-list" role="listbox"></ul></div>
+    </div>
+  </div>
+  <div class="row">
+    <label class="field has-input has-unit" id="fp-f-rec"><span class="col"><small>Recolta scontată <em>(opțional)</em></small><span class="val"><input id="fp-rec" type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 8"><b class="unit">t/ha</b></span></span></label>
+    <label class="field has-input has-unit" id="fp-f-plan"><span class="col"><small>Planificat N</small><span class="val"><input id="fp-plan" type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 150"><b class="unit">kg s.a./ha</b></span></span></label>
+  </div>
+  <p class="doza-msg" id="fp-plan-msg" role="status"></p>
+
+  <p class="fp-sec">Realizat · îngrășăminte minerale</p>
+  <div class="fp-apl" id="fp-apl"></div>
+  <button type="button" class="fp-add" id="fp-add-apl">+ Adaugă o aplicare</button>
+
+  <div class="calc-res" id="fp-res" aria-live="polite">
+    <div class="cards" id="fp-cards"></div>
+    <div id="fp-warn"></div>
+  </div>
+
+  <label class="field has-input" id="fp-f-obs"><span class="col"><small>Observații <em>(opțional)</em></small><span class="val"><input id="fp-obs" type="text" autocomplete="off" placeholder="ex. fracționat: 1/2 la semănat, 1/2 în faza de 6 frunze" maxlength="200"></span></span></label>
+
+  <button class="btn" id="fp-go" type="button"><span>Adaugă parcela în plan</span><svg class="arr" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  <p class="doza-msg" id="fp-go-msg" role="status"></p>
+
+  <div class="fp-plan" id="fp-plan-box" hidden>
+    <div class="fp-plan-head">
+      <h4>Planul tău <span class="tag xs cnt" id="fp-cnt"></span></h4>
+      <div class="fp-plan-act">
+        <button type="button" class="fp-link" id="fp-clear">Golește planul</button>
+        <button type="button" class="btn sm" id="fp-print">Descarcă planul (PDF)</button>
+      </div>
+    </div>
+    <div class="fp-tbl-wrap"><table class="fp-tbl" id="fp-tbl"></table></div>
+    <p class="calc-note">Tabelul urmează modelul oficial „Plan de fertilizare (model simplificat)”. Coloanele pentru îngrășămintele organice rămân goale.</p>
+  </div>
+</div>
+
+<!-- varianta de tipărit (PDF): exact coloanele modelului oficial -->
+<div class="fp-print" id="fp-print-doc" aria-hidden="true"></div>

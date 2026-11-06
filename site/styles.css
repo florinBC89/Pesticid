@@ -1036,3 +1036,63 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 .ts-box { grid-column: 1 / -1; }
 .ts-box:not(.is-on) { position: absolute; width: 0; height: 0; overflow: hidden; }
 .ts-box.is-on { width: 100%; display: flex; justify-content: center; }
+
+/* ---------- plan de fertilizare (model simplificat, doar azot) — aceleași componente ca la calculatorul de pesticide ---------- */
+.fp .field small em { font-style: normal; font-weight: 400; color: #868fa2; }
+.fp .field input[type="date"] { font: inherit; font-size: 16px; font-weight: 500; color: #242c3c; border: 0; background: transparent; padding: 0; width: 100%; outline: none; }
+.fp-sec { margin: 6px 0 -4px; padding: 0 16px; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; color: #3f4b66; text-align: left; }
+.fp-apl { display: grid; gap: 12px; }
+.fp-a { display: grid; gap: 10px; padding: 12px; border: 1.5px solid #e3e9f6; border-radius: 22px; }
+.fp-a-top { display: flex; align-items: center; justify-content: space-between; padding: 0 6px; font-size: 15px; text-align: left; }
+.fp-a-top b { font-weight: 600; }
+.fp-a-out { margin: 0; padding: 0 6px; font-size: 15px; line-height: 1.5; color: #3f4b66; text-align: left; }
+.fp-a-out:empty { display: none; }
+.fp-a-out b { color: var(--fg); font-weight: 600; }
+.fp-a-out .ph { color: #868fa2; }
+.fp-a-out > * { display: inline; }
+.fp-a-out .fp-fill { display: block; margin-top: 4px; text-align: left; }
+.fp-w, .fp-bad { display: block !important; margin-top: 4px; font-size: 14px; }
+.fp-w { color: #8a5a00; }
+.fp-bad { color: #b4232f; font-weight: 500; }
+.fp-link { border: 0; background: none; padding: 0; color: #2d5bd7; font: inherit; font-size: 14px; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.fp-link:hover { color: var(--fg); }
+.fp-add { justify-self: start; margin-left: 6px; border: 1.5px dashed #b9c6e4; background: none; border-radius: 999px; padding: 10px 18px; font: inherit; font-size: 15px; font-weight: 600; color: #3f4b66; cursor: pointer; }
+.fp-add:hover { border-color: var(--fg); color: var(--fg); }
+.fp .calc-res { margin-top: 2px; }
+.fp .calc-warn { margin: 0; text-align: left; }
+.fp .btn[hidden] { display: none; }
+.fp-plan { display: grid; gap: 12px; margin-top: 8px; padding-top: 18px; border-top: 1.5px solid #e3e9f6; text-align: left; }
+.fp-plan-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 0 6px; }
+.fp-plan-head h4 { margin: 0; font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.fp-plan-act { display: flex; align-items: center; gap: 16px; }
+.fp-plan-act .btn { margin: 0; height: 48px; min-width: 0; }
+.fp-tbl-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid #e3e9f6; }
+.fp-tbl { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.35; font-variant-numeric: tabular-nums; }
+.fp-tbl th, .fp-tbl td { border: 1px solid #e3e9f6; padding: 6px 7px; text-align: center; vertical-align: middle; }
+.fp-tbl th { font-weight: 600; color: #242c3c; background: #eef6e6; }
+.fp-tbl th.g-re { background: #fff3c4; }
+.fp-tbl tr.nr th { font-size: 11px; font-weight: 400; color: #5a6478; background: #fff; padding: 2px; }
+.fp-tbl td { color: #242c3c; min-width: 44px; }
+.fp-tbl td.del, .fp-tbl th.del { border: 0; background: none; min-width: 0; }
+.fp-tbl td.del .fp-link { font-size: 18px; text-decoration: none; color: #b4232f; }
+.fp-print { display: none; }
+@media (max-width: 700px) {
+  .fp .row { grid-template-columns: 1fr; }
+  .fp-a { padding: 8px; }
+  .fp-plan-act { width: 100%; justify-content: space-between; }
+}
+@media print {
+  @page { size: A4 landscape; margin: 12mm; }
+  body.fp-printing > *:not(.fp-print-host) { display: none !important; }
+  body.fp-printing { background: #fff !important; }
+  body.fp-printing .fp-print-host { display: block !important; }
+  body.fp-printing .fp-print { display: block !important; color: #000; font-family: Arial, Helvetica, sans-serif; }
+  .fp-print .fp-pr-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .fp-print h1 { font-size: 16pt; margin: 0; }
+  .fp-print .fp-pr-head p { font-size: 9pt; color: #555; margin: 0; }
+  .fp-print .fp-tbl { font-size: 9pt; }
+  .fp-print .fp-tbl th, .fp-print .fp-tbl td { border: 1px solid #555; padding: 4px; }
+  .fp-print .fp-tbl th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .fp-print .fp-tbl td { height: 22px; }
+  .fp-print .fp-pr-note { margin: 10px 0 0; padding-left: 18px; font-size: 8pt; line-height: 1.35; columns: 2; }
+}

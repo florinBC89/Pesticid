@@ -13,6 +13,7 @@ __pycache__/
 
 # fișiere generate
 site/preview.html
+site/preview-fert.html
 supabase/import/anf_2026_10/out/
 
 # sistem
