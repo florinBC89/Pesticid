@@ -188,11 +188,11 @@
         '<div class="fp-a-top"><b>Aplicarea ' + (i + 1) + '</b>' + (apl.length > 1 ? '<button type="button" class="fp-link fp-del">Șterge</button>' : '') + '</div>' +
         '<div class="sel"><label class="field has-input"><span class="col"><small>Îngrășământ mineral</small><span class="val"><input type="text" autocomplete="off" spellcheck="false" placeholder="Caută: uree, azotat de amoniu, UAN…" role="combobox" aria-expanded="false"></span></span><i class="chev" aria-hidden="true"></i></label><div class="dd" hidden><ul class="plist" role="listbox"></ul></div></div>' +
         '<div class="row"><label class="field has-input has-unit fp-q"><span class="col"><small>Cantitate</small><span class="val"><input type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 300"><b class="unit">kg/ha</b></span></span></label>' +
-        '<label class="field has-input fp-d"><span class="col"><small>Data aplicării</small><span class="val"><input type="date"></span></span></label></div>' +
+        '<div class="fp-dsel"><label class="field has-input fp-d"><span class="col"><small>Data aplicării</small><span class="val"><input type="text" inputmode="numeric" autocomplete="off" placeholder="zz.ll.aaaa" maxlength="10" aria-label="Data aplicării, zi.lună.an"></span></span><button type="button" class="fp-cal-btn" aria-label="Alege data din calendar" aria-expanded="false">' + IC_CAL + '</button></label><div class="fp-cal" hidden></div></div></div>' +
         '<p class="fp-a-out"></p>';
       box.appendChild(div);
       var inF = div.querySelector('.sel input'), inQ = div.querySelector('.fp-q input'), inD = div.querySelector('.fp-d input'), out = div.querySelector('.fp-a-out');
-      if (a.f) inF.value = a.f.nume; if (a.q) inQ.value = String(a.q).replace('.', ','); if (a.d) inD.value = a.d;
+      if (a.f) inF.value = a.f.nume; if (a.q) inQ.value = String(a.q).replace('.', ',');
       Combo(div.querySelector('.sel'), {
         empty: 'Niciun îngrășământ cu azot găsit în lista MADR.',
         picker: { title: 'Alege îngrășământul', label: 'Îngrășământ mineral', ph: 'Caută: uree, azotat de amoniu, UAN…', ico: 'sac', toateTitlu: 'Toate îngrășămintele cu azot, alfabetic',
@@ -208,7 +208,7 @@
       });
       if (a.f) div.querySelector('.fp-q .unit').textContent = unitCant(a.f);
       inQ.addEventListener('input', function () { a.q = num(inQ.value); actualizeazaAplicare(a, out); actualizeaza(); });
-      inD.addEventListener('input', function () { a.d = inD.value; actualizeazaAplicare(a, out); actualizeaza(); });
+      CampData(div.querySelector('.fp-dsel'), a.d, function (iso) { a.d = iso; actualizeazaAplicare(a, out); actualizeaza(); });
       out.addEventListener('click', function (ev) {
         var b = ev.target.closest('.fp-fill'); if (!b || !a.f) return;
         var rest = Math.max(0, (num($('fp-plan').value) || 0) - totalN(a));
@@ -251,6 +251,63 @@
     var i = ev.target; if (!i.closest || !i.closest('.has-unit')) return;
     var v = i.value.replace(/[^0-9.,]/g, ''); if (v !== i.value) i.value = v;
   }, true);
+
+  /* ---------- data aplicării: se scrie de mână (zz.ll.aaaa) sau se alege din calendar ---------- */
+  var IC_CAL = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>';
+  var LUNI = ['ianuarie', 'februarie', 'martie', 'aprilie', 'mai', 'iunie', 'iulie', 'august', 'septembrie', 'octombrie', 'noiembrie', 'decembrie'];
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var isoDin = function (y, m, d) { return y + '-' + pad(m) + '-' + pad(d); };
+  var calDeschis = null;
+  document.addEventListener('mousedown', function (e) { if (calDeschis && !calDeschis.wrap.contains(e.target)) calDeschis.close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && calDeschis) calDeschis.close(); });
+  function CampData(wrap, iso, onChange) {
+    var field = wrap.querySelector('.field'), input = wrap.querySelector('input'), btn = wrap.querySelector('.fp-cal-btn'), pop = wrap.querySelector('.fp-cal');
+    var azi = new Date(), sel = iso || '', vy = azi.getFullYear(), vm = azi.getMonth() + 1;
+    function arata(iso2) { if (!iso2) { input.value = ''; return; } var p = iso2.split('-'); input.value = p[2] + '.' + p[1] + '.' + p[0]; }
+    function seteaza(iso2, dinCalendar) { sel = iso2; if (dinCalendar) arata(iso2); field.classList.remove('is-bad'); onChange(iso2); }
+    /* scris de mână: doar cifre, punctele se pun singure; data e acceptată doar când e completă și există în calendar */
+    input.addEventListener('input', function () {
+      var d = input.value.replace(/\D/g, '').slice(0, 8), v = d;
+      if (d.length > 4) v = d.slice(0, 2) + '.' + d.slice(2, 4) + '.' + d.slice(4); else if (d.length > 2) v = d.slice(0, 2) + '.' + d.slice(2);
+      input.value = v;
+      if (d.length === 8) {
+        var z = +d.slice(0, 2), l = +d.slice(2, 4), an = +d.slice(4), t = new Date(an, l - 1, z);
+        var ok = an >= 2000 && an <= 2100 && t.getFullYear() === an && t.getMonth() === l - 1 && t.getDate() === z;
+        field.classList.toggle('is-bad', !ok);
+        if (ok) { vy = an; vm = l; seteaza(isoDin(an, l, z)); if (!pop.hidden) deseneaza(); } else if (sel) { sel = ''; onChange(''); }
+      } else { field.classList.remove('is-bad'); if (sel) { sel = ''; onChange(''); } }
+    });
+    function interzis2(m, z) { return m === 11 || m === 12 || m === 1 || m === 2 || (m === 3 && z <= 15); }
+    function deseneaza() {
+      var prim = new Date(vy, vm - 1, 1), start = (prim.getDay() + 6) % 7, zile = new Date(vy, vm, 0).getDate();
+      var aziIso = isoDin(azi.getFullYear(), azi.getMonth() + 1, azi.getDate()), h = '';
+      h += '<div class="fp-cal-head"><button type="button" class="fp-cal-nav" data-nav="-1" aria-label="Luna anterioară">‹</button><b>' + LUNI[vm - 1] + ' ' + vy + '</b><button type="button" class="fp-cal-nav" data-nav="1" aria-label="Luna următoare">›</button></div>';
+      h += '<div class="fp-cal-grid">' + ['L', 'Ma', 'Mi', 'J', 'V', 'S', 'D'].map(function (z) { return '<span class="wd">' + z + '</span>'; }).join('');
+      for (var i = 0; i < start; i++) h += '<span></span>';
+      for (var z = 1; z <= zile; z++) {
+        var iz = isoDin(vy, vm, z), cls = 'fp-day' + (iz === sel ? ' is-sel' : '') + (iz === aziIso ? ' is-today' : '') + (interzis2(vm, z) ? ' is-forb' : '');
+        h += '<button type="button" class="' + cls + '" data-d="' + iz + '"' + (interzis2(vm, z) ? ' title="Perioadă interzisă (1 noiembrie – 15 martie)"' : '') + '>' + z + '</button>';
+      }
+      h += '</div><div class="fp-cal-foot"><span class="fp-cal-leg"><i></i>1 nov – 15 mar: interzis</span><button type="button" class="fp-link" data-d="' + aziIso + '">Azi</button></div>';
+      pop.innerHTML = h;
+    }
+    var api = {
+      wrap: wrap,
+      open: function () { if (calDeschis && calDeschis !== api) calDeschis.close(); if (sel) { var p = sel.split('-'); vy = +p[0]; vm = +p[1]; } deseneaza(); pop.hidden = false; field.classList.add('is-open'); wrap.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); calDeschis = api; },
+      close: function () { pop.hidden = true; field.classList.remove('is-open'); wrap.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); if (calDeschis === api) calDeschis = null; }
+    };
+    btn.addEventListener('click', function (ev) { ev.preventDefault(); ev.stopPropagation(); if (pop.hidden) api.open(); else api.close(); });
+    input.addEventListener('focus', function () { if (!mobil()) api.open(); });
+    pop.addEventListener('mousedown', function (ev) { ev.preventDefault(); }); /* păstrează focusul în câmp */
+    pop.addEventListener('click', function (ev) {
+      var n = ev.target.closest('[data-nav]');
+      if (n) { vm += +n.getAttribute('data-nav'); if (vm < 1) { vm = 12; vy--; } if (vm > 12) { vm = 1; vy++; } deseneaza(); return; }
+      var d = ev.target.closest('[data-d]'); if (!d) return;
+      seteaza(d.getAttribute('data-d'), true); api.close();
+    });
+    arata(sel);
+    return api;
+  }
 
   /* ---------- rezumat + avertismente ---------- */
   function actualizeaza() {

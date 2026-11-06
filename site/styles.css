@@ -1053,7 +1053,27 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 
 /* ---------- plan de fertilizare (model simplificat, doar azot) — aceleași componente ca la calculatorul de pesticide ---------- */
 .fp .field small em { font-style: normal; font-weight: 400; color: #868fa2; }
-.fp .field input[type="date"] { font: inherit; font-size: 16px; font-weight: 500; color: #242c3c; border: 0; background: transparent; padding: 0; width: 100%; outline: none; }
+/* data aplicării: câmp text (zz.ll.aaaa) + calendar */
+.fp-dsel { position: relative; min-width: 0; }
+.fp-dsel.is-open { z-index: 6; }
+.fp-d { cursor: text; }
+.fp-cal-btn { flex: 0 0 auto; display: grid; place-items: center; width: 40px; height: 40px; margin: -8px -6px -8px 0; border: 0; border-radius: 12px; background: transparent; color: #3f4b66; cursor: pointer; }
+.fp-cal-btn:hover, .fp-cal-btn[aria-expanded="true"] { background: #e6efff; color: var(--fg); }
+.fp-cal { position: absolute; right: 0; top: calc(100% + 6px); z-index: 5; width: min(340px, calc(100vw - 32px)); padding: 14px; background: var(--surface); border-radius: 24px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); text-align: left; }
+.fp-cal-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.fp-cal-head b { font-size: 16px; font-weight: 600; text-transform: capitalize; }
+.fp-cal-nav { width: 36px; height: 36px; border: 0; border-radius: 50%; background: var(--surface-2); color: var(--fg); font-size: 22px; line-height: 1; cursor: pointer; }
+.fp-cal-nav:hover { background: #e6efff; }
+.fp-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.fp-cal-grid .wd { padding: 4px 0; font-size: 12px; font-weight: 600; color: #5a6478; text-align: center; }
+.fp-day { aspect-ratio: 1; min-height: 36px; border: 0; border-radius: 50%; background: none; font: inherit; font-size: 15px; font-weight: 500; color: #242c3c; cursor: pointer; font-variant-numeric: tabular-nums; }
+.fp-day:hover { background: #e6efff; }
+.fp-day.is-forb { color: #b4232f; background: #fff1f2; }
+.fp-day.is-today { box-shadow: inset 0 0 0 2px #242c3c; }
+.fp-day.is-sel, .fp-day.is-sel:hover { background: var(--fg); color: #fff; }
+.fp-cal-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e3e9f6; }
+.fp-cal-leg { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #5a6478; }
+.fp-cal-leg i { width: 12px; height: 12px; border-radius: 50%; background: #fff1f2; box-shadow: inset 0 0 0 1px #f3b6bc; }
 .fp-sec { margin: 6px 0 -4px; padding: 0 16px; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; color: #3f4b66; text-align: left; }
 .fp-apl { display: grid; gap: 12px; }
 .fp-a { display: grid; gap: 10px; padding: 12px; border: 1.5px solid #e3e9f6; border-radius: 22px; }
