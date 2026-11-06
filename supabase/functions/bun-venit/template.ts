@@ -65,7 +65,7 @@ export default `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "
 <tr><td class="hero-bg" background="{{assets_url}}/hero-camp.jpg" bgcolor="#cedbf6" valign="top" style="background-color:#cedbf6;background-image:url('{{assets_url}}/hero-camp.jpg');background-size:100% auto;background-position:center bottom;background-repeat:no-repeat;">
 <!--[if gte mso 9]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:1020px;"><v:fill type="frame" src="{{assets_url}}/hero-camp.jpg" color="#cedbf6" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr><td align="center" style="padding:40px 40px 0;"><a href="{{site_url}}" style="text-decoration:none;"><img class="lt" src="{{assets_url}}/logo.png" width="130" height="29" alt="Pesticid" style="width:130px;height:auto;margin:0 auto;"><!--[if !mso]><!--><img class="dk" src="{{assets_url}}/logo-white.png" width="130" height="29" alt="Pesticid" style="display:none;max-height:0;overflow:hidden;width:130px;height:auto;margin:0 auto;"><!--<![endif]--></a></td></tr>
+  <tr><td align="center" style="padding:40px 40px 0;"><a href="{{site_url}}" style="text-decoration:none;"><img class="lt" src="{{assets_url}}/logo.png" width="150" height="29" alt="AgroSphere" style="width:150px;height:auto;margin:0 auto;"><!--[if !mso]><!--><img class="dk" src="{{assets_url}}/logo-white.png" width="150" height="29" alt="AgroSphere" style="display:none;max-height:0;overflow:hidden;width:150px;height:auto;margin:0 auto;"><!--<![endif]--></a></td></tr>
   <tr><td align="center" class="px" style="padding:48px 40px 0;">
     <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#ceee58" style="background-color:#ceee58;border-radius:999px;padding:6px 12px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:20px;font-weight:500;color:#111111;">{{hero_tag}}</td></tr></table>
   </td></tr>
@@ -156,8 +156,8 @@ export default `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "
     </tr></table></td>
   </tr></table>
 </td></tr>
-<tr><td align="center" style="padding:28px 40px 0;"><a href="{{site_url}}" style="text-decoration:none;"><img class="lt" src="{{assets_url}}/logo.png" width="150" height="34" alt="Pesticid" style="width:150px;height:auto;margin:0 auto;"><!--[if !mso]><!--><img class="dk" src="{{assets_url}}/logo-white.png" width="150" height="34" alt="Pesticid" style="display:none;max-height:0;overflow:hidden;width:150px;height:auto;margin:0 auto;"><!--<![endif]--></a></td></tr>
-<tr><td align="center" class="px t-muted" style="padding:24px 40px 48px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#5a6478;">Primești acest email pentru că te-ai înscris pe lista de așteptare Pesticid cu adresa {{email}}.<br>{{company_line}} &middot; <a href="{{unsubscribe_url}}" style="color:#5a6478;text-decoration:underline;">Dezabonare</a></td></tr>
+<tr><td align="center" style="padding:28px 40px 0;"><a href="{{site_url}}" style="text-decoration:none;"><img class="lt" src="{{assets_url}}/logo.png" width="170" height="33" alt="AgroSphere" style="width:150px;height:auto;margin:0 auto;"><!--[if !mso]><!--><img class="dk" src="{{assets_url}}/logo-white.png" width="170" height="33" alt="AgroSphere" style="display:none;max-height:0;overflow:hidden;width:150px;height:auto;margin:0 auto;"><!--<![endif]--></a></td></tr>
+<tr><td align="center" class="px t-muted" style="padding:24px 40px 48px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#5a6478;">Primești acest email pentru că te-ai înscris pe lista de așteptare AgroSphere cu adresa {{email}}.<br>{{company_line}} &middot; <a href="{{unsubscribe_url}}" style="color:#5a6478;text-decoration:underline;">Dezabonare</a></td></tr>
 
 </table>
 <!--[if mso]></td></tr></table><![endif]-->

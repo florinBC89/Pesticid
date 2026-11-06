@@ -1,5 +1,5 @@
 // Pesticid — dezabonare de la emailurile Pesticid.
-//   POST { email, t }                         → din pagina pesticid.info/dezabonare/ (după ce omul apasă „Confirmă”)
+//   POST { email, t }                         → din pagina agrosphere.eu/dezabonare/ (după ce omul apasă „Confirmă”)
 //   POST ?email=…&t=… (List-Unsubscribe=One-Click) → butonul „Unsubscribe” din Gmail / Apple Mail (RFC 8058)
 // t = HMAC-SHA256(webhook_secret, "dezabonare|" + email normalizat), primele 32 de caractere base64url — același calcul ca în `bun-venit`.
 // Marchează toate rândurile cu acel email (orice plan) cu dezabonat_at; locul rezervat rămâne.

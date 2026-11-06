@@ -15,7 +15,7 @@ const KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const RESEND_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
 const TS_SECRET = Deno.env.get("TURNSTILE_SECRET") ?? "";
 const TO = Deno.env.get("RAPORT_TO") ?? "bostan.florin89@gmail.com";
-const FROM = Deno.env.get("RAPORT_FROM") ?? "Pesticid · Rapoarte <rapoarte@pesticid.info>";
+const FROM = Deno.env.get("RAPORT_FROM") ?? "AgroSphere · Rapoarte <rapoarte@pesticid.info>";
 const BUCKET = "rapoarte";
 const H = { apikey: KEY, Authorization: `Bearer ${KEY}`, "Content-Type": "application/json" };
 const CORS = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "POST, OPTIONS", "Access-Control-Allow-Headers": "content-type, apikey, authorization, x-client-info" };
@@ -139,7 +139,7 @@ async function actSterge(b: Record<string, unknown>) {
   return json(200, { ok: true });
 }
 
-const GAZDE = ["pesticid.info", "www.pesticid.info", "florinbc89.github.io"];
+const GAZDE = ["agrosphere.eu", "www.agrosphere.eu", "pesticid.info", "www.pesticid.info", "florinbc89.github.io"];
 
 /* verificarea tokenului la Cloudflare; dacă Cloudflare nu răspunde deloc (rar), lăsăm cererea să treacă —
    limitele pe IP și pe minut rămân oricum active, iar un atacator nu poate provoca el căderea Cloudflare */
@@ -218,7 +218,7 @@ ${linkuri.length ? `<h3 style="margin:20px 0 8px;font-size:16px">Fișiere atașa
 </div>`;
     const r = await fetch("https://api.resend.com/emails", {
       method: "POST", headers: { Authorization: `Bearer ${RESEND_KEY}`, "Content-Type": "application/json", "Idempotency-Key": `raport/${raport.id}` },
-      body: JSON.stringify({ from: FROM, to: [TO], reply_to: email, subject: `[Pesticid #${raport.nr}] ${SUBIECTE[subiect]}: ${dezarmeaza(descriere).replace(/\s+/g, " ").slice(0, 60)}`, html, tags: [{ name: "tip", value: "raport-problema" }, { name: "subiect", value: subiect }] }),
+      body: JSON.stringify({ from: FROM, to: [TO], reply_to: email, subject: `[AgroSphere #${raport.nr}] ${SUBIECTE[subiect]}: ${dezarmeaza(descriere).replace(/\s+/g, " ").slice(0, 60)}`, html, tags: [{ name: "tip", value: "raport-problema" }, { name: "subiect", value: subiect }] }),
     });
     if (!r.ok) throw new Error(`Resend ${r.status}: ${(await r.text()).slice(0, 200)}`);
     upd.trimis_at = new Date().toISOString();

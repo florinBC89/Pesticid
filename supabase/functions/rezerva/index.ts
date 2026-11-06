@@ -10,7 +10,7 @@ const TS_SECRET = Deno.env.get("TURNSTILE_SECRET") ?? "";
 const H = { apikey: KEY, Authorization: `Bearer ${KEY}`, "Content-Type": "application/json" };
 const CORS = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "POST, OPTIONS", "Access-Control-Allow-Headers": "content-type, apikey, authorization, x-client-info" };
 const json = (status: number, body: unknown) => new Response(JSON.stringify(body), { status, headers: { ...CORS, "Content-Type": "application/json" } });
-const GAZDE = ["pesticid.info", "www.pesticid.info", "florinbc89.github.io"];
+const GAZDE = ["agrosphere.eu", "www.agrosphere.eu", "pesticid.info", "www.pesticid.info", "florinbc89.github.io"];
 
 const ipDin = (req: Request) => (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || req.headers.get("cf-connecting-ip") || "";
 

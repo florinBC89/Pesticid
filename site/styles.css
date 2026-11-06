@@ -56,7 +56,7 @@ b, strong { font-weight: 600; color: var(--fg); }
 
 /* ---------- logo (Pesticid.info, SVG) ---------- */
 .logo { display: inline-flex; align-items: center; line-height: 0; }
-.logo img { display: block; width: 180px; height: auto; }
+.logo img { display: block; width: 220px; height: auto; }
 
 /* ---------- buton ---------- */
 .btn {
@@ -729,7 +729,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 
 /* ---------- tabletă ---------- */
 @media (max-width: 1100px) {
-  .logo img { width: 160px; }
+  .logo img { width: 196px; }
   .nav .wrap { height: 96px; padding-left: max(28px, env(safe-area-inset-left, 0px)); padding-right: max(28px, env(safe-area-inset-right, 0px)); }
   :root { --nav-h: 96px; --nav-fade: 24px; }
   .hero { padding-top: calc(190px + var(--promo-h)); }
@@ -787,7 +787,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   .nav .wrap { height: 78px; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
   :root { --nav-h: 78px; --nav-btn-h: 52px; --nav-fade: 10px; }
   .nav .btn { height: 52px; min-width: 136px; font-size: 15px; }
-  .logo img { width: 132px; }
+  .logo img { width: 160px; }
   .hero { min-height: 0; padding-top: calc(140px + var(--promo-h)); padding-bottom: 56px; }
   /* pe mobil fotografia urcă 200px și, când hero-ul se lungește cu rezultate, rămâne ancorată jos cu înălțime plafonată,
      ca să nu fie mărită de 6–7 ori (sursa are 1920×1251); deasupra ei continuă fundalul, în care fotografia se estompează */

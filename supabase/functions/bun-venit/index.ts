@@ -12,15 +12,15 @@ const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const RESEND_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
 // secretul webhook-ului stă într-un singur loc: Vault (vault.webhook_secret), citit prin rpc-ul `webhook_secret` (doar service_role)
 let WEBHOOK_SECRET = Deno.env.get("WEBHOOK_SECRET") ?? "";
-const FROM = Deno.env.get("EMAIL_FROM") ?? "Pesticid <bun-venit@pesticid.info>";
+const FROM = Deno.env.get("EMAIL_FROM") ?? "AgroSphere <bun-venit@pesticid.info>";
 const REPLY_TO = Deno.env.get("EMAIL_REPLY_TO") ?? "";
 const ASSETS = (Deno.env.get("EMAIL_ASSETS_URL") ?? "https://rpwmfhlmdscjpcrqqmyf.supabase.co/storage/v1/object/public/emails").replace(/\/$/, "");
-const SITE = (Deno.env.get("SITE_URL") ?? "https://pesticid.info").replace(/\/$/, "");
+const SITE = (Deno.env.get("SITE_URL") ?? "https://agrosphere.eu").replace(/\/$/, "");
 const FONT = "Arial,Helvetica,sans-serif";
 // numele fișierelor din bucket-ul Storage „emails” diferă de cele din șablon (urcate manual)
-const ASSET_MAP: Record<string, string> = { "logo.png": "Logo-Pesticid.png", "icon-date.png": "date.png", "linkedin.png": "Linkedin.png", "twitter.png": "Twitter.png", "calc.png": "calculator.png", "hero-camp.jpg": "Hero newsletter image.jpg", "hero-vie.jpg": "Second image from newsletter.jpg",
+const ASSET_MAP: Record<string, string> = { "logo.png": `${SITE}/assets/email-logo.png`, "icon-date.png": "date.png", "linkedin.png": "Linkedin.png", "twitter.png": "Twitter.png", "calc.png": "calculator.png", "hero-camp.jpg": "Hero newsletter image.jpg", "hero-vie.jpg": "Second image from newsletter.jpg",
   // dark theme (afișate doar de clienții cu prefers-color-scheme: dark / Outlook data-ogsc)
-  "logo-white.png": "Logo-Pesticid-white.png", "twitter-white.png": "Twitter-white.png", "linkedin-white.png": "Linkedin-white.png", "footer-dark.jpg": "Footer-image-dark.jpg" };
+  "logo-white.png": `${SITE}/assets/email-logo-white.png`, "twitter-white.png": "Twitter-white.png", "linkedin-white.png": "Linkedin-white.png", "footer-dark.jpg": "Footer-image-dark.jpg" };
 
 type Row = { id: number; email: string; plan: string; trimis_at: string | null; dezabonat_at: string | null };
 type Variant = Record<string, string | number | null> & { id: string; plan: string; rang_max: number | null; subject: string; bullets: string };
@@ -53,7 +53,7 @@ function render(variant: Variant, email: string, dezQ: string): string {
   for (const k of ["intro", "second_headline", "second_text", "offer_calc"]) v[k] = strong(v[k]);
   const sub = (_: string, key: string) => { if (!(key in v)) throw new Error(`token necunoscut în template: ${key}`); return v[key]; };
   let html = TEMPLATE.replace(/\{\{(\w+)\}\}/g, sub).replace(/\{\{(\w+)\}\}/g, sub);
-  for (const [a, b] of Object.entries(ASSET_MAP)) html = html.replaceAll(`${ASSETS}/${a}`, `${ASSETS}/${encodeURIComponent(b)}`);
+  for (const [a, b] of Object.entries(ASSET_MAP)) html = html.replaceAll(`${ASSETS}/${a}`, b.startsWith("http") ? b : `${ASSETS}/${encodeURIComponent(b)}`);
   return html;
 }
 function alegeVarianta(plan: string, rang: number): Variant {

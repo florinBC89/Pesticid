@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Dezabonare — Pesticid.info</title>
+<title>Dezabonare — AgroSphere</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#cedbf6">
 <link rel="icon" href="../favicon.ico" sizes="48x48">
@@ -14,7 +14,7 @@
 <style>
   body { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
   .dz-top { display: flex; justify-content: center; padding: 40px 16px 0; }
-  .dz-top img { display: block; width: 160px; height: auto; }
+  .dz-top img { display: block; width: 196px; height: auto; }
   .dz-main { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 48px 16px 64px; }
   .dz-card { width: min(560px, 100%); background: var(--surface); border-radius: 40px; box-shadow: var(--shadow); padding: 36px 28px 32px; text-align: center; display: grid; gap: 16px; justify-items: center; }
   .dz-card h1 { margin: 0; font-size: 26px; line-height: 1.2; font-weight: 700; }
@@ -26,15 +26,15 @@
   .dz-card .tag { font-size: 18px; padding: 6px 14px; }
   .dz-card .back { font-size: 15px; color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
   [hidden] { display: none !important; }
-  @media (max-width: 480px) { .dz-card { padding: 28px 20px 24px; border-radius: 28px; } .dz-card h1 { font-size: 22px; } .dz-top img { width: 132px; } }
+  @media (max-width: 480px) { .dz-card { padding: 28px 20px 24px; border-radius: 28px; } .dz-card h1 { font-size: 22px; } .dz-top img { width: 160px; } }
 </style>
 </head>
 <body>
-<header class="dz-top"><a href="../" aria-label="Pesticid.info, prima pagină"><img src="../assets/logo-pesticid.svg" alt="Pesticid.info" width="1595" height="521"></a></header>
+<header class="dz-top"><a href="../" aria-label="AgroSphere, prima pagină"><img src="../assets/logo-agrosphere.svg" alt="AgroSphere" width="1585" height="311"></a></header>
 <main class="dz-main">
   <section class="dz-card" aria-live="polite">
     <div id="st-confirm" hidden>
-      <h1>Te dezabonezi de la emailurile Pesticid?</h1>
+      <h1>Te dezabonezi de la emailurile AgroSphere?</h1>
       <p style="margin-top:12px">Nu vei mai primi emailuri pe <b id="dz-email"></b>. Locul tău rezervat pe lista de așteptare rămâne valabil.</p>
     </div>
     <button class="btn" id="dz-go" type="button" hidden>Confirmă dezabonarea</button>
@@ -47,7 +47,7 @@
       <h1>Nu am putut face dezabonarea</h1>
       <p class="err" id="dz-err" style="margin-top:12px"></p>
     </div>
-    <a class="back" href="../">Înapoi la Pesticid.info</a>
+    <a class="back" href="../">Înapoi la AgroSphere</a>
   </section>
 </main>
 <script>
@@ -57,7 +57,7 @@
   var $ = function (id) { return document.getElementById(id); };
   function arata(id) { ['st-confirm', 'st-ok', 'st-err'].forEach(function (x) { $(x).hidden = x !== id; }); $('dz-go').hidden = id !== 'st-confirm'; }
   function eroare(m) { $('dz-err').textContent = m; arata('st-err'); }
-  if (!email || !t) { eroare('Linkul de dezabonare nu e complet. Deschide linkul „Dezabonare” direct din emailul primit de la Pesticid.'); return; }
+  if (!email || !t) { eroare('Linkul de dezabonare nu e complet. Deschide linkul „Dezabonare” direct din emailul primit de la AgroSphere.'); return; }
   $('dz-email').textContent = email; $('dz-email-ok').textContent = email; arata('st-confirm');
   $('dz-go').addEventListener('click', function () {
     var b = $('dz-go'); b.disabled = true; b.textContent = 'Se trimite…';

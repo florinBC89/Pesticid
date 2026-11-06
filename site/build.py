@@ -27,26 +27,26 @@ index = f'''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Pesticid — Calculator de doză pentru pesticide</title>
+<title>AgroSphere — Calculator de doză pentru pesticide</title>
 <meta name="description" content="{desc}">
 <meta name="theme-color" content="#cedbf6">
-<link rel="canonical" href="https://pesticid.info/">
+<link rel="canonical" href="https://agrosphere.eu/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Pesticid.info">
+<meta property="og:site_name" content="AgroSphere">
 <meta property="og:locale" content="ro_RO">
-<meta property="og:url" content="https://pesticid.info/">
-<meta property="og:title" content="Pesticid.info — Îți calculează doza">
+<meta property="og:url" content="https://agrosphere.eu/">
+<meta property="og:title" content="AgroSphere — Îți calculează doza">
 <meta property="og:description" content="{desc}">
-<meta property="og:image" content="https://pesticid.info/assets/og-image.jpg">
-<meta property="og:image:secure_url" content="https://pesticid.info/assets/og-image.jpg">
+<meta property="og:image" content="https://agrosphere.eu/assets/og-image.jpg">
+<meta property="og:image:secure_url" content="https://agrosphere.eu/assets/og-image.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Pesticid.info — calculatorul de doză pentru pesticide">
+<meta property="og:image:alt" content="AgroSphere — calculatorul de doză pentru pesticide">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Pesticid.info — Îți calculează doza">
+<meta name="twitter:title" content="AgroSphere — Îți calculează doza">
 <meta name="twitter:description" content="{desc}">
-<meta name="twitter:image" content="https://pesticid.info/assets/og-image.jpg">
+<meta name="twitter:image" content="https://agrosphere.eu/assets/og-image.jpg">
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
@@ -72,7 +72,7 @@ index = f'''<!doctype html>
 </html>
 '''
 (root / 'index.html').write_text(index, encoding='utf-8')
-preview = f'''<title>Pesticid</title>
+preview = f'''<title>AgroSphere</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 {fonts}
 <style>
