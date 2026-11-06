@@ -447,9 +447,9 @@ b, strong { font-weight: 600; color: var(--fg); }
 .step .arrow .ar-h { width: 89px; height: 23px; }
 .step .arrow .ar-v { display: none; width: 23px; height: 51px; }
 .step.is-visible .arrow { opacity: 1; transform: none; }
-.step-txt { display: grid; gap: 20px; max-width: 240px; }
-.step h3 { font-size: 30px; line-height: 40px; font-weight: 600; }
-.step p { font-size: 18px; line-height: 26px; color: var(--muted); }
+.step-txt { display: grid; gap: 20px; }
+.step h3 { max-width: 360px; font-size: 30px; line-height: 40px; font-weight: 600; }
+.step p { max-width: 300px; font-size: 18px; line-height: 26px; color: var(--muted); }
 
 /* ---------- acces timpuriu (Figma 2062:31024 / 2062:31465 / 2064:32570) ---------- */
 .early {
