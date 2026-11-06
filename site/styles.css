@@ -1134,3 +1134,5 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   .fp-print .fp-tbl td { height: 22px; }
   .fp-print .fp-pr-note { margin: 10px 0 0; padding-left: 18px; font-size: 8pt; line-height: 1.35; columns: 2; }
 }
+.fp-a-top .fp-del { color: #b4232f; text-decoration: none; font-weight: 500; }
+.fp-a-top .fp-del:hover { color: #8f1d27; text-decoration: underline; text-underline-offset: 3px; }
