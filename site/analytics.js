@@ -76,7 +76,7 @@
         capture_pageview: true,
         capture_pageleave: true,
         disable_session_recording: consent !== 'yes' || Math.random() > 0.1, /* înregistrarea sesiunilor doar cu acord (GDPR), ~10% din vizite */
-        session_recording: { maskAllInputs: true, maskTextSelector: 'input, .form-msg' },
+        session_recording: { maskAllInputs: true, maskTextSelector: 'input, textarea, .form-msg, [data-done-email], #r-done-email, .att-list' },
         property_denylist: ['$current_url_email'],
         loaded: function () {
           window.posthog.register(common);
