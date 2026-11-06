@@ -124,6 +124,8 @@ b, strong { font-weight: 600; color: var(--fg); }
 .menu-it { display: flex; flex-direction: column; justify-content: center; gap: 2px; height: 66px; font-size: 16px; line-height: 19px; white-space: nowrap; }
 .menu-it.is-on { font-weight: 600; color: var(--fg); }
 .menu-it.is-on:hover { text-decoration: underline; text-underline-offset: 4px; }
+a.menu-it:not(.is-on) { color: var(--muted); }
+a.menu-it:not(.is-on):hover { color: var(--fg); text-decoration: underline; text-underline-offset: 4px; }
 .menu-it.is-soon { justify-content: flex-end; align-items: flex-start; color: var(--muted); cursor: default; }
 .soon { display: inline-flex; padding: 3px 8px; border-radius: 999px; background: #ceee58; color: var(--fg); font-size: 13px; line-height: 16px; font-weight: 400; white-space: nowrap; }
 .burger { display: none; }
@@ -739,8 +741,18 @@ b, strong { font-weight: 600; color: var(--fg); }
 .spick .sgo { width: 100%; margin-top: 12px; }
 html.is-locked, html.is-locked body { overflow: hidden; }
 
-/* ---------- sub 1380px meniul nu mai încape pe un rând: hamburger + panou (Figma 2210:34545, 2211:36299) ---------- */
-@media (max-width: 1380px) {
+/* ---------- 1025–1380px: meniul complet, dar mai compact (font și spații mai mici), ca să încapă pe laptopuri ---------- */
+@media (min-width: 1025px) and (max-width: 1380px) {
+  .nav .wrap { gap: 16px; }
+  .menu ul { gap: 18px; padding: 0 4px; }
+  .menu-it { font-size: 14px; line-height: 17px; height: 60px; }
+  .soon { font-size: 11px; line-height: 14px; padding: 2px 7px; }
+  .logo img { width: 180px; }
+  .nav .nav-btn { height: 52px; min-width: 0; padding: 0 18px; font-size: 15px; white-space: nowrap; }
+  :root { --nav-btn-h: 52px; }
+}
+/* ---------- până la 1024px (telefoane, tablete) meniul nu mai încape pe un rând: hamburger + panou (Figma 2210:34545, 2211:36299) ---------- */
+@media (max-width: 1024px) {
   .menu, .nav .nav-btn { display: none; }
   .burger { display: inline-flex; flex-direction: column; justify-content: space-between; width: 44px; height: 44px; margin-right: -10px; padding: 12px 10px; border: 0; border-radius: 12px; background: none; color: var(--fg); }
   .burger span { display: block; height: 3px; border-radius: 99px; background: currentColor; transition: transform 0.25s var(--ease), opacity 0.2s; }
@@ -760,9 +772,11 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   .mm-it { display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 20px; line-height: 24px; text-align: center; }
   .mm-it.is-on { padding: 16px 15px; border-radius: 999px; background: var(--surface); font-weight: 600; color: var(--fg); }
   .mm-it.is-soon { color: var(--muted); cursor: default; }
+  a.mm-it:not(.is-on) { color: var(--muted); }
+  a.mm-it:not(.is-on):hover { color: var(--fg); text-decoration: underline; text-underline-offset: 4px; }
   .mm-btn { width: 100%; }
 }
-@media (max-width: 1380px) and (prefers-reduced-motion: reduce) { .mmenu, .burger span { transition: none; } }
+@media (max-width: 1024px) and (prefers-reduced-motion: reduce) { .mmenu, .burger span { transition: none; } }
 
 /* ---------- tabletă ---------- */
 @media (max-width: 1100px) {

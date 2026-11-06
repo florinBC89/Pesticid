@@ -212,12 +212,12 @@
     if (mmBtn) mmBtn.addEventListener('click', function () { if (window.track) window.track('hero_cta_clicked', { cta: 'menu_am_o_problema' }); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') setMenu(false, true); });
     document.addEventListener('click', function (e) { if (burger.getAttribute('aria-expanded') === 'true' && !mmenu.contains(e.target) && !burger.contains(e.target)) setMenu(false); });
-    window.matchMedia('(min-width: 1381px)').addEventListener('change', function (m) { if (m.matches) setMenu(false); });
+    window.matchMedia('(min-width: 1025px)').addEventListener('change', function (m) { if (m.matches) setMenu(false); });
   }
 
   /* fără internet: un service worker mic arată pagina „Nu ai internet” (offline.html) în loc de eroarea browserului */
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+    window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });
   }
 
   /* butoanele „Log in” etc. nu fac nimic deocamdată (fluxul de cont vine mai târziu) */

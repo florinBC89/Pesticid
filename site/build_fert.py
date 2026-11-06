@@ -17,6 +17,7 @@ js = (root / 'fert.js').read_text(encoding='utf-8')
 mainjs = (root / 'main.js').read_text(encoding='utf-8')
 env = root / '..' / 'app' / '.env'
 sbkey = env.read_text().split('VITE_SUPABASE_ANON_KEY=')[1].split()[0] if env.exists() else ''
+phkey = env.read_text().split('VITE_POSTHOG_KEY=')[1].split()[0] if env.exists() and 'VITE_POSTHOG_KEY=' in env.read_text() else ''
 
 header = body.split('<main id="top">')[0]
 footer = '<footer' + body.split('<footer', 1)[1].split('</footer>')[0] + '</footer>' if '<footer' in body else ''
@@ -27,10 +28,8 @@ def antet(prefix):
     # „Calculator pesticide” devine link spre prima pagină; „Plan de fertilizare” e pagina curentă
     h = h.replace(f'<a class="menu-it is-on" href="{prefix}#top" aria-current="page">Calculator pesticide</a>', f'<a class="menu-it" href="{prefix}">Calculator pesticide</a>')
     h = h.replace(f'<a class="mm-it is-on" href="{prefix}#top" aria-current="page">Calculator pesticide</a>', f'<a class="mm-it" href="{prefix}">Calculator pesticide</a>')
-    h = re.sub(r'<li><span class="menu-it is-soon" aria-disabled="true"><span>Plan de fertilizare</span><span class="soon">În curând</span></span></li>',
-               '<li><a class="menu-it is-on" href="#top" aria-current="page">Plan de fertilizare</a></li>', h)
-    h = re.sub(r'<li><span class="mm-it is-soon" aria-disabled="true"><span>Plan de fertilizare</span><span class="soon">În curând</span></span></li>',
-               '<li><a class="mm-it is-on" href="#top" aria-current="page">Plan de fertilizare</a></li>', h)
+    h = h.replace('<a class="menu-it" href="/plan-fertilizare/">Plan de fertilizare</a>', '<a class="menu-it is-on" href="/plan-fertilizare/" aria-current="page">Plan de fertilizare</a>')
+    h = h.replace('<a class="mm-it" href="/plan-fertilizare/">Plan de fertilizare</a>', '<a class="mm-it is-on" href="/plan-fertilizare/" aria-current="page">Plan de fertilizare</a>')
     return h
 
 
@@ -53,6 +52,7 @@ fonts = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="p
 extra_css = '.fp-hero .calc { width: min(1100px, 100%); }\n.fp-hero .hero-copy { max-width: 1160px; }\n'
 
 # 1) pagina pentru site
+ph = f'<meta name="pesticid-posthog" data-key="{phkey}" data-host="https://eu.i.posthog.com">' if phkey else ''
 sb = f'<meta name="pesticid-supabase" data-url="https://rpwmfhlmdscjpcrqqmyf.supabase.co" data-key="{sbkey}">' if sbkey else ''
 pagina = f'''<!doctype html>
 <html lang="ro" class="no-js">
@@ -67,6 +67,7 @@ pagina = f'''<!doctype html>
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 {sb}
+{ph}
 {fonts}
 <link rel="stylesheet" href="/styles.css">
 <style>{extra_css}</style>

@@ -175,8 +175,22 @@
   }
   $('fp-add-apl').addEventListener('click', function () { aplicareNoua(); T('fert_application_added', { n: apl.length }); });
 
+  /* câmpurile cu unitate: lățimea inputului urmează textul, ca unitatea (ha, t/ha, kg/ha…) să stea lângă cifre — ca în calculatorul de pesticide */
+  var masura = document.createElement('span'); masura.className = 'measure'; root.appendChild(masura);
+  function potriveste(input) {
+    var gol = !input.value; input.closest('.field').classList.toggle('is-empty', gol);
+    masura.style.fontWeight = gol ? '400' : '500'; masura.textContent = input.value || input.placeholder || '';
+    input.style.width = Math.max(20, masura.offsetWidth + 2) + 'px';
+  }
+  function potrivesteToate() { Array.prototype.forEach.call(root.querySelectorAll('.has-unit input'), potriveste); }
+  root.addEventListener('input', function (ev) {
+    var i = ev.target; if (!i.closest || !i.closest('.has-unit')) return;
+    var v = i.value.replace(/[^0-9.,]/g, ''); if (v !== i.value) i.value = v;
+  }, true);
+
   /* ---------- rezumat + avertismente ---------- */
   function actualizeaza() {
+    potrivesteToate();
     var plan = num($('fp-plan').value), tot = totalN(), cards = $('fp-cards'), w = [];
     cards.innerHTML =
       '<div class="cstat"><span class="k">Planificat N</span><span class="v">' + (plan ? fmt(plan, 0) : '—') + ' <small>kg s.a./ha</small></span></div>' +
@@ -257,6 +271,7 @@
   /* varianta de tipărit stă direct în <body>, ca la tipărire să putem ascunde tot restul paginii */
   var pr = $('fp-print-doc'); pr.classList.add('fp-print-host'); document.body.appendChild(pr);
   citeste(); deseneazaPlan(); aplicareNoua(); actualizeaza();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(potrivesteToate);
   incarca().then(function (rows) { pregateste(rows); deseneazaAplicari(); })
     .catch(function () { $('fp-hint').textContent = 'Lista de îngrășăminte nu s-a putut încărca.'; });
 })();
