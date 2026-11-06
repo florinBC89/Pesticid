@@ -60,7 +60,8 @@
     }
     function render() { var r = o.options(c.input.value); c.hits = r.items.slice(0, MAX); c.more = Math.max(0, r.items.length - c.hits.length); c.head = r.head || ''; c.hi = c.hits.length && c.input.value ? 0 : -1; paint(); }
     function pick(it) { c.input.value = it.label; inchide(); o.onPick(it); }
-    c.input.addEventListener('focus', render);
+    c.input.addEventListener('focus', function () { if (mobil() && o.picker) { c.input.blur(); deschidePicker(c); return; } render(); });
+    c.field.addEventListener('click', function (ev) { if (mobil() && o.picker) { ev.preventDefault(); deschidePicker(c); } });
     c.input.addEventListener('input', function () { if (o.onType) o.onType(c.input.value); render(); });
     c.input.addEventListener('keydown', function (ev) {
       if (c.dd.hidden) { if (ev.key === 'ArrowDown') { render(); ev.preventDefault(); } return; }
@@ -70,6 +71,65 @@
       else if (ev.key === 'Escape' || ev.key === 'Tab') inchide();
     });
     return c;
+  }
+
+  /* ---------- pe telefon: selectorul pe tot ecranul (același ca în calculatorul de pesticide și în căutare) ---------- */
+  var mq = window.matchMedia('(max-width: 700px)');
+  function mobil() { return mq.matches && !!document.getElementById('spick'); }
+  var ICO = {
+    wheat: '<path d="M12 21V9M12 9c-3 0-5-2-5-5 3 0 5 2 5 5zM12 9c3 0 5-2 5-5-3 0-5 2-5 5zM12 15c-3 0-5-2-5-5 3 0 5 2 5 5zM12 15c3 0 5-2 5-5-3 0-5 2-5 5z"/>',
+    sac: '<path d="M8 7h8l2 13H6z"/><path d="M9 7c0-2 1.3-3 3-3s3 1 3 3"/><path d="M10 13h4"/>'
+  };
+  var ico = function (n) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICO[n] + '</svg>'; };
+  var sp = null, spC = null, spHits = [], spTot = false, spLim = 40;
+  function sp$() {
+    if (sp) return sp;
+    var el = document.getElementById('spick');
+    sp = { el: el, title: $('sp-title'), lbl: $('sp-l'), ico: $('sp-i'), input: $('sp-in'), x: $('sp-x'), list: $('sp-list'), go: $('sp-go') };
+    sp.input.addEventListener('input', randeazaPicker);
+    sp.input.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') inchidePicker();
+      else if (ev.key === 'Enter') { ev.preventDefault(); var b = sp.list.querySelector('.schip[data-id]') || sp.list.querySelector('.schip[data-custom]'); if (b) b.click(); }
+    });
+    sp.x.addEventListener('click', function () { sp.input.value = ''; randeazaPicker(); sp.input.focus(); });
+    $('sp-back').addEventListener('click', inchidePicker);
+    sp.list.addEventListener('click', function (ev) {
+      var m = ev.target.closest('.schip.more'); if (m) { spTot = true; randeazaPicker(); return; }
+      var b = ev.target.closest('.schip'); if (!b || !spC) return;
+      var c = spC, q = sp.input.value.trim();
+      if (b.hasAttribute('data-custom')) { inchidePicker(); c.input.value = q; if (c.o.onType) c.o.onType(q); return; }
+      var it = spHits[Number(b.getAttribute('data-id'))]; inchidePicker(); if (it) { c.input.value = it.label; c.o.onPick(it); }
+    });
+    return sp;
+  }
+  function deschidePicker(c) {
+    var s = sp$(), P = c.o.picker; spC = c; spTot = false;
+    s.title.textContent = P.title; s.lbl.textContent = P.label; s.ico.innerHTML = ico(P.ico); s.input.placeholder = P.ph; s.input.value = '';
+    s.go.hidden = true; s.el.hidden = false; document.documentElement.classList.add('is-locked');
+    randeazaPicker(); s.input.focus();
+  }
+  function inchidePicker() { if (!sp || sp.el.hidden) return; sp.el.hidden = true; document.documentElement.classList.remove('is-locked'); spC = null; }
+  function chips(items, start) { return items.map(function (it, i) { return '<button type="button" class="schip" data-id="' + (start + i) + '">' + ico(spC.o.picker.ico) + '<span>' + esc(it.label) + '</span>' + (it.tag ? '<small>' + esc(it.tag) + '</small>' : '') + '</button>'; }).join(''); }
+  function randeazaPicker() {
+    if (!spC) return;
+    var q = sp.input.value, P = spC.o.picker, r = spC.o.options(q), h = '';
+    spHits = r.items.slice();
+    sp.x.hidden = !q;
+    if (norm(q)) {
+      var vis = spTot ? spHits : spHits.slice(0, spLim);
+      if (spHits.length) h += '<div class="sgrp"><div class="hd">Potriviri pentru „' + esc(q.trim()) + '”<small>' + spHits.length + '</small></div><div class="swrap">' + chips(vis, 0) + (spHits.length > vis.length ? '<button type="button" class="schip more">… încă ' + (spHits.length - vis.length) + '</button>' : '') + '</div></div>';
+      else if (!P.custom) h += '<p class="empty">' + esc(spC.o.empty) + '</p>';
+      /* cultura poate fi și una care nu e în listă: o păstrăm așa cum a scris-o omul */
+      if (P.custom && !spHits.some(function (it) { return norm(it.label) === norm(q); })) h += '<div class="sgrp"><div class="hd">Altă cultură</div><div class="swrap"><button type="button" class="schip" data-custom="1">' + ico(P.ico) + '<span>Folosește „' + esc(q.trim()) + '”</span></button></div></div>';
+    } else {
+      h += '<div class="sgrp"><div class="hd">' + esc(r.head || 'Toate') + '<small>' + spHits.length + '</small></div><div class="swrap">' + chips(spHits, 0) + '</div></div>';
+      if (P.toate) {
+        var all = P.toate(), lim = spTot ? all.length : 10, start = spHits.length;
+        spHits = spHits.concat(all.slice(0, lim));
+        h += '<div class="sgrp"><div class="hd">' + esc(P.toateTitlu) + '<small>' + all.length + '</small></div><div class="swrap">' + chips(all.slice(0, lim), start) + (all.length > lim ? '<button type="button" class="schip more">… încă ' + (all.length - lim) + '</button>' : '') + '</div></div>';
+      }
+    }
+    sp.list.innerHTML = h;
   }
 
   /* ---------- date ---------- */
@@ -99,6 +159,7 @@
   /* ---------- planificat ---------- */
   var cultSel = null, cult = Combo($('fp-s-cult'), {
     empty: 'Nicio cultură găsită. Poți păstra ce ai scris.',
+    picker: { title: 'Alege cultura', label: 'Cultura', ph: 'Scrie sau alege cultura…', ico: 'wheat', custom: true },
     options: function (q) { var k = norm(q); var it = CULTURI.filter(function (c) { return !k || c.k.indexOf(k) >= 0; }).map(function (c) { return { label: c.nume, c: c, tag: c.leg ? 'leguminoasă' : fmt(c.csp, 1) + ' kg N/t', tagCls: 'muted' }; }); return { items: it, head: k ? '' : 'Consum specific de azot (ICPA)' }; },
     onPick: function (it) { cultSel = it.c; sugereaza(); actualizeaza(); },
     onType: function () { cultSel = null; sugereaza(); actualizeaza(); }
@@ -134,6 +195,8 @@
       if (a.f) inF.value = a.f.nume; if (a.q) inQ.value = String(a.q).replace('.', ','); if (a.d) inD.value = a.d;
       Combo(div.querySelector('.sel'), {
         empty: 'Niciun îngrășământ cu azot găsit în lista MADR.',
+        picker: { title: 'Alege îngrășământul', label: 'Îngrășământ mineral', ph: 'Caută: uree, azotat de amoniu, UAN…', ico: 'sac', toateTitlu: 'Toate îngrășămintele cu azot, alfabetic',
+          toate: function () { return F.slice().sort(function (x, y) { return x.nume.localeCompare(y.nume, 'ro'); }).map(function (f) { return { label: f.nume, f: f, tag: tagF(f) }; }); } },
         options: function (q) {
           var k = norm(q), it;
           if (!k) it = POPULARE.map(function (nr) { return FBY[nr]; }).filter(Boolean);

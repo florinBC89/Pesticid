@@ -20,6 +20,7 @@ sbkey = env.read_text().split('VITE_SUPABASE_ANON_KEY=')[1].split()[0] if env.ex
 phkey = env.read_text().split('VITE_POSTHOG_KEY=')[1].split()[0] if env.exists() and 'VITE_POSTHOG_KEY=' in env.read_text() else ''
 
 header = body.split('<main id="top">')[0]
+spick = re.search(r'<div class="spick".*?\n</div>\n', body, re.S).group(0)  # selectorul pe tot ecranul (telefon)
 footer = '<footer' + body.split('<footer', 1)[1].split('</footer>')[0] + '</footer>' if '<footer' in body else ''
 
 
@@ -75,6 +76,7 @@ pagina = f'''<!doctype html>
 <body>
 {antet('/').replace('src="assets/', 'src="/assets/')}
 {continut('/')}
+{spick}
 {footer.replace('src="assets/', 'src="/assets/').replace('href="#', 'href="/#')}
 <script src="/analytics.js"></script>
 <script src="/main.js"></script>
@@ -98,6 +100,7 @@ preview = f'''<title>Plan de fertilizare — AgroSphere</title>
 </style>
 {antet('https://agrosphere.eu/')}
 {continut('')}
+{spick}
 <script type="application/json" id="fert-data">{json.dumps(date, ensure_ascii=False)}</script>
 <script>
 {mainjs}
