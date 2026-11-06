@@ -1136,3 +1136,5 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 }
 .fp-a-top .fp-del { color: #b4232f; text-decoration: none; font-weight: 500; }
 .fp-a-top .fp-del:hover { color: #8f1d27; text-decoration: underline; text-underline-offset: 3px; }
+#fp-warn { display: grid; gap: 8px; }
+#fp-warn:empty { display: none; }
