@@ -155,6 +155,7 @@
       var del = div.querySelector('.fp-del'); if (del) del.addEventListener('click', function () { apl.splice(i, 1); deseneazaAplicari(); actualizeaza(); });
       actualizeazaAplicare(a, out);
     });
+    potrivesteToate(); /* câmpurile noi de cantitate: unitatea lângă cifre */
   }
   function totalN(fara) { return apl.reduce(function (s, a) { return s + (a === fara ? 0 : kgN(a.f, a.q)); }, 0); }
   function interzis(d) { if (!d) return false; var p = d.split('-'), m = +p[1], z = +p[2]; return m === 11 || m === 12 || m === 1 || m === 2 || (m === 3 && z <= 15); }
