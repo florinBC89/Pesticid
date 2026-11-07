@@ -246,14 +246,23 @@
       onGo: function (q) { if (norm(q) && lastHits.length) { pickItem(lastHits[0]); return; } if (sel.c || sel.t || sel.p) { renderRes(); if (!res.hidden) res.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }
     };
   }
+  /* iPhone: când apare tastatura, Safari derulează ecranul ca să arate câmpul, iar titlul și săgeata „înapoi” ieșeau din ecran.
+     Selectorul se lipește de partea vizibilă a ecranului (visualViewport), deasupra tastaturii. */
+  function lipestePeEcran(el) {
+    var vv = window.visualViewport; if (!vv) return function () {};
+    var f = function () { el.style.top = vv.offsetTop + 'px'; el.style.height = vv.height + 'px'; el.style.bottom = 'auto'; };
+    vv.addEventListener('resize', f); vv.addEventListener('scroll', f); f();
+    return function () { vv.removeEventListener('resize', f); vv.removeEventListener('scroll', f); el.style.top = el.style.height = el.style.bottom = ''; };
+  }
+  var dezlipeste = function () {};
   function openPicker(client) {
     if (client.onOpen && client.onOpen() === false) return;
     spC = client;
     document.getElementById('sp-title').textContent = client.title; document.getElementById('sp-l').textContent = client.label; document.getElementById('sp-i').innerHTML = client.ico; spGo.textContent = client.go || 'Caută'; spGo.hidden = !client.go;
     spIn.value = ''; spIn.placeholder = client.ph; pick.hidden = false; document.documentElement.classList.add('is-locked');
-    renderPick(); spIn.focus();
+    renderPick(); dezlipeste = lipestePeEcran(pick); try { spIn.focus({ preventScroll: true }); } catch (e) { spIn.focus(); }
   }
-  function closePicker() { if (pick.hidden) return; pick.hidden = true; document.documentElement.classList.remove('is-locked'); spChips = []; hi = -1; var c = spC; spC = null; if (c && c.onClose) c.onClose(); }
+  function closePicker() { if (pick.hidden) return; dezlipeste(); dezlipeste = function () {}; pick.hidden = true; document.documentElement.classList.remove('is-locked'); spChips = []; hi = -1; var c = spC; spC = null; if (c && c.onClose) c.onClose(); }
   function renderPick() {
     if (!spC) return;
     var q = spIn.value; spList.innerHTML = spC.render(q);
@@ -264,7 +273,7 @@
   spIn.addEventListener('keydown', function (ev) { onKey(ev, spIn); });
   spList.addEventListener('click', onListClick);
   document.getElementById('sp-back').addEventListener('click', closePicker);
-  document.getElementById('sp-x').addEventListener('click', function () { spIn.value = ''; renderPick(); spIn.focus(); });
+  document.getElementById('sp-x').addEventListener('click', function () { spIn.value = ''; renderPick(); try { spIn.focus({ preventScroll: true }); } catch (e) { spIn.focus(); } });
   spGo.addEventListener('click', function () { var q = spIn.value, c = spC; closePicker(); if (c) c.onGo(q); });
   window.PesticidPicker = { open: openPicker, close: closePicker, mobile: mobile, chip: function (html, i) { return html; } };
 

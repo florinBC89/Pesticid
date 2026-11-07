@@ -91,7 +91,7 @@
       if (ev.key === 'Escape') inchidePicker();
       else if (ev.key === 'Enter') { ev.preventDefault(); var b = sp.list.querySelector('.schip[data-id]') || sp.list.querySelector('.schip[data-custom]'); if (b) b.click(); }
     });
-    sp.x.addEventListener('click', function () { sp.input.value = ''; randeazaPicker(); sp.input.focus(); });
+    sp.x.addEventListener('click', function () { sp.input.value = ''; randeazaPicker(); try { sp.input.focus({ preventScroll: true }); } catch (e) { sp.input.focus(); } });
     $('sp-back').addEventListener('click', inchidePicker);
     sp.list.addEventListener('click', function (ev) {
       var m = ev.target.closest('.schip.more'); if (m) { spTot = true; randeazaPicker(); return; }
@@ -102,13 +102,22 @@
     });
     return sp;
   }
+  /* iPhone: când apare tastatura, Safari derulează ecranul ca să arate câmpul, iar titlul și săgeata „înapoi” ieșeau din ecran.
+     Selectorul se lipește de partea vizibilă a ecranului (visualViewport), deasupra tastaturii. */
+  function lipestePeEcran(el) {
+    var vv = window.visualViewport; if (!vv) return function () {};
+    var f = function () { el.style.top = vv.offsetTop + 'px'; el.style.height = vv.height + 'px'; el.style.bottom = 'auto'; };
+    vv.addEventListener('resize', f); vv.addEventListener('scroll', f); f();
+    return function () { vv.removeEventListener('resize', f); vv.removeEventListener('scroll', f); el.style.top = el.style.height = el.style.bottom = ''; };
+  }
+  var dezlipeste = function () {};
   function deschidePicker(c) {
     var s = sp$(), P = c.o.picker; spC = c; spTot = false;
     s.title.textContent = P.title; s.lbl.textContent = P.label; s.ico.innerHTML = ico(P.ico); s.input.placeholder = P.ph; s.input.value = '';
     s.go.hidden = true; s.el.hidden = false; document.documentElement.classList.add('is-locked');
-    randeazaPicker(); s.input.focus();
+    randeazaPicker(); dezlipeste = lipestePeEcran(s.el); try { s.input.focus({ preventScroll: true }); } catch (e) { s.input.focus(); }
   }
-  function inchidePicker() { if (!sp || sp.el.hidden) return; sp.el.hidden = true; document.documentElement.classList.remove('is-locked'); spC = null; }
+  function inchidePicker() { if (!sp || sp.el.hidden) return; dezlipeste(); dezlipeste = function () {}; sp.el.hidden = true; document.documentElement.classList.remove('is-locked'); spC = null; }
   function chips(items, start) { return items.map(function (it, i) { return '<button type="button" class="schip" data-id="' + (start + i) + '">' + ico(spC.o.picker.ico) + '<span>' + esc(it.label) + '</span>' + (it.tag ? '<small>' + esc(it.tag) + '</small>' : '') + '</button>'; }).join(''); }
   function randeazaPicker() {
     if (!spC) return;
