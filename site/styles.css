@@ -753,6 +753,9 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 }
 /* ---------- până la 1024px (telefoane, tablete) meniul nu mai încape pe un rând: hamburger + panou (Figma 2210:34545, 2211:36299) ---------- */
 @media (max-width: 1024px) {
+  /* fără butonul din bară: fundalul rămâne plin până sub logo, apoi se stinge în 24px — conținutul derulat nu mai trece vizibil prin logo */
+  :root { --nav-fade: 24px; }
+  .nav::before { --fade-start: calc(var(--promo-h) + var(--nav-h) - 12px); }
   .menu, .nav .nav-btn { display: none; }
   .burger { display: inline-flex; flex-direction: column; justify-content: space-between; width: 44px; height: 44px; margin-right: -10px; padding: 12px 10px; border: 0; border-radius: 12px; background: none; color: var(--fg); }
   .burger span { display: block; height: 3px; border-radius: 99px; background: currentColor; transition: transform 0.25s var(--ease), opacity 0.2s; }
@@ -836,7 +839,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 /* ---------- mobil ---------- */
 @media (max-width: 700px) {
   .nav .wrap { height: 78px; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
-  :root { --nav-h: 78px; --nav-btn-h: 52px; --nav-fade: 10px; }
+  :root { --nav-h: 78px; --nav-btn-h: 52px; --nav-fade: 24px; }
   .logo img { width: 160px; }
   .hero { min-height: 0; padding-top: calc(140px + var(--promo-h)); padding-bottom: 56px; }
   /* pe mobil fotografia urcă 200px și, când hero-ul se lungește cu rezultate, rămâne ancorată jos cu înălțime plafonată,
