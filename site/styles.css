@@ -92,16 +92,17 @@ b, strong { font-weight: 600; color: var(--fg); }
   position: absolute;
   inset: 0 0 auto 0;
   height: calc(var(--promo-h) + var(--nav-h) + var(--nav-fade));
-  z-index: -1;
+  z-index: 0; /* nu -1: pe iPhone (Safari/WebKit) un fundal cu z-index negativ în bara fixă putea rămâne nedesenat */
   pointer-events: none;
   /* plin sub banda verde; gradientul începe la 6% din înălțimea butonului + 10px „Creează cont” (butonul e centrat în bară)
      și se termină la --nav-fade sub bară. --nav-h, --nav-btn-h și --nav-fade sunt pe breakpoint. */
-  --fade-start: calc(var(--promo-h) + (var(--nav-h) - var(--nav-btn-h)) / 2 + var(--nav-btn-h) * 0.06 + 10px);
+  --fade-start: calc(var(--promo-h) + var(--nav-h) - 12px); /* plin până sub meniu (altfel textul derulat se vede prin meniu), apoi se stinge */
   --fade-end: calc(var(--promo-h) + var(--nav-h) + var(--nav-fade));
   background: linear-gradient(180deg, var(--bg) 0, var(--bg) var(--fade-start), rgba(206, 219, 246, 0.85) calc(var(--fade-start) + (var(--fade-end) - var(--fade-start)) * 0.4), rgba(206, 219, 246, 0) 100%);
 }
+.nav > .promo, .nav > .wrap { position: relative; z-index: 1; }
 /* banda de campanie (early bird): stă sus, în nav, cât timp campania e activă; dispare la final */
-:root { --promo-h: 40px; --nav-h: 112px; --nav-btn-h: 64px; --nav-fade: 10px; }
+:root { --promo-h: 40px; --nav-h: 112px; --nav-btn-h: 64px; --nav-fade: 24px; }
 .no-promo { --promo-h: 0px; }
 .promo { display: flex; align-items: center; justify-content: center; height: var(--promo-h); padding: 0 16px; background: #ceee58; color: var(--fg); font-size: 14px; line-height: 18px; text-align: center; text-decoration: none; overflow: hidden; transition: background 0.2s; }
 .promo b { font-weight: 600; }
@@ -755,7 +756,6 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 @media (max-width: 1024px) {
   /* fără butonul din bară: fundalul rămâne plin până sub logo, apoi se stinge în 24px — conținutul derulat nu mai trece vizibil prin logo */
   :root { --nav-fade: 24px; }
-  .nav::before { --fade-start: calc(var(--promo-h) + var(--nav-h) - 12px); }
   .menu, .nav .nav-btn { display: none; }
   .burger { display: inline-flex; flex-direction: column; justify-content: space-between; width: 44px; height: 44px; margin-right: -10px; padding: 12px 10px; border: 0; border-radius: 12px; background: none; color: var(--fg); }
   .burger span { display: block; height: 3px; border-radius: 99px; background: currentColor; transition: transform 0.25s var(--ease), opacity 0.2s; }
@@ -764,7 +764,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   .nav.menu-open .burger span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
   .mmenu {
     display: flex; flex-direction: column; gap: 82px;
-    position: absolute; top: calc(var(--promo-h) + var(--nav-h) - 8px + env(safe-area-inset-top, 0px)); right: max(10px, env(safe-area-inset-right, 0px));
+    position: absolute; z-index: 2; top: calc(var(--promo-h) + var(--nav-h) - 8px + env(safe-area-inset-top, 0px)); right: max(10px, env(safe-area-inset-right, 0px));
     width: min(293px, calc(100vw - 20px)); max-height: calc(100vh - var(--promo-h) - var(--nav-h) - 10px); max-height: calc(100dvh - var(--promo-h) - var(--nav-h) - 10px); overflow-y: auto;
     padding: 20px; border-radius: var(--r-big) 0 var(--r-big) var(--r-big); background: var(--bg); box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
     opacity: 0; transform: translateY(-8px) scale(0.98); transform-origin: top right; transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
