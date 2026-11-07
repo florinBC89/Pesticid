@@ -1138,3 +1138,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 .fp-a-top .fp-del:hover { color: #8f1d27; text-decoration: underline; text-underline-offset: 3px; }
 #fp-warn { display: grid; gap: 8px; }
 #fp-warn:empty { display: none; }
+.fp-day:disabled { color: #c3cad8; background: none; cursor: not-allowed; }
+.fp-day.is-start { background: #242c3c; color: #fff; opacity: 0.55; }
+.fp-dmsg { margin: 4px 0 0; padding: 0 6px; font-size: 13px; color: #b4232f; text-align: left; }
+.fp-dmsg[hidden] { display: none; }

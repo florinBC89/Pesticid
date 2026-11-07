@@ -187,11 +187,11 @@
       div.innerHTML =
         '<div class="fp-a-top"><b>Aplicarea ' + (i + 1) + '</b>' + (apl.length > 1 ? '<button type="button" class="fp-link fp-del">Șterge</button>' : '') + '</div>' +
         '<div class="sel"><label class="field has-input"><span class="col"><small>Îngrășământ mineral</small><span class="val"><input type="text" autocomplete="off" spellcheck="false" placeholder="Caută: uree, azotat de amoniu, UAN…" role="combobox" aria-expanded="false"></span></span><i class="chev" aria-hidden="true"></i></label><div class="dd" hidden><ul class="plist" role="listbox"></ul></div></div>' +
-        '<div class="row"><label class="field has-input has-unit fp-q"><span class="col"><small>Cantitate</small><span class="val"><input type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 300"><b class="unit">kg/ha</b></span></span></label>' +
-        '<div class="fp-dsel"><label class="field has-input fp-d"><span class="col"><small>Perioada aplicării</small><span class="val"><input type="text" inputmode="numeric" autocomplete="off" placeholder="zz.ll.aaaa – zz.ll.aaaa" maxlength="23" aria-label="Perioada aplicării: de la zi.lună.an până la zi.lună.an"></span></span><button type="button" class="fp-cal-btn" aria-label="Alege perioada din calendar" aria-expanded="false">' + IC_CAL + '</button></label><div class="fp-cal" hidden></div></div></div>' +
+        '<label class="field has-input has-unit fp-q"><span class="col"><small>Cantitate</small><span class="val"><input type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 300"><b class="unit">kg/ha</b></span></span></label>' +
+        '<div class="row">' + campDataHtml('fp-d1', 'Începutul aplicării', 'zz.ll.aaaa') + campDataHtml('fp-d2', 'Sfârșitul aplicării', 'aceeași zi') + '</div>' +
         '<p class="fp-a-out"></p>';
       box.appendChild(div);
-      var inF = div.querySelector('.sel input'), inQ = div.querySelector('.fp-q input'), inD = div.querySelector('.fp-d input'), out = div.querySelector('.fp-a-out');
+      var inF = div.querySelector('.sel input'), inQ = div.querySelector('.fp-q input'), out = div.querySelector('.fp-a-out');
       if (a.f) inF.value = a.f.nume; if (a.q) inQ.value = String(a.q).replace('.', ',');
       Combo(div.querySelector('.sel'), {
         empty: 'Niciun îngrășământ cu azot găsit în lista MADR.',
@@ -208,7 +208,9 @@
       });
       if (a.f) div.querySelector('.fp-q .unit').textContent = unitCant(a.f);
       inQ.addEventListener('input', function () { a.q = num(inQ.value); actualizeazaAplicare(a, out); actualizeaza(); });
-      CampData(div.querySelector('.fp-dsel'), a.d1, a.d2, function (d1, d2) { a.d1 = d1; a.d2 = d2; actualizeazaAplicare(a, out); actualizeaza(); });
+      var refresh = function () { actualizeazaAplicare(a, out); actualizeaza(); };
+      var cSf = null, cIn = CampData(div.querySelector('.fp-d1'), a.d1, {}, function (iso) { a.d1 = iso; if (cSf) cSf.verifica(); refresh(); });
+      cSf = CampData(div.querySelector('.fp-d2'), a.d2, { start: function () { return a.d1; } }, function (iso) { a.d2 = iso; refresh(); });
       out.addEventListener('click', function (ev) {
         var b = ev.target.closest('.fp-fill'); if (!b || !a.f) return;
         var rest = Math.max(0, (num($('fp-plan').value) || 0) - totalN(a));
@@ -267,63 +269,67 @@
   var calDeschis = null;
   document.addEventListener('mousedown', function (e) { if (calDeschis && !calDeschis.wrap.contains(e.target)) calDeschis.close(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && calDeschis) calDeschis.close(); });
-  /* perioada aplicării: „01.10.2026 – 05.10.2026” — se scrie de mână (doar cifrele) sau se alege din calendar:
-     primul click = începutul, al doilea = sfârșitul (o singură zi = un singur click pe aceeași zi de două ori sau „Gata”) */
-  function CampData(wrap, d1, d2, onChange) {
+  /* data aplicării: două câmpuri, „Începutul” și „Sfârșitul” (gol = o singură zi). Fiecare se scrie de mână (doar cifrele,
+     punctele se pun singure) sau se alege din calendar; la sfârșit, zilele dinaintea începutului nu se pot alege. */
+  function campDataHtml(cls, eticheta, ph) {
+    return '<div class="fp-dsel ' + cls + '"><label class="field has-input fp-d"><span class="col"><small>' + eticheta + '</small><span class="val"><input type="text" inputmode="numeric" autocomplete="off" placeholder="' + ph + '" maxlength="10" aria-label="' + eticheta + ', zi.lună.an"></span></span><button type="button" class="fp-cal-btn" aria-label="' + eticheta + ': alege din calendar" aria-expanded="false">' + IC_CAL + '</button></label><div class="fp-cal" hidden></div></div>';
+  }
+  function CampData(wrap, iso, o, onChange) {
     var field = wrap.querySelector('.field'), input = wrap.querySelector('input'), btn = wrap.querySelector('.fp-cal-btn'), pop = wrap.querySelector('.fp-cal');
-    var azi = new Date(), a1 = d1 || '', a2 = d2 || '', vy = azi.getFullYear(), vm = azi.getMonth() + 1, hover = '';
-    var ro = function (iso) { var p = iso.split('-'); return p[2] + '.' + p[1] + '.' + p[0]; };
-    function arata() { input.value = a1 ? ro(a1) + (a2 && a2 !== a1 ? ' – ' + ro(a2) : '') : ''; }
-    function anunta() { field.classList.remove('is-bad'); onChange(a1, a2 || a1); }
+    var azi = new Date(), sel = iso || '', vy = azi.getFullYear(), vm = azi.getMonth() + 1, msg = null;
+    var start = function () { return o.start ? o.start() || '' : ''; };
+    var ro = function (x) { var p = x.split('-'); return p[2] + '.' + p[1] + '.' + p[0]; };
+    function rau(text) {
+      field.classList.toggle('is-bad', !!text);
+      if (text && !msg) { msg = document.createElement('p'); msg.className = 'fp-dmsg'; wrap.appendChild(msg); }
+      if (msg) { msg.textContent = text || ''; msg.hidden = !text; }
+    }
     function valid(z, l, an) { var t = new Date(an, l - 1, z); return an >= 2000 && an <= 2100 && t.getFullYear() === an && t.getMonth() === l - 1 && t.getDate() === z; }
-    /* scris de mână: doar cifre; punctele și liniuța se pun singure */
+    function verifica() { if (sel && start() && sel < start()) rau('Sfârșitul e înainte de început.'); else if (field.classList.contains('is-bad') && sel) rau(''); }
     input.addEventListener('input', function () {
-      var d = input.value.replace(/\D/g, '').slice(0, 16), f = function (x) { return x.length > 4 ? x.slice(0, 2) + '.' + x.slice(2, 4) + '.' + x.slice(4) : x.length > 2 ? x.slice(0, 2) + '.' + x.slice(2) : x; };
-      input.value = d.length > 8 ? f(d.slice(0, 8)) + ' – ' + f(d.slice(8)) : f(d);
-      var bun = true, n1 = '', n2 = '';
-      if (d.length >= 8) { var z = +d.slice(0, 2), l = +d.slice(2, 4), an = +d.slice(4, 8); if (valid(z, l, an)) n1 = isoDin(an, l, z); else bun = false; }
-      if (d.length === 16) { var z2 = +d.slice(8, 10), l2 = +d.slice(10, 12), an2 = +d.slice(12, 16); if (valid(z2, l2, an2)) n2 = isoDin(an2, l2, z2); else bun = false; if (n1 && n2 && n2 < n1) bun = false; }
-      field.classList.toggle('is-bad', !bun);
-      a1 = bun ? n1 : ''; a2 = bun && d.length === 16 ? n2 : '';
-      onChange(a1, a2 || a1);
-      if (a1) { var p = a1.split('-'); vy = +p[0]; vm = +p[1]; }
-      if (!pop.hidden) deseneaza();
+      var d = input.value.replace(/\D/g, '').slice(0, 8);
+      input.value = d.length > 4 ? d.slice(0, 2) + '.' + d.slice(2, 4) + '.' + d.slice(4) : d.length > 2 ? d.slice(0, 2) + '.' + d.slice(2) : d;
+      if (d.length === 8) {
+        var z = +d.slice(0, 2), l = +d.slice(2, 4), an = +d.slice(4);
+        if (!valid(z, l, an)) { rau('Data nu există.'); sel = ''; onChange(''); return; }
+        sel = isoDin(an, l, z); vy = an; vm = l; rau(''); verifica(); onChange(sel); if (!pop.hidden) deseneaza();
+      } else { rau(''); if (sel) { sel = ''; onChange(''); } }
     });
     function deseneaza() {
-      var prim = new Date(vy, vm - 1, 1), start = (prim.getDay() + 6) % 7, zile = new Date(vy, vm, 0).getDate();
-      var aziIso = isoDin(azi.getFullYear(), azi.getMonth() + 1, azi.getDate()), sf = a2 || (a1 && hover > a1 ? hover : ''), h = '';
+      var prim = new Date(vy, vm - 1, 1), st = (prim.getDay() + 6) % 7, zile = new Date(vy, vm, 0).getDate(), s0 = start();
+      var aziIso = isoDin(azi.getFullYear(), azi.getMonth() + 1, azi.getDate()), h = '';
       h += '<div class="fp-cal-head"><button type="button" class="fp-cal-nav" data-nav="-1" aria-label="Luna anterioară">‹</button><b>' + LUNI[vm - 1] + ' ' + vy + '</b><button type="button" class="fp-cal-nav" data-nav="1" aria-label="Luna următoare">›</button></div>';
-      h += '<p class="fp-cal-step">' + (!a1 || a2 ? 'Alege <b>prima zi</b> a aplicării' : 'Alege <b>ultima zi</b> (sau aceeași zi, dacă a fost o singură zi)') + '</p>';
+      if (o.start && s0) h += '<p class="fp-cal-step">Începutul: <b>' + ro(s0) + '</b>. Alege ultima zi a aplicării.</p>';
       h += '<div class="fp-cal-grid">' + ['L', 'Ma', 'Mi', 'J', 'V', 'S', 'D'].map(function (z) { return '<span class="wd">' + z + '</span>'; }).join('');
-      for (var i = 0; i < start; i++) h += '<span></span>';
+      for (var i = 0; i < st; i++) h += '<span></span>';
       for (var z = 1; z <= zile; z++) {
-        var iz = isoDin(vy, vm, z), capat = iz === a1 || iz === a2, inInt = a1 && sf && iz > a1 && iz < sf;
-        var cls = 'fp-day' + (capat ? ' is-sel' : '') + (inInt ? ' is-in' : '') + (iz === aziIso ? ' is-today' : '') + (interzisZi(vm, z) ? ' is-forb' : '');
-        h += '<button type="button" class="' + cls + '" data-d="' + iz + '"' + (interzisZi(vm, z) ? ' title="Perioadă interzisă (1 noiembrie – 15 martie)"' : '') + '>' + z + '</button>';
+        var iz = isoDin(vy, vm, z), inainte = !!(o.start && s0 && iz < s0), sf = sel || '';
+        var cls = 'fp-day' + (iz === sel ? ' is-sel' : '') + (o.start && iz === s0 ? ' is-start' : '') + (o.start && s0 && sf && iz > s0 && iz < sf ? ' is-in' : '') + (iz === aziIso ? ' is-today' : '') + (interzisZi(vm, z) ? ' is-forb' : '');
+        h += '<button type="button" class="' + cls + '" data-d="' + iz + '"' + (inainte ? ' disabled' : '') + (interzisZi(vm, z) ? ' title="Perioadă interzisă (1 noiembrie – 15 martie)"' : '') + '>' + z + '</button>';
       }
-      h += '</div><div class="fp-cal-foot"><span class="fp-cal-leg"><i></i>1 nov – 15 mar: interzis</span>' + (a1 && !a2 ? '<button type="button" class="fp-link" data-gata="1">Gata (o singură zi)</button>' : '<button type="button" class="fp-link" data-d="' + aziIso + '">Azi</button>') + '</div>';
+      h += '</div><div class="fp-cal-foot"><span class="fp-cal-leg"><i></i>1 nov – 15 mar: interzis</span>' +
+        (o.start && s0 ? '<button type="button" class="fp-link" data-d="' + s0 + '">Aceeași zi</button>' : '<button type="button" class="fp-link" data-d="' + aziIso + '">Azi</button>') + '</div>';
       pop.innerHTML = h;
     }
     var api = {
-      wrap: wrap,
-      open: function () { if (calDeschis && calDeschis !== api) calDeschis.close(); if (a1) { var p = a1.split('-'); vy = +p[0]; vm = +p[1]; } deseneaza(); pop.hidden = false; field.classList.add('is-open'); wrap.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); calDeschis = api; },
-      close: function () { if (a1 && !a2) { a2 = a1; arata(); anunta(); } hover = ''; pop.hidden = true; field.classList.remove('is-open'); wrap.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); if (calDeschis === api) calDeschis = null; }
+      wrap: wrap, verifica: verifica,
+      open: function () {
+        if (calDeschis && calDeschis !== api) calDeschis.close();
+        var ref = sel || start(); if (ref) { var p = ref.split('-'); vy = +p[0]; vm = +p[1]; }
+        deseneaza(); pop.hidden = false; field.classList.add('is-open'); wrap.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); calDeschis = api;
+      },
+      close: function () { pop.hidden = true; field.classList.remove('is-open'); wrap.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); if (calDeschis === api) calDeschis = null; }
     };
     btn.addEventListener('click', function (ev) { ev.preventDefault(); ev.stopPropagation(); if (pop.hidden) api.open(); else api.close(); });
     input.addEventListener('focus', function () { if (!mobil()) api.open(); });
     pop.addEventListener('mousedown', function (ev) { ev.preventDefault(); }); /* păstrează focusul în câmp */
-    pop.addEventListener('mouseover', function (ev) { var d = ev.target.closest('[data-d]'); if (a1 && !a2 && d && d.getAttribute('data-d') !== hover) { hover = d.getAttribute('data-d'); deseneaza(); } });
     pop.addEventListener('click', function (ev) {
       var n = ev.target.closest('[data-nav]');
       if (n) { vm += +n.getAttribute('data-nav'); if (vm < 1) { vm = 12; vy--; } if (vm > 12) { vm = 1; vy++; } deseneaza(); return; }
-      if (ev.target.closest('[data-gata]')) { api.close(); return; }
-      var d = ev.target.closest('[data-d]'); if (!d) return;
-      var iz = d.getAttribute('data-d');
-      if (!a1 || a2) { a1 = iz; a2 = ''; arata(); anunta(); deseneaza(); return; }   /* începutul perioadei */
-      if (iz < a1) { a2 = a1; a1 = iz; } else a2 = iz;                                  /* sfârșitul (dacă e înainte, se inversează) */
-      arata(); anunta(); api.close();
+      var d = ev.target.closest('[data-d]'); if (!d || d.disabled) return;
+      sel = d.getAttribute('data-d'); input.value = ro(sel); rau(''); verifica(); onChange(sel); api.close();
     });
-    arata();
+    if (sel) input.value = ro(sel);
     return api;
   }
 
