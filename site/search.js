@@ -250,9 +250,15 @@
      Selectorul se lipește de partea vizibilă a ecranului (visualViewport), deasupra tastaturii. */
   function lipestePeEcran(el) {
     var vv = window.visualViewport; if (!vv) return function () {};
-    var f = function () { el.style.top = vv.offsetTop + 'px'; el.style.height = vv.height + 'px'; el.style.bottom = 'auto'; };
+    /* sus: lipit de marginea vizibilă; jos: se întinde și sub tastatură (altfel se vedea site-ul între selector și tastatură),
+       iar lista primește spațiu jos cât tastatura, ca ultimele opțiuni să poată fi derulate deasupra ei */
+    var f = function () {
+      var kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      el.style.top = vv.offsetTop + 'px'; el.style.bottom = 'auto'; el.style.height = (vv.height + kb + 80) + 'px';
+      el.style.setProperty('--kb', (kb + 80) + 'px');
+    };
     vv.addEventListener('resize', f); vv.addEventListener('scroll', f); f();
-    return function () { vv.removeEventListener('resize', f); vv.removeEventListener('scroll', f); el.style.top = el.style.height = el.style.bottom = ''; };
+    return function () { vv.removeEventListener('resize', f); vv.removeEventListener('scroll', f); el.style.top = el.style.height = el.style.bottom = ''; el.style.removeProperty('--kb'); };
   }
   var dezlipeste = function () {};
   function openPicker(client) {
