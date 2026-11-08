@@ -569,7 +569,7 @@ a.menu-it:not(.is-on):hover { color: var(--ink); }
 .offer-head .save-box { text-align: right; justify-items: end; padding-top: 4px; }
 
 /* ---------- parteneri: Email + CUI (firma vine din ANAF, varianta A din Figma 2297:25655) ---------- */
-.reserve.has-cui { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.reserve.has-cui { grid-template-columns: minmax(0, 7fr) minmax(190px, 3fr); }
 .reserve.has-cui .btn-cta { grid-column: 1 / -1; }
 .cui-wrap { position: relative; min-width: 0; }
 .cui-wrap .field { height: 100%; }
