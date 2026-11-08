@@ -305,6 +305,12 @@
     if (!a.t) { a.totEl.innerHTML = ''; return; }
     a.totEl.innerHTML = '<small>Doza pe ha</small><b>' + (a.q ? fmt2(a.q) + ' ' + unitHa(a.f) : '—') + '</b>';
   }
+  /* data la care e calculat „Realizat N”: cea mai târzie zi de sfârșit dintre aplicări (sau începutul, dacă sfârșitul e gol) */
+  function dataRealizat() {
+    var d = apl.reduce(function (m, a) { var x = a.d2 || a.d1; return x && x > m ? x : m; }, '');
+    if (!d) return '—';
+    var p = d.split('-'); return p[2] + '.' + p[1] + '.' + p[0];
+  }
   function totalN(fara) { return apl.reduce(function (s, a) { return s + (a === fara ? 0 : kgN(a.f, a.q)); }, 0); }
   function interzisZi(m, z) { return m === 11 || m === 12 || m === 1 || m === 2 || (m === 3 && z <= 15); }
   /* perioada aplicării atinge intervalul interzis 1 noiembrie – 15 martie? (se verifică fiecare zi; perioadele sunt scurte) */
@@ -421,7 +427,7 @@
     var plan = num($('fp-plan').value), tot = totalN(), cards = $('fp-cards'), w = [];
     cards.innerHTML =
       '<div class="cstat"><span class="k">Planificat N</span><span class="v">' + (plan ? fmt2(plan) : '—') + ' <small>kg s.a./ha</small></span></div>' +
-      '<div class="cstat"><span class="k">Realizat N (total)</span><span class="v">' + fmt2(tot) + ' <small>kg s.a./ha</small></span></div>' +
+      '<div class="cstat"><span class="k">Realizat N pe data: ' + dataRealizat() + '</span><span class="v">' + fmt2(tot) + ' <small>kg s.a./ha</small></span></div>' +
       '<div class="cstat"><span class="k">Doza realizată pe ha</span><span class="v">' + dozaHa() + '</span></div>' +
       '<div class="cstat"><span class="k">' + (plan && tot > plan ? 'Peste plan' : 'Rămas de aplicat') + '</span><span class="v">' + (plan ? fmt2(Math.abs(plan - tot)) : '—') + ' <small>kg N/ha</small></span></div>';
     /* limita din ghid: fără studiu agrochimic, nici planificatul, nici ce s-a aplicat nu pot trece de maxim */
