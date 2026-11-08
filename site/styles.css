@@ -564,6 +564,54 @@ a.menu-it:not(.is-on):hover { color: var(--fg); text-decoration: underline; text
 .reserve-done p { margin: 0; font-size: 14px; line-height: 20px; color: var(--muted); overflow-wrap: anywhere; }
 .reserve-done p b { color: var(--fg); font-weight: 600; }
 .reserve.is-done .field.email, .reserve.is-done .btn-cta, .reserve.is-done .form-msg { display: none; }
+/* titlul pe două rânduri, „Fermă mică sau mare / Partener” aliniat la dreapta (Figma 2292:10519) */
+.offer-head { align-items: flex-start; }
+.offer-head h3 { min-width: 0; font-size: 30px; }
+.offer-head .save-box { text-align: right; justify-items: end; padding-top: 4px; }
+
+/* ---------- parteneri: Email + CUI (firma vine din ANAF, varianta A din Figma 2297:25655) ---------- */
+.reserve.has-cui { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.reserve.has-cui .btn-cta { grid-column: 1 / -1; }
+.cui-wrap { position: relative; min-width: 0; }
+.cui-wrap .field { height: 100%; }
+.field.cui { cursor: text; padding-right: 12px; }
+.field.cui input { font-size: 18px; font-weight: 500; color: #242c3c; text-transform: uppercase; }
+.field.cui input::placeholder { color: #868fa2; font-weight: 400; text-transform: none; }
+.field.cui.is-ok { border-color: #1f6b2e; background: #f3faf4; }
+.field.cui.is-err { border-color: var(--pink); background: #fff1f2; }
+.cui-ic { flex: 0 0 18px; width: 18px; height: 18px; display: none; }
+.field.cui.is-busy .cui-ic { display: block; border: 2px solid #c3cbe0; border-top-color: #242c3c; border-radius: 50%; animation: cui-spin 0.8s linear infinite; }
+.field.cui.is-ok .cui-ic { display: block; background: no-repeat center / 18px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f6b2e' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12.5l5 5L20 6.5'/%3E%3C/svg%3E"); }
+.field.cui.is-err .cui-ic { display: block; background: no-repeat center / 18px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b4232f' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M12 6v8M12 18.5v.5'/%3E%3C/svg%3E"); }
+@keyframes cui-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .field.cui.is-busy .cui-ic { animation-duration: 2.4s; } }
+/* lista de sub câmp: firma găsită (o atingere o confirmă) */
+.cui-dd {
+  position: absolute; top: calc(100% + 6px); right: 0; z-index: 5;
+  width: min(340px, calc(100vw - 48px));
+  background: #fff; border: 1.5px solid #e3e9f6; border-radius: 16px; box-shadow: 0 12px 28px rgba(17, 24, 39, 0.14);
+  overflow: hidden;
+}
+.cui-dd[hidden] { display: none; }
+.cui-opt { display: flex; align-items: center; gap: 10px; width: 100%; padding: 12px 14px; border: 0; background: none; font: inherit; text-align: left; color: var(--fg); }
+button.cui-opt { cursor: pointer; }
+.cui-opt.is-main { background: #f6fcdd; }
+button.cui-opt:hover, button.cui-opt:focus-visible { background: #eef8c6; outline: none; }
+.cui-opt .t { display: grid; gap: 2px; flex: 1 1 auto; min-width: 0; }
+.cui-opt b { font-size: 15px; font-weight: 600; line-height: 1.25; }
+.cui-opt small { font-size: 12px; line-height: 1.35; color: var(--muted); }
+.cui-opt .tag { flex: 0 0 auto; font-size: 11px; padding: 3px 8px; background: #e6f4ea; color: #1f6b2e; }
+.cui-opt + .cui-opt { border-top: 1px solid #edf1f9; }
+/* mesajul de sub formular: firma confirmată, CUI greșit, firmă inactivă, loc deja rezervat */
+.cui-stare { grid-column: 1 / -1; margin: 0; padding: 9px 12px; border-radius: 12px; font-size: 14px; line-height: 20px; }
+.cui-stare:empty { display: none; }
+.cui-stare.ok { background: #e6f4ea; color: #1f6b2e; font-weight: 600; }
+.cui-stare.err { background: #fde8ea; color: #b4232f; }
+.cui-stare.warn { background: #fff4e5; color: #6b4a1a; }
+.cui-stare.info { background: var(--surface-2); color: var(--muted); }
+.cui-stare button { margin-left: 6px; padding: 0; border: 0; background: none; font: inherit; font-weight: 600; color: #2d5bd7; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.cui-note { grid-column: 1 / -1; margin: 0; font-size: 13px; line-height: 19px; color: var(--muted-2); }
+.reserve.is-done .cui-wrap, .reserve.is-done .cui-stare, .reserve.is-done .cui-note { display: none; }
 
 /* ---------- footer ---------- */
 .footer { padding-top: 120px; }
@@ -751,6 +799,15 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   .logo img { width: 180px; }
   .nav .nav-btn { height: 52px; min-width: 0; padding: 0 18px; font-size: 15px; white-space: nowrap; }
   :root { --nav-btn-h: 52px; }
+  .nav .logo, .nav .nav-btn { flex: 0 0 auto; }
+}
+/* cu „Abonamente” în meniu, între 1025 și 1180px strângem încă puțin ca totul să stea pe un rând */
+@media (min-width: 1025px) and (max-width: 1180px) {
+  .nav .wrap { gap: 12px; }
+  .menu ul { gap: 12px; padding: 0; }
+  .menu-it { font-size: 13px; }
+  .nav .logo img { width: 150px; }
+  .nav .nav-btn { padding: 0 14px; font-size: 14px; }
 }
 /* ---------- până la 1024px (telefoane, tablete) meniul nu mai încape pe un rând: hamburger + panou (Figma 2210:34545, 2211:36299) ---------- */
 @media (max-width: 1024px) {
@@ -815,7 +872,17 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   .offers { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 19px; margin-top: 50px; }
   .offer-head { flex-direction: column; align-items: flex-start; gap: 8px; }
   .reserve { grid-template-columns: minmax(0, 1fr); }
+  .reserve.has-cui { grid-template-columns: minmax(0, 1fr); }
+  .cui-dd { left: 0; right: 0; width: auto; }
+  .offer-head .save-box { text-align: left; justify-items: start; padding-top: 0; }
   .footer { padding-top: 90px; }
+}
+/* între 1025 și 1100px (laptopuri mici): încă un pas, după ce regula de tabletă de mai jos mărește logo-ul și marginile */
+@media (min-width: 1025px) and (max-width: 1100px) {
+  .nav .wrap { padding-left: 20px !important; padding-right: 20px !important; gap: 10px; }
+  .menu ul { gap: 9px; }
+  .menu-it { font-size: 12.5px; }
+  .nav .logo img { width: 140px; }
 }
 
 /* ---------- tabletă, doar între 701 și 1100 px: căutarea pe două rânduri (Figma 2126:32414) ---------- */
@@ -1143,3 +1210,51 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 .fp-day.is-start { background: #242c3c; color: #fff; opacity: 0.55; }
 .fp-dmsg { margin: 4px 0 0; padding: 0 6px; font-size: 13px; color: #b4232f; text-align: left; }
 .fp-dmsg[hidden] { display: none; }
+
+/* ---------- pagina Abonamente (Figma 2292:12017 lunar · 2292:11398 anual · 2292:44219 telefon) ---------- */
+.ab { position: relative; padding-top: calc(var(--promo-h) + var(--nav-h) + 90px); padding-bottom: 150px; overflow: hidden; isolation: isolate; }
+.ab .photo-bg { position: absolute; inset: 300px 0 -10%; z-index: -1; background-size: cover; background-position: center top; will-change: transform; }
+.ab .photo-bg::before { content: ""; position: absolute; inset: 0 0 auto; height: 260px; background: linear-gradient(var(--bg), rgba(206, 219, 246, 0)); }
+.ab-head { max-width: 900px; gap: 14px; }
+.ab-head h1 { font-size: clamp(32px, 3.2vw, 52px); line-height: 1.2; font-weight: 400; letter-spacing: -0.5px; }
+.ab-head h1 b { font-weight: 600; }
+.ab-head p { font-size: 18px; line-height: 28px; color: var(--muted); }
+.ab-toggle { display: inline-flex; gap: 4px; margin-top: 10px; padding: 5px; border-radius: 999px; background: var(--surface); box-shadow: 0 6px 20px rgba(17, 24, 39, 0.08); }
+.ab-toggle button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 20px; border: 0; border-radius: 999px; background: none; font: inherit; font-size: 15px; font-weight: 600; color: var(--fg); cursor: pointer; transition: background 0.2s, color 0.2s; }
+.ab-toggle button[aria-checked="true"] { background: var(--fg); color: #fff; }
+.ab-toggle button:focus-visible { outline: 2px solid #2d5bd7; outline-offset: 2px; }
+.ab-toggle .sm { display: none; }
+.ab-badge { padding: 2px 8px; border-radius: 999px; background: #ceee58; color: var(--fg); font-size: 12px; font-weight: 600; white-space: nowrap; }
+.ab-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 48px; align-items: start; }
+.ab-card { justify-content: flex-start; }
+.ab-card .offer-body { gap: 22px; }
+.tag.ab-blue { background: #cedbf6; }
+.ab-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-top: -8px; }
+.ab-top h2 { font-size: 28px; line-height: 1.2; font-weight: 700; }
+.ab-pret { display: grid; justify-items: end; text-align: right; gap: 2px; }
+.ab-pret p { margin: 0; font-size: 18px; line-height: 1.2; white-space: nowrap; }
+.ab-pret strong { font-size: 26px; font-weight: 700; }
+.ab-pret small { font-size: 12px; line-height: 16px; color: var(--muted); white-space: nowrap; }
+.ab-pret small.ok { color: #1f6b2e; font-weight: 500; }
+.ab[data-perioada="lunar"] .ab-pret .a, .ab[data-perioada="anual"] .ab-pret .l { display: none; }
+.ab-card .intro { margin-top: -8px; font-size: 16px; line-height: 26px; }
+.ab-note { margin: 0; padding: 10px 14px; border-radius: 14px; background: var(--surface-2); font-size: 13px; line-height: 19px; color: var(--muted); }
+@media (max-width: 1100px) {
+  .ab { padding-top: calc(var(--promo-h) + var(--nav-h) + 60px); padding-bottom: 110px; }
+  .ab-cards { grid-template-columns: minmax(0, 1fr); max-width: 560px; margin-inline: auto; }
+}
+@media (max-width: 700px) {
+  .ab { padding-top: calc(var(--promo-h) + var(--nav-h) + 36px); padding-bottom: 80px; }
+  .ab .photo-bg { inset: 380px 0 -10%; }
+  .ab-head h1 { font-size: 30px; line-height: 36px; }
+  .ab-head p { font-size: 16px; line-height: 24px; }
+  .ab-toggle .lg { display: none; }
+  .ab-toggle .sm { display: inline; }
+  .ab-toggle button { padding: 0 18px; font-size: 15px; }
+  .ab-top { flex-direction: column; gap: 6px; }
+  .ab-pret { justify-items: start; text-align: left; }
+  .ab-cards { margin-top: 32px; gap: 16px; }
+  .ab-card { padding: 22px 18px; }
+  .ab-top h2 { font-size: 24px; }
+  .ab-pret strong { font-size: 22px; }
+}

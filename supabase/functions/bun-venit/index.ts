@@ -1,6 +1,7 @@
 // Pesticid — trimite emailul de bun venit (Resend) după înscrierea pe lista de așteptare.
 // Apelată de triggerul `trg_lista_asteptare_bun_venit` (pg_net) cu { record: { id } }, sau manual cu { id } / { id, dry: true } / { id, force: true } (retrimite chiar dacă conținutul e identic).
-// Varianta după rangul pe plan: primii 100 PRO → pro-6, restul → pro-3; primii 20 AGRONOM → agronom-3, restul → agronom-45.
+// Varianta după rangul pe plan: primele 100 de ferme → ferma-6, restul → ferma-3; primii 30 de parteneri → partener-6, restul → partener-3.
+// (pro-6/pro-3 și agronom-3/agronom-45 rămân pentru înscrierile de pe site-ul vechi.)
 // Randarea e aceeași ca în emails/build.py (template.html + variants.json), ca să nu existe două versiuni ale emailurilor.
 // Idempotentă: nu retrimite dacă rândul are `trimis_at`; Resend primește și un Idempotency-Key per rând.
 // Secrete: RESEND_API_KEY; webhook_secret în Vault; opționale: EMAIL_FROM, EMAIL_REPLY_TO, EMAIL_ASSETS_URL, SITE_URL.

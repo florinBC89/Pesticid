@@ -40,6 +40,30 @@
       "<b>Recomandări</b> trimise fermierilor (WhatsApp/Telegram)",
       "Suport prioritar și <b>implicare în Dezvoltarea AgroSphere</b>",
       "Acces <b>API la cerere</b>"
+    ],
+    "ferma": [
+      "Import din <b>centralizatorul APIA</b>, parcele și planuri salvate",
+      "Registru de tratamente <b>completat automat</b> din calculator",
+      "Export PDF pentru <b>controlul APIA/ANF</b>",
+      "<b>Când pot stropi</b> pe fiecare parcelă, cu alerte",
+      "<b>Magazie, cost pe hectar</b> și cereri de ofertă",
+      "Peste 100 ha: <b>utilizatori nelimitați</b>, mai multe ferme și <b>facturile din SPV</b>"
+    ],
+    "partener": [
+      "Profil cu insignele <b>„Verificat AgroSphere”</b> și <b>„Partener fondator”</b>",
+      "<b>Cereri de ofertă</b> de la fermierii din județele tale",
+      "Catalog legat de <b>listele ANF și MADR</b>",
+      "<b>Comenzi, livrări și facturi</b> în același loc",
+      "<b>Preț blocat 12 luni</b> după perioada gratuită: 59 €/lună sau comision de 3%",
+      "Verificarea documentelor <b>gratuită</b>"
+    ],
+    "partener_lista": [
+      "Profil cu insigna <b>„Verificat AgroSphere”</b>",
+      "<b>Cereri de ofertă</b> de la fermierii din județele tale",
+      "Catalog legat de <b>listele ANF și MADR</b>",
+      "<b>Comenzi, livrări și facturi</b> în același loc",
+      "<b>Statistici</b>: oferte trimise, câștigate, valoare",
+      "Verificarea documentelor <b>gratuită la lansare</b>"
     ]
   },
   "variants": [
@@ -114,6 +138,78 @@
       "offer_save": "Salvezi 43,5 Euro",
       "offer_calc": "45 de zile x <b>29 Euro</b>/lună",
       "bullets": "agronom"
+    },
+    {
+      "id": "ferma-6",
+      "nume": "Ferme · primele 100 · 6 luni gratuit",
+      "plan": "ferma",
+      "rang_max": 100,
+      "subject": "Ți-ai rezervat locul: 6 luni gratuit la AgroSphere",
+      "preheader": "Ești printre primele 100 de ferme. Cele 6 luni gratuite pornesc la lansarea pachetelor. Până atunci, calculatorul e al tău.",
+      "hero_tag": "Ți-ai rezervat locul printre primele 100 de ferme",
+      "intro": "Salutare! <b>Ne bucurăm că ești printre primele 100 de ferme care folosesc AgroSphere!</b> Până la lansarea pachetelor, calculatorul de pesticide și planul de fertilizare sunt gratuite pentru tine.",
+      "second_headline": "Ești printre <b>primii care folosesc AgroSphere!</b>",
+      "second_text": "<b>Cele 6 luni gratuite pornesc la lansarea pachetelor</b>, nu de la înscriere. Primești <b>Fermă mică</b> (până la 100 ha) sau <b>Fermă mare</b> (peste 100 ha), după hectarele din APIA.",
+      "offer_tag": "Early · Primele 100 de ferme",
+      "offer_tag_bg": "#ceee58",
+      "offer_title": "6 luni gratuit",
+      "offer_save": "Salvezi până la 174 €",
+      "offer_calc": "6 luni x <b>9 €</b> sau <b>29 €</b>/lună",
+      "bullets": "ferma"
+    },
+    {
+      "id": "ferma-3",
+      "nume": "Ferme · după primele 100 · 3 luni gratuit",
+      "plan": "ferma",
+      "rang_max": null,
+      "subject": "Primele 100 de locuri s-au ocupat, dar ți-am păstrat 3 luni gratuit",
+      "preheader": "Ai prins 3 luni gratuit la lansarea pachetelor. Până atunci, calculatorul AgroSphere e deschis pentru tine.",
+      "hero_tag": "Ți-ai rezervat locul la AgroSphere",
+      "intro": "Salutare! <b>Primele 100 de locuri s-au ocupat, dar ți-am păstrat 3 luni gratuit!</b> Până la lansarea pachetelor, calculatorul de pesticide și planul de fertilizare sunt gratuite pentru tine.",
+      "second_headline": "<b>100 de ferme</b> s-au înscris deja!<br>Tu ai prins <b>3 luni gratuit</b>",
+      "second_text": "<b>Cele 3 luni gratuite pornesc la lansarea pachetelor</b>, nu de la înscriere. Primești <b>Fermă mică</b> (până la 100 ha) sau <b>Fermă mare</b> (peste 100 ha), după hectarele din APIA.",
+      "offer_tag": "Early · Ferme",
+      "offer_tag_bg": "#ceee58",
+      "offer_title": "3 luni gratuit",
+      "offer_save": "Salvezi până la 87 €",
+      "offer_calc": "3 luni x <b>9 €</b> sau <b>29 €</b>/lună",
+      "bullets": "ferma"
+    },
+    {
+      "id": "partener-6",
+      "nume": "Parteneri · primii 30 · fondatori · 6 luni gratuit",
+      "plan": "partener",
+      "rang_max": 30,
+      "subject": "Ți-ai rezervat locul de partener fondator AgroSphere",
+      "preheader": "Firma ta e printre primii 30 de parteneri fondatori. Cele 6 luni gratuite pornesc la lansarea pachetelor.",
+      "hero_tag": "Ți-ai rezervat locul de partener fondator",
+      "intro": "Salutare! <b>Ne bucurăm că firma ta e printre primii 30 de parteneri fondatori AgroSphere!</b> Înainte de lansare îți scriem ca să completezi înscrierea: activitatea, județele și documentele.",
+      "second_headline": "Ești printre <b>primii parteneri AgroSphere!</b>",
+      "second_text": "<b>Cele 6 luni gratuite pornesc la lansarea pachetelor</b>, nu de la înscriere. După aceea, prețul rămâne <b>blocat 12 luni</b>.",
+      "offer_tag": "Early · Primii 30 de parteneri fondatori",
+      "offer_tag_bg": "#ffad60",
+      "offer_title": "6 luni gratuit",
+      "offer_save": "Salvezi 354 €",
+      "offer_calc": "6 luni x <b>59 €</b>/lună",
+      "bullets": "partener"
+    },
+    {
+      "id": "partener-3",
+      "nume": "Parteneri · după primii 30 · 3 luni gratuit",
+      "plan": "partener",
+      "rang_max": null,
+      "subject": "Primele 30 de locuri s-au ocupat, dar ți-am păstrat 3 luni gratuit",
+      "preheader": "Firma ta a prins 3 luni gratuit ca partener AgroSphere, de la lansarea pachetelor.",
+      "hero_tag": "Ți-ai rezervat locul de partener",
+      "intro": "Salutare! <b>Primele 30 de locuri de parteneri fondatori s-au ocupat, dar ți-am păstrat 3 luni gratuit!</b> Înainte de lansare îți scriem ca să completezi înscrierea: activitatea, județele și documentele.",
+      "second_headline": "<b>30 de parteneri fondatori</b> s-au înscris deja!<br>Tu ai prins <b>3 luni gratuit</b>",
+      "second_text": "<b>Cele 3 luni gratuite pornesc la lansarea pachetelor</b>, nu de la înscriere.",
+      "offer_tag": "Early · Parteneri",
+      "offer_tag_bg": "#ffad60",
+      "offer_title": "3 luni gratuit",
+      "offer_save": "Salvezi 177 €",
+      "offer_calc": "3 luni x <b>59 €</b>/lună",
+      "bullets": "partener_lista"
     }
   ]
 }

@@ -1,0 +1,68 @@
+<!-- Pagina „Abonamente” (Figma 2292:12017 lunar · 2292:11398 anual · 2292:44219 telefon).
+     Comutatorul schimbă doar ce se vede (data-perioada pe secțiune); prețurile sunt fără TVA.
+     Butoanele de cumpărare apar abia la lansarea pachetelor; până atunci pagina trimite la campania de pe prima pagină. -->
+  <section class="ab" id="abonamente" data-perioada="lunar">
+    <div class="photo-bg" data-parallax="0.2" style="background-image:url('{{A}}assets/hero-vie.webp');background-image:-webkit-image-set(url('{{A}}assets/hero-vie.webp') 1x, url('{{A}}assets/hero-vie-2x.webp') 2x);background-image:image-set(url('{{A}}assets/hero-vie.webp') 1x, url('{{A}}assets/hero-vie-2x.webp') 2x)" role="img" aria-label="Plantație de viță de vie"></div>
+    <div class="wrap">
+      <div class="section-head ab-head reveal">
+        <h1>Abonamentele noastre valabile <b>de la lansarea platformei</b></h1>
+        <p>Pentru toate tipurile de ferme și pentru parteneri</p>
+        <div class="ab-toggle" role="radiogroup" aria-label="Perioada de plată">
+          <button type="button" role="radio" aria-checked="true" data-p="lunar"><span class="lg">Abonamente lunare</span><span class="sm">Lunar</span></button>
+          <button type="button" role="radio" aria-checked="false" data-p="anual"><span class="lg">Abonamente anuale</span><span class="sm">Anual</span> <span class="ab-badge">2 luni gratuite</span></button>
+        </div>
+      </div>
+      <div class="ab-cards">
+        <article class="offer ab-card reveal">
+          <div class="offer-body">
+            <span class="tag lime">Pentru ferme până la <b>100 ha</b></span>
+            <div class="ab-top">
+              <h2>Fermă mică</h2>
+              <div class="ab-pret">
+                <p class="l"><strong>9 €</strong> /lună</p><small class="l">sau 90 €/an la plata anuală</small>
+                <p class="a"><strong>90 €</strong> /an</p><small class="a ok">≈ 7,50 €/lună · economisești 18 €</small>
+              </div>
+            </div>
+            <p class="intro">Tot ce îți trebuie ca să ții ferma în ordine: <b>registru, planuri, vreme și costuri</b>.</p>
+            <ul class="perks">
+{{PERKS_MICA}}
+            </ul>
+          </div>
+        </article>
+        <article class="offer ab-card reveal">
+          <div class="offer-body">
+            <span class="tag ab-blue">Pentru ferme de peste <b>100 ha</b></span>
+            <div class="ab-top">
+              <h2>Fermă mare</h2>
+              <div class="ab-pret">
+                <p class="l"><strong>29 €</strong> /lună</p><small class="l">sau 290 €/an la plata anuală</small>
+                <p class="a"><strong>290 €</strong> /an</p><small class="a ok">≈ 24,17 €/lună · economisești 58 €</small>
+              </div>
+            </div>
+            <p class="intro">Pentru ferme cu echipă și mai multe firme: <b>roluri, SPV și rapoarte</b>.</p>
+            <ul class="perks">
+{{PERKS_MARE}}
+            </ul>
+          </div>
+          <p class="ab-note">Până la 1.000 ha. Peste 1.000 ha: preț la cerere.</p>
+        </article>
+        <article class="offer ab-card reveal">
+          <div class="offer-body">
+            <span class="tag tip">Pentru <b>laboratoare, distribuitori, service-uri</b></span>
+            <div class="ab-top">
+              <h2>Partener</h2>
+              <div class="ab-pret">
+                <p class="l"><strong>59 €</strong> /lună</p><small class="l">sau 590 €/an la plata anuală</small>
+                <p class="a"><strong>590 €</strong> /an</p><small class="a ok">≈ 49,17 €/lună · economisești 118 €</small>
+              </div>
+            </div>
+            <p class="intro">Primești <b>cereri de ofertă</b> de la fermierii din județele tale, cu profil verificat.</p>
+            <ul class="perks">
+{{PERKS_PARTENER}}
+            </ul>
+          </div>
+          <p class="ab-note">Alternativă fără abonament: comision de 3% din comenzile acceptate prin platformă.</p>
+        </article>
+      </div>
+    </div>
+  </section>

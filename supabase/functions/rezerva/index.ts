@@ -1,8 +1,12 @@
-// Pesticid — înscrierea pe lista de așteptare („Rezerv loc”).
-//   POST { email, plan, sursa, ph_id, token }  → verifică tokenul Turnstile (anti-robot), apoi apelează rezerva_loc_srv
+// AgroSphere — înscrierea pe lista de așteptare („Rezerv loc”).
+//   POST { email, plan, sursa, ph_id, token, cui? }  → verifică tokenul Turnstile (anti-robot), apoi apelează rezerva_loc_srv
 //   cu IP-ul omului (pentru limitele pe IP). Emailul de bun venit pleacă din triggerul existent pe lista_asteptare.
+//   Planuri: `ferma` și `partener` (campaniile de lansare); `pro` / `agronom` rămân acceptate pentru site-ul vechi.
+//   La `partener` CUI-ul e obligatoriu: verificăm cifra de control și firma la ANAF aici, pe server (nu ne bazăm pe pagină).
+//   Dacă ANAF nu răspunde, rezervarea trece cu firma „neverificată” și o verificăm mai târziu.
 // Secrete: TURNSTILE_SECRET (Edge Function Secrets). Fără el, înscrierile sunt refuzate (nu le lăsăm neverificate).
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { anafFirma, cuiCurat, cuiValid } from "./anaf.ts";
 
 const SB = Deno.env.get("SUPABASE_URL")!;
 const KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -44,7 +48,9 @@ Deno.serve(async (req: Request) => {
   try { b = await req.json(); } catch { return json(400, { error: "JSON invalid" }); }
   const email = String(b.email ?? "").trim(), plan = String(b.plan ?? "");
   if (!email || email.length > 254) return json(400, { error: "email", message: "email invalid" });
-  if (plan !== "pro" && plan !== "agronom") return json(400, { error: "plan", message: "plan invalid" });
+  if (!["ferma", "partener", "pro", "agronom"].includes(plan)) return json(400, { error: "plan", message: "plan invalid" });
+  const cui = plan === "partener" ? cuiCurat(b.cui) : "";
+  if (plan === "partener" && !cuiValid(cui)) return json(400, { error: "cui", message: "CUI-ul nu pare corect." });
 
   const ip = ipDin(req);
   const v = await turnstile(b.token, ip, "rezerva");
@@ -53,14 +59,25 @@ Deno.serve(async (req: Request) => {
     return json(403, { error: "antibot", coduri: v.coduri, message: "Verificarea anti-robot nu a trecut." });
   }
 
+  // partener: datele firmei le luăm din ANAF (firmă inexistentă sau inactivă → refuzăm)
+  const firma: Record<string, string | null> = {};
+  if (plan === "partener") {
+    const f = await anafFirma(cui);
+    if (f === false) return json(400, { error: "cui_negasit", message: "Nu am găsit firma la ANAF. Verifică CUI-ul." });
+    if (f && !f.activa) return json(400, { error: "firma_inactiva", message: "Firma apare inactivă la ANAF." });
+    Object.assign(firma, f ? { p_firma: f.denumire, p_judet: f.judet, p_caen: f.caen, p_anaf_stare: "activa" } : { p_anaf_stare: "neverificata" });
+  }
+
   const r = await fetch(`${SB}/rest/v1/rpc/rezerva_loc_srv`, {
     method: "POST", headers: H,
-    body: JSON.stringify({ p_email: email, p_plan: plan, p_sursa: String(b.sursa ?? "site").slice(0, 60), p_ph_id: b.ph_id ? String(b.ph_id).slice(0, 80) : null, p_ip: ip || null }),
+    body: JSON.stringify({ p_email: email, p_plan: plan, p_sursa: String(b.sursa ?? "site").slice(0, 60), p_ph_id: b.ph_id ? String(b.ph_id).slice(0, 80) : null, p_ip: ip || null, ...(plan === "partener" ? { p_cui: cui, ...firma } : {}) }),
   });
   if (r.ok) return json(200, { ok: true });
   const e = await r.json().catch(() => ({})) as { message?: string; code?: string };
   const m = String(e.message ?? "");
+  if (/loc deja rezervat/.test(m)) return json(409, { error: "deja_rezervat", message: "Firma are deja un loc rezervat." });
   if (/prea multe/.test(m)) return json(429, { error: "rate", message: m });
+  if (/cui invalid/.test(m)) return json(400, { error: "cui", message: "CUI-ul nu pare corect." });
   if (/email invalid|plan invalid/.test(m)) return json(400, { error: "email", message: m });
   console.error("rezerva_loc_srv", r.status, m);
   return json(500, { error: "server", message: "A apărut o eroare." });
