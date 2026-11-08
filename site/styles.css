@@ -150,13 +150,14 @@ a.menu-it:not(.is-on):hover { color: var(--ink); }
   background-size: cover;
   background-position: center -200px; /* fotografia e urcată cu 200px pe desktop, în ambele taburi */
   opacity: 0;
-  transform: scale(1.06);
-  will-change: transform, opacity;
+  scale: 1.06;
+  will-change: transform, scale, opacity;
 }
+/* apariția animă doar opacitatea și `scale`; parallax-ul folosește `transform` (inline), așa că cele două nu se mai bat:
+   înainte, dacă dădeai scroll în timpul apariției, fotografia sărea la final cu zeci de pixeli */
 .hero-bg.is-in { animation: hero-in 1.6s var(--ease) forwards; }
-/* după apariție scoatem animația, ca transformarea de parallax (inline) să poată acționa */
-.hero-bg.is-done { animation: none; opacity: 1; }
-@keyframes hero-in { to { opacity: 1; transform: scale(1); } }
+.hero-bg.is-done { animation: none; opacity: 1; scale: 1; }
+@keyframes hero-in { to { opacity: 1; scale: 1; } }
 .hero-bg::after {
   content: "";
   position: absolute;
@@ -665,6 +666,7 @@ button.cui-opt:hover, button.cui-opt:focus-visible { background: #eef8c6; outlin
 .reveal[data-delay="2"] { transition-delay: 0.2s; }
 .reveal[data-delay="3"] { transition-delay: 0.3s; }
 .no-js .reveal, .no-js .hero-bg { opacity: 1; transform: none; }
+.no-js .hero-bg { scale: 1; }
 
 /* ---------- căutare avansată (Figma „Search avansat” 2099:47194 · Search v3 2070:21803) ---------- */
 .search { margin-top: -6px; width: min(1200px, 100%); min-width: 0; max-width: 100%; display: grid; align-content: start; gap: 16px; text-align: left; }
@@ -915,7 +917,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   /* pe mobil fotografia urcă 200px și, când hero-ul se lungește cu rezultate, rămâne ancorată jos cu înălțime plafonată,
      ca să nu fie mărită de 6–7 ori (sursa are 1920×1251); deasupra ei continuă fundalul, în care fotografia se estompează */
   .hero-bg { top: auto; bottom: -200px; height: min(calc(100% + 200px), 1500px); background-position: 55% 100%; background-repeat: no-repeat; }
-  .hero-bg.is-done { transform: none !important; } /* fără parallax pe mobil: fotografia ancorată jos ar fi împinsă în afara hero-ului */
+  .hero-bg { transform: none !important; } /* fără parallax pe mobil: fotografia ancorată jos ar fi împinsă în afara hero-ului */
   .hero h1 { font-size: clamp(32px, 9.2vw, 40px); line-height: 1.2; }
   .hero .lead { font-size: 15px; line-height: 1.6; }
   .calc { padding: 20px 10px 16px; border-radius: 28px; }
@@ -1004,7 +1006,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero-bg, .hero-bg.is-in, .hero-bg.is-done { animation: none; opacity: 1; transform: none; }
+  .hero-bg, .hero-bg.is-in, .hero-bg.is-done { animation: none; opacity: 1; transform: none; scale: 1; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .step .arrow { opacity: 1; transform: none; transition: none; }
   [data-parallax] { transform: none !important; }
