@@ -254,8 +254,8 @@
       var div = document.createElement('div'); div.className = 'fp-a';
       div.innerHTML =
         '<div class="fp-a-top"><b>Aplicarea ' + (i + 1) + '</b>' + (apl.length > 1 ? '<button type="button" class="fp-link fp-del">Șterge</button>' : '') + '</div>' +
-        '<div class="sel"><label class="field has-input"><span class="col"><small>Îngrășământ mineral</small><span class="val"><input data-x type="text" autocomplete="off" spellcheck="false" placeholder="Caută: uree, azotat de amoniu, UAN…" role="combobox" aria-expanded="false"></span></span><i class="chev" aria-hidden="true"></i></label><div class="dd" hidden><ul class="plist" role="listbox"></ul></div></div>' +
-        '<label class="field has-input has-unit fp-q"><span class="col"><small>Cantitate totală aplicată</small><span class="val"><input data-x type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 12,271"><b class="unit">t</b></span></span><span class="fp-tot" aria-live="polite"></span></label>' +
+        '<div class="row"><div class="sel"><label class="field has-input"><span class="col"><small>Îngrășământ mineral</small><span class="val"><input data-x type="text" autocomplete="off" spellcheck="false" placeholder="Caută: uree, azotat de amoniu, UAN…" role="combobox" aria-expanded="false"></span></span><i class="chev" aria-hidden="true"></i></label><div class="dd" hidden><ul class="plist" role="listbox"></ul></div></div>' +
+        '<label class="field has-input has-unit fp-q"><span class="col"><small>Cantitate totală aplicată</small><span class="val"><input data-x type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 12,271"><b class="unit">t</b></span></span><span class="fp-tot" aria-live="polite"></span></label></div>' +
         '<div class="row">' + campDataHtml('fp-d1', 'Începutul aplicării', 'zz.ll.aaaa') + campDataHtml('fp-d2', 'Sfârșitul aplicării', 'aceeași zi') + '</div>' +
         '<p class="fp-a-out"></p>';
       box.appendChild(div);
