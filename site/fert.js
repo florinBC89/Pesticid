@@ -389,7 +389,7 @@
         h += '<button type="button" class="' + cls + '" data-d="' + iz + '"' + (inainte ? ' disabled' : '') + (interzisZi(vm, z) ? ' title="Perioadă interzisă (1 noiembrie – 15 martie)"' : '') + '>' + z + '</button>';
       }
       h += '</div><div class="fp-cal-foot"><span class="fp-cal-leg"><i></i>1 nov – 15 mar: interzis</span>' +
-        (o.start && s0 ? '<button type="button" class="fp-link" data-d="' + s0 + '">Aceeași zi</button>' : '<button type="button" class="fp-link" data-d="' + aziIso + '">Azi</button>') + '</div>';
+        (o.start && s0 ? '<button type="button" class="fp-cal-chip" data-d="' + s0 + '">Aceeași zi</button>' : '<button type="button" class="fp-cal-chip" data-d="' + aziIso + '">Azi</button>') + '</div>';
       pop.innerHTML = h;
     }
     var api = {

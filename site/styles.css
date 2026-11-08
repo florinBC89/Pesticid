@@ -1141,18 +1141,24 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 .fp-cal-nav:hover { background: #e6efff; }
 .fp-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px 2px; max-width: 360px; margin: 0 auto; }
 .fp-cal-grid .wd { padding: 4px 0; font-size: 12px; font-weight: 600; color: #5a6478; text-align: center; }
-.fp-day { justify-self: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: none; font: inherit; font-size: 15px; font-weight: 500; color: #242c3c; cursor: pointer; font-variant-numeric: tabular-nums; }
+.fp-day { position: relative; justify-self: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: none; font: inherit; font-size: 15px; font-weight: 500; color: #242c3c; cursor: pointer; font-variant-numeric: tabular-nums; }
 .fp-day:hover { background: #e6efff; }
-.fp-day.is-forb { color: #b4232f; background: #fff1f2; }
+/* perioada interzisă: culorile site-ului (fundal deschis + punct portocaliu), nu roșu de eroare */
+.fp-day.is-forb { color: #5a6478; background: var(--surface-2); }
+.fp-day.is-forb::after { content: ""; position: absolute; left: 50%; bottom: 5px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: #ffad60; }
+.fp-day.is-forb:hover { background: #e6efff; }
 .fp-day.is-today { box-shadow: inset 0 0 0 2px #242c3c; }
 .fp-day.is-sel, .fp-day.is-sel:hover { background: var(--fg); color: #fff; }
 .fp-day.is-in { background: #dbe6fb; color: var(--fg); border-radius: 12px; }
-.fp-day.is-in.is-forb { background: #f9d9dc; color: #8f1d27; }
+.fp-day.is-in.is-forb { background: #dbe6fb; color: var(--fg); }
 .fp-cal-step { margin: 0 0 6px; font-size: 13px; color: #3f4b66; text-align: center; }
 .fp-cal-step b { color: var(--fg); font-weight: 600; }
 .fp-cal-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; max-width: 360px; margin: 10px auto 0; padding-top: 10px; border-top: 1px solid #e3e9f6; }
 .fp-cal-leg { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #5a6478; }
-.fp-cal-leg i { width: 12px; height: 12px; border-radius: 50%; background: #fff1f2; box-shadow: inset 0 0 0 1px #f3b6bc; }
+.fp-cal-leg i { width: 8px; height: 8px; border-radius: 50%; background: #ffad60; }
+.fp-cal-chip { border: 0; border-radius: 999px; padding: 8px 16px; background: var(--surface-2); color: var(--fg); font: inherit; font-size: 14px; font-weight: 600; line-height: 1.2; cursor: pointer; transition: background 0.15s; }
+.fp-cal-chip:hover { background: #e6efff; }
+.fp-cal-chip:focus-visible { outline: 2px solid #242c3c; outline-offset: 2px; }
 .fp-sec { margin: 6px 0 -4px; padding: 0 16px; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; color: #3f4b66; text-align: left; }
 .fp-apl { display: grid; gap: 12px; }
 .fp-a { display: grid; gap: 10px; padding: 12px; border: 1.5px solid #e3e9f6; border-radius: 22px; }
@@ -1233,6 +1239,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 #fp-warn { display: grid; gap: 8px; }
 #fp-warn:empty { display: none; }
 .fp-day:disabled { color: #c3cad8; background: none; cursor: not-allowed; }
+.fp-day:disabled::after { display: none; }
 .fp-day.is-start { background: #242c3c; color: #fff; opacity: 0.55; }
 .fp-dmsg { margin: 4px 0 0; padding: 0 6px; font-size: 13px; color: #b4232f; text-align: left; }
 .fp-dmsg[hidden] { display: none; }
