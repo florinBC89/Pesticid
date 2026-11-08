@@ -9,6 +9,8 @@ Antetul (meniul) se ia din body.html, ca să nu existe două versiuni; aici „P
 """
 import json, pathlib, re
 
+# scriptul din <head>: animațiile de apariție pornesc de la prima afișare; dacă main.js nu se încarcă în 3 s, conținutul rămâne vizibil
+HEADJS = "<script>(function(d){d.classList.remove('no-js');d.classList.add('js');setTimeout(function(){if(!window.agrosphereMain)d.classList.add('no-js');},3000);})(document.documentElement);</script>"
 root = pathlib.Path(__file__).parent
 body = (root / 'body.html').read_text(encoding='utf-8')
 fert = (root / 'fert-body.html').read_text(encoding='utf-8')
@@ -40,8 +42,8 @@ def continut(prefix_assets):
     <div class="hero-clip"><div class="hero-bg" data-src="{prefix_assets}assets/hero-camp.webp" data-src-2x="{prefix_assets}assets/hero-camp-2x.webp" data-parallax="0.28" data-parallax-top role="img" aria-label="Câmp cultivat la apus"></div></div>
     <div class="wrap">
       <div class="hero-copy">
-        <h1>Planul de fertilizare <b>completat în câteva minute</b></h1>
-        <p class="lead">Completezi parcela și azotul planificat, alegi îngrășămintele din <b>lista oficială MADR</b>, iar noi calculăm <b>kg de azot pe hectar</b>. La final descarci planul în <b>formatul oficial</b> (model simplificat).</p>
+        <h1 class="reveal">Planul de fertilizare <b>completat în câteva minute</b></h1>
+        <p class="lead reveal" data-delay="1">Completezi parcela și azotul planificat, alegi îngrășămintele din <b>lista oficială MADR</b>, iar noi calculăm <b>kg de azot pe hectar</b>. La final descarci planul în <b>formatul oficial</b> (model simplificat).</p>
 {fert}
       </div>
     </div>
@@ -60,6 +62,7 @@ pagina = f'''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{HEADJS}
 <title>Plan de fertilizare — AgroSphere</title>
 <meta name="description" content="Completezi planul de fertilizare (model simplificat): parcelă, azot planificat, îngrășăminte din lista oficială MADR și kg N/ha calculat automat.">
 <meta name="theme-color" content="#cedbf6">
@@ -93,6 +96,7 @@ date = [[r['nr_madr'], r['denumire'], r['n'], r['unitate_npk'], r['forma'], r['c
         for r in src if r['n'] and r['unitate_npk'] in ('%', 'g/l')]
 preview = f'''<title>Plan de fertilizare — AgroSphere</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+{HEADJS}
 {fonts}
 <style>
 {css}

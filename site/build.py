@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Compune index.html (site-ul) și preview.html (pagină pentru Artifact, fără schelet HTML) din body.html + styles.css + main.js."""
 import pathlib
+# scriptul din <head>: animațiile de apariție pornesc de la prima afișare; dacă main.js nu se încarcă în 3 s, conținutul rămâne vizibil
+HEADJS = "<script>(function(d){d.classList.remove('no-js');d.classList.add('js');setTimeout(function(){if(!window.agrosphereMain)d.classList.add('no-js');},3000);})(document.documentElement);</script>"
 root = pathlib.Path(__file__).parent
 body = (root / 'body.html').read_text(encoding='utf-8')
 css = (root / 'styles.css').read_text(encoding='utf-8')
@@ -27,6 +29,7 @@ index = f'''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{HEADJS}
 <title>AgroSphere — Calculator de doză pentru pesticide</title>
 <meta name="description" content="{desc}">
 <meta name="theme-color" content="#cedbf6">
@@ -74,6 +77,7 @@ index = f'''<!doctype html>
 (root / 'index.html').write_text(index, encoding='utf-8')
 preview = f'''<title>AgroSphere</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+{HEADJS}
 {fonts}
 <style>
 {css}

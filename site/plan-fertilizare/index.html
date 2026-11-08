@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>(function(d){d.classList.remove('no-js');d.classList.add('js');setTimeout(function(){if(!window.agrosphereMain)d.classList.add('no-js');},3000);})(document.documentElement);</script>
 <title>Plan de fertilizare — AgroSphere</title>
 <meta name="description" content="Completezi planul de fertilizare (model simplificat): parcelă, azot planificat, îngrășăminte din lista oficială MADR și kg N/ha calculat automat.">
 <meta name="theme-color" content="#cedbf6">
@@ -55,11 +56,11 @@
     <div class="hero-clip"><div class="hero-bg" data-src="/assets/hero-camp.webp" data-src-2x="/assets/hero-camp-2x.webp" data-parallax="0.28" data-parallax-top role="img" aria-label="Câmp cultivat la apus"></div></div>
     <div class="wrap">
       <div class="hero-copy">
-        <h1>Planul de fertilizare <b>completat în câteva minute</b></h1>
-        <p class="lead">Completezi parcela și azotul planificat, alegi îngrășămintele din <b>lista oficială MADR</b>, iar noi calculăm <b>kg de azot pe hectar</b>. La final descarci planul în <b>formatul oficial</b> (model simplificat).</p>
+        <h1 class="reveal">Planul de fertilizare <b>completat în câteva minute</b></h1>
+        <p class="lead reveal" data-delay="1">Completezi parcela și azotul planificat, alegi îngrășămintele din <b>lista oficială MADR</b>, iar noi calculăm <b>kg de azot pe hectar</b>. La final descarci planul în <b>formatul oficial</b> (model simplificat).</p>
 <!-- Plan de fertilizare (model simplificat al Ministerului Mediului): doar azot, fără îngrășăminte organice deocamdată.
      Folosește aceleași componente ca „Calculator pesticide” (.calc, .field, .row, .sel/.dd/.plist, .cstat). -->
-<div class="calc fp" id="fp" role="group" aria-labelledby="fp-title">
+<div class="calc fp reveal" data-delay="2" id="fp" role="group" aria-labelledby="fp-title">
   <div class="calc-head">
     <h3 id="fp-title">Plan de fertilizare</h3>
     <p class="calc-hint" id="fp-hint">Date de test, nu sunt reprezentative momentan</p>

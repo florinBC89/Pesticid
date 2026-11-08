@@ -1,6 +1,7 @@
 /* Pesticid — site de prezentare: tranziție hero, parallax pe fotografii, apariții la scroll, contoare, nav compact. */
 (function () {
   'use strict';
+  window.agrosphereMain = true; /* scriptul din <head> verifică asta: fără main.js, conținutul rămâne vizibil */
   document.documentElement.classList.remove('no-js');
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
