@@ -179,7 +179,12 @@
     $('fp-hint').textContent = 'Date de test, nu sunt reprezentative momentan';
   }
   var lichid = function (f) { return f.u === 'g/l'; };
-  var unitCant = function (f) { return f && lichid(f) ? 'L/ha' : 'kg/ha'; };
+  /* în aplicare se scrie cantitatea TOTALĂ aplicată pe toată suprafața: tone (sau litri, la produsele dozate în g/l);
+     doza pe hectar (a.q: kg/ha sau L/ha) se calculează din total și suprafață */
+  var unitCant = function (f) { return f && lichid(f) ? 'L' : 't'; };
+  var unitHa = function (f) { return f && lichid(f) ? 'L/ha' : 'kg/ha'; };
+  function dozaDinTotal(a) { var ha = num($('fp-ha').value); a.q = a.t && ha ? (a.f && lichid(a.f) ? a.t / ha : a.t * 1000 / ha) : null; }
+  var fmtTot = function (f, v) { return lichid(f || {}) ? fmt(v, 0) : fmt(v, 3); };
   var tagF = function (f) { return f.u === '%' ? fmt(f.n, 2) + '% N' : fmt(f.n, 1) + ' g/l N'; };
   /* kg N/ha dintr-o cantitate de produs: kg/ha × %N / 100, sau L/ha × g/l / 1000 */
   var kgN = function (f, q) { return f && q ? (lichid(f) ? q * f.n / 1000 : q * f.n / 100) : 0; };
@@ -226,7 +231,7 @@
   ['fp-ha', 'fp-bloc', 'fp-parc'].forEach(function (id) { $(id).addEventListener('input', actualizeaza); });
 
   /* ---------- realizat: aplicări ---------- */
-  function aplicareNoua() { apl.push({ f: null, q: null, d1: '', d2: '' }); deseneazaAplicari(); }
+  function aplicareNoua() { apl.push({ f: null, t: null, q: null, d1: '', d2: '' }); deseneazaAplicari(); }
   function deseneazaAplicari() {
     var box = $('fp-apl'); box.innerHTML = '';
     apl.forEach(function (a, i) {
@@ -234,13 +239,13 @@
       div.innerHTML =
         '<div class="fp-a-top"><b>Aplicarea ' + (i + 1) + '</b>' + (apl.length > 1 ? '<button type="button" class="fp-link fp-del">Șterge</button>' : '') + '</div>' +
         '<div class="sel"><label class="field has-input"><span class="col"><small>Îngrășământ mineral</small><span class="val"><input type="text" autocomplete="off" spellcheck="false" placeholder="Caută: uree, azotat de amoniu, UAN…" role="combobox" aria-expanded="false"></span></span><i class="chev" aria-hidden="true"></i></label><div class="dd" hidden><ul class="plist" role="listbox"></ul></div></div>' +
-        '<label class="field has-input has-unit fp-q"><span class="col"><small>Cantitate</small><span class="val"><input type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 300"><b class="unit">kg/ha</b></span></span><span class="fp-tot" aria-live="polite"></span></label>' +
+        '<label class="field has-input has-unit fp-q"><span class="col"><small>Cantitate totală aplicată</small><span class="val"><input type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 12,271"><b class="unit">t</b></span></span><span class="fp-tot" aria-live="polite"></span></label>' +
         '<div class="row">' + campDataHtml('fp-d1', 'Începutul aplicării', 'zz.ll.aaaa') + campDataHtml('fp-d2', 'Sfârșitul aplicării', 'aceeași zi') + '</div>' +
         '<p class="fp-a-out"></p>';
       box.appendChild(div);
       var inF = div.querySelector('.sel input'), inQ = div.querySelector('.fp-q input'), out = div.querySelector('.fp-a-out');
-      a.totEl = div.querySelector('.fp-tot');
-      if (a.f) inF.value = a.f.nume; if (a.q) inQ.value = String(a.q).replace('.', ',');
+      a.totEl = div.querySelector('.fp-tot'); a.outEl = out;
+      if (a.f) inF.value = a.f.nume; if (a.t) inQ.value = String(a.t).replace('.', ',');
       Combo(div.querySelector('.sel'), {
         empty: 'Niciun îngrășământ cu azot găsit în lista MADR.',
         picker: { title: 'Alege îngrășământul', label: 'Îngrășământ mineral', ph: 'Caută: uree, azotat de amoniu, UAN…', ico: 'sac', toateTitlu: 'Toate îngrășămintele cu azot, alfabetic',
@@ -251,18 +256,20 @@
           else it = F.filter(function (f) { return f.k.indexOf(k) >= 0; }).sort(function (x, y) { return (x.k.indexOf(k) === 0 ? 0 : 1) - (y.k.indexOf(k) === 0 ? 0 : 1) || x.oprit - y.oprit || x.cat - y.cat; });
           return { items: it.map(function (f) { return { label: f.nume, f: f, tag: tagF(f), tagCls: f.oprit ? 'muted' : 'cnt' }; }), head: k ? '' : 'Cele mai folosite' };
         },
-        onPick: function (itm) { a.f = itm.f; div.querySelector('.fp-q .unit').textContent = unitCant(a.f); actualizeazaAplicare(a, out); actualizeaza(); },
+        onPick: function (itm) { a.f = itm.f; div.querySelector('.fp-q .unit').textContent = unitCant(a.f); dozaDinTotal(a); actualizeazaAplicare(a, out); actualizeaza(); },
         onType: function () { a.f = null; actualizeazaAplicare(a, out); actualizeaza(); }
       });
       if (a.f) div.querySelector('.fp-q .unit').textContent = unitCant(a.f);
-      inQ.addEventListener('input', function () { a.q = num(inQ.value); actualizeazaAplicare(a, out); actualizeaza(); });
+      inQ.addEventListener('input', function () { a.t = num(inQ.value); dozaDinTotal(a); actualizeazaAplicare(a, out); actualizeaza(); });
       var refresh = function () { actualizeazaAplicare(a, out); actualizeaza(); };
       var cSf = null, cIn = CampData(div.querySelector('.fp-d1'), a.d1, {}, function (iso) { a.d1 = iso; if (cSf) cSf.verifica(); refresh(); });
       cSf = CampData(div.querySelector('.fp-d2'), a.d2, { start: function () { return a.d1; } }, function (iso) { a.d2 = iso; refresh(); });
       out.addEventListener('click', function (ev) {
         var b = ev.target.closest('.fp-fill'); if (!b || !a.f) return;
         var rest = Math.max(0, (num($('fp-plan').value) || 0) - totalN(a));
-        a.q = Math.round(cantPentru(a.f, rest)); inQ.value = String(a.q); actualizeazaAplicare(a, out); actualizeaza();
+        var ha = num($('fp-ha').value); if (!ha) return;
+        var tot = cantPentru(a.f, rest) * ha; a.t = lichid(a.f) ? Math.round(tot) : Math.round(tot) / 1000;
+        inQ.value = String(a.t).replace('.', ','); dozaDinTotal(a); actualizeazaAplicare(a, out); actualizeaza();
         T('fert_fill_rest', { produs: a.f.nume });
       });
       var del = div.querySelector('.fp-del'); if (del) del.addEventListener('click', function () { apl.splice(i, 1); deseneazaAplicari(); actualizeaza(); });
@@ -283,9 +290,8 @@
   function totalAplicare(a) {
     if (!a.totEl) return;
     var ha = num($('fp-ha').value);
-    if (!a.q || !ha) { a.totEl.innerHTML = ''; return; }
-    var lq = a.f && lichid(a.f);
-    a.totEl.innerHTML = '<small>Total pe ' + fmt(ha, 2) + ' ha</small><b>' + (lq ? fmt(a.q * ha, 0) + ' L' : fmt(a.q * ha / 1000, 2) + ' t') + '</b>';
+    if (!a.t) { a.totEl.innerHTML = ''; return; }
+    a.totEl.innerHTML = '<small>Doza pe ha</small><b>' + (a.q ? fmt(a.q, 1) + ' ' + unitHa(a.f) : '—') + '</b>';
   }
   function totalN(fara) { return apl.reduce(function (s, a) { return s + (a === fara ? 0 : kgN(a.f, a.q)); }, 0); }
   function interzisZi(m, z) { return m === 11 || m === 12 || m === 1 || m === 2 || (m === 3 && z <= 15); }
@@ -300,13 +306,11 @@
     var ha = num($('fp-ha').value), plan = num($('fp-plan').value), h = [];
     if (!a.f) { out.innerHTML = '<span class="ph">Alege îngrășământul.</span>'; return; }
     if (a.f.oprit) h.push('<span class="fp-w">Producția acestui produs e marcată ca oprită temporar în lista MADR.</span>');
-    if (a.q) {
-      var n = kgN(a.f, a.q);
-      h.push('= <b>' + fmt(n, 1) + ' kg N/ha</b>');
-    }
-    if (plan) {
-      var rest = Math.max(0, plan - totalN(a));
-      if (rest > 0 && (!a.q || Math.abs(kgN(a.f, a.q) - rest) > 0.5)) h.push('<button type="button" class="fp-link fp-fill">Completează până la ' + fmt(plan, 0) + ' kg N/ha planificat: ' + fmt(Math.round(cantPentru(a.f, rest)), 0) + ' ' + unitCant(a.f) + '</button>');
+    if (a.t && !ha) h.push('<span class="fp-w">Completează suprafața parcelei ca să calculăm doza și azotul pe hectar.</span>');
+    if (a.q) h.push('= <b>' + fmt(kgN(a.f, a.q), 1) + ' kg N/ha</b>');
+    if (plan && ha) {
+      var rest = Math.max(0, plan - totalN(a)), nevoie = cantPentru(a.f, rest) * ha;
+      if (rest > 0 && (!a.q || Math.abs(kgN(a.f, a.q) - rest) > 0.5)) h.push('<button type="button" class="fp-link fp-fill">Completează până la ' + fmt(plan, 0) + ' kg N/ha planificat: ' + fmtTot(a.f, lichid(a.f) ? nevoie : nevoie / 1000) + ' ' + unitCant(a.f) + ' pe ' + fmt(ha, 2) + ' ha</button>');
     }
     if (interzis(a)) h.push('<span class="fp-bad">Atenție: împrăștierea îngrășămintelor e interzisă între 1 noiembrie și 15 martie.</span>');
     out.innerHTML = h.join(' ');
@@ -401,7 +405,7 @@
   /* ---------- rezumat + avertismente ---------- */
   function actualizeaza() {
     potrivesteToate();
-    apl.forEach(totalAplicare);
+    apl.forEach(function (a) { dozaDinTotal(a); totalAplicare(a); if (a.outEl) actualizeazaAplicare(a, a.outEl); });
     var plan = num($('fp-plan').value), tot = totalN(), cards = $('fp-cards'), w = [];
     cards.innerHTML =
       '<div class="cstat"><span class="k">Planificat N</span><span class="v">' + (plan ? fmt(plan, 0) : '—') + ' <small>kg s.a./ha</small></span></div>' +
@@ -459,7 +463,7 @@
     if (!ha) lipsa.push('suprafața');
     if (!c) lipsa.push('cultura');
     if (pl == null) lipsa.push('cantitatea planificată de N');
-    var incomplete = apl.filter(function (a) { return (a.f && !a.q) || (!a.f && a.q); }).length;
+    var incomplete = apl.filter(function (a) { return (a.f && !a.t) || (!a.f && a.t); }).length;
     if (lipsa.length || incomplete) { msg.className = 'doza-msg bad'; msg.textContent = lipsa.length ? 'Completează ' + lipsa.join(', ') + '.' : 'O aplicare are produsul sau cantitatea lipsă.'; return; }
     var L = limita(c);
     if (L && studiu === 'nu' && (pl > L.max || totalN() > L.max)) { msg.className = 'doza-msg bad'; msg.textContent = MSG_ROSU + '. Fără studiu agrochimic, maximul este ' + L.max + ' kg N s.a./ha/an pentru ' + L.ce + '. Corectează cantitatea sau alege „Am studiu”, dacă ai studiu agrochimic.'; T('fert_limit_blocked', { cultura: c }); return; }
