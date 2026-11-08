@@ -198,21 +198,31 @@
     onPick: function (it) { cultSel = it.c; sugereaza(); actualizeaza(); },
     onType: function () { cultSel = null; sugereaza(); actualizeaza(); }
   });
-  /* „Nu am” studiu agrochimic: cantitatea planificată de N se precompletează cu maximul din Ghidul fermierului (pag. 48–49),
-     după cultură și pantă; recolta scontată e opțională — dacă e scrisă și calculul ICPA dă mai puțin, propunem calculul.
-     Cu studiu: propunem doar calculul din recoltă (dacă e scrisă). Ce scrie omul de mână nu se suprascrie. */
+  /* „Nu am” studiu agrochimic: cantitatea planificată de N se completează cu maximul din Ghidul fermierului (pag. 48–49),
+     după cultură și pantă, și nu se poate modifica. „Am studiu”: câmpul se completează de mână, după calculul din studiu.
+     Recolta scontată e opțională: arătăm doar necesarul orientativ (ICPA), fără să schimbăm câmpul. */
+  function blocheazaPlan(da) {
+    var i = $('fp-plan'); i.readOnly = da; i.setAttribute('aria-readonly', da ? 'true' : 'false');
+    $('fp-f-plan').classList.toggle('fp-lock', da);
+  }
   function sugereaza() {
     var rec = num($('fp-rec').value), msg = $('fp-plan-msg'), plan = $('fp-plan');
     msg.className = 'doza-msg'; msg.textContent = '';
-    var L = studiu === 'nu' ? limita($('fp-cult').value) : null;
-    var nc = cultSel && !cultSel.leg && rec ? Math.round(rec * cultSel.csp) : null;
-    var val = L ? (nc != null ? Math.min(nc, L.max) : L.max) : nc;
-    if (val != null && (!plan.value || planAuto)) { plan.value = String(val); planAuto = true; }
-    else if (val == null && planAuto && studiu === 'nu') { plan.value = ''; planAuto = false; } /* cultura ștearsă: golim ce completasem noi */
+    if (studiu === 'nu') {
+      var L = limita($('fp-cult').value);
+      blocheazaPlan(true);
+      plan.value = L ? String(L.max) : ''; planAuto = !!L;
+      plan.placeholder = '—';
+    } else {
+      blocheazaPlan(false);
+      if (planAuto) { plan.value = ''; planAuto = false; }
+      plan.placeholder = 'ex. 150';
+    }
     if (cultSel && cultSel.leg) { msg.className = 'doza-msg warn'; msg.textContent = cultSel.nume + ' e leguminoasă: își fixează singură cea mai mare parte din azot, de obicei nu are nevoie de mult N.'; return; }
-    if (nc == null) return;
-    msg.innerHTML = 'Necesar orientativ: ' + fmt(rec, 2) + ' t/ha × ' + fmt(cultSel.csp, 1) + ' kg N/t = <b>' + nc + ' kg N/ha</b> (consum specific ICPA)' +
-      (L && nc > L.max ? '. Fără studiu agrochimic rămâne maximul permis, <b>' + L.max + ' kg N/ha</b>.' : (studiu === 'da' ? '. Scade azotul din sol și de la cultura premergătoare, conform studiului agrochimic.' : '.'));
+    if (!cultSel || !rec) return;
+    var nc = Math.round(rec * cultSel.csp);
+    msg.innerHTML = 'Necesar orientativ: ' + fmt(rec, 2) + ' t/ha × ' + fmt(cultSel.csp, 1) + ' kg N/t = <b>' + nc + ' kg N/ha</b> (consum specific ICPA).' +
+      (studiu === 'da' ? ' Scade azotul din sol și de la cultura premergătoare, conform studiului agrochimic.' : '');
   }
   $('fp-rec').addEventListener('input', function () { sugereaza(); actualizeaza(); });
   /* panta blocului fizic și studiul agrochimic: două butoane fiecare (radio) */
@@ -418,10 +428,11 @@
     $('fp-f-plan').classList.remove('is-bad');
     if (L && studiu === 'nu') {
       if (plan && plan > L.max) { $('fp-f-plan').classList.add('is-bad'); lm.className = 'doza-msg bad'; lm.innerHTML = '<b>' + MSG_ROSU + '.</b> Fără studiu agrochimic, maximul este ' + L.max + ' kg N s.a./ha/an pentru ' + esc(L.ce) + '.'; }
-      else if (planAuto && plan === L.max) lm.innerHTML = 'Am precompletat cantitatea maximă permisă fără studiu agrochimic: <b>' + L.max + ' kg N s.a./ha/an</b> pentru ' + esc(L.ce) + ' (Ghidul fermierului privind condiționalitatea 2026). Poți scrie o cantitate mai mică; peste ea, sau pe teren irigat, e nevoie de studiu agrochimic.';
+      else if (planAuto && plan === L.max) lm.innerHTML = 'Completat din Ghidul fermierului privind condiționalitatea 2026 (pag. 48–49): fără studiu agrochimic, cantitatea pentru ' + esc(L.ce) + ' este <b>' + L.max + ' kg N s.a./ha/an</b>. Pentru altă cantitate, sau pe teren irigat, e nevoie de studiu agrochimic: alege „Am studiu”.';
       else lm.innerHTML = 'Fără studiu agrochimic poți planifica cel mult <b>' + L.max + ' kg N s.a./ha/an</b> pentru ' + esc(L.ce) + '. Peste această cantitate, sau pe teren irigat, e nevoie de studiu agrochimic.';
       if (tot > L.max) bad.push(MSG_ROSU + ': ' + fmt(tot, 0) + ' kg N/ha aplicat, iar fără studiu agrochimic maximul este ' + L.max + ' kg N/ha.');
-    } else if (L) lm.innerHTML = 'Ai studiu agrochimic: cantitatea de azot se stabilește după calculul din studiu. Fără studiu, maximul ar fi ' + L.max + ' kg N s.a./ha/an pentru ' + esc(L.ce) + '.';
+    } else if (L) lm.innerHTML = 'Ai studiu agrochimic: scrie cantitatea de azot rezultată din calculul studiului. Fără studiu, maximul ar fi ' + L.max + ' kg N s.a./ha/an pentru ' + esc(L.ce) + '.';
+    else if (studiu === 'nu') lm.textContent = 'Alege cultura: cantitatea planificată de N se completează din Ghidul fermierului.';
     if (plan && tot > plan * 1.05) w.push('Ai aplicat mai mult azot decât ai planificat (' + fmt(tot, 0) + ' față de ' + fmt(plan, 0) + ' kg N/ha).');
     if (apl.some(function (a) { return interzis(a); })) w.push('Una dintre aplicări e în perioada interzisă (1 noiembrie – 15 martie).');
     $('fp-warn').innerHTML = bad.map(function (t) { return '<p class="calc-warn is-bad">' + esc(t) + '</p>'; }).join('') + w.map(function (t) { return '<p class="calc-warn">' + esc(t) + '</p>'; }).join('');
@@ -498,7 +509,7 @@
   /* ---------- pornire ---------- */
   /* varianta de tipărit stă direct în <body>, ca la tipărire să putem ascunde tot restul paginii */
   var pr = $('fp-print-doc'); pr.classList.add('fp-print-host'); document.body.appendChild(pr);
-  citeste(); deseneazaPlan(); aplicareNoua(); actualizeaza();
+  citeste(); deseneazaPlan(); aplicareNoua(); sugereaza(); actualizeaza();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(potrivesteToate);
   incarca().then(function (rows) { pregateste(rows); deseneazaAplicari(); })
     .catch(function () { $('fp-hint').textContent = 'Lista de îngrășăminte nu s-a putut încărca.'; });
