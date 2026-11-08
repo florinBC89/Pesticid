@@ -14,8 +14,10 @@
   function device() { var w = window.innerWidth; return w <= 700 ? 'mobile' : w <= 1100 ? 'tablet' : 'desktop'; }
   function mode() { var on = document.querySelector('.tabs .tab.is-on'); return on && /Caută/.test(on.textContent) ? 'search' : 'calc'; }
 
+  /* evenimente urmate imediat de schimbarea paginii (clic în meniu): pleacă prin sendBeacon, ca să nu se piardă */
+  var BEACON = { nav_clicked: 1 };
   function send(name, props) {
-    if (ready && window.posthog) window.posthog.capture(name, props);
+    if (ready && window.posthog) window.posthog.capture(name, props, BEACON[name] ? { transport: 'sendBeacon' } : undefined);
     else queue.push([name, props]);
   }
   /* starea folosită de calc_abandoned și de waitlist_submitted */

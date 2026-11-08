@@ -51,6 +51,7 @@
   var plan = [];
   var apl = [];
   var planAuto = false;
+  var avertRosu = ''; /* PostHog: trimitem fert_limit_warning_shown doar când apare mesajul roșu, nu la fiecare tastă */
 
   /* ---------- combo simplu (aceleași clase ca în calculatorul de pesticide) ---------- */
   var deschis = null;
@@ -197,12 +198,15 @@
     empty: 'Nicio cultură găsită. Poți păstra ce ai scris.',
     picker: { title: 'Alege cultura', label: 'Cultura', ph: 'Scrie sau alege cultura…', ico: 'wheat', custom: true },
     options: function (q) { var k = norm(q); var it = CULTURI.filter(function (c) { return !k || c.k.indexOf(k) >= 0; }).map(function (c) { return { label: c.nume, c: c, tag: c.leg ? 'leguminoasă' : fmt(c.csp, 1) + ' kg N/t', tagCls: 'muted' }; }); return { items: it, head: k ? '' : 'Consum specific de azot (ICPA)' }; },
-    onPick: function (it) { cultSel = it.c; sugereaza(); actualizeaza(); },
-    onType: function () { cultSel = null; sugereaza(); actualizeaza(); }
+    onPick: function (it) { cultSel = it.c; sugereaza(); actualizeaza(); evCultura(it.c.nume, true); },
+    onType: function (v) { cultSel = null; sugereaza(); actualizeaza(); if (window.track && v && v.trim()) window.track.debounced('fert_crop', 1500, 'fert_crop_selected', propsCultura(v.trim(), false)); }
   });
   /* „Nu am” studiu agrochimic: cantitatea planificată de N se completează cu maximul din Ghidul fermierului (pag. 48–49),
      după cultură și pantă, și nu se poate modifica. „Am studiu”: câmpul se completează de mână, după calculul din studiu.
      Recolta scontată e opțională: arătăm doar necesarul orientativ (ICPA), fără să schimbăm câmpul. */
+  /* PostHog: cultura aleasă (din listă sau scrisă de mână) și grupa din ghid în care intră */
+  function propsCultura(nume, dinLista) { var L = limita(nume); return { cultura: nume, din_lista: dinLista, grupa_ghid: L ? L.ce.split(',')[0] : null, max_fara_studiu: L ? L.max : null, panta: panta, studiu: studiu }; }
+  function evCultura(nume, dinLista) { if (window.track) { window.track.cancel('fert_crop'); window.track('fert_crop_selected', propsCultura(nume, dinLista)); } }
   function blocheazaPlan(da) {
     var i = $('fp-plan'); i.readOnly = da; i.setAttribute('aria-readonly', da ? 'true' : 'false');
     $('fp-f-plan').classList.toggle('fp-lock', da);
@@ -237,7 +241,7 @@
       b.addEventListener('keydown', function (e) { if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return; e.preventDefault(); alege(btns[(i + 1) % btns.length].getAttribute('data-v'), true); });
     });
   }
-  Alegere('fp-f-panta', function (v) { panta = v; sugereaza(); actualizeaza(); });
+  Alegere('fp-f-panta', function (v) { panta = v; sugereaza(); actualizeaza(); T('fert_slope_set', { panta: v, cultura: $('fp-cult').value || null }); });
   Alegere('fp-f-studiu', function (v) { studiu = v; sugereaza(); actualizeaza(); T('fert_study_toggled', { studiu: v }); });
   $('fp-plan').addEventListener('input', function () { planAuto = false; actualizeaza(); });
   ['fp-ha', 'fp-bloc', 'fp-parc'].forEach(function (id) { $(id).addEventListener('input', actualizeaza); });
@@ -272,7 +276,10 @@
         onType: function () { a.f = null; actualizeazaAplicare(a, out); actualizeaza(); }
       });
       if (a.f) div.querySelector('.fp-q .unit').textContent = unitCant(a.f);
-      inQ.addEventListener('input', function () { a.t = num(inQ.value); dozaDinTotal(a); actualizeazaAplicare(a, out); actualizeaza(); });
+      inQ.addEventListener('input', function () {
+        a.t = num(inQ.value); dozaDinTotal(a); actualizeazaAplicare(a, out); actualizeaza();
+        if (window.track && a.t) window.track.debounced('fert_qty_' + i, 1500, 'fert_quantity_set', { aplicare: i + 1, unitate: unitCant(a.f), are_suprafata: !!num($('fp-ha').value), are_produs: !!a.f, doza_kg_ha: a.q ? Math.round(a.q) : null, kg_n_ha: a.q && a.f ? Math.round(kgN(a.f, a.q)) : null });
+      });
       var refresh = function () { actualizeazaAplicare(a, out); actualizeaza(); };
       var cSf = null, cIn = CampData(div.querySelector('.fp-d1'), a.d1, {}, function (iso) { a.d1 = iso; if (cSf) cSf.verifica(); refresh(); });
       cSf = CampData(div.querySelector('.fp-d2'), a.d2, { start: function () { return a.d1; } }, function (iso) { a.d2 = iso; refresh(); });
@@ -414,6 +421,7 @@
       var n = ev.target.closest('[data-nav]');
       if (n) { vm += +n.getAttribute('data-nav'); if (vm < 1) { vm = 12; vy--; } if (vm > 12) { vm = 1; vy++; } deseneaza(); return; }
       var d = ev.target.closest('[data-d]'); if (!d || d.disabled) return;
+      if (d.classList.contains('fp-cal-chip')) T('fert_calendar_quick_pick', { buton: d.textContent.trim(), camp: o.start ? 'sfarsit' : 'inceput' });
       sel = d.getAttribute('data-d'); input.value = ro(sel); rau(''); verifica(); onChange(sel); api.close();
     });
     if (sel) input.value = ro(sel);
@@ -432,6 +440,7 @@
       '<div class="cstat"><span class="k">' + (plan && tot > plan ? 'Peste plan' : 'Rămas de aplicat') + '</span><span class="v">' + (plan ? fmt2(Math.abs(plan - tot)) : '—') + ' <small>kg N/ha</small></span></div>';
     /* limita din ghid: fără studiu agrochimic, nici planificatul, nici ce s-a aplicat nu pot trece de maxim */
     var L = limita($('fp-cult').value), lm = $('fp-lim-msg'), bad = [];
+    var undePrev = avertRosu; avertRosu = '';
     lm.className = 'doza-msg'; lm.innerHTML = '';
     $('fp-f-plan').classList.remove('is-bad');
     if (L && studiu === 'nu') {
@@ -439,6 +448,9 @@
       else if (planAuto && plan === L.max) lm.innerHTML = 'Completat din Ghidul fermierului privind condiționalitatea 2026 (pag. 48–49): fără studiu agrochimic, cantitatea pentru ' + esc(L.ce) + ' este <b>' + L.max + ' kg N s.a./ha/an</b>. Pentru altă cantitate, sau pe teren irigat, e nevoie de studiu agrochimic: alege „Am studiu”.';
       else lm.innerHTML = 'Fără studiu agrochimic poți planifica cel mult <b>' + L.max + ' kg N s.a./ha/an</b> pentru ' + esc(L.ce) + '. Peste această cantitate, sau pe teren irigat, e nevoie de studiu agrochimic.';
       if (tot > L.max) bad.push(MSG_ROSU + ': ' + fmt(tot, 0) + ' kg N/ha aplicat, iar fără studiu agrochimic maximul este ' + L.max + ' kg N/ha.');
+      var unde = tot > L.max ? 'realizat' : (plan && plan > L.max ? 'planificat' : '');
+      if (unde && unde !== undePrev) T('fert_limit_warning_shown', { unde: unde, cultura: $('fp-cult').value, max_fara_studiu: L.max, realizat_kg_n: Math.round(tot), panta: panta });
+      avertRosu = unde;
     } else if (L) lm.innerHTML = 'Ai studiu agrochimic: scrie cantitatea de azot rezultată din calculul studiului. Fără studiu, maximul ar fi ' + L.max + ' kg N s.a./ha/an pentru ' + esc(L.ce) + '.';
     else if (studiu === 'nu') lm.textContent = 'Alege cultura: cantitatea planificată de N se completează din Ghidul fermierului.';
     if (plan && tot > plan * 1.05) w.push('Ai aplicat mai mult azot decât ai planificat (' + fmt(tot, 0) + ' față de ' + fmt(plan, 0) + ' kg N/ha).');

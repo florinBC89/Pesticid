@@ -132,3 +132,24 @@ Planul gratuit PostHog include 1 milion de evenimente și 5.000 de înregistrăr
 ## Securitate (audit 02.11.2026)
 
 Aplicat: funcția de trigger nu mai e executabilă de rolurile publice; `rezerva_loc` validează emailul și planul în funcție și limitează rata (20/minut și 200/oră global, 5/oră pe IP, IP păstrat doar ca hash SHA-256); webhook-ul Resend deduplică după `svix-id` (`resend_webhook_ids`). Acceptat ca risc minor: răspunsurile pg_net (cu antetul secret) rămân 6 ore, vizibile doar pentru `postgres`/`service_role`. De făcut din dashboard la lansarea aplicației: Authentication → Settings → Leaked password protection.
+
+## Evenimente adăugate 08.11.2026 (campanii, Abonamente, Plan de fertilizare, meniu)
+
+| Eveniment | Când | Proprietăți |
+|---|---|---|
+| `waitlist_*` | ca mai sus, acum și pentru noile campanii | `plan: ferma \| partener`; `waitlist_failed.reason` include `deja_rezervat`, `firma_inactiva`, `cui_negasit`, `cui` |
+| `partner_cui_confirmed` | partenerul confirmă firma găsită în ANAF | — |
+| `promo_bar_clicked` | clic pe banda de sus | `text` |
+| `pricing_period_toggled` | pagina Abonamente: comutare Lunar/Anual | `perioada` |
+| `nav_clicked` | clic în meniu (pleacă prin sendBeacon) | `item`, `menu: desktop \| mobile`, `from_page`, `is_current` |
+| `fert_crop_selected` | cultura aleasă din listă sau scrisă de mână (după 1,5 s) | `cultura`, `din_lista`, `grupa_ghid`, `max_fara_studiu`, `panta`, `studiu` |
+| `fert_slope_set` | panta blocului fizic | `panta: mica \| mare`, `cultura` |
+| `fert_study_toggled` | studiu agrochimic | `studiu: nu \| da` |
+| `fert_quantity_set` | cantitatea totală aplicată (după 1,5 s) | `aplicare`, `unitate: t \| L`, `are_suprafata`, `are_produs`, `doza_kg_ha`, `kg_n_ha` |
+| `fert_limit_warning_shown` | apare mesajul roșu „Verificați ca cantitatea…” (o dată pe apariție) | `unde: realizat \| planificat`, `cultura`, `max_fara_studiu`, `realizat_kg_n`, `panta` |
+| `fert_limit_blocked` | parcela nu intră în plan (peste maxim, fără studiu) | `cultura` |
+| `fert_calendar_quick_pick` | butonul „Azi” / „Aceeași zi” din calendar | `buton`, `camp: inceput \| sfarsit` |
+| `fert_application_added`, `fert_fill_rest`, `fert_parcel_added`, `fert_plan_printed`, `fert_plan_cleared` | ca până acum | |
+
+Sursa vizitelor din bannere: linkuri cu `utm_source` (facebook / instagram / linkedin), `utm_medium=social`,
+`utm_campaign=campanie-20-zile`, `utm_content=s1|s2|s3-fermieri|parteneri`. PostHog le preia singur din URL.

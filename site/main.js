@@ -1,7 +1,12 @@
 /* Pesticid — site de prezentare: tranziție hero, parallax pe fotografii, apariții la scroll, contoare, nav compact. */
 (function () {
   'use strict';
-  window.agrosphereMain = true; /* scriptul din <head> verifică asta: fără main.js, conținutul rămâne vizibil */
+  window.agrosphereMain = true;
+  /* clic în meniu (desktop și telefon): ce pagină alege omul și de unde pleacă */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a.menu-it, a.mm-it');
+    if (a && window.track) window.track('nav_clicked', { item: a.textContent.replace(/\s+/g, ' ').trim(), menu: a.classList.contains('mm-it') ? 'mobile' : 'desktop', from_page: location.pathname, is_current: a.classList.contains('is-on') });
+  }); /* scriptul din <head> verifică asta: fără main.js, conținutul rămâne vizibil */
   document.documentElement.classList.remove('no-js');
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
