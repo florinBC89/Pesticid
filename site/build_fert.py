@@ -105,6 +105,7 @@ preview = f'''<title>Plan de fertilizare — AgroSphere</title>
 {antet('https://agrosphere.eu/')}
 {continut('')}
 {spick}
+{footer.replace('href="#', 'href="https://agrosphere.eu/#').replace('href="confidentialitate/', 'href="https://agrosphere.eu/confidentialitate/').replace('href="termeni/', 'href="https://agrosphere.eu/termeni/')}
 <script type="application/json" id="fert-data">{json.dumps(date, ensure_ascii=False)}</script>
 <script>
 {mainjs}
