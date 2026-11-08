@@ -254,8 +254,8 @@
       var div = document.createElement('div'); div.className = 'fp-a';
       div.innerHTML =
         '<div class="fp-a-top"><b>Aplicarea ' + (i + 1) + '</b>' + (apl.length > 1 ? '<button type="button" class="fp-link fp-del">Șterge</button>' : '') + '</div>' +
-        '<div class="sel"><label class="field has-input"><span class="col"><small>Îngrășământ mineral</small><span class="val"><input type="text" autocomplete="off" spellcheck="false" placeholder="Caută: uree, azotat de amoniu, UAN…" role="combobox" aria-expanded="false"></span></span><i class="chev" aria-hidden="true"></i></label><div class="dd" hidden><ul class="plist" role="listbox"></ul></div></div>' +
-        '<label class="field has-input has-unit fp-q"><span class="col"><small>Cantitate totală aplicată</small><span class="val"><input type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 12,271"><b class="unit">t</b></span></span><span class="fp-tot" aria-live="polite"></span></label>' +
+        '<div class="sel"><label class="field has-input"><span class="col"><small>Îngrășământ mineral</small><span class="val"><input data-x type="text" autocomplete="off" spellcheck="false" placeholder="Caută: uree, azotat de amoniu, UAN…" role="combobox" aria-expanded="false"></span></span><i class="chev" aria-hidden="true"></i></label><div class="dd" hidden><ul class="plist" role="listbox"></ul></div></div>' +
+        '<label class="field has-input has-unit fp-q"><span class="col"><small>Cantitate totală aplicată</small><span class="val"><input data-x type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 12,271"><b class="unit">t</b></span></span><span class="fp-tot" aria-live="polite"></span></label>' +
         '<div class="row">' + campDataHtml('fp-d1', 'Începutul aplicării', 'zz.ll.aaaa') + campDataHtml('fp-d2', 'Sfârșitul aplicării', 'aceeași zi') + '</div>' +
         '<p class="fp-a-out"></p>';
       box.appendChild(div);
@@ -294,7 +294,7 @@
       var del = div.querySelector('.fp-del'); if (del) del.addEventListener('click', function () { apl.splice(i, 1); deseneazaAplicari(); actualizeaza(); });
       actualizeazaAplicare(a, out);
     });
-    potrivesteToate(); /* câmpurile noi de cantitate: unitatea lângă cifre */
+    puneX(box); potrivesteToate(); /* câmpurile noi: × de golire, unitatea lângă cifre */
   }
   /* doza realizată pe hectar: suma cantităților de produs din toate aplicările (kg/ha; L/ha separat la produsele lichide) */
   function dozaHa() {
@@ -349,7 +349,33 @@
     masura.style.fontWeight = gol ? '400' : '500'; masura.textContent = input.value || input.placeholder || '';
     input.style.width = Math.max(20, masura.offsetWidth + 2) + 'px';
   }
-  function potrivesteToate() { Array.prototype.forEach.call(root.querySelectorAll('.has-unit input'), potriveste); }
+  function potrivesteToate() { Array.prototype.forEach.call(root.querySelectorAll('.has-unit input'), potriveste); Array.prototype.forEach.call(root.querySelectorAll('input[data-x]'), syncX); }
+
+  /* × de golire, ca în calculatorul de pesticide: apare după ce e scris sau ales ceva (lângă cifre / lângă unitate / după textul ales) */
+  function puneX(scope) {
+    Array.prototype.forEach.call(scope.querySelectorAll('input[data-x]'), function (i) {
+      var f = i.closest('.field'); if (f.querySelector('.x')) return;
+      var x = document.createElement('button'); x.type = 'button'; x.className = 'x'; x.textContent = '×'; x.hidden = true;
+      var et = f.querySelector('small'); x.setAttribute('aria-label', 'Șterge ' + (et ? et.firstChild.textContent.trim().toLowerCase() : 'valoarea'));
+      i.parentNode.appendChild(x);
+    });
+  }
+  function syncX(i) {
+    var f = i.closest('.field'), x = f && f.querySelector('.x'); if (!x) return;
+    x.hidden = !i.value || i.readOnly;
+    if (f.classList.contains('has-unit')) return; /* lățimea o potrivește potriveste() */
+    if (i.value) { masura.style.fontWeight = '500'; masura.textContent = i.value; i.style.width = (masura.offsetWidth + 4) + 'px'; } else i.style.width = '';
+  }
+  /* în faza de captură: pe telefon, clicul pe câmpurile-selector ar deschide selectorul pe tot ecranul */
+  root.addEventListener('click', function (ev) {
+    var x = ev.target.closest && ev.target.closest('.field .x'); if (!x || !root.contains(x)) return;
+    ev.preventDefault(); ev.stopPropagation();
+    var i = x.closest('.field').querySelector('input[data-x]'); if (!i) return;
+    i.value = ''; i.dispatchEvent(new Event('input', { bubbles: true })); syncX(i);
+    if (!mobil() || !i.closest('.sel')) i.focus();
+    T('fert_field_cleared', { camp: i.id || (i.closest('.fp-q') ? 'cantitate' : 'ingrasamant') });
+  }, true);
+  root.addEventListener('input', function (ev) { if (ev.target.hasAttribute && ev.target.hasAttribute('data-x')) syncX(ev.target); });
   root.addEventListener('input', function (ev) {
     var i = ev.target; if (!i.closest || !i.closest('.has-unit')) return;
     var v = i.value.replace(/[^0-9.,]/g, ''); if (v !== i.value) i.value = v;
@@ -529,7 +555,7 @@
   /* ---------- pornire ---------- */
   /* varianta de tipărit stă direct în <body>, ca la tipărire să putem ascunde tot restul paginii */
   var pr = $('fp-print-doc'); pr.classList.add('fp-print-host'); document.body.appendChild(pr);
-  citeste(); deseneazaPlan(); aplicareNoua(); sugereaza(); actualizeaza();
+  puneX(root); citeste(); deseneazaPlan(); aplicareNoua(); sugereaza(); actualizeaza();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(potrivesteToate);
   incarca().then(function (rows) { pregateste(rows); deseneazaAplicari(); })
     .catch(function () { $('fp-hint').textContent = 'Lista de îngrășăminte nu s-a putut încărca.'; });
