@@ -153,3 +153,10 @@ Aplicat: funcția de trigger nu mai e executabilă de rolurile publice; `rezerva
 
 Sursa vizitelor din bannere: linkuri cu `utm_source` (facebook / instagram / linkedin), `utm_medium=social`,
 `utm_campaign=campanie-20-zile`, `utm_content=s1|s2|s3-fermieri|parteneri`. PostHog le preia singur din URL.
+
+## Vizitele echipei (filtrate din metrici)
+
+Pe fiecare telefon/browser al echipei se deschide o dată `https://agrosphere.eu/?intern=1` (marcajul stă în localStorage,
+cheia `agrosphere.intern`; `?intern=0` îl scoate). De atunci toate evenimentele de acolo, inclusiv `$pageview`, au
+`is_internal = true` (prin `before_send`), iar înregistrarea sesiunii e oprită. În PostHog: Project settings → Product analytics →
+„Filter out internal and test users” → filtru pe proprietatea de eveniment `is_internal` „is not set”.
