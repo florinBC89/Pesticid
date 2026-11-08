@@ -229,11 +229,12 @@
       div.innerHTML =
         '<div class="fp-a-top"><b>Aplicarea ' + (i + 1) + '</b>' + (apl.length > 1 ? '<button type="button" class="fp-link fp-del">Șterge</button>' : '') + '</div>' +
         '<div class="sel"><label class="field has-input"><span class="col"><small>Îngrășământ mineral</small><span class="val"><input type="text" autocomplete="off" spellcheck="false" placeholder="Caută: uree, azotat de amoniu, UAN…" role="combobox" aria-expanded="false"></span></span><i class="chev" aria-hidden="true"></i></label><div class="dd" hidden><ul class="plist" role="listbox"></ul></div></div>' +
-        '<label class="field has-input has-unit fp-q"><span class="col"><small>Cantitate</small><span class="val"><input type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 300"><b class="unit">kg/ha</b></span></span></label>' +
+        '<label class="field has-input has-unit fp-q"><span class="col"><small>Cantitate</small><span class="val"><input type="text" inputmode="decimal" autocomplete="off" placeholder="ex. 300"><b class="unit">kg/ha</b></span></span><span class="fp-tot" aria-live="polite"></span></label>' +
         '<div class="row">' + campDataHtml('fp-d1', 'Începutul aplicării', 'zz.ll.aaaa') + campDataHtml('fp-d2', 'Sfârșitul aplicării', 'aceeași zi') + '</div>' +
         '<p class="fp-a-out"></p>';
       box.appendChild(div);
       var inF = div.querySelector('.sel input'), inQ = div.querySelector('.fp-q input'), out = div.querySelector('.fp-a-out');
+      a.totEl = div.querySelector('.fp-tot');
       if (a.f) inF.value = a.f.nume; if (a.q) inQ.value = String(a.q).replace('.', ',');
       Combo(div.querySelector('.sel'), {
         empty: 'Niciun îngrășământ cu azot găsit în lista MADR.',
@@ -273,6 +274,14 @@
     if (l) p.push(fmt(l, 1) + ' <small>L/ha</small>');
     return p.length ? p.join(' <small>+</small> ') : '— <small>kg/ha</small>';
   }
+  /* cantitatea totală de produs pe toată suprafața, în câmpul „Cantitate”: tone (sau litri la produsele lichide) */
+  function totalAplicare(a) {
+    if (!a.totEl) return;
+    var ha = num($('fp-ha').value);
+    if (!a.q || !ha) { a.totEl.innerHTML = ''; return; }
+    var lq = a.f && lichid(a.f);
+    a.totEl.innerHTML = '<small>Total pe ' + fmt(ha, 2) + ' ha</small><b>' + (lq ? fmt(a.q * ha, 0) + ' L' : fmt(a.q * ha / 1000, 2) + ' t') + '</b>';
+  }
   function totalN(fara) { return apl.reduce(function (s, a) { return s + (a === fara ? 0 : kgN(a.f, a.q)); }, 0); }
   function interzisZi(m, z) { return m === 11 || m === 12 || m === 1 || m === 2 || (m === 3 && z <= 15); }
   /* perioada aplicării atinge intervalul interzis 1 noiembrie – 15 martie? (se verifică fiecare zi; perioadele sunt scurte) */
@@ -288,7 +297,7 @@
     if (a.f.oprit) h.push('<span class="fp-w">Producția acestui produs e marcată ca oprită temporar în lista MADR.</span>');
     if (a.q) {
       var n = kgN(a.f, a.q);
-      h.push('= <b>' + fmt(n, 1) + ' kg N/ha</b>' + (ha ? ' · pe ' + fmt(ha, 2) + ' ha: <b>' + (lichid(a.f) ? fmt(a.q * ha, 0) + ' L' : fmt(a.q * ha / 1000, 2) + ' t') + '</b> de produs' : ''));
+      h.push('= <b>' + fmt(n, 1) + ' kg N/ha</b>');
     }
     if (plan) {
       var rest = Math.max(0, plan - totalN(a));
@@ -387,6 +396,7 @@
   /* ---------- rezumat + avertismente ---------- */
   function actualizeaza() {
     potrivesteToate();
+    apl.forEach(totalAplicare);
     var plan = num($('fp-plan').value), tot = totalN(), cards = $('fp-cards'), w = [];
     cards.innerHTML =
       '<div class="cstat"><span class="k">Planificat N</span><span class="v">' + (plan ? fmt(plan, 0) : '—') + ' <small>kg s.a./ha</small></span></div>' +
