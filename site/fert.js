@@ -31,6 +31,20 @@
   /* cele mai folosite îngrășăminte cu azot, primele în listă când câmpul e gol */
   var POPULARE = ['1.3', '1.1', '1.2', '7.2', '1.4', '1.16', '4.1', '4.2', '4.4', '1.20'];
 
+  /* cantitatea maximă de azot din îngrășăminte chimice, fără studiu agrochimic — Ghidul fermierului privind condiționalitatea 2026
+     (ed. IV, APIA), pag. 48–49, lit. c): teren arabil după panta medie a blocului fizic (până la 12% / peste 12%),
+     vii, livezi și alte culturi permanente 100, pajiști permanente 80 kg N s.a./ha/an. Cu studiu agrochimic se poate depăși. */
+  var LIM = { porumb: [150, 120, 'porumb și sfeclă de zahăr'], grau: [120, 90, 'grâu și rapiță'], alte: [100, 80, 'alte culturi de pe teren arabil'] };
+  var PERM = /\b(mar|par|prun|cires|visin|cais|piersic|nuc|alun|gutui|vie|vita|livada|livezi|zmeur|afin|coacaz|catina|mur)\b/;
+  function limita(nume) {
+    var k = norm(nume); if (!k) return null;
+    if (/\bpajist/.test(k)) return { max: 80, ce: 'pajiști permanente' };
+    if (PERM.test(k)) return { max: 100, ce: 'vii, livezi și alte culturi permanente' };
+    var g = /\bporumb|sfecla de zahar/.test(k) ? 'porumb' : (/\bgrau|\brapita/.test(k) ? 'grau' : 'alte'), mare = panta === 'mare';
+    return { max: LIM[g][mare ? 1 : 0], ce: LIM[g][2] + ', pe pantă ' + (mare ? 'de peste 12%' : 'de până la 12%') };
+  }
+  var panta = 'mica', studiu = 'nu';
+  var MSG_ROSU = 'Verificați ca cantitatea de îngrășământ aplicată este cea corectă';
   var F = [], FBY = {};
   var plan = [];
   var apl = [];
@@ -184,12 +198,25 @@
     msg.className = 'doza-msg'; msg.textContent = '';
     if (!cultSel) return;
     if (cultSel.leg) { msg.className = 'doza-msg warn'; msg.textContent = cultSel.nume + ' e leguminoasă: își fixează singură cea mai mare parte din azot, de obicei nu are nevoie de mult N.'; return; }
-    if (!rec) { msg.textContent = 'Scrie recolta scontată ca să-ți propunem necesarul de azot (' + fmt(cultSel.csp, 1) + ' kg N pe tona de recoltă).'; return; }
-    var nc = Math.round(rec * cultSel.csp);
-    if (!plan.value || planAuto) { plan.value = String(nc); planAuto = true; }
-    msg.innerHTML = 'Necesar orientativ: ' + fmt(rec, 2) + ' t/ha × ' + fmt(cultSel.csp, 1) + ' kg N/t = <b>' + nc + ' kg N/ha</b> (consum specific ICPA). Scade azotul din sol și de la cultura premergătoare, dacă ai studiu agrochimic.';
+    if (!rec) return;
+    var nc = Math.round(rec * cultSel.csp), L = studiu === 'nu' ? limita(cultSel.nume) : null, pus = L && nc > L.max ? L.max : nc;
+    if (!plan.value || planAuto) { plan.value = String(pus); planAuto = true; }
+    msg.innerHTML = 'Necesar orientativ: ' + fmt(rec, 2) + ' t/ha × ' + fmt(cultSel.csp, 1) + ' kg N/t = <b>' + nc + ' kg N/ha</b> (consum specific ICPA)' +
+      (pus < nc ? '. Fără studiu agrochimic am propus maximul permis, <b>' + pus + ' kg N/ha</b>.' : '. Scade azotul din sol și de la cultura premergătoare, dacă ai studiu agrochimic.');
   }
   $('fp-rec').addEventListener('input', function () { sugereaza(); actualizeaza(); });
+  /* panta blocului fizic și studiul agrochimic: două butoane fiecare (radio) */
+  function Alegere(id, onPick) {
+    var btns = $(id).querySelectorAll('button[data-v]');
+    function alege(v, focus) { Array.prototype.forEach.call(btns, function (b) { var on = b.getAttribute('data-v') === v; b.setAttribute('aria-checked', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1; if (on && focus) b.focus(); }); onPick(v); }
+    Array.prototype.forEach.call(btns, function (b, i) {
+      b.tabIndex = b.getAttribute('aria-checked') === 'true' ? 0 : -1;
+      b.addEventListener('click', function () { alege(b.getAttribute('data-v')); });
+      b.addEventListener('keydown', function (e) { if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return; e.preventDefault(); alege(btns[(i + 1) % btns.length].getAttribute('data-v'), true); });
+    });
+  }
+  Alegere('fp-f-panta', function (v) { panta = v; sugereaza(); actualizeaza(); });
+  Alegere('fp-f-studiu', function (v) { studiu = v; sugereaza(); actualizeaza(); T('fert_study_toggled', { studiu: v }); });
   $('fp-plan').addEventListener('input', function () { planAuto = false; actualizeaza(); });
   ['fp-ha', 'fp-bloc', 'fp-parc'].forEach(function (id) { $(id).addEventListener('input', actualizeaza); });
 
@@ -356,9 +383,18 @@
       '<div class="cstat"><span class="k">Planificat N</span><span class="v">' + (plan ? fmt(plan, 0) : '—') + ' <small>kg s.a./ha</small></span></div>' +
       '<div class="cstat"><span class="k">Realizat N (total)</span><span class="v">' + fmt(tot, 1) + ' <small>kg s.a./ha</small></span></div>' +
       '<div class="cstat"><span class="k">' + (plan && tot > plan ? 'Peste plan' : 'Rămas de aplicat') + '</span><span class="v">' + (plan ? fmt(Math.abs(plan - tot), 1) : '—') + ' <small>kg N/ha</small></span></div>';
+    /* limita din ghid: fără studiu agrochimic, nici planificatul, nici ce s-a aplicat nu pot trece de maxim */
+    var L = limita($('fp-cult').value), lm = $('fp-lim-msg'), bad = [];
+    lm.className = 'doza-msg'; lm.innerHTML = '';
+    $('fp-f-plan').classList.remove('is-bad');
+    if (L && studiu === 'nu') {
+      if (plan && plan > L.max) { $('fp-f-plan').classList.add('is-bad'); lm.className = 'doza-msg bad'; lm.innerHTML = '<b>' + MSG_ROSU + '.</b> Fără studiu agrochimic, maximul este ' + L.max + ' kg N s.a./ha/an pentru ' + esc(L.ce) + '.'; }
+      else lm.innerHTML = 'Fără studiu agrochimic poți planifica cel mult <b>' + L.max + ' kg N s.a./ha/an</b> pentru ' + esc(L.ce) + '. Peste această cantitate, sau pe teren irigat, e nevoie de studiu agrochimic.';
+      if (tot > L.max) bad.push(MSG_ROSU + ': ' + fmt(tot, 0) + ' kg N/ha aplicat, iar fără studiu agrochimic maximul este ' + L.max + ' kg N/ha.');
+    } else if (L) lm.innerHTML = 'Ai studiu agrochimic: cantitatea de azot se stabilește după calculul din studiu. Fără studiu, maximul ar fi ' + L.max + ' kg N s.a./ha/an pentru ' + esc(L.ce) + '.';
     if (plan && tot > plan * 1.05) w.push('Ai aplicat mai mult azot decât ai planificat (' + fmt(tot, 0) + ' față de ' + fmt(plan, 0) + ' kg N/ha).');
     if (apl.some(function (a) { return interzis(a); })) w.push('Una dintre aplicări e în perioada interzisă (1 noiembrie – 15 martie).');
-    $('fp-warn').innerHTML = w.map(function (t) { return '<p class="calc-warn">' + esc(t) + '</p>'; }).join('');
+    $('fp-warn').innerHTML = bad.map(function (t) { return '<p class="calc-warn is-bad">' + esc(t) + '</p>'; }).join('') + w.map(function (t) { return '<p class="calc-warn">' + esc(t) + '</p>'; }).join('');
     $('fp-go-msg').textContent = '';
   }
 
@@ -396,9 +432,11 @@
     if (!$('fp-bloc').value.trim()) lipsa.push('blocul fizic');
     if (!ha) lipsa.push('suprafața');
     if (!c) lipsa.push('cultura');
-    if (pl == null) lipsa.push('azotul planificat');
+    if (pl == null) lipsa.push('cantitatea planificată de N');
     var incomplete = apl.filter(function (a) { return (a.f && !a.q) || (!a.f && a.q); }).length;
     if (lipsa.length || incomplete) { msg.className = 'doza-msg bad'; msg.textContent = lipsa.length ? 'Completează ' + lipsa.join(', ') + '.' : 'O aplicare are produsul sau cantitatea lipsă.'; return; }
+    var L = limita(c);
+    if (L && studiu === 'nu' && (pl > L.max || totalN() > L.max)) { msg.className = 'doza-msg bad'; msg.textContent = MSG_ROSU + '. Fără studiu agrochimic, maximul este ' + L.max + ' kg N s.a./ha/an pentru ' + L.ce + '. Corectează cantitatea sau alege „Am studiu”, dacă ai studiu agrochimic.'; T('fert_limit_blocked', { cultura: c }); return; }
     var ap = apl.filter(function (a) { return a.f && a.q; }).map(function (a) {
       return { tip: a.f.nume, cant: lichid(a.f) ? fmt(a.q, 0) + ' L/ha' : fmt(a.q / 1000, 3), n: fmt(kgN(a.f, a.q), 1), data: dataRo(a.d1) + (a.d2 && a.d2 !== a.d1 ? ' – ' + dataRo(a.d2) : '') };
     });

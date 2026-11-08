@@ -1163,6 +1163,15 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 .fp-a-out > * { display: inline; }
 .fp-a-out .fp-fill { display: block; margin-top: 4px; text-align: left; }
 .fp-w, .fp-bad { display: block !important; margin-top: 4px; font-size: 14px; }
+/* alegeri cu două butoane (panta blocului fizic, studiu agrochimic): arată ca un câmp, cu opțiunile în loc de text */
+.fp-seg { cursor: default; }
+.fp-seg:hover, .fp-seg:focus-within { background: var(--surface-2); border-color: transparent; }
+.fp-opts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.fp-opts button { border: 0; border-radius: 999px; padding: 6px 14px; background: #fff; color: #3f4b66; font: inherit; font-size: 15px; font-weight: 500; line-height: 1.2; cursor: pointer; transition: background 0.15s, color 0.15s; }
+.fp-opts button:hover { background: #e6efff; color: var(--fg); }
+.fp-opts button[aria-checked="true"] { background: #242c3c; color: #fff; }
+.fp-opts button:focus-visible { outline: 2px solid #242c3c; outline-offset: 2px; }
+.calc-warn.is-bad { background: #fff1f2; color: #b4232f; font-weight: 500; }
 .fp-w { color: #8a5a00; }
 .fp-bad { color: #b4232f; font-weight: 500; }
 .fp-link { border: 0; background: none; padding: 0; color: #2d5bd7; font: inherit; font-size: 14px; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
