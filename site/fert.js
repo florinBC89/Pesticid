@@ -162,7 +162,7 @@
     F = rows.map(function (r) { return { nr: r[0], nume: r[1], n: r[2], u: r[3], forma: r[4], cat: r[5], oprit: !!r[6], k: norm(r[1]) }; })
       .filter(function (f) { return f.n > 0 && (f.u === '%' || f.u === 'g/l'); });
     F.forEach(function (f) { FBY[f.nr] = f; });
-    $('fp-hint').innerHTML = 'Model simplificat · <b>azot (N)</b> · ' + F.length + ' îngrășăminte MADR';
+    $('fp-hint').textContent = 'Date de test, nu sunt reprezentative momentan';
   }
   var lichid = function (f) { return f.u === 'g/l'; };
   var unitCant = function (f) { return f && lichid(f) ? 'L/ha' : 'kg/ha'; };
