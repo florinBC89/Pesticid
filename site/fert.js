@@ -14,6 +14,8 @@
   var MAX = 10;
 
   var fmt = function (n, d) { return new Intl.NumberFormat('ro-RO', { maximumFractionDigits: d == null ? 1 : d }).format(n); };
+  /* rezultatele (azot, doză) se afișează mereu cu două zecimale */
+  var fmt2 = function (n) { return new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n); };
   var num = function (s) { var v = parseFloat(String(s || '').replace(/\s/g, '').replace(',', '.')); return isFinite(v) ? v : null; };
   var norm = function (s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
@@ -292,8 +294,8 @@
     var kg = 0, l = 0;
     apl.forEach(function (a) { if (a.f && a.q) { if (lichid(a.f)) l += a.q; else kg += a.q; } });
     var p = [];
-    if (kg) p.push(fmt(kg, 1) + ' <small>kg/ha</small>');
-    if (l) p.push(fmt(l, 1) + ' <small>L/ha</small>');
+    if (kg) p.push(fmt2(kg) + ' <small>kg/ha</small>');
+    if (l) p.push(fmt2(l) + ' <small>L/ha</small>');
     return p.length ? p.join(' <small>+</small> ') : '— <small>kg/ha</small>';
   }
   /* cantitatea totală de produs pe toată suprafața, în câmpul „Cantitate”: tone (sau litri la produsele lichide) */
@@ -301,7 +303,7 @@
     if (!a.totEl) return;
     var ha = num($('fp-ha').value);
     if (!a.t) { a.totEl.innerHTML = ''; return; }
-    a.totEl.innerHTML = '<small>Doza pe ha</small><b>' + (a.q ? fmt(a.q, 1) + ' ' + unitHa(a.f) : '—') + '</b>';
+    a.totEl.innerHTML = '<small>Doza pe ha</small><b>' + (a.q ? fmt2(a.q) + ' ' + unitHa(a.f) : '—') + '</b>';
   }
   function totalN(fara) { return apl.reduce(function (s, a) { return s + (a === fara ? 0 : kgN(a.f, a.q)); }, 0); }
   function interzisZi(m, z) { return m === 11 || m === 12 || m === 1 || m === 2 || (m === 3 && z <= 15); }
@@ -317,7 +319,7 @@
     if (!a.f) { out.innerHTML = '<span class="ph">Alege îngrășământul.</span>'; return; }
     if (a.f.oprit) h.push('<span class="fp-w">Producția acestui produs e marcată ca oprită temporar în lista MADR.</span>');
     if (a.t && !ha) h.push('<span class="fp-w">Completează suprafața parcelei ca să calculăm doza și azotul pe hectar.</span>');
-    if (a.q) h.push('= <b>' + fmt(kgN(a.f, a.q), 1) + ' kg N/ha</b>');
+    if (a.q) h.push('= <b>' + fmt2(kgN(a.f, a.q)) + ' kg N/ha</b>');
     if (plan && ha) {
       var rest = Math.max(0, plan - totalN(a)), nevoie = cantPentru(a.f, rest) * ha;
       if (rest > 0 && (!a.q || Math.abs(kgN(a.f, a.q) - rest) > 0.5)) h.push('<button type="button" class="fp-link fp-fill">Completează până la ' + fmt(plan, 0) + ' kg N/ha planificat: ' + fmtTot(a.f, lichid(a.f) ? nevoie : nevoie / 1000) + ' ' + unitCant(a.f) + ' pe ' + fmt(ha, 2) + ' ha</button>');
@@ -418,10 +420,10 @@
     apl.forEach(function (a) { dozaDinTotal(a); totalAplicare(a); if (a.outEl) actualizeazaAplicare(a, a.outEl); });
     var plan = num($('fp-plan').value), tot = totalN(), cards = $('fp-cards'), w = [];
     cards.innerHTML =
-      '<div class="cstat"><span class="k">Planificat N</span><span class="v">' + (plan ? fmt(plan, 0) : '—') + ' <small>kg s.a./ha</small></span></div>' +
-      '<div class="cstat"><span class="k">Realizat N (total)</span><span class="v">' + fmt(tot, 1) + ' <small>kg s.a./ha</small></span></div>' +
+      '<div class="cstat"><span class="k">Planificat N</span><span class="v">' + (plan ? fmt2(plan) : '—') + ' <small>kg s.a./ha</small></span></div>' +
+      '<div class="cstat"><span class="k">Realizat N (total)</span><span class="v">' + fmt2(tot) + ' <small>kg s.a./ha</small></span></div>' +
       '<div class="cstat"><span class="k">Doza realizată pe ha</span><span class="v">' + dozaHa() + '</span></div>' +
-      '<div class="cstat"><span class="k">' + (plan && tot > plan ? 'Peste plan' : 'Rămas de aplicat') + '</span><span class="v">' + (plan ? fmt(Math.abs(plan - tot), 1) : '—') + ' <small>kg N/ha</small></span></div>';
+      '<div class="cstat"><span class="k">' + (plan && tot > plan ? 'Peste plan' : 'Rămas de aplicat') + '</span><span class="v">' + (plan ? fmt2(Math.abs(plan - tot)) : '—') + ' <small>kg N/ha</small></span></div>';
     /* limita din ghid: fără studiu agrochimic, nici planificatul, nici ce s-a aplicat nu pot trece de maxim */
     var L = limita($('fp-cult').value), lm = $('fp-lim-msg'), bad = [];
     lm.className = 'doza-msg'; lm.innerHTML = '';
