@@ -427,7 +427,7 @@
     var plan = num($('fp-plan').value), tot = totalN(), cards = $('fp-cards'), w = [];
     cards.innerHTML =
       '<div class="cstat"><span class="k">Planificat N</span><span class="v">' + (plan ? fmt2(plan) : '—') + ' <small>kg s.a./ha</small></span></div>' +
-      '<div class="cstat"><span class="k">Realizat N pe data: ' + dataRealizat() + '</span><span class="v">' + fmt2(tot) + ' <small>kg s.a./ha</small></span></div>' +
+      '<div class="cstat"><span class="k">Realizat N până la data: ' + dataRealizat() + '</span><span class="v">' + fmt2(tot) + ' <small>kg s.a./ha</small></span></div>' +
       '<div class="cstat"><span class="k">Doza realizată pe ha</span><span class="v">' + dozaHa() + '</span></div>' +
       '<div class="cstat"><span class="k">' + (plan && tot > plan ? 'Peste plan' : 'Rămas de aplicat') + '</span><span class="v">' + (plan ? fmt2(Math.abs(plan - tot)) : '—') + ' <small>kg N/ha</small></span></div>';
     /* limita din ghid: fără studiu agrochimic, nici planificatul, nici ce s-a aplicat nu pot trece de maxim */
