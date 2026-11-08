@@ -1172,6 +1172,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 .fp-opts button[aria-checked="true"] { background: #242c3c; color: #fff; }
 .fp-opts button:focus-visible { outline: 2px solid #242c3c; outline-offset: 2px; }
 .calc-warn.is-bad { background: #fff1f2; color: #b4232f; font-weight: 500; }
+.fp .calc-res .cards { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
 .fp-w { color: #8a5a00; }
 .fp-bad { color: #b4232f; font-weight: 500; }
 .fp-link { border: 0; background: none; padding: 0; color: #2d5bd7; font: inherit; font-size: 14px; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
