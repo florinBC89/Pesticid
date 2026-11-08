@@ -501,7 +501,7 @@ a.menu-it:not(.is-on):hover { color: var(--ink); }
 
 .offers {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 560px));
+  grid-template-columns: repeat(2, minmax(0, 740px));
   justify-content: center;
   gap: 30px;
   margin-top: 56px;
@@ -571,6 +571,12 @@ a.menu-it:not(.is-on):hover { color: var(--ink); }
 /* ---------- parteneri: Email + CUI (firma vine din ANAF, varianta A din Figma 2297:25655) ---------- */
 .reserve.has-cui { grid-template-columns: minmax(0, 7fr) minmax(190px, 3fr); }
 .reserve.has-cui .btn-cta { grid-column: 1 / -1; }
+/* card destul de lat (desktop mare): email, CUI și butonul pe același rând; starea CUI sub ele */
+.offer { container: oferta / inline-size; }
+@container oferta (min-width: 640px) {
+  .reserve.has-cui { grid-template-columns: minmax(0, 1fr) minmax(190px, 0.62fr) auto; }
+  .reserve.has-cui .btn-cta { grid-column: 3; grid-row: 1; }
+}
 .cui-wrap { position: relative; min-width: 0; }
 .cui-wrap .field { height: 100%; }
 .field.cui { cursor: text; padding-right: 12px; }
