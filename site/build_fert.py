@@ -37,7 +37,7 @@ def antet(prefix):
 def continut(prefix_assets):
     return f'''<main id="top">
   <section class="hero fp-hero">
-    <div class="hero-clip"><div class="hero-bg" data-src="{prefix_assets}assets/hero-camp.webp" data-src-2x="{prefix_assets}assets/hero-camp-2x.webp" role="img" aria-label="Câmp cultivat la apus"></div></div>
+    <div class="hero-clip"><div class="hero-bg" data-src="{prefix_assets}assets/hero-camp.webp" data-src-2x="{prefix_assets}assets/hero-camp-2x.webp" data-parallax="0.28" data-parallax-top role="img" aria-label="Câmp cultivat la apus"></div></div>
     <div class="wrap">
       <div class="hero-copy">
         <h1>Planul de fertilizare <b>completat în câteva minute</b></h1>
