@@ -1238,6 +1238,7 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 .ab-pret small.ok { color: #1f6b2e; font-weight: 500; }
 .ab[data-perioada="lunar"] .ab-pret .a, .ab[data-perioada="anual"] .ab-pret .l { display: none; }
 .ab-card .intro { margin-top: -8px; font-size: 16px; line-height: 26px; }
+.ab .br-sm { display: none; }
 .ab-note { margin: auto 0 0; padding: 10px 14px; border-radius: 14px; background: var(--surface-2); font-size: 13px; line-height: 19px; color: var(--muted); }
 @media (max-width: 1100px) {
   .ab { padding-top: calc(var(--promo-h) + var(--nav-h) + 60px); padding-bottom: 110px; }
@@ -1257,4 +1258,6 @@ html.is-locked, html.is-locked body { overflow: hidden; }
   .ab-card { padding: 22px 18px; }
   .ab-top h2 { font-size: 24px; }
   .ab-pret strong { font-size: 22px; }
+  .ab .br-sm { display: inline; }
+  .ab-card .tag:has(.br-sm) { border-radius: 16px; line-height: 1.35; }
 }
