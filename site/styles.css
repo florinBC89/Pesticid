@@ -143,6 +143,36 @@ a.menu-it:not(.is-on):hover { color: var(--ink); }
 .lang-op { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; color: var(--fg); font-size: 15px; white-space: nowrap; }
 .lang-op:hover { background: var(--surface-2); }
 .lang-op[aria-current="true"] { font-weight: 600; background: var(--surface-2); }
+/* cu selectorul afișat, meniul de pe desktop se strânge puțin ca să încapă pe un rând (fără selector rămâne exact ca înainte) */
+@media (min-width: 1025px) {
+  .has-lang .nav .logo, .has-lang .nav .nav-end { flex: 0 0 auto; }
+  .has-lang .nav .wrap { gap: 16px; }
+}
+@media (min-width: 1025px) and (max-width: 1640px) {
+  .has-lang .lang-cur > span { display: none; }
+  .has-lang .lang-btn { gap: 6px; padding: 0 12px; }
+  .has-lang .menu ul { gap: 18px; padding: 0; }
+  .has-lang .menu-it { font-size: 14px; line-height: 17px; }
+  .has-lang .nav .logo img { width: 180px; }
+  .has-lang .nav-end { gap: 10px; }
+  .has-lang .nav .nav-btn { height: 52px; min-width: 0; padding: 0 18px; font-size: 15px; white-space: nowrap; }
+}
+@media (min-width: 1025px) and (max-width: 1340px) {
+  .has-lang .menu ul { gap: 12px; }
+  .has-lang .menu-it { font-size: 13px; line-height: 16px; }
+  .has-lang .soon { font-size: 11px; line-height: 14px; padding: 2px 7px; }
+  .has-lang .nav .logo img { width: 150px; }
+  .has-lang .nav .nav-btn { padding: 0 14px; font-size: 14px; }
+}
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .has-lang .nav .wrap { gap: 10px; }
+  .has-lang .menu ul { gap: 9px; }
+  .has-lang .menu-it { font-size: 12px; line-height: 15px; }
+  .has-lang .soon { font-size: 10px; line-height: 13px; padding: 1px 6px; }
+  .has-lang .nav .logo img { width: 120px; }
+  .has-lang .lang-btn { height: 40px; padding: 0 10px; }
+  .has-lang .nav .nav-btn { height: 46px; padding: 0 12px; font-size: 13px; }
+}
 .mmenu { display: none; }
 
 /* ---------- hero ---------- */

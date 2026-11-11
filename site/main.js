@@ -331,7 +331,7 @@
       var bq = new URLSearchParams(location.search).get('beta');
       if (bq === 'pl') localStorage.setItem('agrosphere.beta-pl', '1');
       if (bq === '0') localStorage.removeItem('agrosphere.beta-pl');
-      langOn = langOn || localStorage.getItem('agrosphere.beta-pl') === '1';
+      langOn = langOn || localStorage.getItem('agrosphere.beta-pl') === '1' || !!localStorage.getItem('agrosphere.limba'); /* cine a ales o dată limba vede mereu selectorul */
     } catch (e) {}
     if (langOn) {
       var lBtn = langBox.querySelector('.lang-btn'), lDd = langBox.querySelector('.lang-dd');
@@ -354,7 +354,7 @@
       lBtn.addEventListener('click', function () { setLang(lDd.hidden); });
       document.addEventListener('click', function (e) { if (!langBox.contains(e.target)) setLang(false); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lDd.hidden) { setLang(false); lBtn.focus(); } });
-      langBox.hidden = false;
+      langBox.hidden = false; document.documentElement.classList.add('has-lang'); /* meniul se strânge puțin ca să încapă selectorul */
     }
   }
 

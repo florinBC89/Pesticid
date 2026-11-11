@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wypisanie się — AgroSphere</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#cedbf6">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/styles.css">
+<style>
+  body { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+  .dz-top { display: flex; justify-content: center; padding: 40px 16px 0; }
+  .dz-top img { display: block; width: 196px; height: auto; }
+  .dz-main { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 48px 16px 64px; }
+  .dz-card { width: min(560px, 100%); background: var(--surface); border-radius: 40px; box-shadow: var(--shadow); padding: 36px 28px 32px; text-align: center; display: grid; gap: 16px; justify-items: center; }
+  .dz-card h1 { margin: 0; font-size: 26px; line-height: 1.2; font-weight: 700; }
+  .dz-card p { margin: 0; font-size: 16px; line-height: 24px; color: var(--muted); overflow-wrap: anywhere; }
+  .dz-card p b { color: var(--fg); font-weight: 600; }
+  .dz-card .btn { margin-top: 8px; min-width: 240px; }
+  .dz-card .btn[disabled] { opacity: 0.6; cursor: progress; transform: none; box-shadow: none; }
+  .dz-card .err { color: #b4232f; }
+  .dz-card .tag { font-size: 18px; padding: 6px 14px; }
+  .dz-card .back { font-size: 15px; color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
+  [hidden] { display: none !important; }
+  @media (max-width: 480px) { .dz-card { padding: 28px 20px 24px; border-radius: 28px; } .dz-card h1 { font-size: 22px; } .dz-top img { width: 160px; } }
+</style>
+</head>
+<body>
+<header class="dz-top"><a href="/pl/" aria-label="AgroSphere, strona główna"><img src="/assets/logo-agrosphere.svg" alt="AgroSphere" width="1585" height="311"></a></header>
+<main class="dz-main">
+  <section class="dz-card" aria-live="polite">
+    <div id="st-confirm" hidden>
+      <h1>Wypisujesz się z e-maili AgroSphere?</h1>
+      <p style="margin-top:12px">Nie będziesz już otrzymywać e-maili na adres <b id="dz-email"></b>. Twoje zarezerwowane miejsce na liście oczekujących pozostaje ważne.</p>
+    </div>
+    <button class="btn" id="dz-go" type="button" hidden>Potwierdź wypisanie</button>
+    <p class="err" id="dz-retry" hidden></p>
+    <div id="st-ok" hidden>
+      <span class="tag lime">Wypisaliśmy cię</span>
+      <p style="margin-top:14px">Nie wysyłamy już e-maili na adres <b id="dz-email-ok"></b>. Przykro nam, że odchodzisz, a jeśli zmienisz zdanie, w każdej chwili możesz zapisać się ponownie na stronie.</p>
+    </div>
+    <div id="st-err" hidden>
+      <h1>Nie udało się wypisać</h1>
+      <p class="err" id="dz-err" style="margin-top:12px"></p>
+    </div>
+    <a class="back" href="/pl/">Wróć do AgroSphere</a>
+  </section>
+</main>
+<script>
+(function () {
+  var FN = 'https://rpwmfhlmdscjpcrqqmyf.supabase.co/functions/v1/dezabonare';
+  var q = new URLSearchParams(location.search), email = (q.get('email') || '').trim(), t = q.get('t') || '';
+  var $ = function (id) { return document.getElementById(id); };
+  function arata(id) { ['st-confirm', 'st-ok', 'st-err'].forEach(function (x) { $(x).hidden = x !== id; }); $('dz-go').hidden = id !== 'st-confirm'; }
+  function eroare(m) { $('dz-err').textContent = m; arata('st-err'); }
+  if (!email || !t) { eroare('Link do wypisania się jest niekompletny. Otwórz go ponownie bezpośrednio z e-maila otrzymanego od AgroSphere.'); return; }
+  $('dz-email').textContent = email; $('dz-email-ok').textContent = email; arata('st-confirm');
+  $('dz-go').addEventListener('click', function () {
+    var b = $('dz-go'); b.disabled = true; b.textContent = 'Wysyłanie…';
+    fetch(FN, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, t: t }) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var e = new Error(j.mesaj || 'Nie udało się zapisać wypisania. Spróbuj ponownie.'); e.link = r.status === 400 || r.status === 403; throw e; } }); })
+      .then(function () { $('dz-retry').hidden = true; arata('st-ok'); })
+      .catch(function (e) {
+        b.disabled = false; b.textContent = 'Potwierdź wypisanie';
+        if (e && e.link) { eroare(e.message); return; }   /* link greșit: nu are rost să reîncerce */
+        $('dz-retry').textContent = (e && e.message && !/fetch|network|load failed/i.test(e.message)) ? e.message : 'Nie udało się wysłać prośby. Sprawdź połączenie z internetem i spróbuj ponownie.';
+        $('dz-retry').hidden = false;
+      });
+  });
+})();
+</script>
+</body>
+</html>

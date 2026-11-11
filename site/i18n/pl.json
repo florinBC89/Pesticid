@@ -1,0 +1,4688 @@
+[
+ {
+  "text": "input, textarea, .form-msg, [data-done-email], #r-done-email, .att-list",
+  "tip": "js",
+  "pl": null,
+  "nota": "selector CSS"
+ },
+ {
+  "text": "$current_url_email",
+  "tip": "js",
+  "pl": null,
+  "nota": "cheie PostHog"
+ },
+ {
+  "text": "Cookie-uri",
+  "tip": "js",
+  "pl": "Pliki cookie",
+  "nota": ""
+ },
+ {
+  "text": "<p>Folosim statistici anonime ca să îmbunătățim calculatorul.",
+  "tip": "js",
+  "pl": "<p>Używamy anonimowych statystyk, żeby ulepszać kalkulator.",
+  "nota": ""
+ },
+ {
+  "text": "Accepți cookie-uri ca să te recunoaștem la următoarea vizită și să măsurăm câte înscrieri aduc reclamele Google?",
+  "tip": "js",
+  "pl": "Czy akceptujesz pliki cookie, żebyśmy mogli rozpoznać cię przy następnej wizycie i mierzyć, ile zapisów przynoszą reklamy Google?",
+  "nota": ""
+ },
+ {
+  "text": "Accepți un cookie ca să te recunoaștem la următoarea vizită?",
+  "tip": "js",
+  "pl": "Czy akceptujesz plik cookie, żebyśmy mogli rozpoznać cię przy następnej wizycie?",
+  "nota": ""
+ },
+ {
+  "text": "</p><div><button type=\"button\" class=\"btn sm\" data-ok>Accept</button><button type=\"button\" class=\"btn sm ghost\" data-no>Doar necesare</button></div>",
+  "tip": "js",
+  "pl": "</p><div><button type=\"button\" class=\"btn sm\" data-ok>Akceptuję</button><button type=\"button\" class=\"btn sm ghost\" data-no>Tylko niezbędne</button></div>",
+  "nota": ""
+ },
+ {
+  "text": "Verificarea anti-robot nu s-a putut încărca. Dacă folosești un blocator de reclame, oprește-l pentru acest site și încearcă din nou.",
+  "tip": "js",
+  "pl": "Nie udało się załadować weryfikacji antyrobotowej. Jeśli używasz blokera reklam, wyłącz go dla tej strony i spróbuj ponownie.",
+  "nota": ""
+ },
+ {
+  "text": "Verificarea anti-robot nu a reușit. Încearcă din nou în câteva secunde.",
+  "tip": "js",
+  "pl": "Weryfikacja antyrobotowa nie powiodła się. Spróbuj ponownie za kilka sekund.",
+  "nota": ""
+ },
+ {
+  "text": "Calculator de doză pentru pesticide: alegi cultura, dăunătorul și suprafața și primești produsele omologate cu doza exactă.",
+  "tip": "atribut",
+  "pl": "Kalkulator dawek środków ochrony roślin: wybierasz uprawę, agrofaga i powierzchnię, a dostajesz zarejestrowane środki z dokładną dawką.",
+  "nota": ""
+ },
+ {
+  "text": "AgroSphere — Îți calculează doza",
+  "tip": "atribut",
+  "pl": "AgroSphere — Oblicza twoją dawkę",
+  "nota": ""
+ },
+ {
+  "text": "AgroSphere — calculatorul de doză pentru pesticide",
+  "tip": "atribut",
+  "pl": "AgroSphere — kalkulator dawek środków ochrony roślin",
+  "nota": ""
+ },
+ {
+  "text": "Z5vnCLDRyrIdELGAkbUp",
+  "tip": "atribut",
+  "pl": null,
+  "nota": "cod/identificator, nu text"
+ },
+ {
+  "text": "AgroSphere, sus pe pagină",
+  "tip": "atribut",
+  "pl": "AgroSphere, na górę strony",
+  "nota": ""
+ },
+ {
+  "text": "AgroSphere",
+  "tip": "atribut",
+  "pl": "AgroSphere",
+  "nota": ""
+ },
+ {
+  "text": "Instrumente AgroSphere",
+  "tip": "atribut",
+  "pl": "Narzędzia AgroSphere",
+  "nota": ""
+ },
+ {
+  "text": "Deschide meniul",
+  "tip": "atribut",
+  "pl": "Otwórz menu",
+  "nota": ""
+ },
+ {
+  "text": "Rânduri de cultură la apus",
+  "tip": "atribut",
+  "pl": "Rzędy upraw o zachodzie słońca",
+  "nota": ""
+ },
+ {
+  "text": "Mod de lucru",
+  "tip": "atribut",
+  "pl": "Tryb pracy",
+  "nota": ""
+ },
+ {
+  "text": "Calculator pesticide",
+  "tip": "atribut",
+  "pl": "Kalkulator dawek",
+  "nota": ""
+ },
+ {
+  "text": "ID-ul blocului fizic",
+  "tip": "atribut",
+  "pl": "ID bloku fizycznego (APIA)",
+  "nota": ""
+ },
+ {
+  "text": "Șterge blocul fizic",
+  "tip": "atribut",
+  "pl": "Wyczyść blok fizyczny",
+  "nota": ""
+ },
+ {
+  "text": "Se încarcă…",
+  "tip": "atribut",
+  "pl": "Ładowanie…",
+  "nota": ""
+ },
+ {
+  "text": "Șterge produsul",
+  "tip": "atribut",
+  "pl": "Wyczyść środek",
+  "nota": ""
+ },
+ {
+  "text": "Selectează produsul mai întâi",
+  "tip": "atribut",
+  "pl": "Najpierw wybierz środek",
+  "nota": ""
+ },
+ {
+  "text": "Șterge cultura",
+  "tip": "atribut",
+  "pl": "Wyczyść uprawę",
+  "nota": ""
+ },
+ {
+  "text": "Selectează cultura mai întâi",
+  "tip": "atribut",
+  "pl": "Najpierw wybierz uprawę",
+  "nota": ""
+ },
+ {
+  "text": "Șterge dăunătorul",
+  "tip": "atribut",
+  "pl": "Wyczyść agrofaga",
+  "nota": ""
+ },
+ {
+  "text": "Doza ta",
+  "tip": "atribut",
+  "pl": "Twoja dawka",
+  "nota": ""
+ },
+ {
+  "text": "Șterge doza",
+  "tip": "atribut",
+  "pl": "Wyczyść dawkę",
+  "nota": ""
+ },
+ {
+  "text": "ex. 100",
+  "tip": "atribut",
+  "pl": "np. 100",
+  "nota": ""
+ },
+ {
+  "text": "Șterge suprafața",
+  "tip": "atribut",
+  "pl": "Wyczyść powierzchnię",
+  "nota": ""
+ },
+ {
+  "text": "ex. 200",
+  "tip": "atribut",
+  "pl": "np. 200",
+  "nota": ""
+ },
+ {
+  "text": "Șterge volumul de apă",
+  "tip": "atribut",
+  "pl": "Wyczyść ilość wody",
+  "nota": ""
+ },
+ {
+  "text": "Căutare avansată: cultură, dăunător, produs",
+  "tip": "atribut",
+  "pl": "Wyszukiwanie zaawansowane: uprawa, agrofag, środek",
+  "nota": ""
+ },
+ {
+  "text": "Scrie sau alege cultura…",
+  "tip": "atribut",
+  "pl": "Wpisz lub wybierz uprawę…",
+  "nota": ""
+ },
+ {
+  "text": "Șterge",
+  "tip": "atribut",
+  "pl": "Wyczyść",
+  "nota": ""
+ },
+ {
+  "text": "Scrie sau alege dăunătorul…",
+  "tip": "atribut",
+  "pl": "Wpisz lub wybierz agrofaga…",
+  "nota": ""
+ },
+ {
+  "text": "Toate produsele omologate",
+  "tip": "atribut",
+  "pl": "Wszystkie zarejestrowane środki",
+  "nota": ""
+ },
+ {
+  "text": "În curând",
+  "tip": "atribut",
+  "pl": "Wkrótce",
+  "nota": ""
+ },
+ {
+  "text": "Dictează (în curând)",
+  "tip": "atribut",
+  "pl": "Dyktuj (wkrótce)",
+  "nota": ""
+ },
+ {
+  "text": "Scanează eticheta (în curând)",
+  "tip": "atribut",
+  "pl": "Skanuj etykietę (wkrótce)",
+  "nota": ""
+ },
+ {
+  "text": "Fermier în lanul de porumb",
+  "tip": "atribut",
+  "pl": "Rolnik w łanie kukurydzy",
+  "nota": ""
+ },
+ {
+  "text": "Consultant la birou, cu laptop și notițe",
+  "tip": "atribut",
+  "pl": "Doradca przy biurku, z laptopem i notatkami",
+  "nota": ""
+ },
+ {
+  "text": "Parcele agricole văzute din dronă",
+  "tip": "atribut",
+  "pl": "Działki rolne widziane z drona",
+  "nota": ""
+ },
+ {
+  "text": "Plantație de viță de vie",
+  "tip": "atribut",
+  "pl": "Plantacja winorośli",
+  "nota": ""
+ },
+ {
+  "text": "Adresa ta de email",
+  "tip": "atribut",
+  "pl": "Twój adres e-mail",
+  "nota": ""
+ },
+ {
+  "text": "ex. RO 12345678",
+  "tip": "atribut",
+  "pl": "np. RO 12345678",
+  "nota": ""
+ },
+ {
+  "text": "Firma găsită după CUI",
+  "tip": "atribut",
+  "pl": "Firma znaleziona po CUI",
+  "nota": ""
+ },
+ {
+  "text": "Șterge emailul",
+  "tip": "atribut",
+  "pl": "Wyczyść e-mail",
+  "nota": ""
+ },
+ {
+  "text": "Subiectul",
+  "tip": "atribut",
+  "pl": "Temat",
+  "nota": ""
+ },
+ {
+  "text": "Descrie în detaliu problema ta",
+  "tip": "atribut",
+  "pl": "Opisz szczegółowo swój problem",
+  "nota": ""
+ },
+ {
+  "text": "Înapoi",
+  "tip": "atribut",
+  "pl": "Wstecz",
+  "nota": ""
+ },
+ {
+  "text": "AgroSphere pe LinkedIn",
+  "tip": "atribut",
+  "pl": "AgroSphere na LinkedIn",
+  "nota": ""
+ },
+ {
+  "text": "AgroSphere pe Facebook",
+  "tip": "atribut",
+  "pl": "AgroSphere na Facebooku",
+  "nota": ""
+ },
+ {
+  "text": "AgroSphere pe Instagram",
+  "tip": "atribut",
+  "pl": "AgroSphere na Instagramie",
+  "nota": ""
+ },
+ {
+  "text": "AgroSphere — Calculator de doză pentru pesticide",
+  "tip": "html",
+  "pl": "AgroSphere — Kalkulator dawek środków ochrony roślin",
+  "nota": ""
+ },
+ {
+  "text": "Early bird",
+  "tip": "html",
+  "pl": "Early bird",
+  "nota": ""
+ },
+ {
+  "text": "6 luni gratuit pentru ferme și parteneri",
+  "tip": "html",
+  "pl": "6 miesięcy za darmo dla gospodarstw i partnerów",
+  "nota": ""
+ },
+ {
+  "text": "Campanie valabilă",
+  "tip": "html",
+  "pl": "Kampania trwa jeszcze",
+  "nota": ""
+ },
+ {
+  "text": "20 de zile",
+  "tip": "html",
+  "pl": "20 dni",
+  "nota": ""
+ },
+ {
+  "text": "Calculator pesticide",
+  "tip": "html",
+  "pl": "Kalkulator dawek",
+  "nota": ""
+ },
+ {
+  "text": "Plan de fertilizare",
+  "tip": "html",
+  "pl": "Plan nawożenia",
+  "nota": "Florin vrea eticheta „În curând” la acest meniu; asta e o modificare de HTML separată de traducere"
+ },
+ {
+  "text": "Abonamente",
+  "tip": "html",
+  "pl": "Abonamenty",
+  "nota": ""
+ },
+ {
+  "text": "Registrul exploatației",
+  "tip": "html",
+  "pl": "Rejestr gospodarstwa",
+  "nota": ""
+ },
+ {
+  "text": "În curând",
+  "tip": "html",
+  "pl": "Wkrótce",
+  "nota": ""
+ },
+ {
+  "text": "Caiet de agromediu",
+  "tip": "html",
+  "pl": "Zeszyt rolno-środowiskowy",
+  "nota": ""
+ },
+ {
+  "text": "Asigurări culturi",
+  "tip": "html",
+  "pl": "Ubezpieczenia upraw",
+  "nota": ""
+ },
+ {
+  "text": "Am o problemă",
+  "tip": "html",
+  "pl": "Zgłoś problem",
+  "nota": ""
+ },
+ {
+  "text": "Calculează doza corectă pentru",
+  "tip": "html",
+  "pl": "Oblicz prawidłową dawkę dla",
+  "nota": ""
+ },
+ {
+  "text": "toate pesticidele",
+  "tip": "html",
+  "pl": "wszystkich środków ochrony roślin",
+  "nota": ""
+ },
+ {
+  "text": "Sau",
+  "tip": "html",
+  "pl": "Albo",
+  "nota": ""
+ },
+ {
+  "text": "caută produse, culturi sau dăunători",
+  "tip": "html",
+  "pl": "szukaj środków, upraw lub agrofagów",
+  "nota": ""
+ },
+ {
+  "text": ", iar noi îți arătăm",
+  "tip": "html",
+  "pl": ", a my pokażemy ci",
+  "nota": ""
+ },
+ {
+  "text": "toate produsele omologate cu doza exactă, cantitatea totală și recomandări complete",
+  "tip": "html",
+  "pl": "wszystkie zarejestrowane środki z dokładną dawką, łączną ilością i pełnymi zaleceniami",
+  "nota": ""
+ },
+ {
+  "text": "Calculează Doza",
+  "tip": "html",
+  "pl": "Oblicz dawkę",
+  "nota": ""
+ },
+ {
+  "text": "Caută Produse",
+  "tip": "html",
+  "pl": "Szukaj środków",
+  "nota": ""
+ },
+ {
+  "text": "Se încarcă produsele…",
+  "tip": "html",
+  "pl": "Ładowanie środków…",
+  "nota": ""
+ },
+ {
+  "text": "Bloc fizic",
+  "tip": "html",
+  "pl": "Blok fizyczny (APIA)",
+  "nota": ""
+ },
+ {
+  "text": "Produs",
+  "tip": "html",
+  "pl": "Środek",
+  "nota": ""
+ },
+ {
+  "text": "Cultură",
+  "tip": "html",
+  "pl": "Uprawa",
+  "nota": ""
+ },
+ {
+  "text": "Dăunător / boală / buruiană",
+  "tip": "html",
+  "pl": "Szkodnik / choroba / chwast",
+  "nota": ""
+ },
+ {
+  "text": "Doză omologată",
+  "tip": "html",
+  "pl": "Dawka zarejestrowana",
+  "nota": ""
+ },
+ {
+  "text": "Se completează după dăunător",
+  "tip": "html",
+  "pl": "Uzupełni się po wyborze agrofaga",
+  "nota": "[supervizor] aliniat cu aceeași frază din calc.js (lot b)"
+ },
+ {
+  "text": "Doza ta",
+  "tip": "html",
+  "pl": "Twoja dawka",
+  "nota": ""
+ },
+ {
+  "text": "Suprafață",
+  "tip": "html",
+  "pl": "Powierzchnia",
+  "nota": ""
+ },
+ {
+  "text": "ha",
+  "tip": "html",
+  "pl": "ha",
+  "nota": ""
+ },
+ {
+  "text": "Volum de apă",
+  "tip": "html",
+  "pl": "Ilość wody",
+  "nota": ""
+ },
+ {
+  "text": "L/ha",
+  "tip": "html",
+  "pl": "L/ha",
+  "nota": ""
+ },
+ {
+  "text": "Doză",
+  "tip": "html",
+  "pl": "Dawka",
+  "nota": ""
+ },
+ {
+  "text": "Omologată",
+  "tip": "html",
+  "pl": "Zarejestrowana",
+  "nota": ""
+ },
+ {
+  "text": "alege un produs din cele omologate",
+  "tip": "html",
+  "pl": "wybierz jeden z zarejestrowanych środków",
+  "nota": ""
+ },
+ {
+  "text": "Calculează",
+  "tip": "html",
+  "pl": "Oblicz",
+  "nota": ""
+ },
+ {
+  "text": "Rezultat calculat",
+  "tip": "html",
+  "pl": "Wynik obliczeń",
+  "nota": ""
+ },
+ {
+  "text": "Odată ce platforma va fi funcțională, aceste rezultate pot fi salvate în Registrele tale.",
+  "tip": "html",
+  "pl": "Gdy platforma zacznie działać, te wyniki będzie można zapisywać w twoich Rejestrach.",
+  "nota": ""
+ },
+ {
+  "text": "Produs (opțional)",
+  "tip": "html",
+  "pl": "Środek (opcjonalnie)",
+  "nota": ""
+ },
+ {
+  "text": "Caută",
+  "tip": "html",
+  "pl": "Szukaj",
+  "nota": ""
+ },
+ {
+  "text": "Produse",
+  "tip": "html",
+  "pl": "Środki",
+  "nota": ""
+ },
+ {
+  "text": "Omologate",
+  "tip": "html",
+  "pl": "Zarejestrowane",
+  "nota": ""
+ },
+ {
+  "text": "Culturi agricole",
+  "tip": "html",
+  "pl": "Uprawy rolne",
+  "nota": ""
+ },
+ {
+  "text": "Dăunători și boli",
+  "tip": "html",
+  "pl": "Szkodniki i choroby",
+  "nota": ""
+ },
+ {
+  "text": "Date",
+  "tip": "html",
+  "pl": "Dane",
+  "nota": ""
+ },
+ {
+  "text": "actualizate",
+  "tip": "html",
+  "pl": "aktualne",
+  "nota": ""
+ },
+ {
+  "text": "Din surse oficiale",
+  "tip": "html",
+  "pl": "Z oficjalnych źródeł",
+  "nota": ""
+ },
+ {
+  "text": "ANF, UE",
+  "tip": "html",
+  "pl": "ANF, UE",
+  "nota": ""
+ },
+ {
+  "text": "Pentru cine este",
+  "tip": "html",
+  "pl": "Dla kogo jest",
+  "nota": ""
+ },
+ {
+  "text": "AgroSphere?",
+  "tip": "html",
+  "pl": "AgroSphere?",
+  "nota": ""
+ },
+ {
+  "text": "Soluția simplă și rapidă",
+  "tip": "html",
+  "pl": "Proste i szybkie rozwiązanie",
+  "nota": ""
+ },
+ {
+  "text": "pentru toți profesioniștii din agricultură",
+  "tip": "html",
+  "pl": "dla wszystkich profesjonalistów w rolnictwie",
+  "nota": ""
+ },
+ {
+  "text": "Fermieri mici, mijlocii și mari",
+  "tip": "html",
+  "pl": "Małe, średnie i duże gospodarstwa",
+  "nota": ""
+ },
+ {
+  "text": "Calculezi rapid doza corectă",
+  "tip": "html",
+  "pl": "Szybko obliczasz prawidłową dawkę",
+  "nota": ""
+ },
+ {
+  "text": "pentru orice cultură și eviți greșelile.",
+  "tip": "html",
+  "pl": "dla każdej uprawy i unikasz błędów.",
+  "nota": ""
+ },
+ {
+  "text": "Consultanți agricoli",
+  "tip": "html",
+  "pl": "Doradcy rolni",
+  "nota": ""
+ },
+ {
+  "text": "Oferi recomandări precise clienților tăi",
+  "tip": "html",
+  "pl": "Dajesz klientom precyzyjne zalecenia",
+  "nota": ""
+ },
+ {
+  "text": "pe baza produselor omologate",
+  "tip": "html",
+  "pl": "oparte na zarejestrowanych środkach",
+  "nota": ""
+ },
+ {
+  "text": "Companii agricole",
+  "tip": "html",
+  "pl": "Firmy rolnicze",
+  "nota": ""
+ },
+ {
+  "text": "Standardizezi recomandările și gestionezi",
+  "tip": "html",
+  "pl": "Standaryzujesz zalecenia i zarządzasz",
+  "nota": ""
+ },
+ {
+  "text": "tratamentele pentru toate fermele din portofoliu",
+  "tip": "html",
+  "pl": "zabiegami we wszystkich gospodarstwach z portfela",
+  "nota": ""
+ },
+ {
+  "text": "Cum",
+  "tip": "html",
+  "pl": "Jak to",
+  "nota": ""
+ },
+ {
+  "text": "funcționează?",
+  "tip": "html",
+  "pl": "działa?",
+  "nota": ""
+ },
+ {
+  "text": "Îți calculezi doza pentru pesticide",
+  "tip": "html",
+  "pl": "Obliczasz dawkę środków ochrony roślin",
+  "nota": ""
+ },
+ {
+  "text": "Alege cultura ta din lista disponibilă.",
+  "tip": "html",
+  "pl": "Wybierz swoją uprawę z dostępnej listy.",
+  "nota": ""
+ },
+ {
+  "text": "Setezi planul de tratament cu fertilizanți",
+  "tip": "html",
+  "pl": "Ustalasz plan nawożenia",
+  "nota": ""
+ },
+ {
+  "text": "Completezi informațiile esențiale o singură dată.",
+  "tip": "html",
+  "pl": "Uzupełniasz najważniejsze informacje tylko raz.",
+  "nota": ""
+ },
+ {
+  "text": "Registrul exploatației pentru fermă",
+  "tip": "html",
+  "pl": "Rejestr gospodarstwa",
+  "nota": ""
+ },
+ {
+  "text": "Comparăm profilul tău cu criteriile disponibile ale finanțatorilor.",
+  "tip": "html",
+  "pl": "Porównujemy twój profil z dostępnymi kryteriami instytucji finansujących.",
+  "nota": ""
+ },
+ {
+  "text": "Depunere de cereri pentru asigurări culturi",
+  "tip": "html",
+  "pl": "Składanie wniosków o ubezpieczenie upraw",
+  "nota": ""
+ },
+ {
+  "text": "Primești explicații clare și ajutor atunci când ai nevoie.",
+  "tip": "html",
+  "pl": "Dostajesz jasne wyjaśnienia i pomoc, kiedy jej potrzebujesz.",
+  "nota": ""
+ },
+ {
+  "text": "Acces timpuriu",
+  "tip": "html",
+  "pl": "Wczesny dostęp",
+  "nota": ""
+ },
+ {
+  "text": "Fii printre",
+  "tip": "html",
+  "pl": "Bądź wśród",
+  "nota": ""
+ },
+ {
+  "text": "primii care folosesc AgroSphere",
+  "tip": "html",
+  "pl": "pierwszych użytkowników AgroSphere",
+  "nota": ""
+ },
+ {
+  "text": "Înscrie-te",
+  "tip": "html",
+  "pl": "Zapisz się",
+  "nota": ""
+ },
+ {
+  "text": "pe lista de așteptare",
+  "tip": "html",
+  "pl": "na listę oczekujących",
+  "nota": ""
+ },
+ {
+  "text": "și primești",
+  "tip": "html",
+  "pl": "i otrzymaj",
+  "nota": ""
+ },
+ {
+  "text": "6 luni gratuit de la lansarea pachetelor",
+  "tip": "html",
+  "pl": "6 miesięcy za darmo od startu pakietów",
+  "nota": ""
+ },
+ {
+  "text": ", pentru ferma ta sau pentru firma ta parteneră",
+  "tip": "html",
+  "pl": ", dla swojego gospodarstwa lub swojej firmy partnerskiej",
+  "nota": ""
+ },
+ {
+  "text": "Campanie disponibilă",
+  "tip": "html",
+  "pl": "Kampania trwa jeszcze",
+  "nota": ""
+ },
+ {
+  "text": "Early ·",
+  "tip": "html",
+  "pl": "Early ·",
+  "nota": ""
+ },
+ {
+  "text": "Primele 100 de ferme",
+  "tip": "html",
+  "pl": "Pierwsze 100 gospodarstw",
+  "nota": ""
+ },
+ {
+  "text": "6 luni gratuit, oricât de mare e ferma",
+  "tip": "html",
+  "pl": "6 miesięcy za darmo, niezależnie od wielkości gospodarstwa",
+  "nota": ""
+ },
+ {
+  "text": "Fermă mică sau mare",
+  "tip": "html",
+  "pl": "Małe lub duże gospodarstwo",
+  "nota": ""
+ },
+ {
+  "text": "după hectarele din APIA",
+  "tip": "html",
+  "pl": "według hektarów z APIA",
+  "nota": ""
+ },
+ {
+  "text": "Primele",
+  "tip": "html",
+  "pl": "Pierwsze",
+  "nota": ""
+ },
+ {
+  "text": "100 de ferme",
+  "tip": "html",
+  "pl": "100 gospodarstw",
+  "nota": ""
+ },
+ {
+  "text": "înscrise primesc",
+  "tip": "html",
+  "pl": "zapisanych otrzyma",
+  "nota": ""
+ },
+ {
+  "text": ", nu de la înscriere. Fără card bancar.",
+  "tip": "html",
+  "pl": ", a nie od zapisu. Bez karty płatniczej.",
+  "nota": ""
+ },
+ {
+  "text": "Până la 100 ha:",
+  "tip": "html",
+  "pl": "Do 100 ha:",
+  "nota": ""
+ },
+ {
+  "text": "Fermă mică",
+  "tip": "html",
+  "pl": "Małe gospodarstwo",
+  "nota": ""
+ },
+ {
+  "text": "6 luni gratuit (în loc de 54 €)",
+  "tip": "html",
+  "pl": "6 miesięcy za darmo (zamiast 54 €)",
+  "nota": ""
+ },
+ {
+  "text": "Peste 100 ha:",
+  "tip": "html",
+  "pl": "Powyżej 100 ha:",
+  "nota": ""
+ },
+ {
+  "text": "Fermă mare",
+  "tip": "html",
+  "pl": "Duże gospodarstwo",
+  "nota": ""
+ },
+ {
+  "text": "6 luni gratuit (în loc de 174 €)",
+  "tip": "html",
+  "pl": "6 miesięcy za darmo (zamiast 174 €)",
+  "nota": ""
+ },
+ {
+  "text": "După cele 6 luni:",
+  "tip": "html",
+  "pl": "Po 6 miesiącach:",
+  "nota": ""
+ },
+ {
+  "text": "20% reducere",
+  "tip": "html",
+  "pl": "20% zniżki",
+  "nota": ""
+ },
+ {
+  "text": "la primul an plătit anual",
+  "tip": "html",
+  "pl": "na pierwszy rok płatny rocznie",
+  "nota": ""
+ },
+ {
+  "text": "Îți scriem pe email când pornesc pachetele, deci și cele 6 luni",
+  "tip": "html",
+  "pl": "Napiszemy do ciebie e-mailem, gdy wystartują pakiety, a z nimi twoje 6 miesięcy",
+  "nota": ""
+ },
+ {
+  "text": "Email",
+  "tip": "html",
+  "pl": "E-mail",
+  "nota": ""
+ },
+ {
+  "text": "Rezerv loc",
+  "tip": "html",
+  "pl": "Rezerwuję miejsce",
+  "nota": ""
+ },
+ {
+  "text": "Ți-ai rezervat locul printre primele 100 de ferme",
+  "tip": "html",
+  "pl": "Masz zarezerwowane miejsce wśród pierwszych 100 gospodarstw",
+  "nota": ""
+ },
+ {
+  "text": "Ți-am trimis detaliile pe",
+  "tip": "html",
+  "pl": "Wysłaliśmy szczegóły na",
+  "nota": ""
+ },
+ {
+  "text": "Primești emailuri despre lansare și te poți dezabona oricând.",
+  "tip": "html",
+  "pl": "Będziesz dostawać e-maile o starcie i możesz zrezygnować w każdej chwili.",
+  "nota": ""
+ },
+ {
+  "text": "Politica de confidențialitate",
+  "tip": "html",
+  "pl": "Polityka prywatności",
+  "nota": ""
+ },
+ {
+  "text": "Primii 30 de parteneri fondatori",
+  "tip": "html",
+  "pl": "Pierwszych 30 partnerów założycieli",
+  "nota": ""
+ },
+ {
+  "text": "6 luni gratuit și preț blocat un an",
+  "tip": "html",
+  "pl": "6 miesięcy za darmo i cena zablokowana na rok",
+  "nota": ""
+ },
+ {
+  "text": "Partener",
+  "tip": "html",
+  "pl": "Partner",
+  "nota": ""
+ },
+ {
+  "text": "în loc de",
+  "tip": "html",
+  "pl": "zamiast",
+  "nota": ""
+ },
+ {
+  "text": "în 6 luni",
+  "tip": "html",
+  "pl": "za 6 miesięcy",
+  "nota": ""
+ },
+ {
+  "text": "Pentru",
+  "tip": "html",
+  "pl": "Dla",
+  "nota": ""
+ },
+ {
+  "text": "laboratoare, distribuitori, service-uri",
+  "tip": "html",
+  "pl": "laboratoriów, dystrybutorów, serwisów",
+  "nota": ""
+ },
+ {
+  "text": "și firme de servicii agricole. Gratuitatea pornește",
+  "tip": "html",
+  "pl": "i firm usług rolniczych. Darmowy okres zaczyna się",
+  "nota": ""
+ },
+ {
+  "text": "la lansarea pachetelor",
+  "tip": "html",
+  "pl": "od startu pakietów",
+  "nota": ""
+ },
+ {
+  "text": "6 luni gratuit",
+  "tip": "html",
+  "pl": "6 miesięcy za darmo",
+  "nota": ""
+ },
+ {
+  "text": "și verificarea documentelor gratuită",
+  "tip": "html",
+  "pl": "i bezpłatna weryfikacja dokumentów",
+  "nota": ""
+ },
+ {
+  "text": "Preț blocat 12 luni",
+  "tip": "html",
+  "pl": "Cena zablokowana na 12 miesięcy",
+  "nota": ""
+ },
+ {
+  "text": "după aceea: 59 €/lună sau comision de 3%",
+  "tip": "html",
+  "pl": "potem: 59 €/miesiąc lub prowizja 3%",
+  "nota": ""
+ },
+ {
+  "text": "Insigna",
+  "tip": "html",
+  "pl": "Odznaka",
+  "nota": ""
+ },
+ {
+  "text": "„Partener fondator”",
+  "tip": "html",
+  "pl": "„Partner założyciel”",
+  "nota": ""
+ },
+ {
+  "text": "pe profil",
+  "tip": "html",
+  "pl": "na profilu",
+  "nota": ""
+ },
+ {
+  "text": "Locuri limitate pe județ:",
+  "tip": "html",
+  "pl": "Ograniczona liczba miejsc na okręg:",
+  "nota": "județ = okręg; nu există echivalent exact în PL"
+ },
+ {
+  "text": "2 distribuitori, 1 laborator, 1 service",
+  "tip": "html",
+  "pl": "2 dystrybutorów, 1 laboratorium, 1 serwis",
+  "nota": ""
+ },
+ {
+  "text": "Acces facil",
+  "tip": "html",
+  "pl": "Łatwy dostęp",
+  "nota": ""
+ },
+ {
+  "text": "la fermierii din România",
+  "tip": "html",
+  "pl": "do rolników w Rumunii",
+  "nota": ""
+ },
+ {
+  "text": "CUI",
+  "tip": "html",
+  "pl": "CUI",
+  "nota": ""
+ },
+ {
+  "text": "Ți-ai rezervat locul de partener fondator",
+  "tip": "html",
+  "pl": "Masz zarezerwowane miejsce partnera założyciela",
+  "nota": ""
+ },
+ {
+  "text": "Numele firmei, județul și activitatea le luăm din ANAF după CUI. Fiecare firmă poate rezerva un singur loc.",
+  "tip": "html",
+  "pl": "Nazwę firmy, okręg i rodzaj działalności pobieramy z ANAF na podstawie CUI. Każda firma może zarezerwować tylko jedno miejsce.",
+  "nota": ""
+ },
+ {
+  "text": "Vreau să raportez o problemă",
+  "tip": "html",
+  "pl": "Chcę zgłosić problem",
+  "nota": ""
+ },
+ {
+  "text": "Emailul tău",
+  "tip": "html",
+  "pl": "Twój e-mail",
+  "nota": ""
+ },
+ {
+  "text": "Subiectul",
+  "tip": "html",
+  "pl": "Temat",
+  "nota": ""
+ },
+ {
+  "text": "Alege subiectul problemei",
+  "tip": "html",
+  "pl": "Wybierz temat problemu",
+  "nota": ""
+ },
+ {
+  "text": "Calculatorul de doză",
+  "tip": "html",
+  "pl": "Kalkulator dawek",
+  "nota": ""
+ },
+ {
+  "text": "Căutarea de produse",
+  "tip": "html",
+  "pl": "Wyszukiwanie środków",
+  "nota": ""
+ },
+ {
+  "text": "O doză sau un produs pare greșit",
+  "tip": "html",
+  "pl": "Dawka lub środek wydaje się błędny",
+  "nota": ""
+ },
+ {
+  "text": "Înscrierea / emailul",
+  "tip": "html",
+  "pl": "Zapis / e-mail",
+  "nota": ""
+ },
+ {
+  "text": "Altceva",
+  "tip": "html",
+  "pl": "Coś innego",
+  "nota": ""
+ },
+ {
+  "text": "Descrierea problemei",
+  "tip": "html",
+  "pl": "Opis problemu",
+  "nota": ""
+ },
+ {
+  "text": "Minim 10, maxim 2000 de caractere",
+  "tip": "html",
+  "pl": "Minimum 10, maksimum 2000 znaków",
+  "nota": ""
+ },
+ {
+  "text": "Atașează poză/video",
+  "tip": "html",
+  "pl": "Załącz zdjęcie/wideo",
+  "nota": ""
+ },
+ {
+  "text": "ca să înțelegem ce nu merge",
+  "tip": "html",
+  "pl": "żebyśmy zrozumieli, co nie działa",
+  "nota": ""
+ },
+ {
+  "text": "Doar JPG, PNG (max. 10MB) și video MP4, MOV (max. 20MB)",
+  "tip": "html",
+  "pl": "Tylko JPG, PNG (maks. 10MB) i wideo MP4, MOV (maks. 20MB)",
+  "nota": ""
+ },
+ {
+  "text": "Maxim 5 fișiere, 50MB în total",
+  "tip": "html",
+  "pl": "Maksymalnie 5 plików, 50MB łącznie",
+  "nota": ""
+ },
+ {
+  "text": "Vezi mai mult",
+  "tip": "html",
+  "pl": "Pokaż więcej",
+  "nota": ""
+ },
+ {
+  "text": "Atașează",
+  "tip": "html",
+  "pl": "Załącz",
+  "nota": ""
+ },
+ {
+  "text": "Trimite",
+  "tip": "html",
+  "pl": "Wyślij",
+  "nota": ""
+ },
+ {
+  "text": "Folosim emailul și fișierele doar ca să rezolvăm problema; fișierele se șterg după 90 de zile.",
+  "tip": "html",
+  "pl": "Używamy e-maila i plików tylko do rozwiązania problemu; pliki są usuwane po 90 dniach.",
+  "nota": ""
+ },
+ {
+  "text": "Am primit raportul",
+  "tip": "html",
+  "pl": "Otrzymaliśmy zgłoszenie",
+  "nota": ""
+ },
+ {
+  "text": "Mulțumim! Îți răspundem pe",
+  "tip": "html",
+  "pl": "Dziękujemy! Odpowiemy na",
+  "nota": ""
+ },
+ {
+  "text": "cât de repede putem.",
+  "tip": "html",
+  "pl": "najszybciej, jak to możliwe.",
+  "nota": ""
+ },
+ {
+  "text": "Trimite alt raport",
+  "tip": "html",
+  "pl": "Wyślij kolejne zgłoszenie",
+  "nota": ""
+ },
+ {
+  "text": "Companie",
+  "tip": "html",
+  "pl": "Firma",
+  "nota": ""
+ },
+ {
+  "text": "Despre noi",
+  "tip": "html",
+  "pl": "O nas",
+  "nota": ""
+ },
+ {
+  "text": "Noutăți",
+  "tip": "html",
+  "pl": "Aktualności",
+  "nota": ""
+ },
+ {
+  "text": "Contact",
+  "tip": "html",
+  "pl": "Kontakt",
+  "nota": ""
+ },
+ {
+  "text": "Resurse",
+  "tip": "html",
+  "pl": "Zasoby",
+  "nota": ""
+ },
+ {
+  "text": "Centru de ajutor",
+  "tip": "html",
+  "pl": "Centrum pomocy",
+  "nota": ""
+ },
+ {
+  "text": "Suport",
+  "tip": "html",
+  "pl": "Wsparcie",
+  "nota": ""
+ },
+ {
+  "text": "Legal",
+  "tip": "html",
+  "pl": "Informacje prawne",
+  "nota": ""
+ },
+ {
+  "text": "Termeni și condiții",
+  "tip": "html",
+  "pl": "Regulamin",
+  "nota": ""
+ },
+ {
+  "text": "Confidențialitate",
+  "tip": "html",
+  "pl": "Prywatność",
+  "nota": ""
+ },
+ {
+  "text": "Cookies",
+  "tip": "html",
+  "pl": "Pliki cookie",
+  "nota": ""
+ },
+ {
+  "text": "Licențe",
+  "tip": "html",
+  "pl": "Licencje",
+  "nota": ""
+ },
+ {
+  "text": "© 2026 AgroSphere. Toate drepturile rezervate.",
+  "tip": "html",
+  "pl": "© 2026 AgroSphere. Wszelkie prawa zastrzeżone.",
+  "nota": ""
+ },
+ {
+  "text": "use strict",
+  "tip": "js",
+  "pl": null,
+  "nota": "directivă JS"
+ },
+ {
+  "text": "a.menu-it, a.mm-it",
+  "tip": "js",
+  "pl": null,
+  "nota": "selector CSS"
+ },
+ {
+  "text": "(prefers-reduced-motion: reduce)",
+  "tip": "js",
+  "pl": null,
+  "nota": "media query"
+ },
+ {
+  "text": "IntersectionObserver",
+  "tip": "js",
+  "pl": null,
+  "nota": "identificator JS"
+ },
+ {
+  "text": "0px 0px -10% 0px",
+  "tip": "js",
+  "pl": null,
+  "nota": "valoare rootMargin"
+ },
+ {
+  "text": "Campania s-a încheiat",
+  "tip": "js",
+  "pl": "Kampania zakończyła się",
+  "nota": ""
+ },
+ {
+  "text": "oră",
+  "tip": "js",
+  "pl": "godzina",
+  "nota": "funcția plural() din main.js e făcută pentru română (adaugă „de” de la 20); pentru polonă trebuie forme 1 / 2-4 / 5+ (godzina/godziny/godzin, dzień/dni, minuta/minuty/minut) și fără „de”"
+ },
+ {
+  "text": "și",
+  "tip": "js",
+  "pl": "i",
+  "nota": ""
+ },
+ {
+  "text": "Campanie disponibilă",
+  "tip": "js",
+  "pl": "Kampania trwa jeszcze",
+  "nota": ""
+ },
+ {
+  "text": "Campania se încheie în",
+  "tip": "js",
+  "pl": "Kampania kończy się za",
+  "nota": ""
+ },
+ {
+  "text": "Campanie valabilă",
+  "tip": "js",
+  "pl": "Kampania trwa jeszcze",
+  "nota": ""
+ },
+ {
+  "text": "Expiră în",
+  "tip": "js",
+  "pl": "Kończy się za",
+  "nota": "[supervizor] pentru o campanie „kończy się za” e mai natural decât „wygasa za”"
+ },
+ {
+  "text": "]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '",
+  "tip": "js",
+  "pl": null,
+  "nota": "cod JS"
+ },
+ {
+  "text": "Exemplu Firmă Inactivă SRL",
+  "tip": "js",
+  "pl": "Przykładowa Nieaktywna Firma SRL",
+  "nota": "date demo (previzualizare fără ANAF); SRL rămâne"
+ },
+ {
+  "text": "București",
+  "tip": "js",
+  "pl": "București",
+  "nota": "nume propriu de localitate, rămâne neschimbat"
+ },
+ {
+  "text": "Firmă exemplu (previzualizare, fără ANAF)",
+  "tip": "js",
+  "pl": "Przykładowa firma (podgląd, bez ANAF)",
+  "nota": ""
+ },
+ {
+  "text": "Brașov",
+  "tip": "js",
+  "pl": "Brașov",
+  "nota": "nume propriu de localitate, rămâne neschimbat"
+ },
+ {
+  "text": "Hărman",
+  "tip": "js",
+  "pl": "Hărman",
+  "nota": "nume propriu de localitate, rămâne neschimbat"
+ },
+ {
+  "text": "Authorization",
+  "tip": "js",
+  "pl": null,
+  "nota": "antet HTTP"
+ },
+ {
+  "text": "Bearer",
+  "tip": "js",
+  "pl": null,
+  "nota": "antet HTTP"
+ },
+ {
+  "text": "· activă <button type=\"button\" data-schimba>Schimbă firma</button>",
+  "tip": "js",
+  "pl": "· aktywna <button type=\"button\" data-schimba>Zmień firmę</button>",
+  "nota": ""
+ },
+ {
+  "text": "CUI-ul nu pare corect. Verifică ultima cifră.",
+  "tip": "js",
+  "pl": "CUI wygląda na niepoprawny. Sprawdź ostatnią cyfrę.",
+  "nota": ""
+ },
+ {
+  "text": "Nu putem verifica acum firma la ANAF. Poți rezerva locul, o verificăm noi mai târziu.",
+  "tip": "js",
+  "pl": "Nie możemy teraz sprawdzić firmy w ANAF. Możesz zarezerwować miejsce, sprawdzimy ją później.",
+  "nota": ""
+ },
+ {
+  "text": "Firma are deja un loc rezervat. Verifică emailul folosit atunci sau scrie-ne dacă nu tu l-ai rezervat.",
+  "tip": "js",
+  "pl": "Ta firma ma już zarezerwowane miejsce. Sprawdź e-mail użyty wtedy lub napisz do nas, jeśli to nie ty je zarezerwowałeś.",
+  "nota": ""
+ },
+ {
+  "text": "Nu am găsit firma la ANAF. Verifică CUI-ul pe o factură.",
+  "tip": "js",
+  "pl": "Nie znaleźliśmy firmy w ANAF. Sprawdź CUI na fakturze.",
+  "nota": ""
+ },
+ {
+  "text": "Firma apare inactivă la ANAF. Dacă e o greșeală, scrie-ne și verificăm.",
+  "tip": "js",
+  "pl": "Firma figuruje w ANAF jako nieaktywna. Jeśli to pomyłka, napisz do nas, a sprawdzimy.",
+  "nota": ""
+ },
+ {
+  "text": "</small></span><span class=\"tag\">activă</span></button>",
+  "tip": "js",
+  "pl": "</small></span><span class=\"tag\">aktywna</span></button>",
+  "nota": ""
+ },
+ {
+  "text": "<div class=\"cui-opt\" role=\"presentation\"><span class=\"t\"><b>Nu e firma ta?</b><small>Verifică CUI-ul pe o factură</small></span></div>",
+  "tip": "js",
+  "pl": "<div class=\"cui-opt\" role=\"presentation\"><span class=\"t\"><b>To nie twoja firma?</b><small>Sprawdź CUI na fakturze</small></span></div>",
+  "nota": ""
+ },
+ {
+  "text": "<div class=\"cui-opt\" role=\"presentation\"><span class=\"t\"><b>Căutăm firma în ANAF…</b><small>după CUI-ul scris</small></span></div>",
+  "tip": "js",
+  "pl": "<div class=\"cui-opt\" role=\"presentation\"><span class=\"t\"><b>Szukamy firmy w ANAF…</b><small>według wpisanego CUI</small></span></div>",
+  "nota": ""
+ },
+ {
+  "text": "Enter",
+  "tip": "js",
+  "pl": null,
+  "nota": "nume de tastă"
+ },
+ {
+  "text": "ArrowDown",
+  "tip": "js",
+  "pl": null,
+  "nota": "nume de tastă"
+ },
+ {
+  "text": "Escape",
+  "tip": "js",
+  "pl": null,
+  "nota": "nume de tastă"
+ },
+ {
+  "text": "form-msg err",
+  "tip": "js",
+  "pl": null,
+  "nota": "clasă CSS"
+ },
+ {
+  "text": "Verificarea anti-robot nu a trecut. Reîncarcă pagina și încearcă din nou.",
+  "tip": "js",
+  "pl": "Weryfikacja antyrobotowa nie powiodła się. Odśwież stronę i spróbuj ponownie.",
+  "nota": ""
+ },
+ {
+  "text": "Prea multe înscrieri de pe această conexiune. Încearcă din nou peste câteva minute.",
+  "tip": "js",
+  "pl": "Zbyt wiele zapisów z tego połączenia. Spróbuj ponownie za kilka minut.",
+  "nota": ""
+ },
+ {
+  "text": "Adresa de email nu pare validă. Verific-o și încearcă din nou.",
+  "tip": "js",
+  "pl": "Adres e-mail wygląda na niepoprawny. Sprawdź go i spróbuj ponownie.",
+  "nota": ""
+ },
+ {
+  "text": "Nu am putut trimite acum. Încearcă din nou în câteva secunde.",
+  "tip": "js",
+  "pl": "Nie udało się teraz wysłać. Spróbuj ponownie za kilka sekund.",
+  "nota": ""
+ },
+ {
+  "text": "Închide meniul",
+  "tip": "js",
+  "pl": "Zamknij menu",
+  "nota": ""
+ },
+ {
+  "text": "Deschide meniul",
+  "tip": "js",
+  "pl": "Otwórz menu",
+  "nota": ""
+ },
+ {
+  "text": "(min-width: 1025px)",
+  "tip": "js",
+  "pl": null,
+  "nota": "media query"
+ },
+ {
+  "text": "Minim",
+  "tip": "js",
+  "pl": "Minimum",
+  "nota": ""
+ },
+ {
+  "text": ", maxim",
+  "tip": "js",
+  "pl": ", maksimum",
+  "nota": ""
+ },
+ {
+  "text": "de caractere",
+  "tip": "js",
+  "pl": "znaków",
+  "nota": ""
+ },
+ {
+  "text": "de caractere · minim",
+  "tip": "js",
+  "pl": "znaków · minimum",
+  "nota": ""
+ },
+ {
+  "text": "Vezi mai puțin",
+  "tip": "js",
+  "pl": "Pokaż mniej",
+  "nota": ""
+ },
+ {
+  "text": "Vezi mai mult (+",
+  "tip": "js",
+  "pl": "Pokaż więcej (+",
+  "nota": ""
+ },
+ {
+  "text": "att-tile is-up",
+  "tip": "js",
+  "pl": null,
+  "nota": "clasă CSS"
+ },
+ {
+  "text": "Video",
+  "tip": "js",
+  "pl": "Wideo",
+  "nota": ""
+ },
+ {
+  "text": "Elimină",
+  "tip": "js",
+  "pl": "Usuń",
+  "nota": ""
+ },
+ {
+  "text": "Nu am putut urca fișierul. Încearcă din nou.",
+  "tip": "js",
+  "pl": "Nie udało się przesłać pliku. Spróbuj ponownie.",
+  "nota": ""
+ },
+ {
+  "text": "Nu am putut urca fișierul. Verifică internetul și încearcă din nou.",
+  "tip": "js",
+  "pl": "Nie udało się przesłać pliku. Sprawdź połączenie z internetem i spróbuj ponownie.",
+  "nota": ""
+ },
+ {
+  "text": "”: acceptăm doar JPG, PNG, MP4 și MOV.",
+  "tip": "js",
+  "pl": "”: akceptujemy tylko JPG, PNG, MP4 i MOV.",
+  "nota": ""
+ },
+ {
+  "text": "” e prea mare (max.",
+  "tip": "js",
+  "pl": "” jest za duży (maks.",
+  "nota": "„plik” e masculin în polonă; numele fișierului e între ghilimele, deci acordul e cu „plik” subînțeles"
+ },
+ {
+  "text": "Poți atașa maxim",
+  "tip": "js",
+  "pl": "Możesz załączyć maksymalnie",
+  "nota": ""
+ },
+ {
+  "text": "fișiere.",
+  "tip": "js",
+  "pl": "plików.",
+  "nota": "pentru MAX_FILES=5 forma „plików” e corectă în polonă"
+ },
+ {
+  "text": "Fișierele depășesc 50MB în total.",
+  "tip": "js",
+  "pl": "Pliki przekraczają łącznie 50MB.",
+  "nota": ""
+ },
+ {
+  "text": "un email valid",
+  "tip": "js",
+  "pl": "poprawny adres e-mail",
+  "nota": ""
+ },
+ {
+  "text": "Descrierea e obligatorie",
+  "tip": "js",
+  "pl": "Opis jest wymagany",
+  "nota": ""
+ },
+ {
+  "text": "o descriere de cel puțin",
+  "tip": "js",
+  "pl": "opis o długości co najmniej",
+  "nota": ""
+ },
+ {
+  "text": "o descriere de maxim",
+  "tip": "js",
+  "pl": "opis o długości maksymalnie",
+  "nota": ""
+ },
+ {
+  "text": "Completează",
+  "tip": "js",
+  "pl": "Podaj",
+  "nota": "[supervizor] „Uzupełnij poprawny adres e-mail” nu sună natural; „Podaj …” merge cu toate elementele listei (adres, temat, opis)"
+ },
+ {
+  "text": "și $1",
+  "tip": "js",
+  "pl": "i $1",
+  "nota": ""
+ },
+ {
+  "text": "Așteaptă să se termine încărcarea fișierelor.",
+  "tip": "js",
+  "pl": "Poczekaj, aż zakończy się przesyłanie plików.",
+  "nota": ""
+ },
+ {
+  "text": "Nu am putut trimite raportul. Încearcă din nou.",
+  "tip": "js",
+  "pl": "Nie udało się wysłać zgłoszenia. Spróbuj ponownie.",
+  "nota": ""
+ },
+ {
+  "text": "Nu am putut trimite raportul. Verifică internetul și încearcă din nou.",
+  "tip": "js",
+  "pl": "Nie udało się wysłać zgłoszenia. Sprawdź połączenie z internetem i spróbuj ponownie.",
+  "nota": ""
+ },
+ {
+  "text": "Trimite",
+  "tip": "js",
+  "pl": "Wyślij",
+  "nota": ""
+ },
+ {
+  "text": "Alege subiectul problemei",
+  "tip": "js",
+  "pl": "Wybierz temat problemu",
+  "nota": ""
+ },
+ {
+  "text": "L/1000 L apa",
+  "tip": "js",
+  "pl": null,
+  "nota": "unitate comparată în cod (esteConc)"
+ },
+ {
+  "text": "kg/1000 L apa",
+  "tip": "js",
+  "pl": null,
+  "nota": "unitate comparată în cod (esteConc)"
+ },
+ {
+  "text": "apă",
+  "tip": "js",
+  "pl": "wody",
+  "nota": "unitRo: „L/1000 L apa” devine „L/1000 L wody”"
+ },
+ {
+  "text": "aplicare foliară",
+  "tip": "js",
+  "pl": "oprysk nalistny",
+  "nota": ""
+ },
+ {
+  "text": "înainte de plantare",
+  "tip": "js",
+  "pl": "przed sadzeniem",
+  "nota": ""
+ },
+ {
+  "text": "tratament la sămânță",
+  "tip": "js",
+  "pl": "zaprawianie nasion",
+  "nota": ""
+ },
+ {
+  "text": "după recoltare",
+  "tip": "js",
+  "pl": "po zbiorze",
+  "nota": ""
+ },
+ {
+  "text": "ArrowUp",
+  "tip": "js",
+  "pl": null,
+  "nota": "cheie de tastatură"
+ },
+ {
+  "text": "Tab",
+  "tip": "js",
+  "pl": null,
+  "nota": "cheie de tastatură"
+ },
+ {
+  "text": "tag xs",
+  "tip": "js",
+  "pl": null,
+  "nota": "clase CSS"
+ },
+ {
+  "text": "</span></span><span class=\"tag xs",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "+ încă",
+  "tip": "js",
+  "pl": "+ jeszcze",
+  "nota": ""
+ },
+ {
+  "text": "Alege produsul",
+  "tip": "js",
+  "pl": "Wybierz środek",
+  "nota": ""
+ },
+ {
+  "text": "Caută sau scrie produsul…",
+  "tip": "js",
+  "pl": "Szukaj lub wpisz nazwę środka…",
+  "nota": ""
+ },
+ {
+  "text": "Produs",
+  "tip": "js",
+  "pl": "Środek",
+  "nota": ""
+ },
+ {
+  "text": "Alege cultura",
+  "tip": "js",
+  "pl": "Wybierz uprawę",
+  "nota": ""
+ },
+ {
+  "text": "Scrie sau alege cultura…",
+  "tip": "js",
+  "pl": "Wpisz lub wybierz uprawę…",
+  "nota": ""
+ },
+ {
+  "text": "Cultură",
+  "tip": "js",
+  "pl": "Uprawa",
+  "nota": ""
+ },
+ {
+  "text": "Alege dăunătorul",
+  "tip": "js",
+  "pl": "Wybierz agrofaga",
+  "nota": "dăunător folosit generic (dăunător/boală/buruiană) -> agrofag"
+ },
+ {
+  "text": "Scrie sau alege dăunătorul…",
+  "tip": "js",
+  "pl": "Wpisz lub wybierz agrofaga…",
+  "nota": "dăunător generic -> agrofag"
+ },
+ {
+  "text": "Dăunător / boală / buruiană",
+  "tip": "js",
+  "pl": "Szkodnik / choroba / chwast",
+  "nota": ""
+ },
+ {
+  "text": "Potriviri pentru „",
+  "tip": "js",
+  "pl": "Wyniki dla „",
+  "nota": ""
+ },
+ {
+  "text": "Toate",
+  "tip": "js",
+  "pl": "Wszystkie",
+  "nota": ""
+ },
+ {
+  "text": "<button type=\"button\" class=\"schip\" data-id=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "<div class=\"sgrp\"><div class=\"hd\">Toate produsele, alfabetic<small>",
+  "tip": "js",
+  "pl": "<div class=\"sgrp\"><div class=\"hd\">Wszystkie środki, alfabetycznie<small>",
+  "nota": ""
+ },
+ {
+  "text": "<button type=\"button\" class=\"schip more\" data-more=\"tot\">… încă",
+  "tip": "js",
+  "pl": "<button type=\"button\" class=\"schip more\" data-more=\"tot\">… jeszcze",
+  "nota": ""
+ },
+ {
+  "text": "Niciun produs omologat nu se potrivește. Încearcă alt nume sau o denumire veche (ex. Racing).",
+  "tip": "js",
+  "pl": "Żaden zarejestrowany środek nie pasuje. Spróbuj innej nazwy lub dawnej nazwy handlowej (np. Racing).",
+  "nota": ""
+ },
+ {
+  "text": "Cele mai populare produse",
+  "tip": "js",
+  "pl": "Najpopularniejsze środki",
+  "nota": ""
+ },
+ {
+  "text": "Nicio cultură omologată pentru acest produs nu se potrivește.",
+  "tip": "js",
+  "pl": "Żadna zarejestrowana uprawa dla tego środka nie pasuje.",
+  "nota": ""
+ },
+ {
+  "text": "Selectează cultura mai întâi",
+  "tip": "js",
+  "pl": "Najpierw wybierz uprawę",
+  "nota": ""
+ },
+ {
+  "text": "Nicio problemă omologată pentru această combinație nu se potrivește.",
+  "tip": "js",
+  "pl": "Żaden zarejestrowany agrofag dla tej kombinacji nie pasuje.",
+  "nota": ""
+ },
+ {
+  "text": "Caută sau selectează produs",
+  "tip": "js",
+  "pl": "Szukaj lub wybierz środek",
+  "nota": ""
+ },
+ {
+  "text": "produse</b> omologate",
+  "tip": "js",
+  "pl": "środków</b> w rejestrze",
+  "nota": "propoziția: „<b>N środków</b> w rejestrze”; genitiv plural potrivit pentru N mare (sute/mii)"
+ },
+ {
+  "text": "Datele nu s-au putut încărca.",
+  "tip": "js",
+  "pl": "Nie udało się wczytać danych.",
+  "nota": ""
+ },
+ {
+  "text": "dăunător",
+  "tip": "js",
+  "pl": "szkodnik",
+  "nota": ""
+ },
+ {
+  "text": "dăunători",
+  "tip": "js",
+  "pl": "szkodniki",
+  "nota": "Liczba mnoga w mianowniku (2–4); pl() trebuie adaptat la regulile poloneze: 5+ cere genitiv „szkodników”."
+ },
+ {
+  "text": "boală",
+  "tip": "js",
+  "pl": "choroba",
+  "nota": ""
+ },
+ {
+  "text": "buruiană",
+  "tip": "js",
+  "pl": "chwast",
+  "nota": ""
+ },
+ {
+  "text": "problemă",
+  "tip": "js",
+  "pl": "agrofag",
+  "nota": "problemă generic -> agrofag; plural „agrofagi”, genitiv „agrofagów”"
+ },
+ {
+  "text": "Selectează cultura",
+  "tip": "js",
+  "pl": "Wybierz uprawę",
+  "nota": ""
+ },
+ {
+  "text": "Selectează produsul mai întâi",
+  "tip": "js",
+  "pl": "Najpierw wybierz środek",
+  "nota": ""
+ },
+ {
+  "text": "Selectează dăunătorul / boala / buruiana",
+  "tip": "js",
+  "pl": "Wybierz szkodnika / chorobę / chwast",
+  "nota": ""
+ },
+ {
+  "text": "Doza ta (",
+  "tip": "js",
+  "pl": "Twoja dawka (",
+  "nota": ""
+ },
+ {
+  "text": ") depășește doza maximă omologată de",
+  "tip": "js",
+  "pl": ") przekracza maksymalną zarejestrowaną dawkę",
+  "nota": ""
+ },
+ {
+  "text": ") este sub doza minimă omologată de",
+  "tip": "js",
+  "pl": ") jest poniżej minimalnej zarejestrowanej dawki",
+  "nota": ""
+ },
+ {
+  "text": ": eficacitate redusă și risc de rezistență.",
+  "tip": "js",
+  "pl": ": mniejsza skuteczność i ryzyko powstania odporności.",
+  "nota": ""
+ },
+ {
+  "text": "pauză",
+  "tip": "js",
+  "pl": "karencja",
+  "nota": "„karencja 14 dni” (zi/zile -> dzień/dni)"
+ },
+ {
+  "text": "Doză <span class=\"tag\">Omologată</span> <b></b>",
+  "tip": "js",
+  "pl": "Dawka <span class=\"tag\">Zarejestrowana</span> <b></b>",
+  "nota": ""
+ },
+ {
+  "text": "Se completează după dăunător",
+  "tip": "js",
+  "pl": "Uzupełni się po wyborze agrofaga",
+  "nota": ""
+ },
+ {
+  "text": "Se completează după cultură",
+  "tip": "js",
+  "pl": "Uzupełni się po wyborze uprawy",
+  "nota": ""
+ },
+ {
+  "text": "Doza ta",
+  "tip": "js",
+  "pl": "Twoja dawka",
+  "nota": ""
+ },
+ {
+  "text": "Doză <span class=\"tag muted\">Omologată</span>",
+  "tip": "js",
+  "pl": "Dawka <span class=\"tag muted\">Zarejestrowana</span>",
+  "nota": ""
+ },
+ {
+  "text": "alege dăunătorul, boala sau buruiana",
+  "tip": "js",
+  "pl": "wybierz szkodnika, chorobę lub chwast",
+  "nota": ""
+ },
+ {
+  "text": "alege cultura",
+  "tip": "js",
+  "pl": "wybierz uprawę",
+  "nota": ""
+ },
+ {
+  "text": "alege un produs din cele omologate",
+  "tip": "js",
+  "pl": "wybierz jeden z zarejestrowanych środków",
+  "nota": ""
+ },
+ {
+  "text": "Bloc fizic",
+  "tip": "js",
+  "pl": "Blok fizyczny (APIA)",
+  "nota": "conform glosarului; rezultă „Blok fizyczny (APIA) X.”"
+ },
+ {
+  "text": "Produs total de folosit",
+  "tip": "js",
+  "pl": "Całkowita ilość środka",
+  "nota": ""
+ },
+ {
+  "text": "Apă totală",
+  "tip": "js",
+  "pl": "Całkowita ilość wody",
+  "nota": ""
+ },
+ {
+  "text": "L/ha ×",
+  "tip": "js",
+  "pl": "L/ha ×",
+  "nota": "identic, doar unitate"
+ },
+ {
+  "text": "Concentrație",
+  "tip": "js",
+  "pl": "Stężenie",
+  "nota": ""
+ },
+ {
+  "text": "în soluția de stropit",
+  "tip": "js",
+  "pl": "w cieczy użytkowej",
+  "nota": ""
+ },
+ {
+  "text": "Doza e dată la volumul de apă (",
+  "tip": "js",
+  "pl": "Dawka jest podana na ilość wody (",
+  "nota": ""
+ },
+ {
+  "text": "): la",
+  "tip": "js",
+  "pl": "): przy",
+  "nota": ""
+ },
+ {
+  "text": "L/ha înseamnă",
+  "tip": "js",
+  "pl": "L/ha oznacza to",
+  "nota": ""
+ },
+ {
+  "text": "Calculat pe doza ta:",
+  "tip": "js",
+  "pl": "Obliczono dla twojej dawki:",
+  "nota": ""
+ },
+ {
+  "text": "(sub doza minimă omologată)",
+  "tip": "js",
+  "pl": "(poniżej minimalnej zarejestrowanej dawki)",
+  "nota": ""
+ },
+ {
+  "text": "Pauză până la recoltare:",
+  "tip": "js",
+  "pl": "Okres karencji:",
+  "nota": "urmează „N zile.” -> „N dni.”"
+ },
+ {
+  "text": "<p class=\"calc-warn\">Doza acestui produs e pe sămânță (",
+  "tip": "js",
+  "pl": "<p class=\"calc-warn\">Dawka tego środka jest podana na nasiona (",
+  "nota": ""
+ },
+ {
+  "text": "), nu pe hectar. Pentru",
+  "tip": "js",
+  "pl": "), a nie na hektar. Dla",
+  "nota": ""
+ },
+ {
+  "text": "ha calculezi după cantitatea de sămânță folosită, nu după apă.</p>",
+  "tip": "js",
+  "pl": "ha obliczasz ją według ilości użytego materiału siewnego, a nie według ilości wody.</p>",
+  "nota": ""
+ },
+ {
+  "text": "(max-width: 700px)",
+  "tip": "js",
+  "pl": null,
+  "nota": "media query"
+ },
+ {
+  "text": "sămânță",
+  "tip": "js",
+  "pl": "nasion",
+  "nota": "unitRo: „L/100 kg sem” -> „L/100 kg nasion”"
+ },
+ {
+  "text": "fără pauză în registru",
+  "tip": "js",
+  "pl": "brak karencji w rejestrze",
+  "nota": ""
+ },
+ {
+  "text": "Dăunător",
+  "tip": "js",
+  "pl": "Szkodnik",
+  "nota": "folosit și în .replace('Dăunător', 'Dăunători'): traducerile Szkodnik/Szkodniki trebuie aplicate la fel peste tot"
+ },
+ {
+  "text": "Boală",
+  "tip": "js",
+  "pl": "Choroba",
+  "nota": "folosit și în .replace('Boală', 'Boli') -> Choroba/Choroby"
+ },
+ {
+  "text": "Buruiană",
+  "tip": "js",
+  "pl": "Chwast",
+  "nota": "folosit și în .replace('Buruiană', 'Buruieni') -> Chwast/Chwasty"
+ },
+ {
+  "text": "problemă fiziologică",
+  "tip": "js",
+  "pl": "problem fizjologiczny",
+  "nota": "apare și în regex-ul /^1 problemă fiziologică$/ din breakdown(); regex-ul trebuie adaptat"
+ },
+ {
+  "text": "probleme fiziologice",
+  "tip": "js",
+  "pl": "problemy fizjologiczne",
+  "nota": "Liczba mnoga w mianowniku (2–4); pl() trebuie adaptat la regulile poloneze: 5+ cere genitiv „problemów fizjologicznych”."
+ },
+ {
+  "text": "Fiziologic",
+  "tip": "js",
+  "pl": "Fizjologiczny",
+  "nota": ""
+ },
+ {
+  "text": "Regulator de crestere",
+  "tip": "js",
+  "pl": null,
+  "nota": "cheie de obiect (TIPP), valoare din date"
+ },
+ {
+  "text": "regulatoare de creștere",
+  "tip": "js",
+  "pl": "regulatory wzrostu",
+  "nota": ""
+ },
+ {
+  "text": "alte produse",
+  "tip": "js",
+  "pl": "inne środki",
+  "nota": ""
+ },
+ {
+  "text": "Produs (opțional)",
+  "tip": "js",
+  "pl": "Środek (opcjonalnie)",
+  "nota": "trebuie să rămână consecvent cu „(opțional)” din .replace"
+ },
+ {
+  "text": "cultură",
+  "tip": "js",
+  "pl": "uprawa",
+  "nota": ""
+ },
+ {
+  "text": "Toate produsele omologate",
+  "tip": "js",
+  "pl": "Wszystkie zarejestrowane środki",
+  "nota": ""
+ },
+ {
+  "text": "Nimic la",
+  "tip": "js",
+  "pl": "Nic w polu",
+  "nota": "propoziția: „Nic w polu uprawa — wyniki w innym polu”"
+ },
+ {
+  "text": "(opțional)",
+  "tip": "js",
+  "pl": "(opcjonalnie)",
+  "nota": "folosit în .replace(' (opțional)', ''): trebuie identic cu cel din „Środek (opcjonalnie)”"
+ },
+ {
+  "text": "— potriviri în alt câmp",
+  "tip": "js",
+  "pl": "— wyniki w innym polu",
+  "nota": ""
+ },
+ {
+  "text": "Nimic pentru „",
+  "tip": "js",
+  "pl": "Brak wyników dla „",
+  "nota": ""
+ },
+ {
+  "text": "” în registrul ANF. Încearcă alt nume, o denumire veche sau un sinonim (ex. „păduchi”, „grau toamna”).",
+  "tip": "js",
+  "pl": "” w rejestrze ANF. Spróbuj innej nazwy, dawnej nazwy lub synonimu (np. „păduchi”, „grau toamna”).",
+  "nota": "exemplele rămân în română intenționat: baza ANF e în română și doar așa caută"
+ },
+ {
+  "text": "Nicio omologare în registru",
+  "tip": "js",
+  "pl": "Brak zarejestrowanych zastosowań w rejestrze",
+  "nota": "urmează ctxText() („pentru X la Y cu Z”), tradus în alt lot"
+ },
+ {
+  "text": "Culturi",
+  "tip": "js",
+  "pl": "Uprawy",
+  "nota": ""
+ },
+ {
+  "text": "Dăunători, boli și buruieni",
+  "tip": "js",
+  "pl": "Szkodniki, choroby i chwasty",
+  "nota": ""
+ },
+ {
+  "text": "Produse",
+  "tip": "js",
+  "pl": "Środki",
+  "nota": ""
+ },
+ {
+  "text": "Produse cu cele mai multe culturi omologate",
+  "tip": "js",
+  "pl": "Środki z największą liczbą zarejestrowanych upraw",
+  "nota": ""
+ },
+ {
+  "text": "cu cele mai multe produse omologate",
+  "tip": "js",
+  "pl": "z największą liczbą zarejestrowanych środków",
+  "nota": ""
+ },
+ {
+  "text": "Grupuri din registrul ANF",
+  "tip": "js",
+  "pl": "Grupy z rejestru ANF",
+  "nota": ""
+ },
+ {
+  "text": "Dăunători",
+  "tip": "js",
+  "pl": "Szkodniki",
+  "nota": "pereche cu „Szkodnik” în .replace"
+ },
+ {
+  "text": "Boli",
+  "tip": "js",
+  "pl": "Choroby",
+  "nota": "pereche cu „Choroba” în .replace"
+ },
+ {
+  "text": "Buruieni",
+  "tip": "js",
+  "pl": "Chwasty",
+  "nota": "pereche cu „Chwast” în .replace"
+ },
+ {
+  "text": "Pe tipuri, din registrul ANF",
+  "tip": "js",
+  "pl": "Według typu, z rejestru ANF",
+  "nota": ""
+ },
+ {
+  "text": "Erbicid",
+  "tip": "js",
+  "pl": null,
+  "nota": "valoare din date comparată (indexOf)"
+ },
+ {
+  "text": "Fungicid",
+  "tip": "js",
+  "pl": null,
+  "nota": "valoare din date comparată (indexOf)"
+ },
+ {
+  "text": "Insecticid",
+  "tip": "js",
+  "pl": null,
+  "nota": "valoare din date comparată (indexOf)"
+ },
+ {
+  "text": "Altele ·",
+  "tip": "js",
+  "pl": "Inne ·",
+  "nota": ""
+ },
+ {
+  "text": "Toate culturile",
+  "tip": "js",
+  "pl": "Wszystkie uprawy",
+  "nota": ""
+ },
+ {
+  "text": "Toate produsele",
+  "tip": "js",
+  "pl": "Wszystkie środki",
+  "nota": ""
+ },
+ {
+  "text": ", alfabetic",
+  "tip": "js",
+  "pl": ", alfabetycznie",
+  "nota": ""
+ },
+ {
+  "text": "<button type=\"button\" class=\"schip\" role=\"option\" data-k=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "\" data-id=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "\" data-g=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "\" data-pos=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "<button type=\"button\" class=\"schip more\" data-more=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "\">… încă",
+  "tip": "js",
+  "pl": "\">… jeszcze",
+  "nota": ""
+ },
+ {
+  "text": "<div class=\"skeys\"><span>↑ ↓  navighează</span><span>Enter  alege</span><span>Tab  câmpul următor</span><span>Esc  închide</span></div>",
+  "tip": "js",
+  "pl": "<div class=\"skeys\"><span>↑ ↓  nawigacja</span><span>Enter  wybór</span><span>Tab  następne pole</span><span>Esc  zamknij</span></div>",
+  "nota": ""
+ },
+ {
+  "text": "Caută",
+  "tip": "js",
+  "pl": "Szukaj",
+  "nota": ""
+ },
+ {
+  "text": "1 fiziologică",
+  "tip": "js",
+  "pl": "1 fizjologiczny",
+  "nota": "înlocuirea se face prin regex /^1 problemă fiziologică$/ care trebuie tradus și el (-> /^1 problem fizjologiczny$/)"
+ },
+ {
+  "text": "<button type=\"button\" class=\"smore\" data-more=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "grup „",
+  "tip": "js",
+  "pl": "grupa „",
+  "nota": ""
+ },
+ {
+  "text": "” în registrul ANF",
+  "tip": "js",
+  "pl": "” w rejestrze ANF",
+  "nota": ""
+ },
+ {
+  "text": "sinonime în bază:",
+  "tip": "js",
+  "pl": "synonimy w bazie:",
+  "nota": ""
+ },
+ {
+  "text": "cultură din registrul ANF",
+  "tip": "js",
+  "pl": "uprawa z rejestru ANF",
+  "nota": ""
+ },
+ {
+  "text": "Probleme omologate",
+  "tip": "js",
+  "pl": "Zarejestrowane agrofagi",
+  "nota": ""
+ },
+ {
+  "text": "Produse omologate",
+  "tip": "js",
+  "pl": "Zarejestrowane środki",
+  "nota": ""
+ },
+ {
+  "text": "Omologări (dăunător × produs)",
+  "tip": "js",
+  "pl": "Rejestracje (agrofag × środek)",
+  "nota": ""
+ },
+ {
+  "text": "toate cu doză calculabilă",
+  "tip": "js",
+  "pl": "wszystkie z dawką do obliczenia",
+  "nota": ""
+ },
+ {
+  "text": "<p class=\"sc-lead\">Alege problema — numărul arată câte produse omologate sunt pentru ea la",
+  "tip": "js",
+  "pl": "<p class=\"sc-lead\">Wybierz agrofaga — liczba pokazuje, ile zarejestrowanych środków jest na niego w uprawie",
+  "nota": "urmează numele culturii la nominativ (din date)"
+ },
+ {
+  "text": "<div class=\"scol\"><div class=\"ch\"><span class=\"ichip",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "<button type=\"button\" class=\"sitem\" data-k=\"t\" data-id=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "</span><span class=\"stag",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "</p></div><div class=\"sc-tags\"><span class=\"stag",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "Culturi cu produse omologate",
+  "tip": "js",
+  "pl": "Uprawy z zarejestrowanymi środkami",
+  "nota": ""
+ },
+ {
+  "text": "Omologări (cultură × produs)",
+  "tip": "js",
+  "pl": "Rejestracje (uprawa × środek)",
+  "nota": ""
+ },
+ {
+  "text": "<p class=\"sc-lead\">Alege cultura ca să calculezi — numărul arată câte produse omologate sunt pentru",
+  "tip": "js",
+  "pl": "<p class=\"sc-lead\">Wybierz uprawę, aby obliczyć — liczba pokazuje, ile zarejestrowanych środków jest dla",
+  "nota": "urmează numele dăunătorului la nominativ (din date)"
+ },
+ {
+  "text": "la acea cultură</p><div class=\"schips\">",
+  "tip": "js",
+  "pl": "w tej uprawie</p><div class=\"schips\">",
+  "nota": ""
+ },
+ {
+  "text": "<button type=\"button\" class=\"schip\" data-k=\"c\" data-id=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "<p class=\"sc-lead\">Produse omologate pentru",
+  "tip": "js",
+  "pl": "<p class=\"sc-lead\">Zarejestrowane środki dla",
+  "nota": ""
+ },
+ {
+  "text": "— fără cultură aleasă nu se poate calcula doza (diferă pe culturi)</p><div class=\"srows\">",
+  "tip": "js",
+  "pl": "— bez wybranej uprawy nie można obliczyć dawki (różni się w zależności od uprawy)</p><div class=\"srows\">",
+  "nota": ""
+ },
+ {
+  "text": "<button type=\"button\" class=\"srow\" data-k=\"p\" data-id=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "· doză pe volum de apă",
+  "tip": "js",
+  "pl": "· dawka na ilość wody",
+  "nota": ""
+ },
+ {
+  "text": "</span></span><span class=\"tags\"><span class=\"stag",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "</span><span class=\"stag lime\">Omologat</span></span><span class=\"go\">→ alegi cultura (",
+  "tip": "js",
+  "pl": "</span><span class=\"stag lime\">Zarejestrowany</span></span><span class=\"go\">→ wybierasz uprawę (",
+  "nota": ""
+ },
+ {
+  "text": "omologare valabilă până la",
+  "tip": "js",
+  "pl": "rejestracja ważna do",
+  "nota": ""
+ },
+ {
+  "text": "în bază:",
+  "tip": "js",
+  "pl": "w bazie:",
+  "nota": "precedat de sinonim/sinonime (tradus în alt lot: synonim/synonimy)"
+ },
+ {
+  "text": "</span><span class=\"stag lime\">Omologat</span></div></div>",
+  "tip": "js",
+  "pl": "</span><span class=\"stag lime\">Zarejestrowany</span></div></div>",
+  "nota": ""
+ },
+ {
+  "text": "fără pauză",
+  "tip": "js",
+  "pl": "bez karencji",
+  "nota": "folosit și ca cheie comparată (k !== 'fără pauză'): trebuie tradus identic în toate aparițiile"
+ },
+ {
+  "text": "Culturi omologate",
+  "tip": "js",
+  "pl": "Zarejestrowane uprawy",
+  "nota": ""
+ },
+ {
+  "text": "Omologări (cultură × dăunător)",
+  "tip": "js",
+  "pl": "Rejestracje (uprawa × agrofag)",
+  "nota": ""
+ },
+ {
+  "text": "Doze în registru",
+  "tip": "js",
+  "pl": "Dawki w rejestrze",
+  "nota": ""
+ },
+ {
+  "text": "Pauză până la recoltare",
+  "tip": "js",
+  "pl": "Okres karencji",
+  "nota": ""
+ },
+ {
+  "text": "<p class=\"sc-lead\">Omologări pe culturi — apasă „Calculează” ca să completezi cultura; dacă rămâne un singur dăunător, se completează singur</p><div class=\"srows\">",
+  "tip": "js",
+  "pl": "<p class=\"sc-lead\">Rejestracje według upraw — naciśnij „Oblicz”, aby uzupełnić uprawę; jeśli zostanie tylko jeden agrofag, uzupełni się automatycznie</p><div class=\"srows\">",
+  "nota": ""
+ },
+ {
+  "text": "<button type=\"button\" class=\"stag\" data-ct=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "\" title=\"Calculează pentru",
+  "tip": "js",
+  "pl": "\" title=\"Oblicz dla",
+  "nota": ""
+ },
+ {
+  "text": "</span></span><button type=\"button\" class=\"sbtn\" data-calc=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "\">Calculează</button></div>",
+  "tip": "js",
+  "pl": "\">Oblicz</button></div>",
+  "nota": ""
+ },
+ {
+  "text": "omologări",
+  "tip": "js",
+  "pl": "rejestracje",
+  "nota": "Liczba mnoga w mianowniku (2–4); pl() trebuie adaptat la regulile poloneze: 5+ cere genitiv „rejestracji”."
+ },
+ {
+  "text": "cultură omologată",
+  "tip": "js",
+  "pl": "zarejestrowana uprawa",
+  "nota": ""
+ },
+ {
+  "text": "culturi omologate",
+  "tip": "js",
+  "pl": "zarejestrowane uprawy",
+  "nota": "Liczba mnoga w mianowniku (2–4); pl() trebuie adaptat la regulile poloneze: 5+ cere genitiv „zarejestrowanych upraw”."
+ },
+ {
+  "text": "<span>Sursa: registrul ANF, doze omologate</span></div>",
+  "tip": "js",
+  "pl": "<span>Źródło: rejestr ANF, dawki zarejestrowane</span></div>",
+  "nota": ""
+ },
+ {
+  "text": "</h3><p>nicio omologare în registrul ANF pentru această combinație — alege alt produs din listă</p></div></div></div>",
+  "tip": "js",
+  "pl": "</h3><p>brak rejestracji w rejestrze ANF dla tej kombinacji — wybierz inny środek z listy</p></div></div></div>",
+  "nota": ""
+ },
+ {
+  "text": "omologat la",
+  "tip": "js",
+  "pl": "zarejestrowany w uprawie",
+  "nota": "propoziția: „<tip> zarejestrowany w uprawie X pentru Y”; tipul produsului vine din date"
+ },
+ {
+  "text": "· omologare valabilă până la",
+  "tip": "js",
+  "pl": "· rejestracja ważna do",
+  "nota": ""
+ },
+ {
+  "text": "Doză omologată",
+  "tip": "js",
+  "pl": "Dawka zarejestrowana",
+  "nota": ""
+ },
+ {
+  "text": "doză fixă în registru",
+  "tip": "js",
+  "pl": "stała dawka w rejestrze",
+  "nota": ""
+ },
+ {
+  "text": "interval omologat",
+  "tip": "js",
+  "pl": "zarejestrowany zakres",
+  "nota": ""
+ },
+ {
+  "text": "nespecificată în registrul ANF",
+  "tip": "js",
+  "pl": "nieokreślony w rejestrze ANF",
+  "nota": "se referă la okres karencji (masculin)"
+ },
+ {
+  "text": "de la ultimul tratament",
+  "tip": "js",
+  "pl": "od ostatniego zabiegu",
+  "nota": ""
+ },
+ {
+  "text": "Mod de aplicare",
+  "tip": "js",
+  "pl": "Sposób stosowania",
+  "nota": ""
+ },
+ {
+  "text": "conform etichetei",
+  "tip": "js",
+  "pl": "zgodnie z etykietą",
+  "nota": ""
+ },
+ {
+  "text": "nespecificat în registru",
+  "tip": "js",
+  "pl": "nieokreślony w rejestrze",
+  "nota": "se referă la sposób stosowania (masculin)"
+ },
+ {
+  "text": "Cultură × dăunător",
+  "tip": "js",
+  "pl": "Uprawa × agrofag",
+  "nota": ""
+ },
+ {
+  "text": "<p class=\"sc-lead\">Calculează cantitatea pentru suprafața ta — aceleași reguli ca în Calculator</p>",
+  "tip": "js",
+  "pl": "<p class=\"sc-lead\">Oblicz ilość dla swojej powierzchni — te same zasady co w Kalkulatorze</p>",
+  "nota": ""
+ },
+ {
+  "text": "<div class=\"sform\"><div class=\"row",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "<label class=\"field has-input has-unit\" id=\"sf-doza\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "><span class=\"col\"><small>Doza ta</small><span class=\"val\"><input id=\"sf-d\" type=\"text\" inputmode=\"decimal\" autocomplete=\"off\"",
+  "tip": "js",
+  "pl": "><span class=\"col\"><small>Twoja dawka</small><span class=\"val\"><input id=\"sf-d\" type=\"text\" inputmode=\"decimal\" autocomplete=\"off\"",
+  "nota": ""
+ },
+ {
+  "text": "readonly value=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "<label class=\"field has-input has-unit\" id=\"sf-ha-f\"><span class=\"col\"><small>Suprafață</small><span class=\"val\"><input id=\"sf-ha\" type=\"text\" inputmode=\"decimal\" autocomplete=\"off\" placeholder=\"ex. 100\"",
+  "tip": "js",
+  "pl": "<label class=\"field has-input has-unit\" id=\"sf-ha-f\"><span class=\"col\"><small>Powierzchnia</small><span class=\"val\"><input id=\"sf-ha\" type=\"text\" inputmode=\"decimal\" autocomplete=\"off\" placeholder=\"np. 100\"",
+  "nota": ""
+ },
+ {
+  "text": "><b class=\"unit\">ha</b><button type=\"button\" class=\"x\" aria-label=\"Șterge suprafața\" hidden>×</button></span></span></label>",
+  "tip": "js",
+  "pl": "><b class=\"unit\">ha</b><button type=\"button\" class=\"x\" aria-label=\"Șterge suprafața\" hidden>×</button></span></span></label>",
+  "nota": "aria-label lăsat în română ca tag-ul să rămână identic (cerința verificatorului); traducerea propusă: aria-label=\"Wyczyść powierzchnię\""
+ },
+ {
+  "text": "<label class=\"field has-input has-unit\" id=\"sf-apa-f\"><span class=\"col\"><small>Volum de apă</small><span class=\"val\"><input id=\"sf-apa\" type=\"text\" inputmode=\"decimal\" autocomplete=\"off\" placeholder=\"ex. 200\" value=\"",
+  "tip": "js",
+  "pl": "<label class=\"field has-input has-unit\" id=\"sf-apa-f\"><span class=\"col\"><small>Ilość wody</small><span class=\"val\"><input id=\"sf-apa\" type=\"text\" inputmode=\"decimal\" autocomplete=\"off\" placeholder=\"np. 200\" value=\"",
+  "nota": ""
+ },
+ {
+  "text": "\"><b class=\"unit\">L/ha</b><button type=\"button\" class=\"x\" aria-label=\"Șterge volumul de apă\" hidden>×</button></span></span></label>",
+  "tip": "js",
+  "pl": "\"><b class=\"unit\">L/ha</b><button type=\"button\" class=\"x\" aria-label=\"Șterge volumul de apă\" hidden>×</button></span></span></label>",
+  "nota": "aria-label lăsat în română ca tag-ul să rămână identic (cerința verificatorului); traducerea propusă: aria-label=\"Wyczyść ilość wody\""
+ },
+ {
+  "text": "<button class=\"btn ghost\" id=\"sf-go\" type=\"button\" disabled><span>Calculează</span><svg class=\"arr\" width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>",
+  "tip": "js",
+  "pl": "<button class=\"btn ghost\" id=\"sf-go\" type=\"button\" disabled><span>Oblicz</span><svg class=\"arr\" width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>",
+  "nota": ""
+ },
+ {
+  "text": "<div class=\"calc-res\" id=\"sf-res\" hidden><h4>Rezultat calculat</h4><div class=\"cards\" id=\"sf-cards\"></div><p class=\"calc-note\" id=\"sf-note\"></p><p class=\"res-foot\">Odată ce platforma va fi funcțională, aceste rezultate pot fi salvate în Registrele tale.</p></div></div>",
+  "tip": "js",
+  "pl": "<div class=\"calc-res\" id=\"sf-res\" hidden><h4>Wynik obliczeń</h4><div class=\"cards\" id=\"sf-cards\"></div><p class=\"calc-note\" id=\"sf-note\"></p><p class=\"res-foot\">Gdy platforma zacznie działać, te wyniki będzie można zapisywać w twoich Rejestrach.</p></div></div>",
+  "nota": "[supervizor] aliniat cu aceeași frază din index.html (lot a): „zapisywać w twoich Rejestrach”"
+ },
+ {
+  "text": "<div class=\"sfoot\"><span>Sursa: registrul ANF, doze omologate</span></div>",
+  "tip": "js",
+  "pl": "<div class=\"sfoot\"><span>Źródło: rejestr ANF, dawki zarejestrowane</span></div>",
+  "nota": ""
+ },
+ {
+  "text": "produs omologat",
+  "tip": "js",
+  "pl": "zarejestrowany środek",
+  "nota": ""
+ },
+ {
+  "text": "produse omologate",
+  "tip": "js",
+  "pl": "zarejestrowane środki",
+  "nota": "Liczba mnoga w mianowniku (2–4); pl() trebuie adaptat la regulile poloneze: 5+ cere genitiv „zarejestrowanych środków”."
+ },
+ {
+  "text": "</h3><p>compari doza și pauza, apoi alegi — fiecare rând duce la calculul cantității</p></div><div class=\"sc-tags\"><span class=\"stag lime\">",
+  "tip": "js",
+  "pl": "</h3><p>porównujesz dawkę i karencję, potem wybierasz — każdy wiersz prowadzi do obliczenia ilości</p></div><div class=\"sc-tags\"><span class=\"stag lime\">",
+  "nota": ""
+ },
+ {
+  "text": "<p class=\"sc-lead\">Nicio omologare în registru pentru această combinație.</p></div>",
+  "tip": "js",
+  "pl": "<p class=\"sc-lead\">Brak rejestracji w rejestrze dla tej kombinacji.</p></div>",
+  "nota": ""
+ },
+ {
+  "text": "<button type=\"button\" class=\"srow\" data-calc=\"",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "</span><span class=\"stag lime\">Omologat</span></span><span class=\"go\">→ calculezi</span></button>",
+  "tip": "js",
+  "pl": "</span><span class=\"stag lime\">Zarejestrowany</span></span><span class=\"go\">→ obliczasz</span></button>",
+  "nota": ""
+ },
+ {
+  "text": "problemă omologată",
+  "tip": "js",
+  "pl": "zarejestrowany agrofag",
+  "nota": ""
+ },
+ {
+  "text": "probleme omologate",
+  "tip": "js",
+  "pl": "zarejestrowane agrofagi",
+  "nota": "Liczba mnoga w mianowniku (2–4); pl() trebuie adaptat la regulile poloneze: 5+ cere genitiv „zarejestrowanych agrofagów”."
+ },
+ {
+  "text": "— alege dăunătorul, boala sau buruiana; doza e din registrul ANF",
+  "tip": "js",
+  "pl": "— wybierz szkodnika, chorobę lub chwast; dawka pochodzi z rejestru ANF",
+  "nota": ""
+ },
+ {
+  "text": "nicio omologare în registru pentru această combinație",
+  "tip": "js",
+  "pl": "brak rejestracji w rejestrze dla tej kombinacji",
+  "nota": ""
+ },
+ {
+  "text": "\"><span class=\"ichip",
+  "tip": "js",
+  "pl": null,
+  "nota": "doar HTML"
+ },
+ {
+  "text": "</span></span><span class=\"go\">→ calculezi</span></button>",
+  "tip": "js",
+  "pl": "</span></span><span class=\"go\">→ obliczasz</span></button>",
+  "nota": ""
+ },
+ {
+  "text": "— alege cultura; doza diferă pe culturi",
+  "tip": "js",
+  "pl": "— wybierz uprawę; dawka różni się w zależności od uprawy",
+  "nota": ""
+ },
+ {
+  "text": "ArrowLeft",
+  "tip": "js",
+  "pl": null,
+  "nota": "cheie de tastatură comparată în cod"
+ },
+ {
+  "text": "ArrowRight",
+  "tip": "js",
+  "pl": null,
+  "nota": "cheie de tastatură comparată în cod"
+ },
+ {
+  "text": "Abonamentele AgroSphere, valabile de la lansarea platformei: Fermă mică (până la 100 ha), Fermă mare (peste 100 ha) și Partener. Plată lunară sau anuală, cu 2 luni gratuite.",
+  "tip": "atribut",
+  "pl": "Abonamenty AgroSphere, obowiązujące od startu platformy: Małe gospodarstwo (do 100 ha), Duże gospodarstwo (powyżej 100 ha) i Partner. Płatność miesięczna lub roczna, z 2 miesiącami gratis.",
+  "nota": ""
+ },
+ {
+  "text": "Abonamente AgroSphere",
+  "tip": "atribut",
+  "pl": "Abonamenty AgroSphere",
+  "nota": ""
+ },
+ {
+  "text": "Perioada de plată",
+  "tip": "atribut",
+  "pl": "Okres płatności",
+  "nota": ""
+ },
+ {
+  "text": "Abonamente — AgroSphere",
+  "tip": "html",
+  "pl": "Abonamenty — AgroSphere",
+  "nota": ""
+ },
+ {
+  "text": "Abonamentele noastre valabile",
+  "tip": "html",
+  "pl": "Nasze abonamenty obowiązujące",
+  "nota": ""
+ },
+ {
+  "text": "de la lansarea platformei",
+  "tip": "html",
+  "pl": "od startu platformy",
+  "nota": ""
+ },
+ {
+  "text": "Pentru toate tipurile de ferme și pentru parteneri",
+  "tip": "html",
+  "pl": "Dla wszystkich typów gospodarstw i dla partnerów",
+  "nota": ""
+ },
+ {
+  "text": "Abonamente lunare",
+  "tip": "html",
+  "pl": "Abonamenty miesięczne",
+  "nota": ""
+ },
+ {
+  "text": "Lunar",
+  "tip": "html",
+  "pl": "Miesięcznie",
+  "nota": ""
+ },
+ {
+  "text": "Abonamente anuale",
+  "tip": "html",
+  "pl": "Abonamenty roczne",
+  "nota": ""
+ },
+ {
+  "text": "Anual",
+  "tip": "html",
+  "pl": "Rocznie",
+  "nota": ""
+ },
+ {
+  "text": "2 luni gratuite",
+  "tip": "html",
+  "pl": "2 miesiące gratis",
+  "nota": ""
+ },
+ {
+  "text": "Pentru ferme până la",
+  "tip": "html",
+  "pl": "Dla gospodarstw do",
+  "nota": ""
+ },
+ {
+  "text": "100 ha",
+  "tip": "html",
+  "pl": "100 ha",
+  "nota": ""
+ },
+ {
+  "text": "/lună",
+  "tip": "html",
+  "pl": "/mies.",
+  "nota": ""
+ },
+ {
+  "text": "sau 90 €/an la plata anuală",
+  "tip": "html",
+  "pl": "lub 90 €/rok przy płatności rocznej",
+  "nota": ""
+ },
+ {
+  "text": "/an",
+  "tip": "html",
+  "pl": "/rok",
+  "nota": ""
+ },
+ {
+  "text": "≈ 7,50 €/lună · economisești 18 €",
+  "tip": "html",
+  "pl": "≈ 7,50 €/mies. · oszczędzasz 18 €",
+  "nota": ""
+ },
+ {
+  "text": "Tot ce îți trebuie ca să ții ferma în ordine:",
+  "tip": "html",
+  "pl": "Wszystko, czego potrzebujesz, by mieć porządek w gospodarstwie:",
+  "nota": ""
+ },
+ {
+  "text": "registru, planuri, vreme și costuri",
+  "tip": "html",
+  "pl": "rejestr, plany, pogoda i koszty",
+  "nota": ""
+ },
+ {
+  "text": "Import din",
+  "tip": "html",
+  "pl": "Import z",
+  "nota": ""
+ },
+ {
+  "text": "centralizatorul APIA",
+  "tip": "html",
+  "pl": "zestawienia APIA",
+  "nota": "„centralizatorul APIA” = fișierul centralizator APIA; tradus descriptiv"
+ },
+ {
+  "text": ", parcele și planuri salvate",
+  "tip": "html",
+  "pl": ", zapisane działki i plany",
+  "nota": ""
+ },
+ {
+  "text": "Registru de tratamente",
+  "tip": "html",
+  "pl": "Rejestr zabiegów",
+  "nota": ""
+ },
+ {
+  "text": "completat automat",
+  "tip": "html",
+  "pl": "wypełniany automatycznie",
+  "nota": ""
+ },
+ {
+  "text": "din calculator",
+  "tip": "html",
+  "pl": "z kalkulatora",
+  "nota": ""
+ },
+ {
+  "text": "Export PDF pentru",
+  "tip": "html",
+  "pl": "Eksport PDF do",
+  "nota": ""
+ },
+ {
+  "text": "controlul APIA/ANF",
+  "tip": "html",
+  "pl": "kontroli APIA/ANF",
+  "nota": ""
+ },
+ {
+  "text": "Când pot stropi",
+  "tip": "html",
+  "pl": "Kiedy można pryskać",
+  "nota": ""
+ },
+ {
+  "text": "pe fiecare parcelă, cu alerte",
+  "tip": "html",
+  "pl": "na każdej działce, z alertami",
+  "nota": ""
+ },
+ {
+  "text": "Magazie, cost pe hectar",
+  "tip": "html",
+  "pl": "Magazyn, koszt na hektar",
+  "nota": ""
+ },
+ {
+  "text": "și cereri de ofertă",
+  "tip": "html",
+  "pl": "i zapytania ofertowe",
+  "nota": ""
+ },
+ {
+  "text": "2 utilizatori",
+  "tip": "html",
+  "pl": "2 użytkowników",
+  "nota": ""
+ },
+ {
+  "text": "(de ex. tu și un operator)",
+  "tip": "html",
+  "pl": "(np. ty i operator)",
+  "nota": ""
+ },
+ {
+  "text": "Pentru ferme de peste",
+  "tip": "html",
+  "pl": "Dla gospodarstw powyżej",
+  "nota": ""
+ },
+ {
+  "text": "sau 290 €/an la plata anuală",
+  "tip": "html",
+  "pl": "lub 290 €/rok przy płatności rocznej",
+  "nota": ""
+ },
+ {
+  "text": "≈ 24,17 €/lună · economisești 58 €",
+  "tip": "html",
+  "pl": "≈ 24,17 €/mies. · oszczędzasz 58 €",
+  "nota": ""
+ },
+ {
+  "text": "Pentru ferme cu echipă și mai multe firme:",
+  "tip": "html",
+  "pl": "Dla gospodarstw z zespołem i kilkoma firmami:",
+  "nota": ""
+ },
+ {
+  "text": "roluri, SPV și rapoarte",
+  "tip": "html",
+  "pl": "role, SPV i raporty",
+  "nota": "SPV (Spațiul Privat Virtual, ANAF) păstrat ca nume propriu"
+ },
+ {
+  "text": "Tot ce găsești în",
+  "tip": "html",
+  "pl": "Wszystko z pakietu",
+  "nota": "urmat de „Małe gospodarstwo” (alt lot)"
+ },
+ {
+  "text": "Utilizatori nelimitați",
+  "tip": "html",
+  "pl": "Nieograniczona liczba użytkowników",
+  "nota": ""
+ },
+ {
+  "text": "cu roluri: administrator, șef de fermă, operator",
+  "tip": "html",
+  "pl": "z rolami: administrator, kierownik gospodarstwa, operator",
+  "nota": ""
+ },
+ {
+  "text": "Mai multe ferme sau firme",
+  "tip": "html",
+  "pl": "Kilka gospodarstw lub firm",
+  "nota": ""
+ },
+ {
+  "text": "în același cont",
+  "tip": "html",
+  "pl": "na jednym koncie",
+  "nota": ""
+ },
+ {
+  "text": "Facturile din SPV",
+  "tip": "html",
+  "pl": "Faktury z SPV",
+  "nota": ""
+ },
+ {
+  "text": "intră automat în magazie",
+  "tip": "html",
+  "pl": "trafiają automatycznie do magazynu",
+  "nota": ""
+ },
+ {
+  "text": "Rapoarte de cost pe parcelă",
+  "tip": "html",
+  "pl": "Raporty kosztów na działkę",
+  "nota": ""
+ },
+ {
+  "text": "și export pentru contabilitate",
+  "tip": "html",
+  "pl": "i eksport dla księgowości",
+  "nota": ""
+ },
+ {
+  "text": "Suport prioritar",
+  "tip": "html",
+  "pl": "Priorytetowe wsparcie",
+  "nota": ""
+ },
+ {
+  "text": "Până la 1.000 ha. Peste 1.000 ha: preț la cerere.",
+  "tip": "html",
+  "pl": "Do 1000 ha. Powyżej 1000 ha: cena na zapytanie.",
+  "nota": "am păstrat „1.000” ca în original [supervizor] în polonă „1000” (fără punct de mii); punctul ar putea fi citit ca zecimal"
+ },
+ {
+  "text": "laboratoare,",
+  "tip": "html",
+  "pl": "laboratoriów,",
+  "nota": "după „Dla” (alt lot), genitiv"
+ },
+ {
+  "text": "distribuitori, service-uri",
+  "tip": "html",
+  "pl": "dystrybutorów, serwisów",
+  "nota": ""
+ },
+ {
+  "text": "sau 590 €/an la plata anuală",
+  "tip": "html",
+  "pl": "lub 590 €/rok przy płatności rocznej",
+  "nota": ""
+ },
+ {
+  "text": "≈ 49,17 €/lună · economisești 118 €",
+  "tip": "html",
+  "pl": "≈ 49,17 €/mies. · oszczędzasz 118 €",
+  "nota": ""
+ },
+ {
+  "text": "Primești",
+  "tip": "html",
+  "pl": "Otrzymujesz",
+  "nota": ""
+ },
+ {
+  "text": "cereri de ofertă",
+  "tip": "html",
+  "pl": "zapytania ofertowe",
+  "nota": ""
+ },
+ {
+  "text": "de la fermierii din județele tale, cu profil verificat.",
+  "tip": "html",
+  "pl": "od rolników z twoich okręgów, ze zweryfikowanym profilem.",
+  "nota": "județ = okręg"
+ },
+ {
+  "text": "Profil cu insigna",
+  "tip": "html",
+  "pl": "Profil z odznaką",
+  "nota": ""
+ },
+ {
+  "text": "„Verificat AgroSphere”",
+  "tip": "html",
+  "pl": "„Zweryfikowany przez AgroSphere”",
+  "nota": ""
+ },
+ {
+  "text": "Cereri de ofertă",
+  "tip": "html",
+  "pl": "Zapytania ofertowe",
+  "nota": ""
+ },
+ {
+  "text": "nelimitate din județele tale",
+  "tip": "html",
+  "pl": "bez limitu z twoich okręgów",
+  "nota": ""
+ },
+ {
+  "text": "Catalog legat de",
+  "tip": "html",
+  "pl": "Katalog powiązany z",
+  "nota": ""
+ },
+ {
+  "text": "listele ANF și MADR",
+  "tip": "html",
+  "pl": "listami ANF i MADR",
+  "nota": ""
+ },
+ {
+  "text": "Comenzi, livrări și facturi",
+  "tip": "html",
+  "pl": "Zamówienia, dostawy i faktury",
+  "nota": ""
+ },
+ {
+  "text": "în același loc",
+  "tip": "html",
+  "pl": "w jednym miejscu",
+  "nota": ""
+ },
+ {
+  "text": "Statistici",
+  "tip": "html",
+  "pl": "Statystyki",
+  "nota": ""
+ },
+ {
+  "text": ": oferte trimise, câștigate, valoare",
+  "tip": "html",
+  "pl": ": oferty wysłane, wygrane, wartość",
+  "nota": ""
+ },
+ {
+  "text": "Verificarea documentelor",
+  "tip": "html",
+  "pl": "Weryfikacja dokumentów",
+  "nota": ""
+ },
+ {
+  "text": "gratuită la lansare",
+  "tip": "html",
+  "pl": "bezpłatna przy starcie",
+  "nota": ""
+ },
+ {
+  "text": "Alternativă fără abonament: comision de 3% din comenzile acceptate prin platformă.",
+  "tip": "html",
+  "pl": "Alternatywa bez abonamentu: prowizja 3% od zamówień przyjętych przez platformę.",
+  "nota": ""
+ },
+ {
+  "text": "Dezabonare — AgroSphere",
+  "tip": "html",
+  "pl": "Wypisanie się — AgroSphere",
+  "nota": ""
+ },
+ {
+  "text": "Te dezabonezi de la emailurile AgroSphere?",
+  "tip": "html",
+  "pl": "Wypisujesz się z e-maili AgroSphere?",
+  "nota": ""
+ },
+ {
+  "text": "Nu vei mai primi emailuri pe",
+  "tip": "html",
+  "pl": "Nie będziesz już otrzymywać e-maili na adres",
+  "nota": ""
+ },
+ {
+  "text": ". Locul tău rezervat pe lista de așteptare rămâne valabil.",
+  "tip": "html",
+  "pl": ". Twoje zarezerwowane miejsce na liście oczekujących pozostaje ważne.",
+  "nota": ""
+ },
+ {
+  "text": "Confirmă dezabonarea",
+  "tip": "html",
+  "pl": "Potwierdź wypisanie",
+  "nota": ""
+ },
+ {
+  "text": "Te-ai dezabonat",
+  "tip": "html",
+  "pl": "Wypisaliśmy cię",
+  "nota": "[supervizor] mai natural decât forma impersonală „Wypisano cię”; tot neutru ca gen"
+ },
+ {
+  "text": "Nu îți mai trimitem emailuri pe",
+  "tip": "html",
+  "pl": "Nie wysyłamy już e-maili na adres",
+  "nota": ""
+ },
+ {
+  "text": ". Ne pare rău că pleci, iar dacă te răzgândești, te poți înscrie din nou oricând pe site.",
+  "tip": "html",
+  "pl": ". Przykro nam, że odchodzisz, a jeśli zmienisz zdanie, w każdej chwili możesz zapisać się ponownie na stronie.",
+  "nota": ""
+ },
+ {
+  "text": "Nu am putut face dezabonarea",
+  "tip": "html",
+  "pl": "Nie udało się wypisać",
+  "nota": ""
+ },
+ {
+  "text": "Înapoi la AgroSphere",
+  "tip": "html",
+  "pl": "Wróć do AgroSphere",
+  "nota": ""
+ },
+ {
+  "text": "Linkul de dezabonare nu e complet. Deschide linkul „Dezabonare” direct din emailul primit de la AgroSphere.",
+  "tip": "js",
+  "pl": "Link do wypisania się jest niekompletny. Otwórz go ponownie bezpośrednio z e-maila otrzymanego od AgroSphere.",
+  "nota": "„Wypisz się” trebuie să corespundă textului linkului din emailul trimis (dacă emailul rămâne în română, linkul se numește „Dezabonare”) [supervizor] fără numele linkului din email (emailurile sunt încă în română, linkul se numește „Dezabonare”)"
+ },
+ {
+  "text": "Se trimite…",
+  "tip": "js",
+  "pl": "Wysyłanie…",
+  "nota": ""
+ },
+ {
+  "text": "Content-Type",
+  "tip": "js",
+  "pl": null,
+  "nota": "nume de antet HTTP"
+ },
+ {
+  "text": "Nu am putut salva dezabonarea. Încearcă din nou.",
+  "tip": "js",
+  "pl": "Nie udało się zapisać wypisania. Spróbuj ponownie.",
+  "nota": ""
+ },
+ {
+  "text": "Confirmă dezabonarea",
+  "tip": "js",
+  "pl": "Potwierdź wypisanie",
+  "nota": ""
+ },
+ {
+  "text": "Nu am putut trimite cererea. Verifică internetul și încearcă din nou.",
+  "tip": "js",
+  "pl": "Nie udało się wysłać prośby. Sprawdź połączenie z internetem i spróbuj ponownie.",
+  "nota": ""
+ },
+ {
+  "text": "Condițiile de folosire a site-ului AgroSphere, a calculatorului de doză și a ofertei de lansare.",
+  "tip": "atribut",
+  "pl": "Warunki korzystania ze strony AgroSphere, kalkulatora dawek i oferty startowej.",
+  "nota": ""
+ },
+ {
+  "text": "AgroSphere, prima pagină",
+  "tip": "atribut",
+  "pl": "AgroSphere, strona główna",
+  "nota": ""
+ },
+ {
+  "text": "Termeni și condiții — AgroSphere",
+  "tip": "html",
+  "pl": "Regulamin — AgroSphere",
+  "nota": ""
+ },
+ {
+  "text": "Ultima actualizare: 6 noiembrie 2026",
+  "tip": "html",
+  "pl": "Ostatnia aktualizacja: 6 listopada 2026",
+  "nota": ""
+ },
+ {
+  "text": "Acești termeni se aplică tuturor celor care folosesc site-ul",
+  "tip": "html",
+  "pl": "Niniejszy regulamin dotyczy wszystkich osób korzystających ze strony",
+  "nota": ""
+ },
+ {
+  "text": "agrosphere.eu",
+  "tip": "html",
+  "pl": "agrosphere.eu",
+  "nota": "domeniu, neschimbat"
+ },
+ {
+  "text": ". Folosind site-ul, ești de acord cu ei. Dacă nu ești de acord, te rugăm să nu folosești site-ul.",
+  "tip": "html",
+  "pl": ". Korzystając ze strony, akceptujesz go. Jeśli się z nim nie zgadzasz, prosimy, nie korzystaj ze strony.",
+  "nota": ""
+ },
+ {
+  "text": "1. Cine suntem",
+  "tip": "html",
+  "pl": "1. Kim jesteśmy",
+  "nota": ""
+ },
+ {
+  "text": "UI HUMBLE SRL",
+  "tip": "html",
+  "pl": "UI HUMBLE SRL",
+  "nota": "denumire firmă, neschimbată"
+ },
+ {
+  "text": ", operatorul site-ului agrosphere.eu",
+  "tip": "html",
+  "pl": ", operator strony agrosphere.eu",
+  "nota": ""
+ },
+ {
+  "text": "CUI 38086328 · Nr. Reg. Com. J2017000487216",
+  "tip": "html",
+  "pl": "CUI 38086328 · Nr w rejestrze handlowym J2017000487216",
+  "nota": "CUI păstrat ca acronim românesc"
+ },
+ {
+  "text": "Sediu: Aleea Băii nr. 2, Slobozia, jud. Ialomița, cod 920066",
+  "tip": "html",
+  "pl": "Siedziba: Aleea Băii nr. 2, Slobozia, okręg Ialomița, kod 920066",
+  "nota": "adresa păstrată exact (diacritice în nume proprii)"
+ },
+ {
+  "text": "Contact:",
+  "tip": "html",
+  "pl": "Kontakt:",
+  "nota": ""
+ },
+ {
+  "text": "bostan.florin89@gmail.com",
+  "tip": "html",
+  "pl": "bostan.florin89@gmail.com",
+  "nota": "adresă de email, neschimbată"
+ },
+ {
+  "text": "2. Ce oferă site-ul",
+  "tip": "html",
+  "pl": "2. Co oferuje strona",
+  "nota": ""
+ },
+ {
+  "text": "AgroSphere este un instrument",
+  "tip": "html",
+  "pl": "AgroSphere to narzędzie",
+  "nota": ""
+ },
+ {
+  "text": "informativ, gratuit",
+  "tip": "html",
+  "pl": "informacyjne, bezpłatne",
+  "nota": ""
+ },
+ {
+  "text": ", care te ajută să găsești produsele de protecția plantelor omologate în România pentru o cultură și un dăunător, doza omologată și cantitatea totală pentru suprafața ta. Calculatorul și căutarea se folosesc fără cont.",
+  "tip": "html",
+  "pl": ", które pomaga ci znaleźć środki ochrony roślin zarejestrowane w Rumunii dla danej uprawy i agrofaga, zarejestrowaną dawkę oraz całkowitą ilość dla twojej powierzchni. Z kalkulatora i wyszukiwarki korzystasz bez konta.",
+  "nota": ""
+ },
+ {
+  "text": "Datele despre produse provin din",
+  "tip": "html",
+  "pl": "Dane o środkach pochodzą z",
+  "nota": "[supervizor] glosar: produs -> środek"
+ },
+ {
+  "text": "lista oficială a produselor de protecție a plantelor omologate",
+  "tip": "html",
+  "pl": "oficjalnej listy zarejestrowanych środków ochrony roślin",
+  "nota": ""
+ },
+ {
+  "text": ", publicată de Autoritatea Națională Fitosanitară (ANF). Ele sunt actualizate periodic, dar pot exista întârzieri față de lista oficială sau produse care nu sunt încă incluse.",
+  "tip": "html",
+  "pl": ", publikowanej przez rumuński Krajowy Urząd Fitosanitarny (Autoritatea Națională Fitosanitară, ANF). Są one okresowo aktualizowane, ale mogą występować opóźnienia względem oficjalnej listy lub mogą istnieć środki, które nie zostały jeszcze uwzględnione.",
+  "nota": "numele oficial al instituției păstrat în paranteză [supervizor] glosar: produse -> środki"
+ },
+ {
+  "text": "3. Dozele afișate sunt informative",
+  "tip": "html",
+  "pl": "3. Wyświetlane dawki mają charakter informacyjny",
+  "nota": ""
+ },
+ {
+  "text": "Eticheta produsului și legislația în vigoare au întotdeauna prioritate",
+  "tip": "html",
+  "pl": "Etykieta środka i obowiązujące przepisy zawsze mają pierwszeństwo",
+  "nota": ""
+ },
+ {
+  "text": "față de informațiile din site. Înainte de orice tratament, verifică pe etichetă și în lista oficială ANF doza, culturile și dăunătorii pentru care produsul e omologat, numărul de tratamente, timpul de pauză până la recoltare și măsurile de protecție.",
+  "tip": "html",
+  "pl": "przed informacjami na stronie. Przed każdym zabiegiem sprawdź na etykiecie i na oficjalnej liście ANF dawkę, uprawy i agrofagi, dla których środek jest zarejestrowany, liczbę zabiegów, okres karencji oraz środki ostrożności.",
+  "nota": "„măsurile de protecție” = środki ostrożności (evită confuzia cu „środki ochrony roślin”) [supervizor] „w których” -> „dla których” (środek e zarejestrowany dla upraw i agrofagów)"
+ },
+ {
+  "text": "Calculele (cantitatea de produs, apa totală, concentrația) se bazează pe datele pe care le introduci.",
+  "tip": "html",
+  "pl": "Obliczenia (ilość środka, całkowita ilość wody, stężenie) opierają się na danych, które wprowadzasz.",
+  "nota": ""
+ },
+ {
+  "text": "Verifică-le",
+  "tip": "html",
+  "pl": "Sprawdź je",
+  "nota": ""
+ },
+ {
+  "text": "înainte de a prepara soluția.",
+  "tip": "html",
+  "pl": "przed przygotowaniem cieczy użytkowej.",
+  "nota": "„soluția” = ciecz użytkowa (termen tehnic PL)"
+ },
+ {
+  "text": "Site-ul nu înlocuiește sfatul unui consultant agricol autorizat și nu ține cont de condițiile concrete din câmpul tău: vreme, stadiul culturii, rezistența dăunătorilor, amestecuri cu alte produse.",
+  "tip": "html",
+  "pl": "Strona nie zastępuje porady uprawnionego doradcy rolniczego i nie uwzględnia konkretnych warunków na twoim polu: pogody, fazy rozwojowej uprawy, odporności szkodników, mieszanin z innymi środkami.",
+  "nota": ""
+ },
+ {
+  "text": "Aplicarea produselor de protecția plantelor se face doar de persoane instruite, cu echipament de protecție, cu respectarea legislației privind utilizarea pesticidelor și a evidenței tratamentelor.",
+  "tip": "html",
+  "pl": "Środki ochrony roślin mogą stosować wyłącznie przeszkolone osoby, z użyciem środków ochrony indywidualnej, z przestrzeganiem przepisów dotyczących stosowania pestycydów i prowadzenia ewidencji zabiegów.",
+  "nota": "[supervizor] „w środkach ochrony indywidualnej” -> „z użyciem środków ochrony indywidualnej”"
+ },
+ {
+  "text": "Dacă observi o doză sau un produs care pare greșit, te rugăm să ne scrii din formularul",
+  "tip": "html",
+  "pl": "Jeśli zauważysz dawkę lub środek, które wydają się błędne, prosimy, napisz do nas przez formularz",
+  "nota": "[supervizor] glosar produs -> środek; acord la plural pentru „dawkę lub środek”"
+ },
+ {
+  "text": "„Am o problemă”",
+  "tip": "html",
+  "pl": "„Zgłoś problem”",
+  "nota": ""
+ },
+ {
+  "text": "4. Oferta de lansare (lista de așteptare)",
+  "tip": "html",
+  "pl": "4. Oferta startowa (lista oczekujących)",
+  "nota": ""
+ },
+ {
+  "text": "Prin butonul „Rezerv loc” te înscrii pe lista de așteptare pentru platforma AgroSphere, aflată în dezvoltare. Înscrierea e",
+  "tip": "html",
+  "pl": "Przyciskiem „Rezerwuję miejsce” zapisujesz się na listę oczekujących na platformę AgroSphere, która jest w trakcie tworzenia. Zapis jest",
+  "nota": "„Rezerwuję miejsce” = textul butonului din lotul acasă"
+ },
+ {
+  "text": "gratuită",
+  "tip": "html",
+  "pl": "bezpłatny",
+  "nota": ""
+ },
+ {
+  "text": "și",
+  "tip": "html",
+  "pl": "i",
+  "nota": ""
+ },
+ {
+  "text": "nu cere card bancar",
+  "tip": "html",
+  "pl": "nie wymaga karty płatniczej",
+  "nota": ""
+ },
+ {
+  "text": "Plan",
+  "tip": "html",
+  "pl": "Plan",
+  "nota": ""
+ },
+ {
+  "text": "Cine primește",
+  "tip": "html",
+  "pl": "Kto otrzymuje",
+  "nota": ""
+ },
+ {
+  "text": "Ce primește la lansare",
+  "tip": "html",
+  "pl": "Co otrzymuje przy starcie",
+  "nota": ""
+ },
+ {
+  "text": "PRO",
+  "tip": "html",
+  "pl": "PRO",
+  "nota": "nume de plan"
+ },
+ {
+  "text": "primii 100 de înscriși pe planul PRO",
+  "tip": "html",
+  "pl": "pierwsze 100 osób zapisanych na plan PRO",
+  "nota": ""
+ },
+ {
+  "text": "6 luni de abonament PRO gratuit",
+  "tip": "html",
+  "pl": "6 miesięcy bezpłatnego abonamentu PRO",
+  "nota": ""
+ },
+ {
+  "text": "următorii înscriși pe planul PRO",
+  "tip": "html",
+  "pl": "kolejne osoby zapisane na plan PRO",
+  "nota": ""
+ },
+ {
+  "text": "3 luni de abonament PRO gratuit",
+  "tip": "html",
+  "pl": "3 miesiące bezpłatnego abonamentu PRO",
+  "nota": ""
+ },
+ {
+  "text": "AGRONOM",
+  "tip": "html",
+  "pl": "AGRONOM",
+  "nota": "nume de plan"
+ },
+ {
+  "text": "primii 20 de înscriși pe planul AGRONOM",
+  "tip": "html",
+  "pl": "pierwsze 20 osób zapisanych na plan AGRONOM",
+  "nota": ""
+ },
+ {
+  "text": "3 luni de abonament AGRONOM gratuit",
+  "tip": "html",
+  "pl": "3 miesiące bezpłatnego abonamentu AGRONOM",
+  "nota": ""
+ },
+ {
+  "text": "următorii înscriși pe planul AGRONOM",
+  "tip": "html",
+  "pl": "kolejne osoby zapisane na plan AGRONOM",
+  "nota": ""
+ },
+ {
+  "text": "45 de zile de abonament AGRONOM gratuit",
+  "tip": "html",
+  "pl": "45 dni bezpłatnego abonamentu AGRONOM",
+  "nota": ""
+ },
+ {
+  "text": "Perioada campaniei:",
+  "tip": "html",
+  "pl": "Okres kampanii:",
+  "nota": ""
+ },
+ {
+  "text": "5 noiembrie 2026 – 24 noiembrie 2026, ora 23:59 (ora României). Ordinea se stabilește după momentul înscrierii.",
+  "tip": "html",
+  "pl": "5 listopada 2026 – 24 listopada 2026, godz. 23:59 (czasu rumuńskiego). Kolejność ustala się według momentu zapisu.",
+  "nota": ""
+ },
+ {
+  "text": "Perioada gratuită începe în momentul în care platforma se lansează și îți activezi contul. Te anunțăm prin email.",
+  "tip": "html",
+  "pl": "Okres bezpłatny zaczyna się w momencie, gdy platforma zostanie uruchomiona, a ty aktywujesz konto. Powiadomimy cię e-mailem.",
+  "nota": ""
+ },
+ {
+  "text": "Oferta e valabilă",
+  "tip": "html",
+  "pl": "Oferta jest ważna",
+  "nota": ""
+ },
+ {
+  "text": "o singură dată pentru fiecare adresă de email și fiecare plan",
+  "tip": "html",
+  "pl": "jeden raz dla każdego adresu e-mail i każdego planu",
+  "nota": ""
+ },
+ {
+  "text": ", nu se poate transfera și nu se poate schimba pe bani.",
+  "tip": "html",
+  "pl": ", nie można jej przenieść ani wymienić na pieniądze.",
+  "nota": ""
+ },
+ {
+  "text": "După perioada gratuită, abonamentul nu se reînnoiește automat cu plată. Continuarea se face doar dacă alegi tu un abonament plătit.",
+  "tip": "html",
+  "pl": "Po okresie bezpłatnym abonament nie odnawia się automatycznie jako płatny. Kontynuacja następuje tylko wtedy, gdy to ty wybierzesz płatny abonament.",
+  "nota": ""
+ },
+ {
+  "text": "Putem anula înscrierile făcute în mod abuziv (de exemplu adrese false sau înscrieri automate în masă).",
+  "tip": "html",
+  "pl": "Możemy anulować zapisy dokonane w sposób stanowiący nadużycie (na przykład fałszywe adresy lub masowe zapisy automatyczne).",
+  "nota": ""
+ },
+ {
+  "text": "Prețurile afișate pentru planuri (de exemplu 9 € pe lună pentru PRO, 29 € pe lună pentru AGRONOM) sunt prețurile estimate de lansare și pot fi actualizate până la deschiderea platformei; perioada gratuită câștigată rămâne aceeași.",
+  "tip": "html",
+  "pl": "Ceny wyświetlane dla planów (na przykład 9 € miesięcznie za PRO, 29 € miesięcznie za AGRONOM) są szacowanymi cenami startowymi i mogą zostać zaktualizowane do momentu uruchomienia platformy; zdobyty okres bezpłatny pozostaje taki sam.",
+  "nota": ""
+ },
+ {
+  "text": "Te poți dezabona de la emailuri oricând. Dezabonarea nu îți anulează locul rezervat.",
+  "tip": "html",
+  "pl": "Możesz w każdej chwili wypisać się z e-maili. Wypisanie się nie anuluje twojego zarezerwowanego miejsca.",
+  "nota": ""
+ },
+ {
+  "text": "5. Folosirea corectă a site-ului",
+  "tip": "html",
+  "pl": "5. Prawidłowe korzystanie ze strony",
+  "nota": ""
+ },
+ {
+  "text": "Nu ai voie să: copiezi automat, în masă, datele din site (scraping) pentru a le republica; încerci să ocolești sau să perturbi măsurile de securitate; trimiți prin formulare conținut ilegal, înșelător sau fișiere dăunătoare; folosești site-ul în moduri care îl pot face indisponibil pentru alții.",
+  "tip": "html",
+  "pl": "Nie wolno ci: automatycznie i masowo kopiować danych ze strony (scraping) w celu ich ponownej publikacji; próbować obchodzić lub zakłócać zabezpieczeń; przesyłać przez formularze treści niezgodnych z prawem, wprowadzających w błąd ani szkodliwych plików; korzystać ze strony w sposób, który może uczynić ją niedostępną dla innych.",
+  "nota": ""
+ },
+ {
+  "text": "6. Proprietate intelectuală",
+  "tip": "html",
+  "pl": "6. Własność intelektualna",
+  "nota": ""
+ },
+ {
+  "text": "Designul, textele, logo-ul AgroSphere, codul și modul de organizare a datelor aparțin UI HUMBLE SRL sau sunt folosite cu licență. Datele oficiale despre omologări rămân informații publice ale autorităților care le publică.",
+  "tip": "html",
+  "pl": "Projekt graficzny, teksty, logo AgroSphere, kod i sposób organizacji danych należą do UI HUMBLE SRL lub są wykorzystywane na podstawie licencji. Oficjalne dane o rejestracjach pozostają informacjami publicznymi organów, które je publikują.",
+  "nota": ""
+ },
+ {
+  "text": "7. Limitarea răspunderii",
+  "tip": "html",
+  "pl": "7. Ograniczenie odpowiedzialności",
+  "nota": ""
+ },
+ {
+  "text": "Depunem eforturi ca informațiile să fie corecte și actualizate, dar nu putem garanta că sunt complete sau lipsite de erori în orice moment. În limitele permise de lege, UI HUMBLE SRL nu răspunde pentru pagubele rezultate din folosirea informațiilor din site fără verificarea lor pe etichetă și în lista oficială, inclusiv pagube asupra culturilor, pierderi de producție, sancțiuni sau reziduuri peste limitele legale. Această limitare nu se aplică acolo unde legea nu permite excluderea răspunderii.",
+  "tip": "html",
+  "pl": "Dokładamy starań, aby informacje były poprawne i aktualne, ale nie możemy zagwarantować, że w każdym momencie są kompletne lub wolne od błędów. W granicach dozwolonych przez prawo UI HUMBLE SRL nie odpowiada za szkody wynikające z korzystania z informacji ze strony bez ich sprawdzenia na etykiecie i na oficjalnej liście, w tym za szkody w uprawach, straty w plonach, sankcje lub pozostałości przekraczające dopuszczalne limity. To ograniczenie nie ma zastosowania tam, gdzie prawo nie pozwala na wyłączenie odpowiedzialności.",
+  "nota": ""
+ },
+ {
+  "text": "8. Disponibilitate și modificări",
+  "tip": "html",
+  "pl": "8. Dostępność i zmiany",
+  "nota": ""
+ },
+ {
+  "text": "Putem modifica, întrerupe temporar sau opri orice parte a site-ului, de exemplu pentru întreținere sau actualizarea datelor. Putem actualiza și acești termeni; versiunea în vigoare e cea publicată pe această pagină, cu data de la început.",
+  "tip": "html",
+  "pl": "Możemy zmieniać, czasowo przerywać lub wyłączać dowolną część strony, na przykład w celu konserwacji lub aktualizacji danych. Możemy też aktualizować niniejszy regulamin; obowiązuje wersja opublikowana na tej stronie, z datą podaną na początku.",
+  "nota": ""
+ },
+ {
+  "text": "9. Datele personale",
+  "tip": "html",
+  "pl": "9. Dane osobowe",
+  "nota": ""
+ },
+ {
+  "text": "Cum folosim datele tale e explicat în",
+  "tip": "html",
+  "pl": "Sposób, w jaki wykorzystujemy twoje dane, wyjaśnia",
+  "nota": "urmat de linkul „Polityka prywatności” (nominativ)"
+ },
+ {
+  "text": "10. Licențe pentru materialele folosite",
+  "tip": "html",
+  "pl": "10. Licencje na wykorzystane materiały",
+  "nota": ""
+ },
+ {
+  "text": "Fotografii:",
+  "tip": "html",
+  "pl": "Zdjęcia:",
+  "nota": ""
+ },
+ {
+  "text": "imaginile cu câmpuri și vii provin de pe",
+  "tip": "html",
+  "pl": "obrazy pól i winnic pochodzą z serwisu",
+  "nota": ""
+ },
+ {
+  "text": "Unsplash",
+  "tip": "html",
+  "pl": "Unsplash",
+  "nota": "nume propriu"
+ },
+ {
+  "text": "și sunt folosite conform licenței Unsplash.",
+  "tip": "html",
+  "pl": "i są wykorzystywane zgodnie z licencją Unsplash.",
+  "nota": ""
+ },
+ {
+  "text": "Font:",
+  "tip": "html",
+  "pl": "Czcionka:",
+  "nota": ""
+ },
+ {
+  "text": "Inter, de Rasmus Andersson, licență SIL Open Font License 1.1, servit prin Google Fonts.",
+  "tip": "html",
+  "pl": "Inter, autor Rasmus Andersson, licencja SIL Open Font License 1.1, udostępniana przez Google Fonts.",
+  "nota": ""
+ },
+ {
+  "text": "Date:",
+  "tip": "html",
+  "pl": "Dane:",
+  "nota": ""
+ },
+ {
+  "text": "lista produselor de protecție a plantelor omologate în România, publicată de Autoritatea Națională Fitosanitară.",
+  "tip": "html",
+  "pl": "lista środków ochrony roślin zarejestrowanych w Rumunii, publikowana przez rumuński Krajowy Urząd Fitosanitarny (Autoritatea Națională Fitosanitară).",
+  "nota": "numele oficial al instituției păstrat în paranteză"
+ },
+ {
+  "text": "11. Legea aplicabilă și litigii",
+  "tip": "html",
+  "pl": "11. Prawo właściwe i spory",
+  "nota": ""
+ },
+ {
+  "text": "Acești termeni sunt guvernați de legea română. Încercăm să rezolvăm orice nemulțumire pe cale amiabilă; scrie-ne la adresa de contact de mai sus. Dacă ești consumator, te poți adresa și Autorității Naționale pentru Protecția Consumatorilor (",
+  "tip": "html",
+  "pl": "Niniejszy regulamin podlega prawu rumuńskiemu. Staramy się rozwiązywać wszelkie skargi polubownie; napisz do nas na podany wyżej adres kontaktowy. Jeśli jesteś konsumentem, możesz zwrócić się także do rumuńskiego Krajowego Urzędu Ochrony Konsumentów (Autoritatea Națională pentru Protecția Consumatorilor, ",
+  "nota": "numele oficial ANPC păstrat în paranteză"
+ },
+ {
+  "text": "anpc.ro",
+  "tip": "html",
+  "pl": "anpc.ro",
+  "nota": "domeniu, neschimbat"
+ },
+ {
+  "text": ") sau platformei europene de soluționare online a litigiilor. Litigiile care nu se rezolvă amiabil se judecă de instanțele competente din România.",
+  "tip": "html",
+  "pl": ") lub do europejskiej platformy internetowego rozstrzygania sporów. Spory nierozwiązane polubownie rozstrzygają właściwe sądy w Rumunii.",
+  "nota": ""
+ },
+ {
+  "text": "← Înapoi la AgroSphere",
+  "tip": "html",
+  "pl": "← Wróć do AgroSphere",
+  "nota": ""
+ },
+ {
+  "text": "Ce date colectează AgroSphere, de ce, cât timp le păstrăm, cine le prelucrează și ce drepturi ai.",
+  "tip": "atribut",
+  "pl": "Jakie dane zbiera AgroSphere, dlaczego, jak długo je przechowujemy, kto je przetwarza i jakie masz prawa.",
+  "nota": ""
+ },
+ {
+  "text": "Politica de confidențialitate și cookies — AgroSphere",
+  "tip": "html",
+  "pl": "Polityka prywatności i plików cookie — AgroSphere",
+  "nota": "[supervizor] „pliki cookie” ca în restul site-ului"
+ },
+ {
+  "text": "Aici explicăm, pe înțelesul tuturor, ce date colectează",
+  "tip": "html",
+  "pl": "Tutaj wyjaśniamy w przystępny sposób, jakie dane zbiera",
+  "nota": ""
+ },
+ {
+  "text": "AgroSphere",
+  "tip": "html",
+  "pl": "AgroSphere",
+  "nota": ""
+ },
+ {
+  "text": ", de ce, cât timp le păstrăm, cine le prelucrează pentru noi și ce drepturi ai. Calculatorul de doză și căutarea de produse funcționează",
+  "tip": "html",
+  "pl": ", dlaczego, jak długo je przechowujemy, kto przetwarza je w naszym imieniu i jakie masz prawa. Kalkulator dawek i wyszukiwarka środków działają",
+  "nota": ""
+ },
+ {
+  "text": "fără cont și fără să ne dai vreo dată personală",
+  "tip": "html",
+  "pl": "bez konta i bez podawania nam jakichkolwiek danych osobowych",
+  "nota": ""
+ },
+ {
+  "text": "Email pentru date personale:",
+  "tip": "html",
+  "pl": "E-mail w sprawach danych osobowych:",
+  "nota": ""
+ },
+ {
+  "text": "2. Ce date colectăm și de ce",
+  "tip": "html",
+  "pl": "2. Jakie dane zbieramy i dlaczego",
+  "nota": ""
+ },
+ {
+  "text": "Lista de așteptare („Rezerv loc”)",
+  "tip": "html",
+  "pl": "Lista oczekujących („Rezerwuję miejsce”)",
+  "nota": ""
+ },
+ {
+  "text": "Ce:",
+  "tip": "html",
+  "pl": "Co:",
+  "nota": ""
+ },
+ {
+  "text": "adresa de email, planul ales (PRO sau AGRONOM), data înscrierii și pagina de unde te-ai înscris.",
+  "tip": "html",
+  "pl": "adres e-mail, wybrany plan (PRO lub AGRONOM), data zapisu i strona, z której się zapisałeś.",
+  "nota": "[supervizor] „plan PRO/AGRONOM” ca în regulamin (lot c)"
+ },
+ {
+  "text": "De ce:",
+  "tip": "html",
+  "pl": "Dlaczego:",
+  "nota": ""
+ },
+ {
+  "text": "ca să-ți rezervăm locul în oferta de lansare, să-ți trimitem emailul de bun venit și să te anunțăm când se deschide platforma.",
+  "tip": "html",
+  "pl": "aby zarezerwować ci miejsce w ofercie startowej, wysłać ci e-mail powitalny i powiadomić cię, gdy platforma zostanie uruchomiona.",
+  "nota": ""
+ },
+ {
+  "text": "Temei legal:",
+  "tip": "html",
+  "pl": "Podstawa prawna:",
+  "nota": ""
+ },
+ {
+  "text": "consimțământul tău (art. 6 alin. 1 lit. a GDPR) și demersurile făcute la cererea ta înaintea unui eventual abonament (lit. b). Te poți dezabona oricând din linkul aflat în fiecare email.",
+  "tip": "html",
+  "pl": "twoja zgoda (art. 6 ust. 1 lit. a RODO) oraz działania podejmowane na twoje żądanie przed ewentualnym zawarciem abonamentu (lit. b). Możesz w każdej chwili wypisać się za pomocą linku zamieszczonego w każdym e-mailu.",
+  "nota": "GDPR -> RODO (acronimul oficial în polonă); alin. -> ust."
+ },
+ {
+  "text": "Formularul „Am o problemă”",
+  "tip": "html",
+  "pl": "Formularz „Zgłoś problem”",
+  "nota": ""
+ },
+ {
+  "text": "emailul, subiectul și descrierea problemei, fișierele pe care alegi să le atașezi (poze sau video) și informații tehnice care ne ajută să reproducem problema: pagina, tipul de telefon sau browser, dimensiunea ecranului, limba și ce era selectat în calculator (produs, cultură, dăunător, doză, suprafață).",
+  "tip": "html",
+  "pl": "e-mail, temat i opis problemu, pliki, które zdecydujesz się załączyć (zdjęcia lub wideo), oraz informacje techniczne, które pomagają nam odtworzyć problem: strona, typ telefonu lub przeglądarki, rozmiar ekranu, język oraz to, co było wybrane w kalkulatorze (środek, uprawa, agrofag, dawka, powierzchnia).",
+  "nota": "[supervizor] „szkodnik” -> „agrofag”, ca în câmpul din calculator"
+ },
+ {
+  "text": "ca să înțelegem și să rezolvăm problema și să-ți răspundem.",
+  "tip": "html",
+  "pl": "aby zrozumieć i rozwiązać problem oraz ci odpowiedzieć.",
+  "nota": ""
+ },
+ {
+  "text": "interesul nostru legitim de a repara erorile site-ului și cererea ta de a fi contactat (art. 6 alin. 1 lit. f și b GDPR).",
+  "tip": "html",
+  "pl": "nasz prawnie uzasadniony interes polegający na naprawianiu błędów serwisu oraz twoja prośba o kontakt (art. 6 ust. 1 lit. f i b RODO).",
+  "nota": ""
+ },
+ {
+  "text": "Te rugăm să",
+  "tip": "html",
+  "pl": "Prosimy,",
+  "nota": "„Te rugăm să” -> „Prosimy,” + imperativ (nie załączaj) — construcție naturală în PL"
+ },
+ {
+  "text": "nu atașezi documente personale",
+  "tip": "html",
+  "pl": "nie załączaj dokumentów osobistych",
+  "nota": ""
+ },
+ {
+  "text": "(acte de identitate, facturi cu date ale altor persoane).",
+  "tip": "html",
+  "pl": "(dokumentów tożsamości, faktur z danymi innych osób).",
+  "nota": ""
+ },
+ {
+  "text": "Protecția anti-robot (Cloudflare Turnstile)",
+  "tip": "html",
+  "pl": "Ochrona przed botami (Cloudflare Turnstile)",
+  "nota": ""
+ },
+ {
+  "text": "când trimiți formularul „Rezerv loc” sau „Am o problemă”, Cloudflare verifică dacă cererea vine de la un om. Pentru asta folosește adresa IP, tipul de browser și semnale tehnice ale dispozitivului. Nu folosește aceste date pentru reclame și nu salvează cookie-uri de urmărire.",
+  "tip": "html",
+  "pl": "gdy wysyłasz formularz „Rezerwuję miejsce” lub „Zgłoś problem”, Cloudflare sprawdza, czy zgłoszenie pochodzi od człowieka. W tym celu wykorzystuje adres IP, typ przeglądarki i sygnały techniczne urządzenia. Nie wykorzystuje tych danych do celów reklamowych i nie zapisuje śledzących plików cookie.",
+  "nota": ""
+ },
+ {
+  "text": "ca să oprim înscrierile automate în masă și rapoartele false trimise de programe.",
+  "tip": "html",
+  "pl": "aby powstrzymać masowe automatyczne zapisy i fałszywe zgłoszenia wysyłane przez programy.",
+  "nota": ""
+ },
+ {
+  "text": "interesul nostru legitim de a proteja site-ul și formularele (art. 6 alin. 1 lit. f GDPR).",
+  "tip": "html",
+  "pl": "nasz prawnie uzasadniony interes polegający na ochronie serwisu i formularzy (art. 6 ust. 1 lit. f RODO).",
+  "nota": ""
+ },
+ {
+  "text": "Statistici de utilizare (PostHog)",
+  "tip": "html",
+  "pl": "Statystyki użytkowania (PostHog)",
+  "nota": ""
+ },
+ {
+  "text": "paginile vizitate și acțiunile din site (de exemplu: ai ales o cultură, ai făcut un calcul, ai trimis formularul), tipul de dispozitiv și browser, țara aproximativă. Nu colectăm ce scrii în câmpurile de text.",
+  "tip": "html",
+  "pl": "odwiedzane strony i działania w serwisie (na przykład: wybrałeś uprawę, wykonałeś obliczenie, wysłałeś formularz), typ urządzenia i przeglądarki, przybliżony kraj. Nie zbieramy tego, co wpisujesz w pola tekstowe.",
+  "nota": ""
+ },
+ {
+  "text": "Fără acordul tău",
+  "tip": "html",
+  "pl": "Bez twojej zgody",
+  "nota": ""
+ },
+ {
+  "text": ", statisticile sunt anonime: nu salvăm niciun cookie pe dispozitiv, iar vizitele nu pot fi legate între ele.",
+  "tip": "html",
+  "pl": ", statystyki są anonimowe: nie zapisujemy na urządzeniu żadnego pliku cookie, a wizyt nie da się ze sobą powiązać.",
+  "nota": ""
+ },
+ {
+  "text": "Doar dacă accepți",
+  "tip": "html",
+  "pl": "Tylko jeśli zaakceptujesz",
+  "nota": ""
+ },
+ {
+  "text": "cookie-ul: îți recunoaștem dispozitivul la vizitele următoare și, pentru aproximativ 1 din 10 vizite, înregistrăm cum navighezi în pagină (click-uri, derulare), cu toate câmpurile de text ascunse.",
+  "tip": "html",
+  "pl": "plik cookie: rozpoznajemy twoje urządzenie przy kolejnych wizytach i mniej więcej podczas 1 na 10 wizyt nagrywamy, jak poruszasz się po stronie (kliknięcia, przewijanie), przy czym wszystkie pola tekstowe są ukryte.",
+  "nota": ""
+ },
+ {
+  "text": "interesul legitim de a îmbunătăți calculatorul, pentru statisticile anonime, și consimțământul tău pentru cookie și înregistrare (art. 6 alin. 1 lit. f și a GDPR).",
+  "tip": "html",
+  "pl": "prawnie uzasadniony interes polegający na ulepszaniu kalkulatora — w przypadku anonimowych statystyk — oraz twoja zgoda na plik cookie i nagrywanie (art. 6 ust. 1 lit. f i a RODO).",
+  "nota": ""
+ },
+ {
+  "text": "Măsurarea reclamelor (Google Ads)",
+  "tip": "html",
+  "pl": "Pomiar reklam (Google Ads)",
+  "nota": ""
+ },
+ {
+  "text": "cookie-urile: când ajungi pe site dintr-o reclamă Google și te înscrii pe lista de așteptare, Google Ads află că acea reclamă a adus o înscriere. Așa știm ce reclame merită păstrate.",
+  "tip": "html",
+  "pl": "pliki cookie: gdy trafiasz do serwisu z reklamy Google i zapisujesz się na listę oczekujących, Google Ads dowiaduje się, że ta reklama przyniosła zapis. Dzięki temu wiemy, które reklamy warto utrzymać.",
+  "nota": ""
+ },
+ {
+  "text": "Nu trimitem la Google adresa ta de email și nici alte date din formulare. Nu folosim reclame personalizate și nici remarketing (nu te „urmăresc” reclamele noastre pe alte site-uri).",
+  "tip": "html",
+  "pl": "Nie przekazujemy Google twojego adresu e-mail ani innych danych z formularzy. Nie stosujemy reklam spersonalizowanych ani remarketingu (nasze reklamy nie „chodzą” za tobą po innych stronach).",
+  "nota": ""
+ },
+ {
+  "text": ", tagul Google nu se încarcă deloc.",
+  "tip": "html",
+  "pl": ", tag Google w ogóle się nie wczytuje.",
+  "nota": ""
+ },
+ {
+  "text": "consimțământul tău (art. 6 alin. 1 lit. a GDPR), pe care îl poți retrage oricând din secțiunea",
+  "tip": "html",
+  "pl": "twoja zgoda (art. 6 ust. 1 lit. a RODO), którą możesz w każdej chwili wycofać w sekcji",
+  "nota": ""
+ },
+ {
+  "text": "Emailurile pe care ți le trimitem",
+  "tip": "html",
+  "pl": "E-maile, które do ciebie wysyłamy",
+  "nota": ""
+ },
+ {
+  "text": "Aflăm dacă emailul a fost",
+  "tip": "html",
+  "pl": "Sprawdzamy, czy e-mail został",
+  "nota": ""
+ },
+ {
+  "text": "livrat",
+  "tip": "html",
+  "pl": "dostarczony",
+  "nota": ""
+ },
+ {
+  "text": ", dacă a fost",
+  "tip": "html",
+  "pl": ", czy został",
+  "nota": ""
+ },
+ {
+  "text": "respins",
+  "tip": "html",
+  "pl": "odrzucony",
+  "nota": ""
+ },
+ {
+  "text": "și dacă ai",
+  "tip": "html",
+  "pl": "i czy",
+  "nota": ""
+ },
+ {
+  "text": "apăsat pe un link",
+  "tip": "html",
+  "pl": "kliknięto link",
+  "nota": "formulare impersonală („kliknięto link”) ca să evit forma de gen"
+ },
+ {
+  "text": "din el, ca să știm că emailurile ajung și sunt utile.",
+  "tip": "html",
+  "pl": "w wiadomości, aby wiedzieć, że e-maile docierają i są przydatne.",
+  "nota": ""
+ },
+ {
+  "text": "Securitate",
+  "tip": "html",
+  "pl": "Bezpieczeństwo",
+  "nota": ""
+ },
+ {
+  "text": "Ca să oprim roboții și abuzurile, păstrăm o",
+  "tip": "html",
+  "pl": "Aby powstrzymać boty i nadużycia, przechowujemy",
+  "nota": ""
+ },
+ {
+  "text": "amprentă criptată (hash) a adresei IP",
+  "tip": "html",
+  "pl": "zaszyfrowany odcisk (hash) adresu IP",
+  "nota": ""
+ },
+ {
+  "text": ", nu adresa în sine, și limităm numărul de înscrieri și rapoarte trimise de pe aceeași conexiune. Temei: interesul legitim de a proteja site-ul.",
+  "tip": "html",
+  "pl": ", a nie sam adres, i ograniczamy liczbę zapisów oraz zgłoszeń wysyłanych z tego samego połączenia. Podstawa: prawnie uzasadniony interes polegający na ochronie serwisu.",
+  "nota": ""
+ },
+ {
+  "text": "3. Cât timp păstrăm datele",
+  "tip": "html",
+  "pl": "3. Jak długo przechowujemy dane",
+  "nota": ""
+ },
+ {
+  "text": "Cât timp",
+  "tip": "html",
+  "pl": "Jak długo",
+  "nota": ""
+ },
+ {
+  "text": "Lista de așteptare",
+  "tip": "html",
+  "pl": "Lista oczekujących",
+  "nota": ""
+ },
+ {
+  "text": "Până la lansarea platformei și cel mult 12 luni după, sau până te dezabonezi ori ceri ștergerea. După dezabonare păstrăm doar faptul că te-ai dezabonat, ca să nu-ți mai scriem.",
+  "tip": "html",
+  "pl": "Do uruchomienia platformy i najwyżej 12 miesięcy później albo do momentu, gdy się wypiszesz lub zażądasz usunięcia. Po wypisaniu się przechowujemy jedynie informację, że się wypisałeś, aby więcej do ciebie nie pisać.",
+  "nota": ""
+ },
+ {
+  "text": "Fișierele atașate la rapoarte",
+  "tip": "html",
+  "pl": "Pliki załączone do zgłoszeń",
+  "nota": ""
+ },
+ {
+  "text": "90 de zile, apoi se șterg automat. Fișierele urcate dar netrimise se șterg după o zi.",
+  "tip": "html",
+  "pl": "90 dni, potem są automatycznie usuwane. Pliki przesłane, ale niewysłane, są usuwane po jednym dniu.",
+  "nota": ""
+ },
+ {
+  "text": "Rapoartele de problemă (textul)",
+  "tip": "html",
+  "pl": "Zgłoszenia problemów (treść)",
+  "nota": ""
+ },
+ {
+  "text": "Cel mult 12 luni de la rezolvare.",
+  "tip": "html",
+  "pl": "Najwyżej 12 miesięcy od rozwiązania.",
+  "nota": ""
+ },
+ {
+  "text": "Statistici de utilizare",
+  "tip": "html",
+  "pl": "Statystyki użytkowania",
+  "nota": ""
+ },
+ {
+  "text": "Cel mult 12 luni.",
+  "tip": "html",
+  "pl": "Najwyżej 12 miesięcy.",
+  "nota": ""
+ },
+ {
+  "text": "Cookie-urile Google Ads expiră după cel mult 90 de zile; datele din rapoartele Google Ads se păstrează conform politicii Google.",
+  "tip": "html",
+  "pl": "Pliki cookie Google Ads wygasają najpóźniej po 90 dniach; dane w raportach Google Ads są przechowywane zgodnie z polityką Google.",
+  "nota": ""
+ },
+ {
+  "text": "4. Cine prelucrează datele pentru noi",
+  "tip": "html",
+  "pl": "4. Kto przetwarza dane w naszym imieniu",
+  "nota": ""
+ },
+ {
+  "text": "Nu vindem și nu închiriem datele tale. Folosim câțiva furnizori care le prelucrează doar în numele nostru, pe baza unor contracte de prelucrare:",
+  "tip": "html",
+  "pl": "Nie sprzedajemy ani nie wynajmujemy twoich danych. Korzystamy z kilku dostawców, którzy przetwarzają je wyłącznie w naszym imieniu, na podstawie umów powierzenia przetwarzania:",
+  "nota": ""
+ },
+ {
+  "text": "Furnizor",
+  "tip": "html",
+  "pl": "Dostawca",
+  "nota": ""
+ },
+ {
+  "text": "Pentru ce",
+  "tip": "html",
+  "pl": "W jakim celu",
+  "nota": ""
+ },
+ {
+  "text": "Unde",
+  "tip": "html",
+  "pl": "Gdzie",
+  "nota": ""
+ },
+ {
+  "text": "Supabase",
+  "tip": "html",
+  "pl": "Supabase",
+  "nota": ""
+ },
+ {
+  "text": "baza de date, stocarea fișierelor atașate, funcțiile serverului",
+  "tip": "html",
+  "pl": "baza danych, przechowywanie załączonych plików, funkcje serwera",
+  "nota": ""
+ },
+ {
+  "text": "UE (Irlanda)",
+  "tip": "html",
+  "pl": "UE (Irlandia)",
+  "nota": ""
+ },
+ {
+  "text": "Resend",
+  "tip": "html",
+  "pl": "Resend",
+  "nota": ""
+ },
+ {
+  "text": "trimiterea emailurilor",
+  "tip": "html",
+  "pl": "wysyłanie e-maili",
+  "nota": ""
+ },
+ {
+  "text": "SUA",
+  "tip": "html",
+  "pl": "USA",
+  "nota": ""
+ },
+ {
+  "text": "PostHog",
+  "tip": "html",
+  "pl": "PostHog",
+  "nota": ""
+ },
+ {
+  "text": "statistici de utilizare",
+  "tip": "html",
+  "pl": "statystyki użytkowania",
+  "nota": ""
+ },
+ {
+  "text": "UE (Germania)",
+  "tip": "html",
+  "pl": "UE (Niemcy)",
+  "nota": ""
+ },
+ {
+  "text": "Google (Gmail, Google Sheets, Google Fonts, Google Ads)",
+  "tip": "html",
+  "pl": "Google (Gmail, Google Sheets, Google Fonts, Google Ads)",
+  "nota": ""
+ },
+ {
+  "text": "primirea și organizarea rapoartelor de problemă; fonturile site-ului; măsurarea înscrierilor aduse de reclame (doar cu acordul tău)",
+  "tip": "html",
+  "pl": "odbieranie i porządkowanie zgłoszeń problemów; czcionki serwisu; pomiar zapisów pozyskanych dzięki reklamom (tylko za twoją zgodą)",
+  "nota": ""
+ },
+ {
+  "text": "UE și SUA",
+  "tip": "html",
+  "pl": "UE i USA",
+  "nota": ""
+ },
+ {
+  "text": "GitHub (GitHub Pages)",
+  "tip": "html",
+  "pl": "GitHub (GitHub Pages)",
+  "nota": ""
+ },
+ {
+  "text": "găzduirea site-ului",
+  "tip": "html",
+  "pl": "hosting serwisu",
+  "nota": ""
+ },
+ {
+  "text": "Cloudflare (Turnstile)",
+  "tip": "html",
+  "pl": "Cloudflare (Turnstile)",
+  "nota": ""
+ },
+ {
+  "text": "verificarea anti-robot la trimiterea formularelor",
+  "tip": "html",
+  "pl": "weryfikacja antybotowa przy wysyłaniu formularzy",
+  "nota": ""
+ },
+ {
+  "text": "SUA și rețeaua globală Cloudflare",
+  "tip": "html",
+  "pl": "USA i globalna sieć Cloudflare",
+  "nota": ""
+ },
+ {
+  "text": "Când datele ajung în afara Spațiului Economic European (de exemplu în SUA), transferul se face pe baza mecanismelor prevăzute de GDPR: decizia de adecvare UE–SUA (Data Privacy Framework), acolo unde furnizorul este certificat, sau clauzele contractuale standard aprobate de Comisia Europeană.",
+  "tip": "html",
+  "pl": "Gdy dane trafiają poza Europejski Obszar Gospodarczy (na przykład do USA), przekazanie odbywa się na podstawie mechanizmów przewidzianych w RODO: decyzji UE–USA stwierdzającej odpowiedni stopień ochrony (Data Privacy Framework) — tam, gdzie dostawca posiada certyfikację — lub standardowych klauzul umownych zatwierdzonych przez Komisję Europejską.",
+  "nota": ""
+ },
+ {
+  "text": "5. Drepturile tale",
+  "tip": "html",
+  "pl": "5. Twoje prawa",
+  "nota": ""
+ },
+ {
+  "text": "Ai dreptul să ceri",
+  "tip": "html",
+  "pl": "Masz prawo żądać",
+  "nota": ""
+ },
+ {
+  "text": "acces",
+  "tip": "html",
+  "pl": "dostępu",
+  "nota": ""
+ },
+ {
+  "text": "la datele tale,",
+  "tip": "html",
+  "pl": "do swoich danych,",
+  "nota": ""
+ },
+ {
+  "text": "corectarea",
+  "tip": "html",
+  "pl": "sprostowania",
+  "nota": "[supervizor] scos „ich”: fraza asamblată devine „dostępu do swoich danych, sprostowania lub usunięcia tych danych”"
+ },
+ {
+  "text": "sau",
+  "tip": "html",
+  "pl": "lub",
+  "nota": ""
+ },
+ {
+  "text": "ștergerea",
+  "tip": "html",
+  "pl": "usunięcia",
+  "nota": ""
+ },
+ {
+  "text": "lor,",
+  "tip": "html",
+  "pl": "tych danych,",
+  "nota": ""
+ },
+ {
+  "text": "restricționarea",
+  "tip": "html",
+  "pl": "ograniczenia",
+  "nota": ""
+ },
+ {
+  "text": "prelucrării,",
+  "tip": "html",
+  "pl": "przetwarzania,",
+  "nota": ""
+ },
+ {
+  "text": "portabilitatea",
+  "tip": "html",
+  "pl": "przenoszenia",
+  "nota": ""
+ },
+ {
+  "text": "datelor și să te",
+  "tip": "html",
+  "pl": "danych, a także wnieść",
+  "nota": ""
+ },
+ {
+  "text": "opui",
+  "tip": "html",
+  "pl": "sprzeciw",
+  "nota": ""
+ },
+ {
+  "text": "prelucrării bazate pe interesul nostru legitim. Îți poți",
+  "tip": "html",
+  "pl": "wobec przetwarzania opartego na naszym prawnie uzasadnionym interesie. Możesz",
+  "nota": ""
+ },
+ {
+  "text": "retrage consimțământul",
+  "tip": "html",
+  "pl": "wycofać zgodę",
+  "nota": ""
+ },
+ {
+  "text": "oricând, fără să afecteze ce s-a făcut înainte.",
+  "tip": "html",
+  "pl": "w dowolnym momencie, bez wpływu na przetwarzanie dokonane wcześniej.",
+  "nota": ""
+ },
+ {
+  "text": "Pentru oricare dintre acestea, scrie-ne la",
+  "tip": "html",
+  "pl": "W każdej z tych spraw napisz do nas na adres",
+  "nota": ""
+ },
+ {
+  "text": ". Răspundem în cel mult 30 de zile. Dacă nu ești mulțumit de răspuns, poți depune o plângere la",
+  "tip": "html",
+  "pl": ". Odpowiadamy w ciągu maksymalnie 30 dni. Jeśli nie jesteś zadowolony z odpowiedzi, możesz złożyć skargę do rumuńskiego organu nadzorczego,",
+  "nota": "am adăugat „rumuńskiego organu nadzorczego,” ca să fie clar pentru cititorul polonez; numele instituției rămâne în română"
+ },
+ {
+  "text": "Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal",
+  "tip": "html",
+  "pl": "Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal",
+  "nota": "numele oficial al autorității române păstrat neschimbat (diacritice românești intenționate)"
+ },
+ {
+  "text": "www.dataprotection.ro",
+  "tip": "html",
+  "pl": "www.dataprotection.ro",
+  "nota": ""
+ },
+ {
+  "text": "6. Cookies",
+  "tip": "html",
+  "pl": "6. Pliki cookie",
+  "nota": ""
+ },
+ {
+  "text": "Fără acordul tău, nu salvăm niciun cookie de statistici sau de reclame. Dacă apeși „Accept” în banner, folosim cookie-urile de mai jos.",
+  "tip": "html",
+  "pl": "Bez twojej zgody nie zapisujemy żadnych plików cookie statystycznych ani reklamowych. Jeśli klikniesz „Akceptuję” w banerze, używamy poniższych plików cookie.",
+  "nota": ""
+ },
+ {
+  "text": "Ce",
+  "tip": "html",
+  "pl": "Co",
+  "nota": ""
+ },
+ {
+  "text": "Când",
+  "tip": "html",
+  "pl": "Kiedy",
+  "nota": ""
+ },
+ {
+  "text": "pesticid.consent (memorie locală)",
+  "tip": "html",
+  "pl": "pesticid.consent (pamięć lokalna)",
+  "nota": ""
+ },
+ {
+  "text": "ține minte dacă ai acceptat sau refuzat cookie-ul, ca să nu te întrebăm la fiecare vizită",
+  "tip": "html",
+  "pl": "zapamiętuje, czy zaakceptowałeś, czy odrzuciłeś plik cookie, abyśmy nie pytali cię przy każdej wizycie",
+  "nota": ""
+ },
+ {
+  "text": "după ce alegi în banner",
+  "tip": "html",
+  "pl": "po dokonaniu wyboru w banerze",
+  "nota": ""
+ },
+ {
+  "text": "pesticid.site.param (memorie locală)",
+  "tip": "html",
+  "pl": "pesticid.site.param (pamięć lokalna)",
+  "nota": ""
+ },
+ {
+  "text": "ține minte ultima suprafață și volumul de apă folosite în calculator",
+  "tip": "html",
+  "pl": "zapamiętuje ostatnią powierzchnię i ilość wody użyte w kalkulatorze",
+  "nota": ""
+ },
+ {
+  "text": "după un calcul",
+  "tip": "html",
+  "pl": "po wykonaniu obliczenia",
+  "nota": ""
+ },
+ {
+  "text": "ph_… (cookie și memorie locală PostHog)",
+  "tip": "html",
+  "pl": "ph_… (plik cookie i pamięć lokalna PostHog)",
+  "nota": ""
+ },
+ {
+  "text": "recunoașterea dispozitivului în statistici, între vizite",
+  "tip": "html",
+  "pl": "rozpoznawanie urządzenia w statystykach między wizytami",
+  "nota": ""
+ },
+ {
+  "text": "doar dacă apeși „Accept”",
+  "tip": "html",
+  "pl": "tylko jeśli klikniesz „Akceptuję”",
+  "nota": ""
+ },
+ {
+  "text": "_gcl_au, _gcl_aw și cookie-urile Google pe domeniile Google",
+  "tip": "html",
+  "pl": "_gcl_au, _gcl_aw oraz pliki cookie Google w domenach Google",
+  "nota": ""
+ },
+ {
+  "text": "legătura dintre un click pe o reclamă Google și o înscriere pe lista de așteptare (fără reclame personalizate)",
+  "tip": "html",
+  "pl": "powiązanie kliknięcia reklamy Google z zapisem na listę oczekujących (bez reklam spersonalizowanych)",
+  "nota": ""
+ },
+ {
+  "text": "Îți poți schimba alegerea oricând:",
+  "tip": "html",
+  "pl": "Swój wybór możesz zmienić w każdej chwili:",
+  "nota": ""
+ },
+ {
+  "text": "Schimbă alegerea despre cookie-uri",
+  "tip": "html",
+  "pl": "Zmień wybór dotyczący plików cookie",
+  "nota": ""
+ },
+ {
+  "text": "Gata, am șters alegerea. La următoarea deschidere a site-ului te întrebăm din nou.",
+  "tip": "html",
+  "pl": "Gotowe, usunęliśmy twój wybór. Przy następnym otwarciu serwisu zapytamy cię ponownie.",
+  "nota": ""
+ },
+ {
+  "text": "7. Modificări",
+  "tip": "html",
+  "pl": "7. Zmiany",
+  "nota": ""
+ },
+ {
+  "text": "Dacă schimbăm această politică, actualizăm data de la începutul paginii. Pentru schimbări importante, îi anunțăm prin email pe cei înscriși pe lista de așteptare.",
+  "tip": "html",
+  "pl": "Jeśli zmienimy tę politykę, zaktualizujemy datę na początku strony. O istotnych zmianach powiadomimy e-mailem osoby zapisane na listę oczekujących.",
+  "nota": ""
+ },
+ {
+  "text": "=; Max-Age=0; path=/",
+  "tip": "js",
+  "pl": null,
+  "nota": "sintaxă cookie, nu e text vizibil"
+ },
+ {
+  "text": "=; Max-Age=0; path=/; domain=.",
+  "tip": "js",
+  "pl": null,
+  "nota": "sintaxă cookie, nu e text vizibil"
+ }
+]

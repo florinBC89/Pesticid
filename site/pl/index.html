@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="pl" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>(function(d){d.classList.remove('no-js');d.classList.add('js');setTimeout(function(){if(!window.agrosphereMain)d.classList.add('no-js');},3000);})(document.documentElement);</script>
+<title>AgroSphere — Kalkulator dawek środków ochrony roślin</title>
+<meta name="description" content="Kalkulator dawek środków ochrony roślin: wybierasz uprawę, agrofaga i powierzchnię, a dostajesz zarejestrowane środki z dokładną dawką.">
+<meta name="theme-color" content="#cedbf6">
+<link rel="canonical" href="https://agrosphere.eu/pl/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AgroSphere">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:url" content="https://agrosphere.eu/pl/">
+<meta property="og:title" content="AgroSphere — Oblicza twoją dawkę">
+<meta property="og:description" content="Kalkulator dawek środków ochrony roślin: wybierasz uprawę, agrofaga i powierzchnię, a dostajesz zarejestrowane środki z dokładną dawką.">
+<meta property="og:image" content="https://agrosphere.eu/assets/og-image.jpg">
+<meta property="og:image:secure_url" content="https://agrosphere.eu/assets/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AgroSphere — kalkulator dawek środków ochrony roślin">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AgroSphere — Oblicza twoją dawkę">
+<meta name="twitter:description" content="Kalkulator dawek środków ochrony roślin: wybierasz uprawę, agrofaga i powierzchnię, a dostajesz zarejestrowane środki z dokładną dawką.">
+<meta name="twitter:image" content="https://agrosphere.eu/assets/og-image.jpg">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="pesticid-supabase" data-url="https://rpwmfhlmdscjpcrqqmyf.supabase.co" data-key="sb_publishable_dDXZs-VnJo6ixr4fsymcOA_BouLzIn0">
+<meta name="pesticid-turnstile" data-key="0x4AAAAAAF0iO2Yk4JMq4zBE">
+<meta name="pesticid-gads" data-id="AW-11117281329" data-label="Z5vnCLDRyrIdELGAkbUp">
+<meta name="pesticid-posthog" data-key="phc_vBsdbNATEpFEg35kKUQroJcq4L93W2uBNcRokuj7sJ2x" data-host="https://eu.i.posthog.com">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="nav">
+  <a class="promo" id="promo" href="#acces-timpuriu"><span>Early bird <b>6 miesięcy za darmo dla gospodarstw i partnerów</b> <span class="promo-sep">-</span> <span data-promo-l>Kampania trwa jeszcze</span> <b data-promo-t>20 dni</b></span></a>
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="AgroSphere, na górę strony"><img src="/assets/logo-agrosphere.svg" alt="AgroSphere" width="1585" height="311"></a>
+    <nav class="menu" aria-label="Narzędzia AgroSphere">
+      <ul>
+        <li><a class="menu-it is-on" href="#top" aria-current="page">Kalkulator dawek</a></li>
+        <li><span class="menu-it is-soon" aria-disabled="true"><span>Plan nawożenia</span><span class="soon">Wkrótce</span></span></li>
+        <li><a class="menu-it" href="/pl/abonamente/">Abonamenty</a></li>
+        <li><span class="menu-it is-soon" aria-disabled="true"><span>Rejestr gospodarstwa</span><span class="soon">Wkrótce</span></span></li>
+        <li><span class="menu-it is-soon" aria-disabled="true"><span>Zeszyt rolno-środowiskowy</span><span class="soon">Wkrótce</span></span></li>
+        <li><span class="menu-it is-soon" aria-disabled="true"><span>Ubezpieczenia upraw</span><span class="soon">Wkrótce</span></span></li>
+      </ul>
+    </nav>
+    <div class="nav-end">
+      <div class="lang" data-lang hidden>
+        <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Limba și țara: România"><span class="lang-cur"><svg class="flag" viewBox="0 0 3 2" width="21" height="14" aria-hidden="true"><path fill="#002b7f" d="M0 0h1v2H0z"/><path fill="#fcd116" d="M1 0h1v2H1z"/><path fill="#ce1126" d="M2 0h1v2H2z"/></svg><span>RO</span></span><i class="chev" aria-hidden="true"></i></button>
+        <ul class="lang-dd" hidden>
+          <li><a class="lang-op" href="/pl/" hreflang="ro" lang="ro" data-lang-op="ro"><svg class="flag" viewBox="0 0 3 2" width="21" height="14" aria-hidden="true"><path fill="#002b7f" d="M0 0h1v2H0z"/><path fill="#fcd116" d="M1 0h1v2H1z"/><path fill="#ce1126" d="M2 0h1v2H2z"/></svg><span>Română</span></a></li>
+          <li><a class="lang-op" href="/pl/" hreflang="pl" lang="pl" data-lang-op="pl"><svg class="flag" viewBox="0 0 8 5" width="21" height="14" aria-hidden="true"><path fill="#fff" d="M0 0h8v2.5H0z"/><path fill="#dc143c" d="M0 2.5h8V5H0z"/></svg><span>Polski</span></a></li>
+        </ul>
+      </div>
+      <a class="btn nav-btn" href="#raporteaza">Zgłoś problem</a>
+    </div>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="meniu-mobil" aria-label="Otwórz menu"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mmenu" id="meniu-mobil" hidden>
+    <ul>
+      <li><a class="mm-it is-on" href="#top" aria-current="page">Kalkulator dawek</a></li>
+      <li><span class="mm-it is-soon" aria-disabled="true"><span>Plan nawożenia</span><span class="soon">Wkrótce</span></span></li>
+      <li><a class="mm-it" href="/pl/abonamente/">Abonamenty</a></li>
+      <li><span class="mm-it is-soon" aria-disabled="true"><span>Rejestr gospodarstwa</span><span class="soon">Wkrótce</span></span></li>
+      <li><span class="mm-it is-soon" aria-disabled="true"><span>Zeszyt rolno-środowiskowy</span><span class="soon">Wkrótce</span></span></li>
+      <li><span class="mm-it is-soon" aria-disabled="true"><span>Ubezpieczenia upraw</span><span class="soon">Wkrótce</span></span></li>
+    </ul>
+    <a class="btn mm-btn" href="#raporteaza">Zgłoś problem</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-clip"><div class="hero-bg" data-src="/assets/hero-camp.webp" data-src-2x="/assets/hero-camp-2x.webp" data-parallax="0.28" data-parallax-top role="img" aria-label="Rzędy upraw o zachodzie słońca"></div></div>
+    <div class="wrap">
+      <div class="hero-copy">
+        <h1 class="reveal">Oblicz prawidłową dawkę dla <b>wszystkich środków ochrony roślin</b></h1>
+        <p class="lead reveal" data-delay="1">Albo <b>szukaj środków, upraw lub agrofagów</b>, a my pokażemy ci <b>wszystkie zarejestrowane środki z dokładną dawką, łączną ilością i pełnymi zaleceniami</b></p>
+        <div class="tabs reveal" data-delay="2" role="tablist" aria-label="Tryb pracy">
+          <button class="tab is-on" type="button" role="tab" aria-selected="true">Oblicz dawkę</button>
+          <button class="tab" type="button" role="tab" aria-selected="false">Szukaj środków</button>
+        </div>
+        <div class="calc reveal" data-delay="3" role="group" aria-label="Kalkulator dawek">
+          <div class="calc-head">
+            <h3>Kalkulator dawek</h3>
+            <p class="calc-hint" id="c-hint">Ładowanie środków…</p>
+          </div>
+          <label class="field has-input" id="f-bloc"><span class="col"><small>Blok fizyczny (APIA)</small><span class="val"><input id="c-bloc" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="ID bloku fizycznego (APIA)" maxlength="12"><button type="button" class="x" aria-label="Wyczyść blok fizyczny" hidden>×</button></span></span></label>
+          <div class="sel" id="s-produs">
+            <label class="field has-input is-off" id="f-produs" for="c-produs">
+              <span class="col"><small>Środek</small><span class="val"><input id="c-produs" type="text" autocomplete="off" spellcheck="false" placeholder="Ładowanie…" disabled role="combobox" aria-expanded="false" aria-controls="c-produs-list"><span class="txt" hidden></span><button type="button" class="x" aria-label="Wyczyść środek" hidden>×</button></span></span>
+              <span class="tag xs tagr" hidden></span><i class="chev" aria-hidden="true"></i>
+            </label>
+            <div class="dd" hidden><ul class="plist" id="c-produs-list" role="listbox"></ul></div>
+          </div>
+          <div class="sel" id="s-cultura">
+            <label class="field has-input is-off" id="f-cultura" for="c-cultura">
+              <span class="col"><small>Uprawa</small><span class="val"><input id="c-cultura" type="text" autocomplete="off" spellcheck="false" placeholder="Najpierw wybierz środek" disabled role="combobox" aria-expanded="false" aria-controls="c-cultura-list"><span class="txt" hidden></span><button type="button" class="x" aria-label="Wyczyść uprawę" hidden>×</button></span></span>
+              <span class="tag xs cnt" hidden></span><i class="chev" aria-hidden="true"></i>
+            </label>
+            <div class="dd" hidden><ul class="plist" id="c-cultura-list" role="listbox"></ul></div>
+          </div>
+          <div class="sel" id="s-tinta">
+            <label class="field has-input is-off" id="f-tinta" for="c-tinta">
+              <span class="col"><small>Szkodnik / choroba / chwast</small><span class="val"><input id="c-tinta" type="text" autocomplete="off" spellcheck="false" placeholder="Najpierw wybierz uprawę" disabled role="combobox" aria-expanded="false" aria-controls="c-tinta-list"><span class="txt" hidden></span><button type="button" class="x" aria-label="Wyczyść agrofaga" hidden>×</button></span></span>
+              <span class="tag xs cnt" hidden></span><i class="chev" aria-hidden="true"></i>
+            </label>
+            <div class="dd" hidden><ul class="plist" id="c-tinta-list" role="listbox"></ul></div>
+          </div>
+          <div class="row">
+            <div class="field is-ro" id="c-doza-om" aria-live="polite"><span class="col"><small>Dawka zarejestrowana</small><span class="val"><span class="txt ph" id="c-doza-om-v">Uzupełni się po wyborze agrofaga</span></span></span></div>
+            <label class="field has-input has-unit is-off" id="f-doza"><span class="col"><small>Twoja dawka</small><span class="val"><input id="c-doza" type="text" inputmode="decimal" autocomplete="off" placeholder="Twoja dawka" disabled><b class="unit" id="c-doza-u"></b><button type="button" class="x" aria-label="Wyczyść dawkę" hidden>×</button></span></span></label>
+          </div>
+          <div class="row">
+            <label class="field has-input has-unit" id="f-ha"><span class="col"><small>Powierzchnia</small><span class="val"><input id="c-ha" type="text" inputmode="decimal" autocomplete="off" placeholder="np. 100"><b class="unit">ha</b><button type="button" class="x" aria-label="Wyczyść powierzchnię" hidden>×</button></span></span></label>
+            <label class="field has-input has-unit" id="f-apa"><span class="col"><small>Ilość wody</small><span class="val"><input id="c-apa" type="text" inputmode="decimal" autocomplete="off" placeholder="np. 200"><b class="unit">L/ha</b><button type="button" class="x" aria-label="Wyczyść ilość wody" hidden>×</button></span></span></label>
+          </div>
+          <p class="doza-msg" id="c-doza-msg" role="status"></p>
+          <p class="doza">Dawka <span class="tag muted">Zarejestrowana</span> wybierz jeden z zarejestrowanych środków</p>
+          <button class="btn ghost" id="c-go" type="button" disabled><span>Oblicz</span><svg class="arr" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <div class="calc-res" id="c-res" hidden>
+            <h4>Wynik obliczeń</h4>
+            <div class="cards" id="c-cards"></div>
+            <p class="calc-note"></p>
+            <p class="res-foot">Gdy platforma zacznie działać, te wyniki będzie można zapisywać w twoich Rejestrach.</p>
+          </div>
+        </div>
+        <div class="search" id="search" role="group" aria-label="Wyszukiwanie zaawansowane: uprawa, agrofag, środek" hidden>
+          <div class="sbar">
+            <div class="sfield" data-k="c">
+              <label class="field has-input" id="f-sc" for="s-c">
+                <span class="col"><small>Uprawa</small><span class="val"><i class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21V9M12 9c-3 0-5-2-5-5 3 0 5 2 5 5zM12 9c3 0 5-2 5-5-3 0-5 2-5 5zM12 15c-3 0-5-2-5-5 3 0 5 2 5 5zM12 15c3 0 5-2 5-5-3 0-5 2-5 5z"/></svg></i><input id="s-c" type="text" autocomplete="off" spellcheck="false" placeholder="Wpisz lub wybierz uprawę…" role="combobox" aria-expanded="false" aria-controls="s-dd" aria-autocomplete="list"><span class="txt" hidden></span><button type="button" class="x" aria-label="Wyczyść" hidden>×</button></span></span>
+              </label>
+            </div>
+            <div class="sfield" data-k="t">
+              <label class="field has-input" id="f-st" for="s-t">
+                <span class="col"><small>Szkodnik / choroba / chwast</small><span class="val"><i class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="5"/><path d="M12 8V5M7 10l-3-2M17 10l3-2M7 15H4M17 15h3M8 19l-2 2M16 19l2 2"/></svg></i><input id="s-t" type="text" autocomplete="off" spellcheck="false" placeholder="Wpisz lub wybierz agrofaga…" role="combobox" aria-expanded="false" aria-controls="s-dd" aria-autocomplete="list"><span class="txt" hidden></span><button type="button" class="x" aria-label="Wyczyść" hidden>×</button></span></span>
+              </label>
+            </div>
+            <div class="sfield" data-k="p">
+              <label class="field has-input" id="f-sp" for="s-p">
+                <span class="col"><small>Środek (opcjonalnie)</small><span class="val"><i class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6v3l2 3v12H7V9l2-3z"/><path d="M9 13h6"/></svg></i><input id="s-p" type="text" autocomplete="off" spellcheck="false" placeholder="Wszystkie zarejestrowane środki" role="combobox" aria-expanded="false" aria-controls="s-dd" aria-autocomplete="list"><span class="txt" hidden></span><button type="button" class="x" aria-label="Wyczyść" hidden>×</button></span></span>
+              </label>
+            </div>
+            <button class="ichip" type="button" aria-label="Dyktuj (wkrótce)" title="Wkrótce" data-soon><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg></button>
+            <button class="ichip" type="button" aria-label="Skanuj etykietę (wkrótce)" title="Wkrótce" data-soon><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/></svg></button>
+            <button class="sgo" id="s-go" type="button" disabled>Szukaj</button>
+            <div class="sdd" id="s-dd" role="listbox" hidden></div>
+          </div>
+          <div class="sres" id="s-res" aria-live="polite" hidden></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="wrap">
+      <div class="grid">
+        <div class="stat reveal">
+          <div class="ico" aria-hidden="true"><img src="/assets/icon-produse.webp" alt="" width="146" height="146" loading="lazy"></div>
+          <div><div class="num" data-count="450" data-suffix="+">450+</div><div class="lbl">Środki <b class="tag">Zarejestrowane</b></div></div>
+        </div>
+        <div class="stat reveal" data-delay="1">
+          <div class="ico" aria-hidden="true"><img src="/assets/icon-culturi.webp" alt="" width="146" height="146" loading="lazy"></div>
+          <div><div class="num" data-count="150" data-suffix="+">150+</div><div class="lbl">Uprawy rolne</div></div>
+        </div>
+        <div class="stat reveal" data-delay="2">
+          <div class="ico" aria-hidden="true"><img src="/assets/icon-daunatori.webp" alt="" width="146" height="146" loading="lazy"></div>
+          <div><div class="num" data-count="350" data-suffix="+">350+</div><div class="lbl">Szkodniki i choroby</div></div>
+        </div>
+        <div class="stat reveal" data-delay="3">
+          <div class="ico" aria-hidden="true"><img src="/assets/icon-date.webp" alt="" width="146" height="146" loading="lazy"></div>
+          <div><div class="num txt">Dane<br>aktualne</div><div class="lbl">Z oficjalnych źródeł <b>ANF, UE</b></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="who">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Dla kogo jest <b>AgroSphere?</b></h2>
+        <p>Proste i szybkie rozwiązanie <b>dla wszystkich profesjonalistów w rolnictwie</b></p>
+      </div>
+      <div class="cards">
+        <article class="card reveal">
+          <div class="ph" data-parallax="0.12" style="background-image:url('/assets/card-fermieri.webp')" role="img" aria-label="Rolnik w łanie kukurydzy"></div>
+          <div class="box"><h3>Małe, średnie i duże gospodarstwa</h3><p>Szybko obliczasz prawidłową dawkę <b>dla każdej uprawy i unikasz błędów.</b></p></div>
+        </article>
+        <article class="card reveal" data-delay="1">
+          <div class="ph" data-parallax="0.12" style="background-image:url('/assets/card-consultanti.webp')" role="img" aria-label="Doradca przy biurku, z laptopem i notatkami"></div>
+          <div class="box"><h3>Doradcy rolni</h3><p>Dajesz klientom precyzyjne zalecenia <b>oparte na zarejestrowanych środkach</b></p></div>
+        </article>
+        <article class="card reveal" data-delay="2">
+          <div class="ph" data-parallax="0.12" style="background-image:url('/assets/card-companii.webp')" role="img" aria-label="Działki rolne widziane z drona"></div>
+          <div class="box"><h3>Firmy rolnicze</h3><p>Standaryzujesz zalecenia i zarządzasz <b>zabiegami we wszystkich gospodarstwach z portfela</b></p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="wrap">
+      <div class="panel">
+        <div class="section-head reveal">
+          <h2>Jak to <b>działa?</b></h2>
+        </div>
+        <ol class="steps">
+          <li class="step">
+            <div class="step-top"><span class="n">1</span></div>
+            <div class="step-txt"><h3>Obliczasz dawkę środków ochrony roślin</h3><p>Wybierz swoją uprawę z dostępnej listy.</p></div>
+          </li>
+          <li class="step">
+            <div class="step-top"><span class="n">2</span></div>
+            <div class="step-txt"><h3>Ustalasz plan nawożenia</h3><p>Uzupełniasz najważniejsze informacje tylko raz.</p></div>
+          </li>
+          <li class="step">
+            <div class="step-top"><span class="n">3</span></div>
+            <div class="step-txt"><h3>Rejestr gospodarstwa</h3><p>Porównujemy twój profil z dostępnymi kryteriami instytucji finansujących.</p></div>
+          </li>
+          <li class="step">
+            <div class="step-top"><span class="n">4</span></div>
+            <div class="step-txt"><h3>Składanie wniosków o ubezpieczenie upraw</h3><p>Dostajesz jasne wyjaśnienia i pomoc, kiedy jej potrzebujesz.</p></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="early" id="acces-timpuriu" data-campaign-end="2026-11-27T23:59:59+02:00">
+    <div class="photo-bg" data-parallax="0.25" style="background-image:url('/assets/hero-vie.webp');background-image:-webkit-image-set(url('/assets/hero-vie.webp') 1x, url('/assets/hero-vie-2x.webp') 2x);background-image:image-set(url('/assets/hero-vie.webp') 1x, url('/assets/hero-vie-2x.webp') 2x)" role="img" aria-label="Plantacja winorośli"></div>
+    <div class="wrap">
+      <div class="section-head early-head reveal">
+        <span class="tag tip sm">Wczesny dostęp</span>
+        <h2>Bądź wśród <b>pierwszych użytkowników AgroSphere</b></h2>
+        <p>Zapisz się <b>na listę oczekujących</b> i otrzymaj <b>6 miesięcy za darmo od startu pakietów</b>, dla swojego gospodarstwa lub swojej firmy partnerskiej</p>
+        <div class="countdown" id="countdown">Kampania trwa jeszcze <b data-cd>20 dni</b></div>
+      </div>
+      <div class="offers">
+        <article class="offer reveal" data-plan="ferma">
+          <div class="offer-body">
+            <span class="tag lime">Early · <b>Pierwsze 100 gospodarstw</b></span>
+            <div class="offer-head">
+              <h3>6 miesięcy za darmo, niezależnie od wielkości gospodarstwa</h3>
+              <div class="save-box"><strong>Małe lub duże gospodarstwo</strong><span>według hektarów z APIA</span></div>
+            </div>
+            <p class="intro">Pierwsze <b>100 gospodarstw</b> zapisanych otrzyma <b>6 miesięcy za darmo od startu pakietów</b>, a nie od zapisu. Bez karty płatniczej.</p>
+            <ul class="perks">
+            <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span>Do 100 ha: <b>Małe gospodarstwo</b> 6 miesięcy za darmo (zamiast 54 €)</span></li>
+            <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span>Powyżej 100 ha: <b>Duże gospodarstwo</b> 6 miesięcy za darmo (zamiast 174 €)</span></li>
+            <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span>Po 6 miesiącach: <b>20% zniżki</b> na pierwszy rok płatny rocznie</span></li>
+            <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span><b>Napiszemy do ciebie e-mailem, gdy wystartują pakiety, a z nimi twoje 6 miesięcy</b></span></li>
+            </ul>
+          </div>
+          <form class="reserve" novalidate data-plan="ferma">
+            <label class="field email" for="email-ferma">
+              <span class="col"><small>E-mail</small><input type="email" name="email" id="email-ferma" placeholder="Twój adres e-mail" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required></span>
+            </label>
+            <button class="btn-cta" type="submit" disabled><span>Rezerwuję miejsce</span><svg class="arr" width="23" height="23" viewBox="0 0 23 23" fill="none" aria-hidden="true"><path d="M3.11328 11.5C3.11328 11.897 3.43508 12.2188 3.83203 12.2188L17.4301 12.2188L12.9071 16.7418C12.6264 17.0225 12.6264 17.4775 12.9071 17.7582C13.1878 18.0389 13.6429 18.0389 13.9236 17.7582L19.6736 12.0082C19.8084 11.8734 19.8841 11.6906 19.8841 11.5C19.8841 11.3094 19.8084 11.1266 19.6736 10.9918L13.9236 5.24177C13.6429 4.96108 13.1878 4.96108 12.9071 5.24177C12.6264 5.52246 12.6264 5.97754 12.9071 6.25823L17.4301 10.7813L3.83203 10.7813C3.43508 10.7813 3.11328 11.103 3.11328 11.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
+            <div class="reserve-done" hidden>
+              <span class="tag lime">Masz zarezerwowane miejsce wśród pierwszych 100 gospodarstw</span>
+              <p>Wysłaliśmy szczegóły na <b data-done-email></b></p>
+            </div>
+            <p class="legal-note">Będziesz dostawać e-maile o starcie i możesz zrezygnować w każdej chwili. <a href="/pl/confidentialitate/">Polityka prywatności</a></p>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+          </form>
+        </article>
+        <article class="offer reveal" data-plan="partener">
+          <div class="offer-body">
+            <span class="tag tip">Early · <b>Pierwszych 30 partnerów założycieli</b></span>
+            <div class="offer-head">
+              <h3>6 miesięcy za darmo i cena zablokowana na rok</h3>
+              <div class="save-box"><strong>Partner</strong><span>zamiast <b>354 €</b> za 6 miesięcy</span></div>
+            </div>
+            <p class="intro">Dla <b>laboratoriów, dystrybutorów, serwisów</b> i firm usług rolniczych. Darmowy okres zaczyna się <b>od startu pakietów</b>.</p>
+            <ul class="perks">
+            <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span><b>6 miesięcy za darmo</b> i bezpłatna weryfikacja dokumentów</span></li>
+            <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span><b>Cena zablokowana na 12 miesięcy</b> potem: 59 €/miesiąc lub prowizja 3%</span></li>
+            <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span>Odznaka <b>„Partner założyciel”</b> na profilu</span></li>
+            <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span>Ograniczona liczba miejsc na okręg: <b>2 dystrybutorów, 1 laboratorium, 1 serwis</b></span></li>
+            <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span><b>Łatwy dostęp</b> do rolników w Rumunii</span></li>
+            </ul>
+          </div>
+          <form class="reserve has-cui" novalidate data-plan="partener">
+            <label class="field email" for="email-partener">
+              <span class="col"><small>E-mail</small><input type="email" name="email" id="email-partener" placeholder="Twój adres e-mail" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required></span>
+            </label>
+            <div class="cui-wrap">
+              <label class="field cui" for="cui-partener">
+                <span class="col"><small>CUI</small><input type="text" name="cui" id="cui-partener" placeholder="np. RO 12345678" autocomplete="off" inputmode="numeric" autocapitalize="characters" spellcheck="false" maxlength="14" role="combobox" aria-expanded="false" aria-controls="cui-lista" aria-autocomplete="list" aria-describedby="cui-stare"></span>
+                <span class="cui-ic" aria-hidden="true"></span>
+              </label>
+              <div class="cui-dd" id="cui-lista" role="listbox" aria-label="Firma znaleziona po CUI" hidden></div>
+            </div>
+            <p class="cui-stare" id="cui-stare" role="status" aria-live="polite"></p>
+            <button class="btn-cta" type="submit" disabled><span>Rezerwuję miejsce</span><svg class="arr" width="23" height="23" viewBox="0 0 23 23" fill="none" aria-hidden="true"><path d="M3.11328 11.5C3.11328 11.897 3.43508 12.2188 3.83203 12.2188L17.4301 12.2188L12.9071 16.7418C12.6264 17.0225 12.6264 17.4775 12.9071 17.7582C13.1878 18.0389 13.6429 18.0389 13.9236 17.7582L19.6736 12.0082C19.8084 11.8734 19.8841 11.6906 19.8841 11.5C19.8841 11.3094 19.8084 11.1266 19.6736 10.9918L13.9236 5.24177C13.6429 4.96108 13.1878 4.96108 12.9071 5.24177C12.6264 5.52246 12.6264 5.97754 12.9071 6.25823L17.4301 10.7813L3.83203 10.7813C3.43508 10.7813 3.11328 11.103 3.11328 11.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
+            <div class="reserve-done" hidden>
+              <span class="tag tip">Masz zarezerwowane miejsce partnera założyciela</span>
+              <p>Wysłaliśmy szczegóły na <b data-done-email></b></p>
+            </div>
+            <p class="cui-note">Nazwę firmy, okręg i rodzaj działalności pobieramy z ANAF na podstawie CUI. Każda firma może zarezerwować tylko jedno miejsce.</p>
+            <p class="legal-note">Będziesz dostawać e-maile o starcie i możesz zrezygnować w każdej chwili. <a href="/pl/confidentialitate/">Polityka prywatności</a></p>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+          </form>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="report" id="raporteaza">
+    <div class="wrap">
+      <form class="calc rep reveal" id="rep" novalidate aria-labelledby="rep-title">
+        <div class="calc-head"><h3 id="rep-title">Chcę zgłosić problem</h3></div>
+        <label class="field has-input" id="r-email-f" for="r-email"><span class="col"><small>Twój e-mail</small><span class="val"><input id="r-email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="Twój adres e-mail" maxlength="254"><button type="button" class="x" aria-label="Wyczyść e-mail" hidden>×</button></span></span></label>
+        <div class="sel" id="r-subiect-s">
+          <button type="button" class="field" id="r-subiect-f" aria-haspopup="listbox" aria-expanded="false" aria-controls="r-subiect-list"><span class="col"><small>Temat</small><span class="val"><span class="txt ph" id="r-subiect-t">Wybierz temat problemu</span></span></span><i class="chev" aria-hidden="true"></i></button>
+          <div class="dd" hidden><ul class="plist" id="r-subiect-list" role="listbox" aria-label="Temat">
+            <li class="opt" role="option" data-v="calculator"><span class="nm"><span>Kalkulator dawek</span></span></li>
+            <li class="opt" role="option" data-v="cautare"><span class="nm"><span>Wyszukiwanie środków</span></span></li>
+            <li class="opt" role="option" data-v="date"><span class="nm"><span>Dawka lub środek wydaje się błędny</span></span></li>
+            <li class="opt" role="option" data-v="inscriere"><span class="nm"><span>Zapis / e-mail</span></span></li>
+            <li class="opt" role="option" data-v="altceva"><span class="nm"><span>Coś innego</span></span></li>
+          </ul></div>
+        </div>
+        <div class="rep-desc">
+          <label class="area" for="r-desc"><span class="sr-only">Opis problemu</span><textarea id="r-desc" rows="6" placeholder="Opisz szczegółowo swój problem"></textarea></label>
+          <p class="hint" id="r-desc-h">Minimum 10, maksimum 2000 znaków</p>
+        </div>
+        <div class="att" id="r-att">
+          <div class="att-top">
+            <span class="att-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10a2 2 0 0 1 2 2v16l-3-2-2 2-2-2-2 2-2-2-3 2V5a2 2 0 0 1 2-2Z"/><path d="M9 8h6M9 12h6" opacity=".55"/></svg></span>
+            <p class="att-t"><b>Załącz zdjęcie/wideo</b> żebyśmy zrozumieli, co nie działa</p>
+          </div>
+          <div class="att-d">
+            <p>Tylko JPG, PNG (maks. 10MB) i wideo MP4, MOV (maks. 20MB)</p>
+            <p>Maksymalnie 5 plików, 50MB łącznie</p>
+            <p class="att-err" role="alert" hidden></p>
+          </div>
+          <div class="att-list" id="r-att-list" hidden></div>
+          <div class="att-act">
+            <button type="button" class="att-more" id="r-att-more" hidden>Pokaż więcej</button>
+            <button type="button" class="att-btn" id="r-att-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5" opacity=".55"/></svg><span>Załącz</span></button>
+          </div>
+          <input type="file" id="r-file" accept="image/jpeg,image/png,video/mp4,video/quicktime,.jpg,.jpeg,.png,.mp4,.mov" multiple hidden>
+        </div>
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn ghost" id="r-go" type="submit" disabled><span>Wyślij</span><svg class="arr" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <p class="rep-msg" id="r-msg" role="status" aria-live="polite"></p>
+        <p class="legal-note">Używamy e-maila i plików tylko do rozwiązania problemu; pliki są usuwane po 90 dniach. <a href="/pl/confidentialitate/">Polityka prywatności</a></p>
+        <div class="rep-done" id="r-done" hidden>
+          <span class="tag lime">Otrzymaliśmy zgłoszenie <b id="r-done-nr"></b></span>
+          <p>Dziękujemy! Odpowiemy na <b id="r-done-email"></b> najszybciej, jak to możliwe.</p>
+          <button type="button" class="att-more" id="r-again">Wyślij kolejne zgłoszenie</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<div class="spick" id="spick" role="dialog" aria-modal="true" aria-labelledby="sp-title" hidden>
+  <div class="ph"><button class="back" type="button" id="sp-back" aria-label="Wstecz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><h4 id="sp-title"></h4></div>
+  <label class="field has-input is-on" id="sp-f" for="sp-in"><span class="col"><small id="sp-l"></small><span class="val"><i class="ico" id="sp-i"></i><input id="sp-in" type="text" autocomplete="off" spellcheck="false" placeholder="" role="combobox" aria-expanded="true" aria-controls="sp-list"><button type="button" class="x" id="sp-x" aria-label="Wyczyść" hidden>×</button></span></span></label>
+  <div class="list" id="sp-list" role="listbox"></div>
+  <button class="sgo" id="sp-go" type="button" disabled>Szukaj</button>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="cols reveal">
+      <div><h4>Firma</h4><ul><li><a href="#" data-soon>O nas</a></li><li><a href="#" data-soon>Aktualności</a></li><li><a href="#" data-soon>Kontakt</a></li></ul></div>
+      <div><h4>Zasoby</h4><ul><li><a href="#" data-soon>Centrum pomocy</a></li><li><a href="#" data-soon>Wsparcie</a></li></ul></div>
+      <div><h4>Informacje prawne</h4><ul><li><a href="/pl/termeni/">Regulamin</a></li><li><a href="/pl/confidentialitate/">Prywatność</a></li><li><a href="/pl/confidentialitate/#cookies">Pliki cookie</a></li><li><a href="/pl/termeni/#licente">Licencje</a></li></ul></div>
+    </div>
+    <div class="bottom reveal">
+      <span>© 2026 AgroSphere. Wszelkie prawa zastrzeżone.</span>
+      <div class="social">
+        <a href="https://www.linkedin.com/company/agrosphere-for-farmers/" target="_blank" rel="noopener" aria-label="AgroSphere na LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6.5 0H13v1.7c.6-1.1 2-2 4-2 4.2 0 5 2.7 5 6.3V21h-4v-5.3c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21h-4V9Z"/></svg></a>
+        <a href="https://www.facebook.com/profile.php?id=61596213154257" target="_blank" rel="noopener" aria-label="AgroSphere na Facebooku"><svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8h3.3Z"/></svg></a>
+        <a href="https://www.instagram.com/agrosphere.for.farmers/" target="_blank" rel="noopener" aria-label="AgroSphere na Instagramie"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="wordmark" aria-hidden="true">
+    <img src="/assets/logo-agrosphere.svg" alt="" width="1585" height="311" loading="lazy">
+  </div>
+</footer>
+
+<script src="/pl/analytics.js"></script>
+<script src="/pl/antibot.js"></script>
+<script src="/pl/gads.js"></script>
+<script src="/pl/main.js"></script>
+<script src="/pl/calc.js"></script>
+<script src="/pl/search.js"></script>
+<script src="/pl/report.js"></script>
+</body>
+</html>
