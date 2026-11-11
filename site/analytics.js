@@ -87,7 +87,7 @@
         autocapture: false,
         capture_pageview: true,
         capture_pageleave: true,
-        before_send: function (ev) { if (intern && ev && ev.properties) ev.properties.is_internal = true; return ev; }, /* și pentru $pageview, care pleacă înainte de register */
+        before_send: function (ev) { if (ev && ev.properties) { if (intern) ev.properties.is_internal = true; ev.properties.limba = document.documentElement.lang || 'ro'; } return ev; }, /* și pentru $pageview, care pleacă înainte de register; limba = versiunea site-ului (ro / pl) */
         disable_session_recording: intern || consent !== 'yes' || Math.random() > 0.1, /* înregistrarea sesiunilor doar cu acord (GDPR), ~10% din vizite */
         session_recording: { maskAllInputs: true, maskTextSelector: 'input, textarea, .form-msg, [data-done-email], #r-done-email, .att-list' },
         property_denylist: ['$current_url_email'],

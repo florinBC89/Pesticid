@@ -129,6 +129,20 @@ a.menu-it:not(.is-on):hover { color: var(--ink); }
 .menu-it.is-soon { justify-content: flex-end; align-items: flex-start; color: var(--muted); cursor: default; }
 .soon { display: inline-flex; padding: 3px 8px; border-radius: 999px; background: #ceee58; color: var(--fg); font-size: 13px; line-height: 16px; font-weight: 400; white-space: nowrap; }
 .burger { display: none; }
+/* ---------- selector limbă / țară (RO · PL), înainte de „Am o problemă”; ascuns până la lansarea versiunii PL ---------- */
+.nav-end { display: flex; align-items: center; gap: 14px; flex: 0 0 auto; }
+.lang { position: relative; }
+.lang-btn { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px 0 12px; border: 0; border-radius: 999px; background: var(--surface); color: var(--fg); font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.lang-btn:hover { background: var(--surface-2); }
+.lang-cur { display: inline-flex; align-items: center; gap: 8px; }
+.lang .flag { flex: 0 0 auto; display: block; border-radius: 3px; box-shadow: 0 0 0 1px rgba(17, 17, 17, 0.12); }
+.lang .chev { flex: 0 0 11px; width: 11px; height: 7px; background: no-repeat center / 11px 7px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='8' viewBox='0 0 13 8'%3E%3Cpath d='M1 1l5.5 5.5L12 1' fill='none' stroke='%23242c3c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); transition: transform 0.2s; }
+.lang.is-open .chev { transform: rotate(180deg); }
+.lang-dd { position: absolute; z-index: 5; top: calc(100% + 8px); right: 0; min-width: 168px; margin: 0; padding: 8px; list-style: none; border-radius: 20px; background: var(--surface); box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15); }
+.lang-dd[hidden] { display: none; }
+.lang-op { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; color: var(--fg); font-size: 15px; white-space: nowrap; }
+.lang-op:hover { background: var(--surface-2); }
+.lang-op[aria-current="true"] { font-weight: 600; background: var(--surface-2); }
 .mmenu { display: none; }
 
 /* ---------- hero ---------- */
@@ -819,6 +833,8 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 /* ---------- până la 1024px (telefoane, tablete) meniul nu mai încape pe un rând: hamburger + panou (Figma 2210:34545, 2211:36299) ---------- */
 @media (max-width: 1024px) {
   .menu, .nav .nav-btn { display: none; }
+  .nav-end { margin-left: auto; margin-right: 10px; }
+  .lang-btn { height: 40px; padding: 0 12px 0 10px; font-size: 14px; }
   .burger { display: inline-flex; flex-direction: column; justify-content: space-between; width: 44px; height: 44px; margin-right: -10px; padding: 12px 10px; border: 0; border-radius: 12px; background: none; color: var(--fg); }
   .burger span { display: block; height: 3px; border-radius: 99px; background: currentColor; transition: transform 0.25s var(--ease), opacity 0.2s; }
   .nav.menu-open .burger span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }

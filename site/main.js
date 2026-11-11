@@ -323,6 +323,41 @@
     window.matchMedia('(min-width: 1025px)').addEventListener('change', function (m) { if (m.matches) setMenu(false); });
   }
 
+  /* selector limbă / țară (RO · PL) — vizibil pe paginile /pl/ și, până la lansare, doar în beta (?beta=pl; ?beta=0 îl ascunde) */
+  var langBox = document.querySelector('[data-lang]');
+  if (langBox) {
+    var esPl = document.documentElement.lang === 'pl', langOn = esPl;
+    try {
+      var bq = new URLSearchParams(location.search).get('beta');
+      if (bq === 'pl') localStorage.setItem('agrosphere.beta-pl', '1');
+      if (bq === '0') localStorage.removeItem('agrosphere.beta-pl');
+      langOn = langOn || localStorage.getItem('agrosphere.beta-pl') === '1';
+    } catch (e) {}
+    if (langOn) {
+      var lBtn = langBox.querySelector('.lang-btn'), lDd = langBox.querySelector('.lang-dd');
+      var cur = esPl ? 'pl' : 'ro', opCur = langBox.querySelector('[data-lang-op="' + cur + '"]');
+      if (opCur) { lBtn.querySelector('.lang-cur').innerHTML = opCur.querySelector('svg').outerHTML + '<span>' + cur.toUpperCase() + '</span>'; opCur.setAttribute('aria-current', 'true'); }
+      lBtn.setAttribute('aria-label', esPl ? 'Język i kraj: Polska' : 'Limba și țara: România');
+      /* aceeași pagină în cealaltă limbă; Plan de fertilizare nu există încă în PL → prima pagină */
+      var cale = location.pathname.replace(/index\.html$/, ''), roCale = cale.replace(/^\/pl(\/|$)/, '/'), plCale = '/pl' + roCale;
+      if (/^\/plan-fertilizare\//.test(roCale)) plCale = '/pl/';
+      var paginaReala = /^\/(pl\/)?(abonamente\/|plan-fertilizare\/)?$/.test(cale);
+      langBox.querySelectorAll('[data-lang-op]').forEach(function (a) {
+        if (paginaReala) a.setAttribute('href', (a.getAttribute('data-lang-op') === 'pl' ? plCale : roCale) + location.hash);
+        a.addEventListener('click', function () {
+          var tinta = a.getAttribute('data-lang-op');
+          try { localStorage.setItem('agrosphere.limba', tinta); } catch (e) {}
+          if (window.track) window.track('limba_schimbata', { din: cur, in: tinta });
+        });
+      });
+      var setLang = function (open) { lBtn.setAttribute('aria-expanded', open ? 'true' : 'false'); langBox.classList.toggle('is-open', open); lDd.hidden = !open; };
+      lBtn.addEventListener('click', function () { setLang(lDd.hidden); });
+      document.addEventListener('click', function (e) { if (!langBox.contains(e.target)) setLang(false); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lDd.hidden) { setLang(false); lBtn.focus(); } });
+      langBox.hidden = false;
+    }
+  }
+
   /* fără internet: un service worker mic arată pagina „Nu ai internet” (offline.html) în loc de eroarea browserului */
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
     window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });
