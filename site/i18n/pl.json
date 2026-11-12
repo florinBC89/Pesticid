@@ -2162,8 +2162,8 @@
  {
   "text": "fără pauză în registru",
   "tip": "js",
-  "pl": "brak karencji w rejestrze",
-  "nota": ""
+  "pl": "karencja: sprawdź etykietę",
+  "nota": " [PL] registrul polonez nu conține karencja; valoarea vine doar din etichete."
  },
  {
   "text": "Dăunător",
@@ -2600,8 +2600,8 @@
  {
   "text": "fără pauză",
   "tip": "js",
-  "pl": "bez karencji",
-  "nota": "folosit și ca cheie comparată (k !== 'fără pauză'): trebuie tradus identic în toate aparițiile"
+  "pl": "karencja: patrz etykieta",
+  "nota": "folosit și ca cheie comparată (k !== 'fără pauză'): trebuie tradus identic în toate aparițiile [PL] registrul polonez nu conține karencja; valoarea vine doar din etichete."
  },
  {
   "text": "Culturi omologate",
@@ -2720,8 +2720,8 @@
  {
   "text": "nespecificată în registrul ANF",
   "tip": "js",
-  "pl": "nieokreślony w rejestrze ANF",
-  "nota": "se referă la okres karencji (masculin)"
+  "pl": "brak w rejestrze — sprawdź etykietę",
+  "nota": "se referă la okres karencji (masculin) [PL] registrul polonez nu conține karencja; valoarea vine doar din etichete."
  },
  {
   "text": "de la ultimul tratament",

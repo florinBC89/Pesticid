@@ -19,7 +19,7 @@
     doza: $('.doza'), btn: $('#c-go'), res: $('#c-res'), cards: $('#c-cards'), note: $('.calc-note')
   };
   var D = null, produse = [], popular = [], sel = { p: null, c: null, t: null, rec: null, culOpts: [], tinOpts: [] };
-  var fmt = function (n, d) { return new Intl.NumberFormat('ro-RO', { maximumFractionDigits: d == null ? 2 : d }).format(n); };
+  var fmt = function (n, d) { return new Intl.NumberFormat('pl-PL', { maximumFractionDigits: d == null ? 2 : d }).format(n); };
   var norm = function (s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); };
   function unitProdus(u) { if (!u) return ''; if (u.indexOf('ml') === 0) return 'ml'; if (u.indexOf('L') === 0) return 'L'; if (u.indexOf('kg') === 0) return 'kg'; if (u.indexOf('g') === 0) return 'g'; return u; }
   function estePerHa(u) { return u === 'L/ha' || u === 'kg/ha' || u === 'ml/ha' || u === 'g/ha'; }
@@ -38,7 +38,7 @@
   };
   function ico(n) { return '<svg viewBox="0 0 24 24" fill="none" stroke="#3f4b66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICO[n] + '</svg>'; }
   function tipIco(t) { return { daunator: 'bug', boala: 'leaf', buruiana: 'weed' }[t] || 'leaf'; }
-  var GEN = { 'dni': 'dni', 'godziny': 'godzin', 'minuty': 'minut', 'środki': 'środków', 'uprawy': 'upraw', 'agrofagi': 'agrofagów', 'rejestracje': 'rejestracji', 'szkodniki': 'szkodników', 'choroby': 'chorób', 'chwasty': 'chwastów', 'problemy fizjologiczne': 'problemów fizjologicznych', 'zarejestrowane środki': 'zarejestrowanych środków', 'zarejestrowane uprawy': 'zarejestrowanych upraw', 'zarejestrowane agrofagi': 'zarejestrowanych agrofagów' }; function maiMulte(n) { var k = n % 10, h = n % 100; return k >= 2 && k <= 4 && (h < 12 || h > 14); } function plural(n, one, few, many) { return n === 1 ? '1 ' + one : n + ' ' + (maiMulte(n) ? few : (GEN[many] || many)); }
+  var GEN = { 'dni': 'dni', 'godziny': 'godzin', 'minuty': 'minut', 'środki': 'środków', 'uprawy': 'upraw', 'agrofagi': 'agrofagów', 'rejestracje': 'rejestracji', 'szkodniki': 'szkodników', 'choroby': 'chorób', 'chwasty': 'chwastów', 'problemy fizjologiczne': 'problemów fizjologicznych', 'zarejestrowane środki': 'zarejestrowanych środków', 'zarejestrowane uprawy': 'zarejestrowanych upraw', 'zarejestrowane agrofagi': 'zarejestrowanych agrofagów' }; function maiMulte(n) { var k = n % 10, h = n % 100; return k >= 2 && k <= 4 && (h < 12 || h > 14); } var TIPN = { Erbicid: 'Herbicyd', Fungicid: 'Fungicyd', Insecticid: 'Insektycyd', Moluscocid: 'Moluskocyd', Nematocid: 'Nematocyd', Rodenticid: 'Rodentycyd', 'Regulator de crestere': 'Regulator wzrostu', Altul: 'Inny' }; function plural(n, one, few, many) { return n === 1 ? '1 ' + one : n + ' ' + (maiMulte(n) ? few : (GEN[many] || many)); }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   /* ---------- combo generic: câmp cu input, listă de max. 10, × de golire ---------- */
@@ -100,7 +100,7 @@
         hits.forEach(function (it, i) { h += '<button type="button" class="schip" data-id="' + i + '">' + ico(it.ico) + '<span>' + esc(it.label) + '</span><small>' + esc(it.tag) + '</small></button>'; });
         h += '</div></div>';
         if (!norm(q) && c === cProd && produse.length > hits.length) {
-          var all = produse.slice().sort(function (a, b) { return a.nume.localeCompare(b.nume, 'ro'); }), lim = tot ? all.length : MAXP;
+          var all = produse.slice().sort(function (a, b) { return a.nume.localeCompare(b.nume, 'pl'); }), lim = tot ? all.length : MAXP;
           h += '<div class="sgrp"><div class="hd">Wszystkie środki, alfabetycznie<small>' + all.length + '</small></div><div class="swrap">';
           all.slice(0, lim).forEach(function (it) { h += '<button type="button" class="schip" data-id="' + (hits.push(it) - 1) + '">' + ico(it.ico) + '<span>' + esc(it.label) + '</span><small>' + esc(it.tag) + '</small></button>'; });
           if (all.length > lim) h += '<button type="button" class="schip more" data-more="tot">… jeszcze ' + (all.length - lim) + '</button>';
@@ -141,11 +141,11 @@
   });
 
   /* ---------- încărcare date ---------- */
-  fetch('/assets/calc-data.json').then(function (r) { return r.json(); }).then(function (data) {
+  fetch('/assets/calc-data-pl.json').then(function (r) { return r.json(); }).then(function (data) {
     D = data; if (window.track) window.track.register({ data_version: data.generat || null });
-    produse = data.produse.map(function (p) { return { id: p[0], nume: p[1], label: p[1], tip: p[3], ico: 'bottle', tag: p[3] || 'Środek', tagCls: tipCls(p[3]), key: p[1] + ' ' + (p[5] || []).join(' ') }; });
+    produse = data.produse.map(function (p) { return { id: p[0], nume: p[1], label: p[1], tip: p[3], ico: 'bottle', tag: TIPN[p[3]] || p[3] || 'Środek', tagCls: tipCls(p[3]), key: p[1] + ' ' + (p[5] || []).join(' ') }; });
     var nc = {}; data.recs.forEach(function (r) { (nc[r[0]] = nc[r[0]] || {})[r[1]] = 1; });
-    popular = produse.slice().sort(function (a, b) { return Object.keys(nc[b.id] || {}).length - Object.keys(nc[a.id] || {}).length || a.nume.localeCompare(b.nume, 'ro'); }).slice(0, MAX);
+    popular = produse.slice().sort(function (a, b) { return Object.keys(nc[b.id] || {}).length - Object.keys(nc[a.id] || {}).length || a.nume.localeCompare(b.nume, 'pl'); }).slice(0, MAX);
     cProd.enable(true, 'Szukaj lub wybierz środek');
     els.hint.innerHTML = '<b>' + produse.length + '</b> ' + (produse.length === 1 ? 'środek' : maiMulte(produse.length) ? 'środki' : 'środków') + ' w rejestrze';
     root.classList.add('is-ready');
@@ -157,7 +157,7 @@
     resetCultura();
     var byC = {}; D.recs.forEach(function (r) { if (r[0] === p.id) (byC[r[1]] = byC[r[1]] || {})[r[2]] = D.tinte[r[2]][1]; });
     var L = { daunator: ['szkodnik', 'szkodniki', 'szkodniki'], boala: ['choroba', 'choroby', 'choroby'], buruiana: ['chwast', 'chwasty', 'chwasty'] };
-    sel.culOpts = Object.keys(byC).map(Number).sort(function (a, b) { return D.culturi[a].localeCompare(D.culturi[b], 'ro'); }).map(function (id) {
+    sel.culOpts = Object.keys(byC).map(Number).sort(function (a, b) { return D.culturi[a].localeCompare(D.culturi[b], 'pl'); }).map(function (id) {
       var ts = Object.keys(byC[id]), kinds = {}; ts.forEach(function (t) { kinds[byC[id][t]] = 1; }); var k = Object.keys(kinds); var lbl = (k.length === 1 && L[k[0]]) || ['agrofag', 'agrofagi', 'agrofagi'];
       return { id: id, label: D.culturi[id], ico: 'wheat', tag: plural(ts.length, lbl[0], lbl[1], lbl[2]), tagCls: 'cnt' };
     });
@@ -170,7 +170,7 @@
     sel.c = o.id; sel.t = null; sel.rec = null; cCul.set(o, o.label, o.tag, 'cnt');
     var seen = {}, opts = [];
     D.recs.forEach(function (r) { if (r[0] === sel.p.id && r[1] === sel.c && !seen[r[2]]) { seen[r[2]] = 1; var sa = {}; D.recs.forEach(function (q) { if (q[1] === sel.c && q[2] === r[2]) sa[q[0]] = 1; }); opts.push({ id: r[2], label: D.tinte[r[2]][0], tip: D.tinte[r[2]][1], ico: tipIco(D.tinte[r[2]][1]), tag: plural(Object.keys(sa).length, 'środek', 'środki', 'środki'), tagCls: 'cnt' }); } });
-    opts.sort(function (a, b) { return a.label.localeCompare(b.label, 'ro'); });
+    opts.sort(function (a, b) { return a.label.localeCompare(b.label, 'pl'); });
     sel.tinOpts = opts; cTin.clear(false); cTin.enable(true, 'Wybierz szkodnika / chorobę / chwast'); els.dozaIn.value = '';
     if (opts.length === 1) { via = 'auto'; alegeTinta(opts[0]); } else { actualizeaza(); setTimeout(function () { cTin.input.focus(); }, 0); }
   }

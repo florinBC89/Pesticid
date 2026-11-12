@@ -1,7 +1,7 @@
 /* Pesticid — căutare avansată: Cultură · Dăunător / boală / buruiană · Produs (opțional).
    Figma: „Search avansat” 2099:47194 (bară, stări, liste cu chip-uri, selectorul pe tot ecranul — Explorare B 2108:22713)
    și „Search v3” 2070:21803 (fișele de rezultat 7–9, listele de omologări 2/4/5/6).
-   Date: assets/calc-data.json (produse omologate, culturi cu ierarhia ANF, dăunători/boli/buruieni, recomandări, sinonime).
+   Date: assets/calc-data.json (produse omologate, culturi cu ierarhia MRiRW, dăunători/boli/buruieni, recomandări, sinonime).
    Regula „Caută”: inactiv cât nu e nimic tastat sau ales; activ când textul are ≥ 3 litere și există potriviri (face ce face Enter)
    sau când există cel puțin o valoare aleasă. Alegerea unei valori precompletează câmpul și pornește căutarea automat. */
 (function () {
@@ -20,14 +20,14 @@
   var mq = window.matchMedia('(max-width: 700px)');
   var mobile = function () { return mq.matches; };
 
-  var fmt = function (n, d) { return new Intl.NumberFormat('ro-RO', { maximumFractionDigits: d == null ? 2 : d }).format(n); };
+  var fmt = function (n, d) { return new Intl.NumberFormat('pl-PL', { maximumFractionDigits: d == null ? 2 : d }).format(n); };
   var norm = function (s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); };
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var lower = function (s) { return String(s).charAt(0).toLowerCase() + String(s).slice(1); };
-  var GEN = { 'dni': 'dni', 'godziny': 'godzin', 'minuty': 'minut', 'środki': 'środków', 'uprawy': 'upraw', 'agrofagi': 'agrofagów', 'rejestracje': 'rejestracji', 'szkodniki': 'szkodników', 'choroby': 'chorób', 'chwasty': 'chwastów', 'problemy fizjologiczne': 'problemów fizjologicznych', 'zarejestrowane środki': 'zarejestrowanych środków', 'zarejestrowane uprawy': 'zarejestrowanych upraw', 'zarejestrowane agrofagi': 'zarejestrowanych agrofagów' }; function maiMulte(n) { var k = n % 10, h = n % 100; return k >= 2 && k <= 4 && (h < 12 || h > 14); } function pl(n, one, many) { return n === 1 ? '1 ' + one : n + ' ' + (maiMulte(n) ? many : (GEN[many] || many)); }
+  var GEN = { 'dni': 'dni', 'godziny': 'godzin', 'minuty': 'minut', 'środki': 'środków', 'uprawy': 'upraw', 'agrofagi': 'agrofagów', 'rejestracje': 'rejestracji', 'szkodniki': 'szkodników', 'choroby': 'chorób', 'chwasty': 'chwastów', 'problemy fizjologiczne': 'problemów fizjologicznych', 'zarejestrowane środki': 'zarejestrowanych środków', 'zarejestrowane uprawy': 'zarejestrowanych upraw', 'zarejestrowane agrofagi': 'zarejestrowanych agrofagów' }; function maiMulte(n) { var k = n % 10, h = n % 100; return k >= 2 && k <= 4 && (h < 12 || h > 14); } var TIPN = { Erbicid: 'Herbicyd', Fungicid: 'Fungicyd', Insecticid: 'Insektycyd', Moluscocid: 'Moluskocyd', Nematocid: 'Nematocyd', Rodenticid: 'Rodentycyd', 'Regulator de crestere': 'Regulator wzrostu', Altul: 'Inny' }; function pl(n, one, many) { return n === 1 ? '1 ' + one : n + ' ' + (maiMulte(n) ? many : (GEN[many] || many)); }
   function unitRo(u) { return (u || '').replace(' apa', ' wody').replace('1000', '1.000').replace(' sem', ' nasion'); }
   function fmtDoza(r, cuUnit) { return (r[3] === r[4] ? fmt(r[3], 4) : fmt(r[3], 4) + '–' + fmt(r[4], 4)) + (cuUnit === false ? '' : ' ' + unitRo(r[5])); }
-  function pauza(v) { return v == null ? 'brak karencji w rejestrze' : 'karencja ' + v + (v === 1 ? ' dzień' : ' dni'); }
+  function pauza(v) { return v == null ? 'karencja: sprawdź etykietę' : 'karencja ' + v + (v === 1 ? ' dzień' : ' dni'); }
   function modLabel(m) { return { foliar: 'oprysk nalistny', postemergent: 'powschodowo', preemergent: 'przedwschodowo', preplantare: 'przed sadzeniem', tratament_samanta: 'zaprawianie nasion', postrecoltare: 'po zbiorze' }[m] || m; }
   function dataRo(s) { return s ? s.slice(8, 10) + '.' + s.slice(5, 7) + '.' + s.slice(0, 4) : ''; }
   var TIP = { daunator: ['szkodnik', 'szkodniki', 'Szkodnik', 'bug', 'c-bug'], boala: ['choroba', 'choroby', 'Choroba', 'leaf', 'c-leaf'], buruiana: ['chwast', 'chwasty', 'Chwast', 'weed', 'c-weed'], fiziologic: ['problem fizjologiczny', 'problemy fizjologiczne', 'Fizjologiczny', 'leaf', 'c-fiz'] };
@@ -49,7 +49,7 @@
   /* ---------- date ---------- */
   var D = null, E = { c: {}, t: {}, p: {} }, N = { c: 0, t: 0, p: 0 }, sel = { c: null, t: null, p: null }, expanded = {};
   function icoOf(it) { return it.k === 'c' ? 'wheat' : it.k === 'p' ? 'bottle' : TIP[it.e.tip] ? TIP[it.e.tip][3] : 'leaf'; }
-  fetch('/assets/calc-data.json').then(function (r) { return r.json(); }).then(function (data) {
+  fetch('/assets/calc-data-pl.json').then(function (r) { return r.json(); }).then(function (data) {
     D = data;
     var syn = { c: {}, t: {} };
     ((data.sinonime || {}).cultura || []).forEach(function (s) { (syn.c[s[0]] = syn.c[s[0]] || []).push(s[1]); });
@@ -81,8 +81,8 @@
       return { e: E[k][id], id: id, k: k, cnt: n, lbl: cd === 0 ? pl(n, 'środek', 'środki') : cd === 1 ? pl(n, 'uprawa', 'uprawy') : kindWord(ids, n), rec: dose[id] };
     });
   }
-  var byCnt = function (a, b) { return b.cnt - a.cnt || a.e.nume.localeCompare(b.e.nume, 'ro'); };
-  var byName = function (a, b) { return a.e.nume.localeCompare(b.e.nume, 'ro'); };
+  var byCnt = function (a, b) { return b.cnt - a.cnt || a.e.nume.localeCompare(b.e.nume, 'pl'); };
+  var byName = function (a, b) { return a.e.nume.localeCompare(b.e.nume, 'pl'); };
   function match(list, q) { var pre = [], mid = []; list.forEach(function (it) { if (norm(it.e.nume).indexOf(q) === 0) pre.push(it); else if (it.e.key.indexOf(q) >= 0) mid.push(it); }); return pre.sort(byCnt).concat(mid.sort(byCnt)); }
   function ctxText() { var p = []; if (sel.t) p.push('dla ' + E.t[sel.t].nume); if (sel.c) p.push('w uprawie ' + E.c[sel.c].nume); if (sel.p) p.push('ze środkiem ' + E.p[sel.p].nume); return p.join(' '); }
 
@@ -99,7 +99,7 @@
       ['c', 't', 'p'].forEach(function (o) { if (o !== k && !sel[o]) others = others.concat(match(items(o), q).map(function (it) { it.other = true; return it; })); });
       lastHits = others;
       if (others.length) out.push({ hd: 'Nic w polu ' + lower(KL[k].replace(' (opcjonalnie)', '')) + ' — wyniki w innym polu', chips: others, limit: MAX, key: 'o' + q, icon: true });
-      else out.push({ empty: 'Brak wyników dla „' + q + '” w rejestrze ANF. Spróbuj innej nazwy, dawnej nazwy lub synonimu (np. „păduchi”, „grau toamna”).' });
+      else out.push({ empty: 'Brak wyników dla „' + q + '” w rejestrze MRiRW. Spróbuj innej nazwy, dawnej nazwy lub synonimu (np. „mszyce”, „pszenica ozima”).' });
       return out;
     }
     lastHits = [];
@@ -111,15 +111,15 @@
       var byPar = {}, cnt = {}; all.forEach(function (it) { cnt[it.id] = it; });
       all.forEach(function (it) { if (it.e.parent && E.c[it.e.parent]) (byPar[it.e.parent] = byPar[it.e.parent] || []).push(it); });
       Object.keys(byPar).map(Number).sort(function (a, b) { return byPar[b].length - byPar[a].length || (cnt[b] ? cnt[b].cnt : 0) - (cnt[a] ? cnt[a].cnt : 0); }).forEach(function (par) { rows.push({ lbl: E.c[par].nume, chips: byPar[par].sort(byCnt) }); });
-      if (rows.length) out.push({ hd: 'Grupy z rejestru ANF', rows: rows, key: 'grp' });
+      if (rows.length) out.push({ hd: 'Grupy z rejestru MRiRW', rows: rows, key: 'grp' });
     } else if (k === 't') {
       ['daunator', 'boala', 'buruiana', 'fiziologic'].forEach(function (tip) { var xs = all.filter(function (it) { return it.e.tip === tip; }); if (xs.length) rows.push({ lbl: TIP[tip][2].replace('Szkodnik', 'Szkodniki').replace('Choroba', 'Choroby').replace('Chwast', 'Chwasty') + ' · ' + xs.length, chips: xs.sort(byCnt).slice(0, PERTIP) }); });
-      out.push({ hd: 'Według typu, z rejestru ANF', rows: rows, key: 'grp' });
+      out.push({ hd: 'Według typu, z rejestru MRiRW', rows: rows, key: 'grp' });
     } else {
       var tips = ['Erbicid', 'Fungicid', 'Insecticid'], rest = all.filter(function (it) { return tips.indexOf(it.e.tip) < 0; });
       tips.forEach(function (tip) { var xs = all.filter(function (it) { return it.e.tip === tip; }); if (xs.length) rows.push({ lbl: TIPP[tip].charAt(0).toUpperCase() + TIPP[tip].slice(1) + ' · ' + xs.length, chips: xs.sort(byCnt).slice(0, PERTIP) }); });
       if (rest.length) rows.push({ lbl: 'Inne · ' + rest.length, chips: rest.sort(byCnt).slice(0, PERTIP) });
-      out.push({ hd: 'Według typu, z rejestru ANF', rows: rows, key: 'grp' });
+      out.push({ hd: 'Według typu, z rejestru MRiRW', rows: rows, key: 'grp' });
     }
     out.push({ hd: (k === 'c' ? 'Wszystkie uprawy' : k === 't' ? 'Wszystkie' : 'Wszystkie środki') + ', alfabetycznie', n: all.length, chips: all.slice().sort(byName), limit: MAX, key: 'all', nocnt: true });
     return out;
@@ -321,24 +321,24 @@
   function pairs(rs, a, b) { var m = {}; rs.forEach(function (r) { m[r[a] + '|' + r[b]] = 1; }); return Object.keys(m).length; }
   function breakdown(ids, k) {
     var m = {}; ids.forEach(function (id) { var e = E[k][id]; m[e.tip] = (m[e.tip] || 0) + 1; });
-    return Object.keys(m).sort(function (a, b) { return m[b] - m[a]; }).map(function (tip) { return k === 't' ? (TIP[tip] ? pl(m[tip], TIP[tip][0], TIP[tip][1]).replace(/^1 problemă fiziologică$/, '1 fizjologiczny') : m[tip] + ' ' + tip) : (m[tip] === 1 ? '1 ' + lower(tip) : m[tip] + ' ' + (TIPP[tip] || lower(tip))); }).join(' · ');
+    return Object.keys(m).sort(function (a, b) { return m[b] - m[a]; }).map(function (tip) { return k === 't' ? (TIP[tip] ? pl(m[tip], TIP[tip][0], TIP[tip][1]).replace(/^1 problemă fiziologică$/, '1 fizjologiczny') : m[tip] + ' ' + tip) : (m[tip] === 1 ? '1 ' + lower(TIPN[tip] || tip) : m[tip] + ' ' + (TIPP[tip] || lower(tip))); }).join(' · ');
   }
   function modes(rs) { var m = {}; rs.forEach(function (r) { if (r[7]) m[r[7]] = 1; }); var k = Object.keys(m); return k.length === 1 ? modLabel(k[0]) : ''; }
   function stat(k, v, s) { return '<div class="sstat"><div class="k">' + esc(k) + '</div><div class="v">' + esc(v) + '</div><div class="s">' + esc(s) + '</div></div>'; }
   function more(key, text) { return '<button type="button" class="smore" data-more="' + key + '">' + esc(text) + '</button>'; }
-  function names(ids, k, n) { var xs = ids.map(function (id) { return k === 'c' ? E[k][id].nume.toLowerCase() : E[k][id].nume; }).sort(function (a, b) { return a.localeCompare(b, 'ro'); }); return xs.slice(0, n).join(', ') + (xs.length > n ? '…' : ''); }
+  function names(ids, k, n) { var xs = ids.map(function (id) { return k === 'c' ? E[k][id].nume.toLowerCase() : E[k][id].nume; }).sort(function (a, b) { return a.localeCompare(b, 'pl'); }); return xs.slice(0, n).join(', ') + (xs.length > n ? '…' : ''); }
 
   /* fișa culturii (Search v3, cadrul 8) */
   function cardC() {
     var c = E.c[sel.c], rs = D.recs.filter(function (r) { return r[1] === c.id; }), ts = distinct(rs, 2), ps = distinct(rs, 0);
-    var sub = []; if (c.parent && E.c[c.parent]) sub.push('grupa „' + E.c[c.parent].nume + '” w rejestrze ANF'); if (c.syn.length) sub.push('synonimy w bazie: ' + c.syn.join(', ')); if (c.children) sub.push('podtypy: ' + c.children.map(function (id) { return E.c[id].nume; }).join(', ')); if (!sub.length) sub.push('uprawa z rejestru ANF');
+    var sub = []; if (c.parent && E.c[c.parent]) sub.push('grupa „' + E.c[c.parent].nume + '” w rejestrze MRiRW'); if (c.syn.length) sub.push('synonimy w bazie: ' + c.syn.join(', ')); if (c.children) sub.push('podtypy: ' + c.children.map(function (id) { return E.c[id].nume; }).join(', ')); if (!sub.length) sub.push('uprawa z rejestru MRiRW');
     var h = '<div class="scard"><div class="sc-head"><div><h3>' + esc(c.nume) + '</h3><p>' + esc(sub.join(' · ')) + '</p></div><div class="sc-tags">' + (c.parent && E.c[c.parent] ? '<span class="stag lime">' + esc(E.c[c.parent].nume) + '</span>' : '') + '</div></div>';
     h += '<div class="sc-stats">' + stat('Zarejestrowane agrofagi', ts.length, breakdown(ts, 't')) + stat('Zarejestrowane środki', ps.length, breakdown(ps, 'p')) + stat('Rejestracje (agrofag × środek)', pairs(rs, 2, 0), 'wszystkie z dawką do obliczenia') + '</div>';
     h += '<p class="sc-lead">Wybierz agrofaga — liczba pokazuje, ile zarejestrowanych środków jest na niego w uprawie ' + esc(lower(c.nume)) + '</p><div class="sc-cols">';
     ['daunator', 'boala', 'buruiana', 'fiziologic'].forEach(function (tip) {
       var xs = ts.filter(function (t) { return E.t[t].tip === tip; }); if (!xs.length) return;
       var cnt = {}; rs.forEach(function (r) { if (E.t[r[2]].tip === tip) (cnt[r[2]] = cnt[r[2]] || {})[r[0]] = 1; });
-      xs = xs.map(function (t) { return { id: t, n: Object.keys(cnt[t]).length }; }).sort(function (a, b) { return b.n - a.n || E.t[a.id].nume.localeCompare(E.t[b.id].nume, 'ro'); });
+      xs = xs.map(function (t) { return { id: t, n: Object.keys(cnt[t]).length }; }).sort(function (a, b) { return b.n - a.n || E.t[a.id].nume.localeCompare(E.t[b.id].nume, 'pl'); });
       var key = 'c' + c.id + ':' + tip, lim = expanded[key] ? xs.length : ROWS;
       h += '<div class="scol"><div class="ch"><span class="ichip ' + TIP[tip][4] + '">' + ico(TIP[tip][3]) + '</span>' + esc(TIP[tip][2].replace('Szkodnik', 'Szkodniki').replace('Choroba', 'Choroby').replace('Chwast', 'Chwasty')) + ' · ' + xs.length + '</div>';
       xs.slice(0, lim).forEach(function (x) { h += '<button type="button" class="sitem" data-k="t" data-id="' + x.id + '"><span>' + esc(E.t[x.id].nume) + '</span><span class="stag' + (x.n >= 10 ? ' lime' : '') + '">' + pl(x.n, 'środek', 'środki') + '</span></button>'; });
@@ -355,19 +355,19 @@
     var ptip = {}; ps.forEach(function (p) { ptip[E.p[p].tip] = 1; }); var pk = Object.keys(ptip), md = modes(rs);
     h += '<div class="sc-stats">' + stat('Uprawy z zarejestrowanymi środkami', cs.length, 'z ' + N.c) + stat('Zarejestrowane środki', ps.length, (pk.length === 1 ? 'wszystkie ' + (TIPP[pk[0]] || lower(pk[0])) : breakdown(ps, 'p')) + (md ? ' · ' + md : '')) + stat('Rejestracje (uprawa × środek)', pairs(rs, 1, 0), 'wszystkie z dawką do obliczenia') + '</div>';
     var cc = {}; rs.forEach(function (r) { (cc[r[1]] = cc[r[1]] || {})[r[0]] = 1; });
-    var crops = cs.map(function (c) { return { id: c, n: Object.keys(cc[c]).length }; }).sort(function (a, b) { return b.n - a.n || E.c[a.id].nume.localeCompare(E.c[b.id].nume, 'ro'); });
+    var crops = cs.map(function (c) { return { id: c, n: Object.keys(cc[c]).length }; }).sort(function (a, b) { return b.n - a.n || E.c[a.id].nume.localeCompare(E.c[b.id].nume, 'pl'); });
     var key = 't' + t.id + ':c', lim = expanded[key] ? crops.length : CHIPS;
     h += '<p class="sc-lead">Wybierz uprawę, aby obliczyć — liczba pokazuje, ile zarejestrowanych środków jest dla ' + esc(lower(t.nume)) + ' w tej uprawie</p><div class="schips">';
     crops.slice(0, lim).forEach(function (x, i) { h += '<button type="button" class="schip" data-k="c" data-id="' + x.id + '">' + ico('wheat') + '<span>' + esc(E.c[x.id].nume) + '</span><small>' + (i === 0 ? pl(x.n, 'środek', 'środki') : x.n) + '</small></button>'; });
     if (crops.length > lim) h += '<button type="button" class="schip more" data-more="' + key + '">… jeszcze ' + pl(crops.length - lim, 'uprawa', 'uprawy') + '</button>';
     h += '</div>';
     var pc = {}, conc = {}; rs.forEach(function (r) { (pc[r[0]] = pc[r[0]] || {})[r[1]] = 1; if (/apa|%/.test(r[5])) conc[r[0]] = 1; });
-    var prods = ps.map(function (p) { return { id: p, cs: Object.keys(pc[p]).map(Number) }; }).sort(function (a, b) { return b.cs.length - a.cs.length || E.p[a.id].nume.localeCompare(E.p[b.id].nume, 'ro'); });
+    var prods = ps.map(function (p) { return { id: p, cs: Object.keys(pc[p]).map(Number) }; }).sort(function (a, b) { return b.cs.length - a.cs.length || E.p[a.id].nume.localeCompare(E.p[b.id].nume, 'pl'); });
     var key2 = 't' + t.id + ':p', lim2 = expanded[key2] ? prods.length : PERTIP;
     h += '<p class="sc-lead">Zarejestrowane środki dla ' + esc(lower(t.nume)) + ' · ' + ps.length + ' — bez wybranej uprawy nie można obliczyć dawki (różni się w zależności od uprawy)</p><div class="srows">';
     prods.slice(0, lim2).forEach(function (x) {
       var p = E.p[x.id], prs = rs.filter(function (r) { return r[0] === x.id; }), m2 = modes(prs);
-      h += '<button type="button" class="srow" data-k="p" data-id="' + p.id + '"><span class="ichip">' + ico('bottle') + '</span><span class="t"><b>' + esc(p.nume) + '</b><span>' + esc(lower(p.tip) + (m2 ? ' · ' + m2 : '') + ' · ' + pl(x.cs.length, 'uprawa', 'uprawy') + ': ' + names(x.cs, 'c', 5) + (conc[x.id] ? ' · dawka na ilość wody' : '')) + '</span></span><span class="tags"><span class="stag ' + tipCls(p.tip) + '">' + esc(p.tip) + '</span><span class="stag lime">Zarejestrowany</span></span><span class="go">→ wybierasz uprawę (' + x.cs.length + ')</span></button>';
+      h += '<button type="button" class="srow" data-k="p" data-id="' + p.id + '"><span class="ichip">' + ico('bottle') + '</span><span class="t"><b>' + esc(p.nume) + '</b><span>' + esc(lower(TIPN[p.tip] || p.tip) + (m2 ? ' · ' + m2 : '') + ' · ' + pl(x.cs.length, 'uprawa', 'uprawy') + ': ' + names(x.cs, 'c', 5) + (conc[x.id] ? ' · dawka na ilość wody' : '')) + '</span></span><span class="tags"><span class="stag ' + tipCls(p.tip) + '">' + esc(TIPN[p.tip] || p.tip) + '</span><span class="stag lime">Zarejestrowany</span></span><span class="go">→ wybierasz uprawę (' + x.cs.length + ')</span></button>';
     });
     h += '</div>';
     if (prods.length > lim2) h += '<div class="sfoot">' + more(key2, '+ jeszcze ' + pl(prods.length - lim2, 'środek', 'środki') + ' (' + names(prods.slice(lim2).map(function (x) { return x.id; }), 'p', 12) + ') →') + '</div>';
@@ -376,23 +376,23 @@
   /* fișa produsului (cadrul 7) */
   function cardP() {
     var p = E.p[sel.p], rs = D.recs.filter(function (r) { return r[0] === p.id; }), cs = distinct(rs, 1), ts = distinct(rs, 2), md = modes(rs);
-    var sub = [p.tip]; if (p.exp) sub.push('rejestracja ważna do ' + dataRo(p.exp)); if (md) sub.push(md); if (p.syn.length) sub.push((p.syn.length === 1 ? 'synonim' : 'synonimy') + ' w bazie: ' + p.syn.join(', '));
-    var h = '<div class="scard"><div class="sc-head"><div><h3>' + esc(p.nume) + '</h3><p>' + esc(sub.join(' · ')) + '</p></div><div class="sc-tags"><span class="stag ' + tipCls(p.tip) + '">' + esc(p.tip) + '</span><span class="stag lime">Zarejestrowany</span></div></div>';
-    var dz = {}, pz = {}, units = {}; rs.forEach(function (r) { var k = fmtDoza(r); dz[k] = (dz[k] || 0) + 1; units[r[5]] = 1; var pk = r[6] == null ? 'bez karencji' : String(r[6]); pz[pk] = (pz[pk] || 0) + 1; });
+    var sub = [TIPN[p.tip] || p.tip]; if (p.exp) sub.push('rejestracja ważna do ' + dataRo(p.exp)); if (md) sub.push(md); if (p.syn.length) sub.push((p.syn.length === 1 ? 'synonim' : 'synonimy') + ' w bazie: ' + p.syn.join(', '));
+    var h = '<div class="scard"><div class="sc-head"><div><h3>' + esc(p.nume) + '</h3><p>' + esc(sub.join(' · ')) + '</p></div><div class="sc-tags"><span class="stag ' + tipCls(p.tip) + '">' + esc(TIPN[p.tip] || p.tip) + '</span><span class="stag lime">Zarejestrowany</span></div></div>';
+    var dz = {}, pz = {}, units = {}; rs.forEach(function (r) { var k = fmtDoza(r); dz[k] = (dz[k] || 0) + 1; units[r[5]] = 1; var pk = r[6] == null ? 'karencja: patrz etykieta' : String(r[6]); pz[pk] = (pz[pk] || 0) + 1; });
     var dzk = Object.keys(dz).sort(function (a, b) { return dz[b] - dz[a]; }), oneUnit = Object.keys(units).length === 1;
     var dzs = dzk.slice(0, 3).map(function (k, i) { return (i && oneUnit ? k.replace(/ .*$/, '') : k) + ' (' + dz[k] + ')'; }).join(' · ') + (dzk.length > 3 ? ' · …' : '');
-    var pzn = Object.keys(pz).filter(function (k) { return k !== 'bez karencji'; }).map(Number).sort(function (a, b) { return a - b; });
-    var pzv = pzn.length ? (pzn[0] === pzn[pzn.length - 1] ? pzn[0] + ' dni' : pzn[0] + '–' + pzn[pzn.length - 1] + ' dni') : 'bez karencji';
+    var pzn = Object.keys(pz).filter(function (k) { return k !== 'karencja: patrz etykieta'; }).map(Number).sort(function (a, b) { return a - b; });
+    var pzv = pzn.length ? (pzn[0] === pzn[pzn.length - 1] ? pzn[0] + ' dni' : pzn[0] + '–' + pzn[pzn.length - 1] + ' dni') : 'karencja: patrz etykieta';
     var pzs = Object.keys(pz).sort(function (a, b) { return pz[b] - pz[a]; }).map(function (k) { return k + ' (' + pz[k] + ')'; }).join(' · ');
     var kinds = {}; ts.forEach(function (t) { kinds[E.t[t].tip] = 1; }); var kk = Object.keys(kinds);
     h += '<div class="sc-stats">' + stat('Zarejestrowane uprawy', cs.length, 'z ' + N.c) + stat('Rejestracje (uprawa × agrofag)', pairs(rs, 1, 2), (kk.length === 1 && TIP[kk[0]] ? 'wszystkie ' + TIP[kk[0]][1] : breakdown(ts, 't')) + (md ? ' · ' + md : '')) + stat('Dawki w rejestrze', dzk.length, dzs) + stat('Okres karencji', pzv, pzs) + '</div>';
     h += '<p class="sc-lead">Rejestracje według upraw — naciśnij „Oblicz”, aby uzupełnić uprawę; jeśli zostanie tylko jeden agrofag, uzupełni się automatycznie</p><div class="srows">';
     var byC = {}; rs.forEach(function (r) { (byC[r[1]] = byC[r[1]] || []).push(r); });
-    var crops = cs.map(function (c) { var xs = byC[c], seen = {}, list = []; xs.forEach(function (r) { if (!seen[r[2]]) { seen[r[2]] = 1; list.push(r); } }); return { id: c, rs: list }; }).sort(function (a, b) { return b.rs.length - a.rs.length || E.c[a.id].nume.localeCompare(E.c[b.id].nume, 'ro'); });
+    var crops = cs.map(function (c) { var xs = byC[c], seen = {}, list = []; xs.forEach(function (r) { if (!seen[r[2]]) { seen[r[2]] = 1; list.push(r); } }); return { id: c, rs: list }; }).sort(function (a, b) { return b.rs.length - a.rs.length || E.c[a.id].nume.localeCompare(E.c[b.id].nume, 'pl'); });
     var key = 'p' + p.id + ':c', lim = expanded[key] ? crops.length : ROWS_P;
     crops.slice(0, lim).forEach(function (x) {
       var pzc = {}; x.rs.forEach(function (r) { pzc[r[6] == null ? 'x' : r[6]] = 1; }); var pk = Object.keys(pzc).filter(function (k) { return k !== 'x'; }).map(Number).sort(function (a, b) { return a - b; });
-      var ptag = pk.length ? 'karencja ' + (pk[0] === pk[pk.length - 1] ? pk[0] : pk[0] + '–' + pk[pk.length - 1]) + ' dni' : 'brak karencji w rejestrze';
+      var ptag = pk.length ? 'karencja ' + (pk[0] === pk[pk.length - 1] ? pk[0] : pk[0] + '–' + pk[pk.length - 1]) + ' dni' : 'karencja: sprawdź etykietę';
       var u1 = x.rs[0][5], same = x.rs.every(function (r) { return r[5] === u1; });
       h += '<div class="srow crop"><span class="cn">' + ico('wheat') + '<span>' + esc(E.c[x.id].nume) + '</span><small>' + kindWord(x.rs.map(function (r) { return r[2]; }), x.rs.length) + '</small></span><span class="chips">';
       x.rs.forEach(function (r, i) { h += '<button type="button" class="stag" data-ct="' + x.id + ',' + r[2] + '" title="Oblicz dla ' + esc(E.t[r[2]].nume) + '">' + esc(E.t[r[2]].nume) + '<small>' + esc(fmtDoza(r, i === 0 || !same)) + '</small></button>'; });
@@ -400,7 +400,7 @@
     });
     h += '</div>';
     var rest = crops.slice(lim);
-    h += '<div class="sfoot">' + (rest.length ? more(key, '+ jeszcze ' + pl(rest.length, 'uprawa', 'uprawy') + ' · ' + pl(rest.reduce(function (s, x) { return s + x.rs.length; }, 0), 'rejestracja', 'rejestracje') + ' (' + names(rest.map(function (x) { return x.id; }), 'c', 20) + ') →') : '<span>' + esc(pl(crops.length, 'zarejestrowana uprawa', 'zarejestrowane uprawy')) + '</span>') + '<span>Źródło: rejestr ANF, dawki zarejestrowane</span></div>';
+    h += '<div class="sfoot">' + (rest.length ? more(key, '+ jeszcze ' + pl(rest.length, 'uprawa', 'uprawy') + ' · ' + pl(rest.reduce(function (s, x) { return s + x.rs.length; }, 0), 'rejestracja', 'rejestracje') + ' (' + names(rest.map(function (x) { return x.id; }), 'c', 20) + ') →') : '<span>' + esc(pl(crops.length, 'zarejestrowana uprawa', 'zarejestrowane uprawy')) + '</span>') + '<span>Źródło: rejestr MRiRW, dawki zarejestrowane</span></div>';
     return h + '</div>';
   }
   /* toate trei alese → fișa omologării, cu calculul cantității în același loc (Search v3, cadrul 3) */
@@ -410,10 +410,10 @@
     var rs = ctxRecs().slice().sort(function (a, b) { var s = function (u) { return /\/ha$/.test(u) ? 2 : /apa|%/.test(u) ? 1 : 0; }; return s(b[5]) - s(a[5]); });
     var r = recPCT = rs[0] || null;
     var h = '<div class="scard sc-pct">';
-    if (!r) return h + '<div class="sc-head"><div><h3>' + esc(p.nume) + ' w uprawie ' + esc(lower(c.nume)) + ' dla ' + esc(lower(t.nume)) + '</h3><p>brak rejestracji w rejestrze ANF dla tej kombinacji — wybierz inny środek z listy</p></div></div></div>';
-    h += '<div class="sc-head"><div><h3>' + esc(p.nume) + '</h3><p>' + esc(lower(p.tip) + ' zarejestrowany w uprawie ' + lower(c.nume) + ' dla ' + lower(t.nume) + (p.exp ? ' · rejestracja ważna do ' + dataRo(p.exp) : '')) + '</p></div><div class="sc-tags"><span class="stag ' + tipCls(p.tip) + '">' + esc(p.tip) + '</span><span class="stag lime">Zarejestrowany</span></div></div>';
+    if (!r) return h + '<div class="sc-head"><div><h3>' + esc(p.nume) + ' w uprawie ' + esc(lower(c.nume)) + ' dla ' + esc(lower(t.nume)) + '</h3><p>brak rejestracji w rejestrze MRiRW dla tej kombinacji — wybierz inny środek z listy</p></div></div></div>';
+    h += '<div class="sc-head"><div><h3>' + esc(p.nume) + '</h3><p>' + esc(lower(TIPN[p.tip] || p.tip) + ' zarejestrowany w uprawie ' + lower(c.nume) + ' dla ' + lower(t.nume) + (p.exp ? ' · rejestracja ważna do ' + dataRo(p.exp) : '')) + '</p></div><div class="sc-tags"><span class="stag ' + tipCls(p.tip) + '">' + esc(TIPN[p.tip] || p.tip) + '</span><span class="stag lime">Zarejestrowany</span></div></div>';
     var fix = r[3] === r[4], u = PC ? PC.unitRo(r[5]) : r[5];
-    h += '<div class="sc-stats">' + stat('Dawka zarejestrowana', PC ? PC.fmtDoza(r) : '', fix ? 'stała dawka w rejestrze' : 'zarejestrowany zakres') + stat('Okres karencji', r[6] == null ? 'bez karencji' : r[6] + (r[6] === 1 ? ' dzień' : ' dni'), r[6] == null ? 'nieokreślony w rejestrze ANF' : 'od ostatniego zabiegu') + stat('Sposób stosowania', r[7] ? modLabel(r[7]) : '—', r[7] ? 'zgodnie z etykietą' : 'nieokreślony w rejestrze') + stat('Uprawa × agrofag', c.nume, t.nume) + '</div>';
+    h += '<div class="sc-stats">' + stat('Dawka zarejestrowana', PC ? PC.fmtDoza(r) : '', fix ? 'stała dawka w rejestrze' : 'zarejestrowany zakres') + stat('Okres karencji', r[6] == null ? 'karencja: patrz etykieta' : r[6] + (r[6] === 1 ? ' dzień' : ' dni'), r[6] == null ? 'brak w rejestrze — sprawdź etykietę' : 'od ostatniego zabiegu') + stat('Sposób stosowania', r[7] ? modLabel(r[7]) : '—', r[7] ? 'zgodnie z etykietą' : 'nieokreślony w rejestrze') + stat('Uprawa × agrofag', c.nume, t.nume) + '</div>';
     h += '<p class="sc-lead">Oblicz ilość dla swojej powierzchni — te same zasady co w Kalkulatorze</p>';
     var pm = {}; try { pm = JSON.parse(localStorage.getItem('pesticid.site.param') || '{}') || {}; } catch (e) {}
     h += '<div class="sform"><div class="row' + (fix ? ' two' : '') + '">';
@@ -423,7 +423,7 @@
     h += '</div><p class="doza-msg" id="sf-msg" role="status"></p>';
     h += '<button class="btn ghost" id="sf-go" type="button" disabled><span>Oblicz</span><svg class="arr" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>';
     h += '<div class="calc-res" id="sf-res" hidden><h4>Wynik obliczeń</h4><div class="cards" id="sf-cards"></div><p class="calc-note" id="sf-note"></p><p class="res-foot">Gdy platforma zacznie działać, te wyniki będzie można zapisywać w twoich Rejestrach.</p></div></div>';
-    h += '<div class="sfoot"><span>Źródło: rejestr ANF, dawki zarejestrowane</span></div>';
+    h += '<div class="sfoot"><span>Źródło: rejestr MRiRW, dawki zarejestrowane</span></div>';
     return h + '</div>';
   }
   var measure = document.createElement('span'); measure.className = 'measure'; root.appendChild(measure);
@@ -455,26 +455,26 @@
   /* cultură + dăunător → produsele omologate, cu doză și pauză (cadrul 2) */
   function listCT() {
     var c = E.c[sel.c], t = E.t[sel.t], rs = ctxRecs(), seen = {}, list = []; rs.forEach(function (r) { if (!seen[r[0]]) { seen[r[0]] = 1; list.push(r); } });
-    list.sort(function (a, b) { return E.p[a[0]].nume.localeCompare(E.p[b[0]].nume, 'ro'); });
+    list.sort(function (a, b) { return E.p[a[0]].nume.localeCompare(E.p[b[0]].nume, 'pl'); });
     var h = '<div class="scard"><div class="sc-head"><div><h3>' + pl(list.length, 'zarejestrowany środek', 'zarejestrowane środki') + ' dla ' + esc(lower(t.nume)) + ' w uprawie ' + esc(lower(c.nume)) + '</h3><p>porównujesz dawkę i karencję, potem wybierasz — każdy wiersz prowadzi do obliczenia ilości</p></div><div class="sc-tags"><span class="stag lime">' + esc(c.nume) + '</span><span class="stag ' + { daunator: 'tip', boala: 'alt', buruiana: 'erb' }[t.tip] + '">' + esc(t.nume) + '</span></div></div>';
     if (!list.length) return h + '<p class="sc-lead">Brak rejestracji w rejestrze dla tej kombinacji.</p></div>';
     h += '<div class="srows">';
-    list.forEach(function (r) { var p = E.p[r[0]]; h += '<button type="button" class="srow" data-calc="' + p.id + ',' + c.id + ',' + t.id + '"><span class="ichip">' + ico('bottle') + '</span><span class="t"><b>' + esc(p.nume) + '</b><span>' + esc(lower(p.tip) + (r[7] ? ' · ' + modLabel(r[7]) : '') + (p.exp ? ' · rejestracja ważna do ' + dataRo(p.exp) : '')) + '</span></span><span class="tags"><span class="stag">' + esc(fmtDoza(r) + ' · ' + pauza(r[6])) + '</span><span class="stag lime">Zarejestrowany</span></span><span class="go">→ obliczasz</span></button>'; });
+    list.forEach(function (r) { var p = E.p[r[0]]; h += '<button type="button" class="srow" data-calc="' + p.id + ',' + c.id + ',' + t.id + '"><span class="ichip">' + ico('bottle') + '</span><span class="t"><b>' + esc(p.nume) + '</b><span>' + esc(lower(TIPN[p.tip] || p.tip) + (r[7] ? ' · ' + modLabel(r[7]) : '') + (p.exp ? ' · rejestracja ważna do ' + dataRo(p.exp) : '')) + '</span></span><span class="tags"><span class="stag">' + esc(fmtDoza(r) + ' · ' + pauza(r[6])) + '</span><span class="stag lime">Zarejestrowany</span></span><span class="go">→ obliczasz</span></button>'; });
     return h + '</div></div>';
   }
   /* produs + cultură → dăunătorii omologați (cadrul 6) */
   function listPC() {
     var p = E.p[sel.p], c = E.c[sel.c], rs = ctxRecs(), seen = {}, list = []; rs.forEach(function (r) { if (!seen[r[2]]) { seen[r[2]] = 1; list.push(r); } });
-    list.sort(function (a, b) { return E.t[a[2]].nume.localeCompare(E.t[b[2]].nume, 'ro'); });
-    var h = '<div class="scard"><div class="sc-head"><div><h3>' + esc(p.nume) + ' w uprawie ' + esc(lower(c.nume)) + '</h3><p>' + (list.length ? pl(list.length, 'zarejestrowany agrofag', 'zarejestrowane agrofagi') + ' — wybierz szkodnika, chorobę lub chwast; dawka pochodzi z rejestru ANF' : 'brak rejestracji w rejestrze dla tej kombinacji') + '</p></div><div class="sc-tags"><span class="stag ' + tipCls(p.tip) + '">' + esc(p.tip) + '</span><span class="stag lime">' + esc(c.nume) + '</span></div></div><div class="srows">';
+    list.sort(function (a, b) { return E.t[a[2]].nume.localeCompare(E.t[b[2]].nume, 'pl'); });
+    var h = '<div class="scard"><div class="sc-head"><div><h3>' + esc(p.nume) + ' w uprawie ' + esc(lower(c.nume)) + '</h3><p>' + (list.length ? pl(list.length, 'zarejestrowany agrofag', 'zarejestrowane agrofagi') + ' — wybierz szkodnika, chorobę lub chwast; dawka pochodzi z rejestru MRiRW' : 'brak rejestracji w rejestrze dla tej kombinacji') + '</p></div><div class="sc-tags"><span class="stag ' + tipCls(p.tip) + '">' + esc(TIPN[p.tip] || p.tip) + '</span><span class="stag lime">' + esc(c.nume) + '</span></div></div><div class="srows">';
     list.forEach(function (r) { var t = E.t[r[2]], tp = TIP[t.tip] || TIP.fiziologic; h += '<button type="button" class="srow" data-calc="' + p.id + ',' + c.id + ',' + t.id + '"><span class="ichip ' + tp[4] + '">' + ico(tp[3]) + '</span><span class="t"><b>' + esc(t.nume) + '</b><span>' + esc(tp[0] + (r[7] ? ' · ' + modLabel(r[7]) : '')) + '</span></span><span class="tags"><span class="stag">' + esc(fmtDoza(r) + ' · ' + pauza(r[6])) + '</span></span><span class="go">→ obliczasz</span></button>'; });
     return h + '</div></div>';
   }
   /* produs + dăunător → culturile omologate (cadrul 4/5) */
   function listPT() {
     var p = E.p[sel.p], t = E.t[sel.t], rs = ctxRecs(), seen = {}, list = []; rs.forEach(function (r) { if (!seen[r[1]]) { seen[r[1]] = 1; list.push(r); } });
-    list.sort(function (a, b) { return E.c[a[1]].nume.localeCompare(E.c[b[1]].nume, 'ro'); });
-    var h = '<div class="scard"><div class="sc-head"><div><h3>' + esc(p.nume) + ' dla ' + esc(lower(t.nume)) + '</h3><p>' + (list.length ? pl(list.length, 'zarejestrowana uprawa', 'zarejestrowane uprawy') + ' — wybierz uprawę; dawka różni się w zależności od uprawy' : 'brak rejestracji w rejestrze dla tej kombinacji') + '</p></div><div class="sc-tags"><span class="stag ' + tipCls(p.tip) + '">' + esc(p.tip) + '</span><span class="stag ' + { daunator: 'tip', boala: 'alt', buruiana: 'erb' }[t.tip] + '">' + esc(t.nume) + '</span></div></div><div class="srows">';
+    list.sort(function (a, b) { return E.c[a[1]].nume.localeCompare(E.c[b[1]].nume, 'pl'); });
+    var h = '<div class="scard"><div class="sc-head"><div><h3>' + esc(p.nume) + ' dla ' + esc(lower(t.nume)) + '</h3><p>' + (list.length ? pl(list.length, 'zarejestrowana uprawa', 'zarejestrowane uprawy') + ' — wybierz uprawę; dawka różni się w zależności od uprawy' : 'brak rejestracji w rejestrze dla tej kombinacji') + '</p></div><div class="sc-tags"><span class="stag ' + tipCls(p.tip) + '">' + esc(TIPN[p.tip] || p.tip) + '</span><span class="stag ' + { daunator: 'tip', boala: 'alt', buruiana: 'erb' }[t.tip] + '">' + esc(t.nume) + '</span></div></div><div class="srows">';
     list.forEach(function (r) { var c = E.c[r[1]]; h += '<button type="button" class="srow" data-calc="' + p.id + ',' + c.id + ',' + t.id + '"><span class="ichip">' + ico('wheat') + '</span><span class="t"><b>' + esc(c.nume) + '</b><span>' + esc((c.parent && E.c[c.parent] ? 'grupa „' + E.c[c.parent].nume + '”' : 'uprawa') + (r[7] ? ' · ' + modLabel(r[7]) : '')) + '</span></span><span class="tags"><span class="stag">' + esc(fmtDoza(r) + ' · ' + pauza(r[6])) + '</span></span><span class="go">→ obliczasz</span></button>'; });
     return h + '</div></div>';
   }

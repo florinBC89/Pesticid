@@ -22,20 +22,31 @@ lipsa = set()
 PREVIZ = False  # True la previzualizări: căile rămân relative
 
 # ---- pluralul polonez: 1 / 2–4 (fără 12–14) / restul (genitiv plural) ----
-PLURAL_PL = "var GEN = { 'dni': 'dni', 'godziny': 'godzin', 'minuty': 'minut', 'środki': 'środków', 'uprawy': 'upraw', 'agrofagi': 'agrofagów', 'rejestracje': 'rejestracji', 'szkodniki': 'szkodników', 'choroby': 'chorób', 'chwasty': 'chwastów', 'problemy fizjologiczne': 'problemów fizjologicznych', 'zarejestrowane środki': 'zarejestrowanych środków', 'zarejestrowane uprawy': 'zarejestrowanych upraw', 'zarejestrowane agrofagi': 'zarejestrowanych agrofagów' }; function maiMulte(n) { var k = n % 10, h = n % 100; return k >= 2 && k <= 4 && (h < 12 || h > 14); }"
+PLURAL_PL = "var GEN = { 'dni': 'dni', 'godziny': 'godzin', 'minuty': 'minut', 'środki': 'środków', 'uprawy': 'upraw', 'agrofagi': 'agrofagów', 'rejestracje': 'rejestracji', 'szkodniki': 'szkodników', 'choroby': 'chorób', 'chwasty': 'chwastów', 'problemy fizjologiczne': 'problemów fizjologicznych', 'zarejestrowane środki': 'zarejestrowanych środków', 'zarejestrowane uprawy': 'zarejestrowanych upraw', 'zarejestrowane agrofagi': 'zarejestrowanych agrofagów' }; function maiMulte(n) { var k = n % 10, h = n % 100; return k >= 2 && k <= 4 && (h < 12 || h > 14); } var TIPN = { Erbicid: 'Herbicyd', Fungicid: 'Fungicyd', Insecticid: 'Insektycyd', Moluscocid: 'Moluskocyd', Nematocid: 'Nematocyd', Rodenticid: 'Rodentycyd', 'Regulator de crestere': 'Regulator wzrostu', Altul: 'Inny' };"
 PRE = {
     'main.js': [("function plural(n, one, few, many) { return n === 1 ? '1 ' + one : (n < 20 ? n + ' ' + few : n + ' de ' + many); }",
                  PLURAL_PL + " function plural(n, one, few, many) { return n === 1 ? '1 ' + one : n + ' ' + (maiMulte(n) ? few : (GEN[many] || many)); }")],
     'calc.js': [("function plural(n, one, few, many) { return n === 1 ? '1 ' + one : (n < 20 ? n + ' ' + few : n + ' de ' + many); }",
                  PLURAL_PL + " function plural(n, one, few, many) { return n === 1 ? '1 ' + one : n + ' ' + (maiMulte(n) ? few : (GEN[many] || many)); }"),
                 ("plural(Object.keys(sa).length, 'produs', 'produse', 'produse')", "plural(Object.keys(sa).length, 'środek', 'środki', 'środki')"),
+                ("tag: p[3] || 'Produs'", "tag: TIPN[p[3]] || p[3] || 'Środek'"),
                 ("els.hint.innerHTML = '<b>' + produse.length + ' produse</b> omologate';", "els.hint.innerHTML = '<b>' + produse.length + '</b> ' + (produse.length === 1 ? 'środek' : maiMulte(produse.length) ? 'środki' : 'środków') + ' w rejestrze';")],
     'search.js': [("function pl(n, one, many) { return n === 1 ? '1 ' + one : (n < 20 ? n + ' ' + many : n + ' de ' + many); }",
                    PLURAL_PL + " function pl(n, one, many) { return n === 1 ? '1 ' + one : n + ' ' + (maiMulte(n) ? many : (GEN[many] || many)); }"),
-                  ("(m[tip] < 20 ? ' ' : ' de ')", "' '")],
+                  ("(m[tip] < 20 ? ' ' : ' de ')", "' '"),
+                  ("lower(p.tip)", "lower(TIPN[p.tip] || p.tip)"), ("esc(p.tip)", "esc(TIPN[p.tip] || p.tip)"), ("var sub = [p.tip];", "var sub = [TIPN[p.tip] || p.tip];"),
+                  ("'1 ' + lower(tip)", "'1 ' + lower(TIPN[tip] || tip)")],
 }
+HTML_POST = [('data-count="450" data-suffix="+">450+', 'data-count="2400" data-suffix="+">2400+'),
+             ('data-count="150" data-suffix="+">150+', 'data-count="600" data-suffix="+">600+'),
+             ('data-count="350" data-suffix="+">350+', 'data-count="1000" data-suffix="+">1000+'),
+             ('<b>ANF, UE</b>', '<b>MRiRW, UE</b>'),
+             ('<label class="field has-input" id="f-bloc">', '<label class="field has-input" id="f-bloc" style="display:none">')]
+LOCALE = [("'ro-RO'", "'pl-PL'"), (", 'ro')", ", 'pl')")]
 POST = {
-    'search.js': [('aria-label="Șterge suprafața"', 'aria-label="Wyczyść powierzchnię"'), ('aria-label="Șterge volumul de apă"', 'aria-label="Wyczyść ilość wody"'),
+    'calc.js': LOCALE,
+    'main.js': [],
+    'search.js': LOCALE + [('ANF', 'MRiRW'), ('păduchi', 'mszyce'), ('grau toamna', 'pszenica ozima')] + [('aria-label="Șterge suprafața"', 'aria-label="Wyczyść powierzchnię"'), ('aria-label="Șterge volumul de apă"', 'aria-label="Wyczyść ilość wody"'),
                   ('aria-label="Șterge doza"', 'aria-label="Wyczyść dawkę"')],
 }
 # cuvinte scurte (șirul exact, cu spațiile lui), doar în fișierele unde sunt text vizibil
@@ -71,7 +82,8 @@ def tr_js(src, fis=''):
         gi = next(i for i, g in enumerate(m.groups()) if g is not None); q = "'\"`"[gi]
         raw = src[m.start() + 1:m.end() - 1]
         new = raw
-        if raw.startswith('assets/') and not PREVIZ: new = '/' + raw                     # fetch('assets/…') din /pl/
+        if raw == 'assets/calc-data.json': new = ('' if PREVIZ else '/') + 'assets/calc-data-pl.json'   # datele poloneze
+        elif raw.startswith('assets/') and not PREVIZ: new = '/' + raw                     # fetch('assets/…') din /pl/
         elif raw in CUVINTE.get(fis, {}): new = CUVINTE[fis][raw]
         elif raw.strip() in TJ:
             new = tr_text(raw, TJ)
@@ -133,6 +145,7 @@ def tr_html(s, d, canon):
                 if v.strip() and re.search(r'[ăâîșțĂÂÎȘȚ]', v): lipsa.add(v.strip()[:80])
                 out.append(p)
     s = ''.join(out)
+    for a_, b_ in HTML_POST: s = s.replace(a_, b_)
     s = re.sub(r'<html lang="ro"', '<html lang="pl"', s, count=1)
     s = s.replace('content="ro_RO"', 'content="pl_PL"')
     s = re.sub(r'(<link rel="canonical" href=")https://agrosphere\.eu/[^"]*(")', r'\g<1>https://agrosphere.eu' + canon + r'\2', s)
