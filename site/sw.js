@@ -1,7 +1,7 @@
 /* AgroSphere — service worker minimal: NU pune site-ul în cache (totul vine de pe rețea, ca înainte).
    Singurul rol: când nu există internet și omul deschide o pagină, îi arată offline.html („Nu ai internet”)
    în loc de eroarea browserului. Pagina și imaginile ei sunt salvate la instalare. */
-var CACHE = 'agrosphere-offline-v1';
+var CACHE = 'agrosphere-offline-v2';
 var FILES = ['offline.html', 'assets/logo-agrosphere.svg', 'assets/err-wifi.webp', 'assets/hero-camp.webp', 'favicon.ico', 'assets/favicon-32.png'];
 
 self.addEventListener('install', function (e) {

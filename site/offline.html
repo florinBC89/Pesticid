@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Nu ai internet — AgroSphere</title>
+<meta name="pl-title" content="Brak internetu — AgroSphere">
 <meta name="robots" content="noindex">
 <meta name="description" content="Nu ai conexiune la internet.">
 <meta name="theme-color" content="#cedbf6">
@@ -53,19 +54,32 @@
 </head>
 <body>
   <div class="bg" aria-hidden="true"><img src="/assets/hero-camp.webp" alt="" width="1920" height="1439"></div>
-  <a class="logo" href="/" aria-label="AgroSphere, pagina principală"><img src="/assets/logo-agrosphere.svg" alt="AgroSphere" width="1585" height="311"></a>
+  <a class="logo" href="/" aria-label="AgroSphere, pagina principală" data-pl-aria="AgroSphere, strona główna"><img src="/assets/logo-agrosphere.svg" alt="AgroSphere" width="1585" height="311"></a>
   <main>
     <img class="ill" src="/assets/err-wifi.webp" alt="" width="325" height="296">
     <div class="txt">
-      <h1>Nu ai internet!!!</h1>
-      <p>Nu mai ai conexiune la internet</p>
+      <h1 data-pl="Brak internetu!">Nu ai internet!!!</h1>
+      <p data-pl="Nie masz połączenia z internetem">Nu mai ai conexiune la internet</p>
     </div>
-    <button class="btn" type="button" id="reload">Reîncarcă site</button>
+    <button class="btn" type="button" id="reload" data-pl="Odśwież stronę">Reîncarcă site</button>
   </main>
   <script>
     /* pagina vine din service worker (sw.js) când nu există conexiune; revine singură când internetul se întoarce */
     document.getElementById('reload').addEventListener('click', function () { location.reload(); });
     window.addEventListener('online', function () { location.reload(); });
+  </script>
+  <script>
+    /* versiunea poloneză: pe /pl/… (sau după alegerea „Polski” din selector) textele paginii apar în poloneză */
+    (function () {
+      var pl = /^\/pl(\/|$)/.test(location.pathname);
+      try { pl = pl || localStorage.getItem('agrosphere.limba') === 'pl'; } catch (e) {}
+      if (!pl) return;
+      document.documentElement.lang = 'pl';
+      var t = document.querySelector('meta[name="pl-title"]'); if (t) document.title = t.content;
+      document.querySelectorAll('[data-pl]').forEach(function (e) { e.textContent = e.getAttribute('data-pl'); });
+      document.querySelectorAll('[data-pl-aria]').forEach(function (e) { e.setAttribute('aria-label', e.getAttribute('data-pl-aria')); });
+      document.querySelectorAll('a[href="/"]').forEach(function (a) { a.setAttribute('href', '/pl/'); });
+    })();
   </script>
 </body>
 </html>

@@ -20,6 +20,7 @@ from doze import parse
 ap = argparse.ArgumentParser()
 ap.add_argument('--registru', required=True); ap.add_argument('--culturi', required=True); ap.add_argument('--etichete', required=True)
 ap.add_argument('--azi', default=datetime.date.today().isoformat())
+ap.add_argument('--trace', default=None, help='fișier JSON: pentru fiecare rând din registru, ce a produs (pentru verificare)')
 ap.add_argument('--out', default=str(pathlib.Path(__file__).resolve().parents[3] / 'site' / 'assets' / 'calc-data-pl.json'))
 a = ap.parse_args()
 
@@ -96,6 +97,7 @@ for p in R['prod']:
     if (p.get('utilizare_pana') or '0') >= a.azi or (p.get('valabil_pana') or '0') >= a.azi:
         prod_ok[(p['nr_autorizatie'], p['produs'])] = p
 produse, pid, culturi, cid, tinte, tid, recs, seen = [], {}, {}, {}, {}, {}, [], set()
+TRACE = []
 stat = {'utilizari': 0, 'fara_produs_valabil': 0, 'doze_multiple': 0, 'fara_doza': 0, 'unitate_necalculabila': 0, 'fara_cultura': 0, 'fara_agrofag': 0, 'cu_karencja': 0}
 for u in R['uz']:
     stat['utilizari'] += 1
@@ -120,15 +122,20 @@ for u in R['uz']:
     else:
         e = produse[pid[key] - 1]
         if (p.get('valabil_pana') or '') > (e[4] or ''): e[4] = p.get('valabil_pana')
+    tr = {'rand': u['rand_sursa'], 'produs': p['produs'], 'nr': p['nr_autorizatie'], 'rodzaj': p['tip'], 'cultura_text': u['cultura'], 'agent_text': u['agent'],
+          'doza_text': u['doza_text'], 'tip_calculator': tp, 'doza': {'min': conv[0], 'max': conv[1], 'unitate': conv[2]}, 'culturi': [], 'agrofagi': []}
     for c in crops:
         if c not in cid: cid[c] = len(cid) + 1; culturi[cid[c]] = cap(c)
         kar = KAR.get((norm(p['produs']), norm(c)))
         if kar is not None: stat['cu_karencja'] += 1
+        tr['culturi'].append({'cultura': cap(c), 'eppo': C[c].get('cod_eppo'), 'karencja_din_eticheta': kar})
         for g in agents:
             if g not in tid: tid[g] = len(tid) + 1; tinte[tid[g]] = [cap(g), tip_agent(g, tp)]
             r = (pid[key], cid[c], tid[g], conv[0], conv[1], conv[2], kar, None)
+            if c == crops[0]: tr['agrofagi'].append({'agrofag': tinte[tid[g]][0], 'tip': tinte[tid[g]][1]})
             if r[:6] in seen: continue
             seen.add(r[:6]); recs.append(list(r))
+    TRACE.append(tr)
 # sinonime: numele românesc al culturii (aceeași cultură EPPO) — ca un fermier român să o găsească
 sin_c = []
 for c, i in cid.items():
@@ -136,4 +143,5 @@ for c, i in cid.items():
 out = {'generat': a.azi, 'tara': 'PL', 'sursa': 'Rejestr środków ochrony roślin MRiRW + etykiety', 'produse': produse, 'culturi': culturi,
        'tinte': tinte, 'recs': recs, 'parinti': {}, 'sinonime': {'cultura': sin_c, 'tinta': []}}
 pathlib.Path(a.out).write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+if a.trace: pathlib.Path(a.trace).write_text(json.dumps(TRACE, ensure_ascii=False), encoding='utf-8')
 print(json.dumps(stat), '| produse', len(produse), 'culturi', len(culturi), 'agrofagi', len(tinte), 'recs', len(recs), '| fișier', pathlib.Path(a.out).stat().st_size // 1024, 'KB')

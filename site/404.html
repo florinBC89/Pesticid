@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Pagina nu există — AgroSphere</title>
+<meta name="pl-title" content="Strona nie istnieje — AgroSphere">
 <meta name="robots" content="noindex">
 <meta name="description" content="Pagina căutată nu există.">
 <meta name="theme-color" content="#cedbf6">
@@ -52,16 +53,29 @@
 </head>
 <body>
   <div class="bg" aria-hidden="true"><img src="/assets/hero-camp.webp" srcset="/assets/hero-camp.webp 1920w, /assets/hero-camp-2x.webp 3840w" sizes="max(100vw, 1729px)" alt="" width="1920" height="1439"></div>
-  <a class="logo" href="/" aria-label="AgroSphere, pagina principală"><img src="/assets/logo-agrosphere.svg" alt="AgroSphere" width="1585" height="311"></a>
+  <a class="logo" href="/" aria-label="AgroSphere, pagina principală" data-pl-aria="AgroSphere, strona główna"><img src="/assets/logo-agrosphere.svg" alt="AgroSphere" width="1585" height="311"></a>
   <main>
     <img class="ill" src="/assets/err-puzzle.webp" alt="" width="314" height="297">
     <div class="txt">
-      <span class="tag">Eroare</span>
+      <span class="tag" data-pl="Błąd">Eroare</span>
       <div class="code" aria-hidden="true">404</div>
-      <h1>Ceva nu a mers bine</h1>
-      <p>Reîncarcă pagina sau du-te înapoi pe Home page</p>
+      <h1 data-pl="Coś poszło nie tak">Ceva nu a mers bine</h1>
+      <p data-pl="Odśwież stronę albo wróć na stronę główną">Reîncarcă pagina sau du-te înapoi pe Home page</p>
     </div>
-    <a class="btn" href="/">Home page</a>
+    <a class="btn" href="/" data-pl="Strona główna">Home page</a>
   </main>
+  <script>
+    /* versiunea poloneză: pe /pl/… (sau după alegerea „Polski” din selector) textele paginii apar în poloneză */
+    (function () {
+      var pl = /^\/pl(\/|$)/.test(location.pathname);
+      try { pl = pl || localStorage.getItem('agrosphere.limba') === 'pl'; } catch (e) {}
+      if (!pl) return;
+      document.documentElement.lang = 'pl';
+      var t = document.querySelector('meta[name="pl-title"]'); if (t) document.title = t.content;
+      document.querySelectorAll('[data-pl]').forEach(function (e) { e.textContent = e.getAttribute('data-pl'); });
+      document.querySelectorAll('[data-pl-aria]').forEach(function (e) { e.setAttribute('aria-label', e.getAttribute('data-pl-aria')); });
+      document.querySelectorAll('a[href="/"]').forEach(function (a) { a.setAttribute('href', '/pl/'); });
+    })();
+  </script>
 </body>
 </html>
