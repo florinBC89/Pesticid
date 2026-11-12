@@ -127,6 +127,15 @@ b, strong { font-weight: 600; color: var(--fg); }
 a.menu-it:not(.is-on) { color: var(--muted); }
 a.menu-it:not(.is-on):hover { color: var(--ink); }
 .menu-it.is-soon { justify-content: flex-end; align-items: flex-start; color: var(--muted); cursor: default; }
+/* „În curând”: instrumentele care vin, adunate într-un singur meniu (desktop) */
+.menu-soon { position: relative; }
+.menu-soon-btn { flex-direction: row; align-items: center; gap: 7px; border: 0; background: none; padding: 0; font: inherit; font-size: inherit; color: var(--muted); cursor: pointer; }
+.menu-soon-btn:hover, .menu-soon.is-open .menu-soon-btn { color: var(--ink); }
+.menu-soon .chev { flex: 0 0 11px; width: 11px; height: 7px; background: no-repeat center / 11px 7px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='8' viewBox='0 0 13 8'%3E%3Cpath d='M1 1l5.5 5.5L12 1' fill='none' stroke='%233b3f4a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); transition: transform 0.2s; }
+.menu-soon.is-open .chev { transform: rotate(180deg); }
+.nav .menu ul.soon-dd { position: absolute; z-index: 5; top: calc(100% + 4px); left: 50%; transform: translateX(-50%); min-width: 240px; margin: 0; padding: 8px; list-style: none; border-radius: 20px; background: var(--surface); box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15); display: grid; gap: 2px; }
+.nav .menu ul.soon-dd[hidden] { display: none; }
+.soon-op { display: block; padding: 10px 12px; border-radius: 12px; color: var(--muted); font-size: 15px; line-height: 19px; white-space: nowrap; cursor: default; }
 .soon { display: inline-flex; padding: 3px 8px; border-radius: 999px; background: #ceee58; color: var(--fg); font-size: 13px; line-height: 16px; font-weight: 400; white-space: nowrap; }
 .burger { display: none; }
 /* ---------- selector limbă / țară (RO · PL), înainte de „Am o problemă”; ascuns până la lansarea versiunii PL ---------- */
@@ -143,35 +152,14 @@ a.menu-it:not(.is-on):hover { color: var(--ink); }
 .lang-op { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; color: var(--fg); font-size: 15px; white-space: nowrap; }
 .lang-op:hover { background: var(--surface-2); }
 .lang-op[aria-current="true"] { font-weight: 600; background: var(--surface-2); }
-/* cu selectorul afișat, meniul de pe desktop se strânge puțin ca să încapă pe un rând (fără selector rămâne exact ca înainte) */
+/* cu selectorul afișat, pe laptopuri chip-ul arată doar steagul (fără „RO”/„PL”), ca meniul să încapă pe un rând */
 @media (min-width: 1025px) {
   .has-lang .nav .logo, .has-lang .nav .nav-end { flex: 0 0 auto; }
-  .has-lang .nav .wrap { gap: 16px; }
-}
-@media (min-width: 1025px) and (max-width: 1640px) {
-  .has-lang .lang-cur > span { display: none; }
-  .has-lang .lang-btn { gap: 6px; padding: 0 12px; }
-  .has-lang .menu ul { gap: 18px; padding: 0; }
-  .has-lang .menu-it { font-size: 14px; line-height: 17px; }
-  .has-lang .nav .logo img { width: 180px; }
-  .has-lang .nav-end { gap: 10px; }
-  .has-lang .nav .nav-btn { height: 52px; min-width: 0; padding: 0 18px; font-size: 15px; white-space: nowrap; }
 }
 @media (min-width: 1025px) and (max-width: 1340px) {
-  .has-lang .menu ul { gap: 12px; }
-  .has-lang .menu-it { font-size: 13px; line-height: 16px; }
-  .has-lang .soon { font-size: 11px; line-height: 14px; padding: 2px 7px; }
-  .has-lang .nav .logo img { width: 150px; }
-  .has-lang .nav .nav-btn { padding: 0 14px; font-size: 14px; }
-}
-@media (min-width: 1025px) and (max-width: 1200px) {
-  .has-lang .nav .wrap { gap: 10px; }
-  .has-lang .menu ul { gap: 9px; }
-  .has-lang .menu-it { font-size: 12px; line-height: 15px; }
-  .has-lang .soon { font-size: 10px; line-height: 13px; padding: 1px 6px; }
-  .has-lang .nav .logo img { width: 120px; }
-  .has-lang .lang-btn { height: 40px; padding: 0 10px; }
-  .has-lang .nav .nav-btn { height: 46px; padding: 0 12px; font-size: 13px; }
+  .has-lang .lang-cur > span { display: none; }
+  .has-lang .lang-btn { gap: 6px; padding: 0 12px; }
+  .has-lang .nav-end { gap: 10px; }
 }
 .mmenu { display: none; }
 
@@ -851,8 +839,8 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 /* ---------- 1025–1380px: meniul complet, dar mai compact (font și spații mai mici), ca să încapă pe laptopuri ---------- */
 @media (min-width: 1025px) and (max-width: 1380px) {
   .nav .wrap { gap: 16px; }
-  .menu ul { gap: 18px; padding: 0 4px; }
-  .menu-it { font-size: 14px; line-height: 17px; height: 60px; }
+  .menu ul { gap: 24px; padding: 0 4px; }
+  .menu-it { font-size: 15px; line-height: 18px; height: 60px; }
   .soon { font-size: 11px; line-height: 14px; padding: 2px 7px; }
   .logo img { width: 180px; }
   .nav .nav-btn { height: 52px; min-width: 0; padding: 0 18px; font-size: 15px; white-space: nowrap; }
@@ -862,9 +850,9 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 /* cu „Abonamente” în meniu, între 1025 și 1180px strângem încă puțin ca totul să stea pe un rând */
 @media (min-width: 1025px) and (max-width: 1180px) {
   .nav .wrap { gap: 12px; }
-  .menu ul { gap: 12px; padding: 0; }
-  .menu-it { font-size: 13px; }
-  .nav .logo img { width: 150px; }
+  .menu ul { gap: 18px; padding: 0; }
+  .menu-it { font-size: 15px; }
+  .nav .logo img { width: 160px; }
   .nav .nav-btn { padding: 0 14px; font-size: 14px; }
 }
 /* ---------- până la 1024px (telefoane, tablete) meniul nu mai încape pe un rând: hamburger + panou (Figma 2210:34545, 2211:36299) ---------- */
@@ -940,9 +928,9 @@ html.is-locked, html.is-locked body { overflow: hidden; }
 /* între 1025 și 1100px (laptopuri mici): încă un pas, după ce regula de tabletă de mai jos mărește logo-ul și marginile */
 @media (min-width: 1025px) and (max-width: 1100px) {
   .nav .wrap { padding-left: 20px !important; padding-right: 20px !important; gap: 10px; }
-  .menu ul { gap: 9px; }
-  .menu-it { font-size: 12.5px; }
-  .nav .logo img { width: 140px; }
+  .menu ul { gap: 14px; }
+  .menu-it { font-size: 14px; }
+  .nav .logo img { width: 145px; }
 }
 
 /* ---------- tabletă, doar între 701 și 1100 px: căutarea pe două rânduri (Figma 2126:32414) ---------- */

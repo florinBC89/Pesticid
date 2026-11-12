@@ -7,9 +7,14 @@
         <li><a class="menu-it is-on" href="#top" aria-current="page">Calculator pesticide</a></li>
         <li><a class="menu-it" href="/plan-fertilizare/">Plan de fertilizare</a></li>
         <li><a class="menu-it" href="/abonamente/">Abonamente</a></li>
-        <li><span class="menu-it is-soon" aria-disabled="true"><span>Registrul exploatației</span><span class="soon">În curând</span></span></li>
-        <li><span class="menu-it is-soon" aria-disabled="true"><span>Caiet de agromediu</span><span class="soon">În curând</span></span></li>
-        <li><span class="menu-it is-soon" aria-disabled="true"><span>Asigurări culturi</span><span class="soon">În curând</span></span></li>
+        <li class="menu-soon" data-soon-menu>
+          <button class="menu-it menu-soon-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="meniu-in-curand"><span>În curând</span><i class="chev" aria-hidden="true"></i></button>
+          <ul class="soon-dd" id="meniu-in-curand" hidden>
+            <li><span class="soon-op" aria-disabled="true">Registrul exploatației</span></li>
+            <li><span class="soon-op" aria-disabled="true">Caiet de agromediu</span></li>
+            <li><span class="soon-op" aria-disabled="true">Asigurări culturi</span></li>
+          </ul>
+        </li>
       </ul>
     </nav>
     <div class="nav-end">

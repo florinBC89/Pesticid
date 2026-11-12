@@ -343,6 +343,24 @@
     window.matchMedia('(min-width: 1025px)').addEventListener('change', function (m) { if (m.matches) setMenu(false); });
   }
 
+  /* meniul „În curând” (desktop): se deschide la clic sau la trecerea mouse-ului, se închide la clic în afară / Escape */
+  var soonM = document.querySelector('[data-soon-menu]');
+  if (soonM) {
+    var sBtn = soonM.querySelector('.menu-soon-btn'), sDd = soonM.querySelector('.soon-dd'), sT = null, sSeen = false, sAt = 0;
+    var setSoon = function (open) {
+      if (open && sDd.hidden) sAt = Date.now();
+      clearTimeout(sT); sBtn.setAttribute('aria-expanded', open ? 'true' : 'false'); soonM.classList.toggle('is-open', open); sDd.hidden = !open;
+      if (open && !sSeen) { sSeen = true; if (window.track) window.track('nav_soon_opened', { from_page: location.pathname }); }
+    };
+    sBtn.addEventListener('click', function () { setSoon(sDd.hidden || Date.now() - sAt < 500); }); /* deschis tocmai de mouse → clicul nu-l închide */
+    if (window.matchMedia('(hover: hover)').matches) {
+      soonM.addEventListener('mouseenter', function () { setSoon(true); });
+      soonM.addEventListener('mouseleave', function () { sT = setTimeout(function () { setSoon(false); }, 180); });
+    }
+    document.addEventListener('click', function (e) { if (!soonM.contains(e.target)) setSoon(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sDd.hidden) { setSoon(false); sBtn.focus(); } });
+  }
+
   /* selector limbă / țară (RO · PL) — vizibil pe paginile /pl/ și, până la lansare, doar în beta (?beta=pl; ?beta=0 îl ascunde) */
   var langBox = document.querySelector('[data-lang]');
   if (langBox) {
