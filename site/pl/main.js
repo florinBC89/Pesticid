@@ -346,7 +346,7 @@
   /* selector limbă / țară (RO · PL) — vizibil pe paginile /pl/ și, până la lansare, doar în beta (?beta=pl; ?beta=0 îl ascunde) */
   var langBox = document.querySelector('[data-lang]');
   if (langBox) {
-    var esPl = document.documentElement.lang === 'pl', langOn = esPl;
+    var esPl = document.documentElement.lang === 'pl', langOn = esPl || !!document.querySelector('meta[name="agrosphere-pl"]'); /* lansat: vizibil pentru toți */
     try {
       var bq = new URLSearchParams(location.search).get('beta');
       if (bq === 'pl') localStorage.setItem('agrosphere.beta-pl', '1');

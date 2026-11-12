@@ -6,7 +6,8 @@ Rulează după build.py și build_abonamente.py. Paginile RO nu sunt modificate.
 - Plan de fertilizare apare în meniu ca „Wkrótce” (regulile sunt cele din România);
 - BETA = True: paginile au noindex și nu sunt anunțate în paginile RO (hreflang) până la lansare."""
 import html, json, pathlib, re, posixpath
-BETA = True
+from lansare_pl import PL_PUBLIC
+BETA = not PL_PUBLIC  # până la lansare: noindex
 root = pathlib.Path(__file__).parent
 D = json.loads((root / 'i18n' / 'pl.json').read_text(encoding='utf-8'))
 TH = {e['text']: e['pl'] for e in D if e['tip'] in ('html', 'atribut') and e.get('pl')}

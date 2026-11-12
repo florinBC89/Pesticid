@@ -11,6 +11,8 @@ import json, pathlib, re
 
 # scriptul din <head>: animațiile de apariție pornesc de la prima afișare; dacă main.js nu se încarcă în 3 s, conținutul rămâne vizibil
 HEADJS = "<script>(function(d){d.classList.remove('no-js');d.classList.add('js');setTimeout(function(){if(!window.agrosphereMain)d.classList.add('no-js');},3000);})(document.documentElement);</script>"
+from lansare_pl import head_extra  # versiunea PL: selector public / trecere automată (oprite până la aprobare)
+HEADJS += head_extra()
 root = pathlib.Path(__file__).parent
 body = (root / 'body.html').read_text(encoding='utf-8')
 fert = (root / 'fert-body.html').read_text(encoding='utf-8')
