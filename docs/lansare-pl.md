@@ -22,3 +22,10 @@ Totul e pregătit pe ramura `previzualizare`. Pașii de mai jos se fac doar dup�
 - Corectura unui vorbitor nativ (fișa de corectură, Artifact cu colecția `poprawki`).
 - Regulamin + Polityka prywatności verificate de un jurist (acum fac trimitere la legislația și autoritățile din România).
 - Etichetele poloneze din lunile anterioare (okres karencji pentru toate produsele; acum doar 80 de etichete).
+
+## Verificarea datelor calculatorului (12.11.2026)
+- Eșantion de 200 de rânduri din registru verificat de 4 agenți + supervizor; corecturi în `build_calc_pl.py` / `doze.py`:
+  doze pe hectarul de perete foliar (LWA) → doza pe hectarul de teren din paranteză (sau rândul nu intră), doza minimă recomandată,
+  restricțiile de cultivare afișate lângă doză („tylko w szklarni”, „tylko pod osłonami”, „tylko plantacje nasienne”…),
+  tipul produselor cu mai multe tipuri, „nie stosować w dniu zbioru” = 1 zi, agrofagi lipiți, ml/g pe ha mari → L/kg pe ha.
+- Coloanele de doză din `import_registru_utilizari` (Supabase) sunt încă din prima variantă a parserului; calculatorul folosește `build_calc_pl.py`.
