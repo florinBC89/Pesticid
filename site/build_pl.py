@@ -134,7 +134,7 @@ def tr_html(s, d, canon):
     # meniul: Plan de fertilizare → „În curând” (regulile de fertilizare sunt cele din România)
     for c in ('menu-it', 'mm-it'):
         s = s.replace(f'<a class="{c}" href="/plan-fertilizare/">Plan de fertilizare</a>',
-                      f'<span class="{c} is-soon" aria-disabled="true"><span>Plan de fertilizare</span><span class="soon">În curând</span></span>')
+                      f'<span class="{c} is-soon" aria-disabled="true"><span>Plan de fertilizare</span><span class="soon" lang="en">Soon</span></span>')
     parts = TOK.split(s); out = []
     for p in parts:
         if not p: continue
