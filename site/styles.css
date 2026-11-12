@@ -653,6 +653,13 @@ button.cui-opt:hover, button.cui-opt:focus-visible { background: #eef8c6; outlin
 .cui-opt .tag { flex: 0 0 auto; font-size: 11px; padding: 3px 8px; background: #e6f4ea; color: #1f6b2e; }
 .cui-opt + .cui-opt { border-top: 1px solid #edf1f9; }
 /* mesajul de sub formular: firma confirmată, CUI greșit, firmă inactivă, loc deja rezervat */
+/* Polonia (/pl/): partenerul scrie NIP, numele firmei și voievodatul (nu există ANAF) */
+.pl-firma { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+@media (max-width: 560px) { .pl-firma { grid-template-columns: minmax(0, 1fr); } }
+.pl-firma .field { cursor: text; }
+.pl-firma .field input, .pl-firma .field select { font-size: 18px; font-weight: 500; color: #242c3c; }
+.field select { appearance: none; -webkit-appearance: none; border: 0; background: transparent; padding: 0; margin: 0; width: 100%; min-width: 0; font: inherit; line-height: 1.2; outline: none; cursor: pointer; }
+.field select:invalid, .field select.is-empty { color: #868fa2; font-weight: 400; }
 .cui-stare { grid-column: 1 / -1; margin: 0; padding: 9px 12px; border-radius: 12px; font-size: 14px; line-height: 20px; }
 .cui-stare:empty { display: none; }
 .cui-stare.ok { background: #e6f4ea; color: #1f6b2e; font-weight: 600; }

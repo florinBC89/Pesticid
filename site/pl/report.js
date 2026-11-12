@@ -120,7 +120,7 @@
   function urca(f) {
     f.st = 'up'; render();
     if (!FN) { f.st = 'ok'; f.el.classList.remove('is-up'); f.bar.parentNode.remove(); render(); return; } // mod demo, fără Supabase
-    fetch(FN, { method: 'POST', headers: hdr(), body: JSON.stringify({ action: 'url', draft: draft, nume: f.file.name, tip: f.tip, marime: f.file.size }) })
+    fetch(FN, { method: 'POST', headers: hdr(), body: JSON.stringify({ action: 'url', limba: 'pl', draft: draft, nume: f.file.name, tip: f.tip, marime: f.file.size }) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw eroare(j.mesaj || 'Nie udało się przesłać pliku. Spróbuj ponownie.'); return j; }); })
       .then(function (j) {
         f.path = j.path;
@@ -198,7 +198,7 @@
     if (busy) return;
     if (!gata()) { ceLipseste(); return; }
     var ok = files.filter(function (f) { return f.st === 'ok' && f.path; });
-    var body = { action: 'trimite', draft: draft, email: email.value.trim(), subiect: subiect, descriere: desc.value.trim(), fisiere: ok.map(function (f) { return f.path; }), context: context(), ph_id: (window.track && window.track.distinctId && window.track.distinctId()) || null, hp: hp.value };
+    var body = { action: 'trimite', limba: 'pl', draft: draft, email: email.value.trim(), subiect: subiect, descriere: desc.value.trim(), fisiere: ok.map(function (f) { return f.path; }), context: context(), ph_id: (window.track && window.track.distinctId && window.track.distinctId()) || null, hp: hp.value };
     var fin = function (nr) {
       T('report_submitted', { subiect: subiect, fisiere: ok.length });
       $('r-done-nr').textContent = '#' + nr; $('r-done-email').textContent = body.email;

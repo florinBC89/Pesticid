@@ -62,7 +62,7 @@
   $('dz-email').textContent = email; $('dz-email-ok').textContent = email; arata('st-confirm');
   $('dz-go').addEventListener('click', function () {
     var b = $('dz-go'); b.disabled = true; b.textContent = 'Wysyłanie…';
-    fetch(FN, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, t: t }) })
+    fetch(FN, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, t: t, limba: 'pl' }) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var e = new Error(j.mesaj || 'Nie udało się zapisać wypisania. Spróbuj ponownie.'); e.link = r.status === 400 || r.status === 403; throw e; } }); })
       .then(function () { $('dz-retry').hidden = true; arata('st-ok'); })
       .catch(function (e) {

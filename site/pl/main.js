@@ -185,7 +185,7 @@
     }
     function rezultat(j, cui) {
       if (cuiCurat(input.value) !== cui) return;               /* între timp s-a schimbat CUI-ul */
-      if (j.control === false) { inchide(); set('gresit', 'CUI wygląda na niepoprawny. Sprawdź ostatnią cyfrę.', 'err'); return; }
+      if (j.control === false) { inchide(); set('gresit', 'NIP wygląda na niepoprawny. Sprawdź ostatnią cyfrę.', 'err'); return; }
       if (j.indisponibil) { inchide(); firma = { cui: cui, denumire: '', judet: '' }; set('neverificat', 'Nie możemy teraz sprawdzić firmy w ANAF. Możesz zarezerwować miejsce, sprawdzimy ją później.', 'info'); return; }
       if (j.deja_rezervat) { inchide(); set('rezervat', 'Ta firma ma już zarezerwowane miejsce. Sprawdź e-mail użyty wtedy lub napisz do nas, jeśli to nie ty je zarezerwowałeś.', 'warn'); return; }
       if (!j.gasit) { inchide(); set('negasit', 'Nie znaleźliśmy firmy w ANAF. Sprawdź CUI na fakturze.', 'err'); return; }
@@ -205,7 +205,7 @@
       if (!cuiValid(cui)) {
         inchide();
         /* eroarea apare doar după ce a terminat de scris (iese din câmp sau trimite) */
-        if (imediat && cui.length >= 2) set('gresit', 'CUI wygląda na niepoprawny. Sprawdź ostatnią cyfrę.', 'err'); else set('scrie', '');
+        if (imediat && cui.length >= 2) set('gresit', 'NIP wygląda na niepoprawny. Sprawdź ostatnią cyfrę.', 'err'); else set('scrie', '');
         return;
       }
       timer = setTimeout(function () {
@@ -231,6 +231,26 @@
     };
   }
 
+  /* Polonia: NIP (cifra de control) + numele firmei + voievodatul, fără ANAF — firma o verificăm manual */
+  function nipField(f, onChange) {
+    var input = f.querySelector('.field.cui input'), lbl = f.querySelector('.field.cui'), st = f.querySelector('.cui-stare');
+    var firma = f.querySelector('#firma-partener'), woj = f.querySelector('#woj-partener'), stare = 'gol';
+    function curat() { return String(input.value || '').replace(/\D/g, ''); }
+    function valid(n) { if (!/^\d{10}$/.test(n)) return false; var w = [6, 5, 7, 2, 3, 4, 5, 6, 7], s = 0; for (var i = 0; i < 9; i++) s += w[i] * +n[i]; s = s % 11; return s !== 10 && s === +n[9]; }
+    function set(s, msg, cls) { stare = s; lbl.classList.toggle('is-ok', s === 'ok'); lbl.classList.toggle('is-err', s === 'gresit'); st.className = 'cui-stare' + (cls ? ' ' + cls : ''); st.textContent = msg || ''; onChange(); }
+    function verifica(final) { var n = curat(); if (!n) { set('gol', ''); return; } if (valid(n)) { set('ok', ''); return; } if (final || n.length >= 10) set('gresit', 'NIP wygląda na niepoprawny. Sprawdź ostatnią cyfrę.', 'err'); else set('scrie', ''); }
+    input.addEventListener('input', function () { verifica(false); });
+    input.addEventListener('blur', function () { verifica(true); });
+    if (woj) { var gol = function () { woj.classList.toggle('is-empty', !woj.value); }; gol(); woj.addEventListener('change', function () { gol(); onChange(); }); }
+    if (firma) firma.addEventListener('input', onChange);
+    return {
+      gata: function () { return stare === 'ok' && !!firma && firma.value.trim().length >= 2 && !!woj && !!woj.value; },
+      cui: curat, firma: function () { return firma ? firma.value.trim() : ''; }, woj: function () { return woj ? woj.value : ''; },
+      forteaza: function () { verifica(true); },
+      eroare: function (msg) { set('gresit', msg, 'err'); }
+    };
+  }
+
   document.querySelectorAll('form.reserve').forEach(function (f) {
     var input = f.querySelector('.field.email input'), msg = f.querySelector('.form-msg'), btn = f.querySelector('.btn-cta');
     var doneBox = f.querySelector('.reserve-done'), doneEmail = f.querySelector('[data-done-email]');
@@ -239,7 +259,7 @@
     /* „Rezerv loc” e activ doar când în câmp e o adresă de email validă (și, la parteneri, firma e confirmată) */
     var cui = null;
     var sync = function () { btn.disabled = busy || !EMAIL_RE.test((input.value || '').trim()) || (cui && !cui.gata()); };
-    if (f.classList.contains('has-cui')) cui = cuiField(f, function () { sync(); });
+    if (f.classList.contains('has-cui')) cui = nipField(f, function () { sync(); });
     input.addEventListener('focus', function () { if (window.antibot) window.antibot.pregateste(); if (formStarted) return; formStarted = true; T('waitlist_form_started', { plan: plan }); });
     input.addEventListener('input', function () { f.classList.remove('is-error'); msg.textContent = ''; msg.className = 'form-msg'; sync(); });
     input.addEventListener('change', sync);
@@ -262,7 +282,7 @@
       var AB = window.antibot;
       (AB ? AB.token(f, 'rezerva') : Promise.resolve(null)).catch(function (e) { e.antibot = true; throw e; }).then(function (tk) {
         var corp = { email: email, plan: plan, sursa: 'site:acces-timpuriu', ph_id: (window.track && window.track.distinctId()) || null, token: tk };
-        if (cui) corp.cui = cui.cui();
+        corp.tara = 'PL'; corp.limba = 'pl'; if (cui) { corp.nip = cui.cui(); corp.firma = cui.firma(); corp.wojewodztwo = cui.woj(); }
         return fetch(sbUrl + '/functions/v1/rezerva', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'apikey': sbKey, 'Authorization': 'Bearer ' + sbKey },
@@ -274,11 +294,11 @@
       }).catch(function (e) {
           var txt = String((e && e.body && (e.body.error || e.body.message || e.body.hint)) || (e && e.message) || '');
           var cod = e && e.body && e.body.error;
-          if (cui && (cod === 'deja_rezervat' || cod === 'firma_inactiva' || cod === 'cui_negasit' || cod === 'cui')) {
+          if (cui && (cod === 'deja_rezervat' || cod === 'firma_inactiva' || cod === 'cui_negasit' || cod === 'cui' || cod === 'firma' || cod === 'wojewodztwo')) {
             T('waitlist_failed', { plan: plan, reason: cod });
             cui.eroare(cod === 'deja_rezervat' ? 'Ta firma ma już zarezerwowane miejsce. Sprawdź e-mail użyty wtedy lub napisz do nas, jeśli to nie ty je zarezerwowałeś.'
               : cod === 'firma_inactiva' ? 'Firma figuruje w ANAF jako nieaktywna. Jeśli to pomyłka, napisz do nas, a sprawdzimy.'
-              : cod === 'cui_negasit' ? 'Nie znaleźliśmy firmy w ANAF. Sprawdź CUI na fakturze.' : 'CUI wygląda na niepoprawny. Sprawdź ostatnią cyfrę.');
+              : cod === 'firma' ? 'Wpisz nazwę firmy.' : cod === 'wojewodztwo' ? 'Wybierz województwo.' : cod === 'cui_negasit' ? 'Nie znaleźliśmy firmy w ANAF. Sprawdź CUI na fakturze.' : 'NIP wygląda na niepoprawny. Sprawdź ostatnią cyfrę.');
             return;
           }
           var reason = e && e.antibot ? 'antibot' : /antibot/.test(txt) ? 'antibot_server' : /prea multe|rate|429/i.test(txt) ? 'rate_limited' : /email/i.test(txt) && /400/.test(String(e && e.message)) ? 'invalid_email' : 'network';

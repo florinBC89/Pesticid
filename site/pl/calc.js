@@ -260,7 +260,7 @@
     var u = r[5], up = unitProdus(u), uro = unitRo(u);
     try { localStorage.setItem('pesticid.site.param', JSON.stringify({ ha: ha, apa: apa })); } catch (e) {}
     var html = '', note = [];
-    if (els.bloc.value) note.push('Blok fizyczny (APIA) ' + els.bloc.value + '.');
+    if (els.bloc.value) note.push('Działka ' + els.bloc.value + '.');
     if (estePerHa(u) || esteConc(u)) {
       var d = dozaPerHa(dta, u, apa), total = d * ha, apaTot = apa * ha, conc = d / apa * 100;
       html += card('Całkowita ilość środka', fmt(total, 3), up, fmt(d, 4) + ' ' + up + '/ha × ' + fmt(ha) + ' ha');

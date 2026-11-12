@@ -122,8 +122,8 @@
  {
   "text": "ID-ul blocului fizic",
   "tip": "atribut",
-  "pl": "ID bloku fizycznego (APIA)",
-  "nota": ""
+  "pl": "Numer działki",
+  "nota": " [PL] adaptat pentru Polonia."
  },
  {
   "text": "Șterge blocul fizic",
@@ -470,8 +470,8 @@
  {
   "text": "Bloc fizic",
   "tip": "html",
-  "pl": "Blok fizyczny (APIA)",
-  "nota": ""
+  "pl": "Działka",
+  "nota": " [PL] adaptat pentru Polonia."
  },
  {
   "text": "Produs",
@@ -848,8 +848,8 @@
  {
   "text": "după hectarele din APIA",
   "tip": "html",
-  "pl": "według hektarów z APIA",
-  "nota": ""
+  "pl": "według hektarów z ARiMR",
+  "nota": " [PL] adaptat pentru Polonia."
  },
  {
   "text": "Primele",
@@ -1070,8 +1070,8 @@
  {
   "text": "Locuri limitate pe județ:",
   "tip": "html",
-  "pl": "Ograniczona liczba miejsc na okręg:",
-  "nota": "județ = okręg; nu există echivalent exact în PL"
+  "pl": "Ograniczona liczba miejsc na województwo:",
+  "nota": "județ = okręg; nu există echivalent exact în PL [PL] adaptat pentru Polonia."
  },
  {
   "text": "2 distribuitori, 1 laborator, 1 service",
@@ -1088,8 +1088,8 @@
  {
   "text": "la fermierii din România",
   "tip": "html",
-  "pl": "do rolników w Rumunii",
-  "nota": ""
+  "pl": "do rolników w Polsce",
+  "nota": " [PL] adaptat pentru Polonia."
  },
  {
   "text": "CUI",
@@ -1106,8 +1106,8 @@
  {
   "text": "Numele firmei, județul și activitatea le luăm din ANAF după CUI. Fiecare firmă poate rezerva un singur loc.",
   "tip": "html",
-  "pl": "Nazwę firmy, okręg i rodzaj działalności pobieramy z ANAF na podstawie CUI. Każda firma może zarezerwować tylko jedno miejsce.",
-  "nota": ""
+  "pl": "Podaj NIP, nazwę firmy i województwo — dane firmy sprawdzimy ręcznie. Każda firma może zarezerwować tylko jedno miejsce.",
+  "nota": " [PL] adaptat pentru Polonia."
  },
  {
   "text": "Vreau să raportez o problemă",
@@ -1454,8 +1454,8 @@
  {
   "text": "CUI-ul nu pare corect. Verifică ultima cifră.",
   "tip": "js",
-  "pl": "CUI wygląda na niepoprawny. Sprawdź ostatnią cyfrę.",
-  "nota": ""
+  "pl": "NIP wygląda na niepoprawny. Sprawdź ostatnią cyfrę.",
+  "nota": " [PL] adaptat pentru Polonia."
  },
  {
   "text": "Nu putem verifica acum firma la ANAF. Poți rezerva locul, o verificăm noi mai târziu.",
@@ -2060,8 +2060,8 @@
  {
   "text": "Bloc fizic",
   "tip": "js",
-  "pl": "Blok fizyczny (APIA)",
-  "nota": "conform glosarului; rezultă „Blok fizyczny (APIA) X.”"
+  "pl": "Działka",
+  "nota": "conform glosarului; rezultă „Blok fizyczny (APIA) X.” [PL] adaptat pentru Polonia."
  },
  {
   "text": "Produs total de folosit",
@@ -3044,8 +3044,8 @@
  {
   "text": "centralizatorul APIA",
   "tip": "html",
-  "pl": "zestawienia APIA",
-  "nota": "„centralizatorul APIA” = fișierul centralizator APIA; tradus descriptiv"
+  "pl": "zestawienia ARiMR",
+  "nota": "„centralizatorul APIA” = fișierul centralizator APIA; tradus descriptiv [PL] adaptat pentru Polonia."
  },
  {
   "text": ", parcele și planuri salvate",
@@ -3080,8 +3080,8 @@
  {
   "text": "controlul APIA/ANF",
   "tip": "html",
-  "pl": "kontroli APIA/ANF",
-  "nota": ""
+  "pl": "kontroli ARiMR/PIORiN",
+  "nota": " [PL] adaptat pentru Polonia."
  },
  {
   "text": "Când pot stropi",
@@ -3146,8 +3146,8 @@
  {
   "text": "roluri, SPV și rapoarte",
   "tip": "html",
-  "pl": "role, SPV i raporty",
-  "nota": "SPV (Spațiul Privat Virtual, ANAF) păstrat ca nume propriu"
+  "pl": "role, KSeF i raporty",
+  "nota": "SPV (Spațiul Privat Virtual, ANAF) păstrat ca nume propriu [PL] adaptat pentru Polonia."
  },
  {
   "text": "Tot ce găsești în",
@@ -3182,8 +3182,8 @@
  {
   "text": "Facturile din SPV",
   "tip": "html",
-  "pl": "Faktury z SPV",
-  "nota": ""
+  "pl": "Faktury z KSeF",
+  "nota": " [PL] adaptat pentru Polonia."
  },
  {
   "text": "intră automat în magazie",
@@ -3254,8 +3254,8 @@
  {
   "text": "de la fermierii din județele tale, cu profil verificat.",
   "tip": "html",
-  "pl": "od rolników z twoich okręgów, ze zweryfikowanym profilem.",
-  "nota": "județ = okręg"
+  "pl": "od rolników z twoich województw, ze zweryfikowanym profilem.",
+  "nota": "județ = okręg [PL] adaptat pentru Polonia."
  },
  {
   "text": "Profil cu insigna",
@@ -3278,8 +3278,8 @@
  {
   "text": "nelimitate din județele tale",
   "tip": "html",
-  "pl": "bez limitu z twoich okręgów",
-  "nota": ""
+  "pl": "bez limitu z twoich województw",
+  "nota": " [PL] adaptat pentru Polonia."
  },
  {
   "text": "Catalog legat de",
@@ -3290,8 +3290,8 @@
  {
   "text": "listele ANF și MADR",
   "tip": "html",
-  "pl": "listami ANF i MADR",
-  "nota": ""
+  "pl": "listami MRiRW",
+  "nota": " [PL] adaptat."
  },
  {
   "text": "Comenzi, livrări și facturi",

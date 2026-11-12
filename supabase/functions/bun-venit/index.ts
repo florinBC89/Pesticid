@@ -8,6 +8,9 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import spec from "./variants.json" with { type: "json" };
 import TEMPLATE from "./template.ts";
+// versiunea poloneză (înscrierile de pe agrosphere.eu/pl/, limba = "pl"): aceleași chei și variante, texte în poloneză
+import specPl from "./variants-pl.json" with { type: "json" };
+import TEMPLATE_PL from "./template-pl.ts";
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const RESEND_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
@@ -23,11 +26,13 @@ const ASSET_MAP: Record<string, string> = { "logo.png": `${SITE}/assets/email-lo
   // dark theme (afișate doar de clienții cu prefers-color-scheme: dark / Outlook data-ogsc)
   "logo-white.png": `${SITE}/assets/email-logo-white.png`, "twitter-white.png": "Twitter-white.png", "linkedin-white.png": "Linkedin-white.png", "footer-dark.jpg": "Footer-image-dark.jpg" };
 
-type Row = { id: number; email: string; plan: string; trimis_at: string | null; dezabonat_at: string | null };
+type Row = { id: number; email: string; plan: string; trimis_at: string | null; dezabonat_at: string | null; tara: string; limba: string };
 type Variant = Record<string, string | number | null> & { id: string; plan: string; rang_max: number | null; subject: string; bullets: string };
-const VARIANTS = spec.variants as Variant[];
-const CFG = spec.config as Record<string, string>;
-const BULLETS = spec.bullets as Record<string, string[]>;
+type Spec = { variants: Variant[]; config: Record<string, string>; bullets: Record<string, string[]>; template: string; prefix: string };
+const SPECS: Record<string, Spec> = {
+  ro: { variants: spec.variants as Variant[], config: spec.config as Record<string, string>, bullets: spec.bullets as Record<string, string[]>, template: TEMPLATE, prefix: "" },
+  pl: { variants: specPl.variants as Variant[], config: specPl.config as Record<string, string>, bullets: specPl.bullets as Record<string, string[]>, template: TEMPLATE_PL, prefix: "/pl" },
+};
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]!));
 const strong = (html: string, color = "#111111") =>
@@ -45,21 +50,21 @@ async function dezToken(email: string) {
   return btoa(String.fromCharCode(...mac)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "").slice(0, 32);
 }
 const dezQuery = async (email: string) => `email=${encodeURIComponent(email.trim().toLowerCase())}&t=${await dezToken(email)}`;
-function render(variant: Variant, email: string, dezQ: string): string {
-  const v: Record<string, string> = { ...CFG };
+function render(variant: Variant, email: string, dezQ: string, L: Spec): string {
+  const v: Record<string, string> = { ...L.config };
   for (const k of Object.keys(variant)) v[k] = String(variant[k] ?? "");
-  v.assets_url = ASSETS; v.site_url = SITE; v.calc_url = `${SITE}/#calculator`;
-  v.email = esc(email); v.unsubscribe_url = `${SITE}/dezabonare/?${dezQ}`;
-  v.bullets = bulletRows(BULLETS[variant.bullets]);
+  v.assets_url = ASSETS; v.site_url = `${SITE}${L.prefix}`; v.calc_url = `${SITE}${L.prefix}/#calculator`;
+  v.email = esc(email); v.unsubscribe_url = `${SITE}${L.prefix}/dezabonare/?${dezQ}`;
+  v.bullets = bulletRows(L.bullets[variant.bullets]);
   for (const k of ["intro", "second_headline", "second_text", "offer_calc"]) v[k] = strong(v[k]);
   const sub = (_: string, key: string) => { if (!(key in v)) throw new Error(`token necunoscut în template: ${key}`); return v[key]; };
-  let html = TEMPLATE.replace(/\{\{(\w+)\}\}/g, sub).replace(/\{\{(\w+)\}\}/g, sub);
+  let html = L.template.replace(/\{\{(\w+)\}\}/g, sub).replace(/\{\{(\w+)\}\}/g, sub);
   for (const [a, b] of Object.entries(ASSET_MAP)) html = html.replaceAll(`${ASSETS}/${a}`, b.startsWith("http") ? b : `${ASSETS}/${encodeURIComponent(b)}`);
   return html;
 }
-function alegeVarianta(plan: string, rang: number): Variant {
-  const ale = VARIANTS.filter((x) => x.plan === plan);
-  return ale.find((x) => x.rang_max != null && rang <= x.rang_max) ?? ale.find((x) => x.rang_max == null) ?? VARIANTS[0];
+function alegeVarianta(plan: string, rang: number, L: Spec): Variant {
+  const ale = L.variants.filter((x) => x.plan === plan);
+  return ale.find((x) => x.rang_max != null && rang <= x.rang_max) ?? ale.find((x) => x.rang_max == null) ?? L.variants[0];
 }
 
 const json = (status: number, body: unknown) =>
@@ -87,21 +92,22 @@ Deno.serve(async (req: Request) => {
   const id = Number(body.id ?? body.record?.id);
   if (!id) return json(400, { error: "id lipsă" });
 
-  const rows: Row[] = await rest(`lista_asteptare?id=eq.${id}&select=id,email,plan,trimis_at,dezabonat_at`);
+  const rows: Row[] = await rest(`lista_asteptare?id=eq.${id}&select=id,email,plan,trimis_at,dezabonat_at,tara,limba`);
   const row = rows[0];
   if (!row) return json(404, { error: "rând inexistent" });
   if (row.trimis_at) return json(200, { skipped: "deja trimis", id });
   if (row.dezabonat_at) return json(200, { skipped: "dezabonat", id });
 
-  // rangul pe plan = câți s-au înscris pe același plan până la (și inclusiv) acest rând
-  const cnt = await fetch(`${SUPABASE_URL}/rest/v1/lista_asteptare?plan=eq.${encodeURIComponent(row.plan)}&id=lte.${row.id}&select=id`, {
+  // rangul pe plan = câți s-au înscris pe același plan, în aceeași țară, până la (și inclusiv) acest rând
+  const L = SPECS[row.limba] ?? SPECS.ro;
+  const cnt = await fetch(`${SUPABASE_URL}/rest/v1/lista_asteptare?plan=eq.${encodeURIComponent(row.plan)}&tara=eq.${encodeURIComponent(row.tara ?? "RO")}&id=lte.${row.id}&select=id`, {
     headers: { ...H, Prefer: "count=exact", Range: "0-0" },
   });
   const rang = Number((cnt.headers.get("content-range") ?? "0/1").split("/")[1]) || 1;
-  const variant = alegeVarianta(row.plan, rang);
+  const variant = alegeVarianta(row.plan, rang, L);
   const dezQ = await dezQuery(row.email);
-  const html = render(variant, row.email, dezQ);
-  if (body.dry) return json(200, { id, rang, varianta: variant.id, subject: variant.subject, from: FROM, site: SITE, html_length: html.length, dry: true });
+  const html = render(variant, row.email, dezQ, L);
+  if (body.dry) return json(200, { id, rang, limba: row.limba, varianta: variant.id, subject: variant.subject, from: FROM, site: SITE, html_length: html.length, dry: true });
   if (!RESEND_KEY) return json(500, { error: "RESEND_API_KEY lipsă" });
 
   // cheia de idempotență depinde de conținut: același email nu pleacă de două ori, dar o versiune nouă a șablonului poate fi retrimisă
@@ -113,7 +119,7 @@ Deno.serve(async (req: Request) => {
       from: FROM, to: [row.email], subject: variant.subject, html,
       ...(REPLY_TO ? { reply_to: REPLY_TO } : {}),
       headers: { "List-Unsubscribe": `<${SUPABASE_URL}/functions/v1/dezabonare?${dezQ}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" },
-      tags: [{ name: "tip", value: "bun-venit" }, { name: "varianta", value: variant.id }, { name: "plan", value: row.plan }],
+      tags: [{ name: "tip", value: "bun-venit" }, { name: "varianta", value: variant.id }, { name: "plan", value: row.plan }, { name: "limba", value: row.limba ?? "ro" }],
     }),
   });
   const res = await send.json().catch(() => ({}));

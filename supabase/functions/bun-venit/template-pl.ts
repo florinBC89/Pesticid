@@ -1,0 +1,168 @@
+// wersja polska template.ts (emails/template.html): ten sam HTML i te same tokeny, tylko teksty po polsku
+export default `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="pl">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<title>{{subject}}</title>
+<!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
+<style>
+  body{margin:0;padding:0;background-color:#cedbf6;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}
+  table{border-collapse:collapse;mso-table-lspace:0;mso-table-rspace:0}
+  img{border:0;line-height:100%;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;display:block}
+  a{color:#111}
+  @media only screen and (max-width:599px){
+    .w{width:100%!important;max-width:100%!important}
+    .px{padding-left:16px!important;padding-right:16px!important}
+    .h1{font-size:32px!important;line-height:40px!important}
+    .h2{font-size:28px!important;line-height:36px!important}
+    .stack{display:block!important;width:100%!important;padding-left:0!important;padding-right:0!important;box-sizing:border-box!important}
+    .r40{border-radius:28px!important}
+    .c1{border-radius:40px 40px 6px 6px!important}
+    .c2,.c3{border-radius:6px!important}
+    .c4{border-radius:6px 6px 40px 40px!important}
+    .ctr{text-align:center!important}
+    .stack.lbl{padding:0 0 12px!important}
+  }
+</style>
+<style>
+  :root{color-scheme:light dark;supported-color-schemes:light dark}
+  /* ===== Dark theme (Apple Mail / iOS Mail, Outlook macOS & iOS, Samsung, Thunderbird) ===== */
+  @media (prefers-color-scheme: dark){
+    body,.bg{background-color:#2c394f!important}
+    .lt{display:none!important;max-height:0!important}
+    .dk{display:block!important;max-height:none!important;overflow:visible!important}
+    .hero-bg{background-color:#2c394f!important;background-image:url('{{assets_url}}/hero-camp-dark.jpg')!important}
+    .foot-bg{background-color:#2c394f!important;background-image:url('{{assets_url}}/footer-dark.jpg')!important}
+    .t-main,.t-main strong{color:#ffffff!important}
+    .t-body{color:#f0f4fe!important}
+    .t-body strong{color:#ffffff!important}
+    .t-muted{color:#aeb9d0!important}
+    .t-muted a{color:#aeb9d0!important}
+  }
+</style>
+<!--[if !mso]><!--><style>
+  /* Outlook.com / Outlook app (dark mode z atrybutami data-ogsc / data-ogsb) */
+  [data-ogsb] body,[data-ogsb] .bg,[data-ogsb] .hero-bg,[data-ogsb] .foot-bg{background-color:#2c394f!important}
+  [data-ogsc] .lt{display:none!important;max-height:0!important}
+  [data-ogsc] .dk{display:block!important;max-height:none!important;overflow:visible!important}
+  [data-ogsc] .t-main,[data-ogsc] .t-main strong,[data-ogsc] .t-body strong{color:#ffffff!important}
+  [data-ogsc] .t-body{color:#f0f4fe!important}
+  [data-ogsc] .t-muted,[data-ogsc] .t-muted a{color:#aeb9d0!important}
+</style><!--<![endif]-->
+</head>
+<body class="bg" style="margin:0;padding:0;background-color:#cedbf6;">
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#cedbf6;">{{preheader}}&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;</div>
+<table role="presentation" class="bg" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#cedbf6" style="background-color:#cedbf6;">
+<tr><td align="center" style="padding:0;">
+<!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td><![endif]-->
+<table role="presentation" class="w" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;">
+
+<!-- ===== HERO (zdjecie pola jako tlo) ===== -->
+<tr><td class="hero-bg" background="{{assets_url}}/hero-camp.jpg" bgcolor="#cedbf6" valign="top" style="background-color:#cedbf6;background-image:url('{{assets_url}}/hero-camp.jpg');background-size:100% auto;background-position:center bottom;background-repeat:no-repeat;">
+<!--[if gte mso 9]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:1020px;"><v:fill type="frame" src="{{assets_url}}/hero-camp.jpg" color="#cedbf6" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr><td align="center" style="padding:40px 40px 0;"><a href="{{site_url}}" style="text-decoration:none;"><img class="lt" src="{{assets_url}}/logo.png" width="150" height="29" alt="AgroSphere" style="width:150px;height:auto;margin:0 auto;"><!--[if !mso]><!--><img class="dk" src="{{assets_url}}/logo-white.png" width="150" height="29" alt="AgroSphere" style="display:none;max-height:0;overflow:hidden;width:150px;height:auto;margin:0 auto;"><!--<![endif]--></a></td></tr>
+  <tr><td align="center" class="px" style="padding:48px 40px 0;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#ceee58" style="background-color:#ceee58;border-radius:999px;padding:6px 12px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:20px;font-weight:500;color:#111111;">{{hero_tag}}</td></tr></table>
+  </td></tr>
+  <tr><td align="center" class="px t-body" style="padding:24px 40px 0;font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:28px;font-weight:400;color:#3b3f4a;">{{intro}}</td></tr>
+  <tr><td align="center" class="px h1 t-main" style="padding:28px 40px 0;font-family:Arial,Helvetica,sans-serif;font-size:40px;line-height:48px;font-weight:400;color:#111111;letter-spacing:-0.5px;">Obliczasz prawidłową dawkę dla <strong style="font-weight:600;">wszystkich środków ochrony roślin</strong></td></tr>
+  <tr><td align="center" class="px t-body" style="padding:20px 40px 0;font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:28px;font-weight:400;color:#3b3f4a;">Wybierasz uprawę, agrofaga i powierzchnię, a my pokazujemy ci <strong style="font-weight:600;color:#111111;">wszystkie zarejestrowane środki z dokładną dawką, łączną ilością i pełnymi zaleceniami</strong></td></tr>
+  <tr><td class="px" style="padding:36px 40px 48px;">
+    <!-- Kalkulator: zrzut ekranu + przycisk -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr><td align="center"><a href="{{calc_url}}" style="text-decoration:none;"><img src="{{assets_url}}/calc.png" width="520" alt="Kalkulator środków ochrony roślin: {{calc_produs}}, {{calc_cultura}}, {{calc_tinta}}, {{calc_ha}}, {{calc_apa}}, dawka zarejestrowana {{calc_doza}}" style="width:100%;max-width:520px;height:auto;margin:0 auto;"></a></td></tr>
+      <tr><td align="center" style="padding-top:22px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" bgcolor="#000000" style="background-color:#000000;border-radius:32px;">
+          <a href="{{calc_url}}" style="display:inline-block;padding:0 30px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:60px;font-weight:600;color:#ceee58;text-decoration:none;border-radius:32px;">Oblicz teraz na stronie</a>
+        </td></tr></table>
+      </td></tr>
+    </table>
+  </td></tr>
+</table>
+<!--[if gte mso 9]></v:textbox></v:rect><![endif]-->
+</td></tr>
+
+<!-- ===== STATYSTYKI ===== -->
+<tr><td class="px" style="padding:30px 24px 0;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td class="stack" width="50%" valign="top" style="padding:0 3px 5px 0;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" class="c1" style="background-color:#000000;border-radius:40px 6px 6px 6px;"><tr>
+        <td width="88" height="110" valign="middle" style="padding:12px 0 12px 14px;"><img src="{{assets_url}}/icon-produse.png" width="88" height="88" alt="" style="width:88px;height:88px;border-radius:44px;"></td>
+        <td valign="middle" style="padding:12px 8px 12px 16px;font-family:Arial,Helvetica,sans-serif;"><div style="font-size:30px;line-height:34px;font-weight:600;color:#e9f0ff;letter-spacing:-0.5px;white-space:nowrap;">{{stat_produse}}</div><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:6px;"><tr><td style="padding-right:6px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:22px;color:#cedbf6;white-space:nowrap;">Środki</td><td bgcolor="#ceee58" style="background-color:#ceee58;border-radius:999px;padding:4px 10px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:18px;font-weight:500;color:#111111;white-space:nowrap;">Zarejestrowane</td></tr></table></td>
+      </tr></table>
+    </td>
+    <td class="stack" width="50%" valign="top" style="padding:0 0 5px 3px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" class="c2" style="background-color:#000000;border-radius:6px 40px 6px 6px;"><tr>
+        <td width="88" height="110" valign="middle" style="padding:12px 0 12px 14px;"><img src="{{assets_url}}/icon-culturi.png" width="88" height="88" alt="" style="width:88px;height:88px;border-radius:8px;"></td>
+        <td valign="middle" style="padding:12px 8px 12px 16px;font-family:Arial,Helvetica,sans-serif;"><div style="font-size:30px;line-height:34px;font-weight:600;color:#e9f0ff;letter-spacing:-0.5px;white-space:nowrap;">{{stat_culturi}}</div><div style="padding-top:6px;font-size:16px;line-height:22px;color:#cedbf6;white-space:nowrap;">Uprawy rolne</div></td>
+      </tr></table>
+    </td>
+  </tr>
+  <tr>
+    <td class="stack" width="50%" valign="top" style="padding:0 3px 5px 0;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" class="c3" style="background-color:#000000;border-radius:6px 6px 6px 40px;"><tr>
+        <td width="88" height="110" valign="middle" style="padding:12px 0 12px 14px;"><img src="{{assets_url}}/icon-daunatori.png" width="88" height="88" alt="" style="width:88px;height:88px;border-radius:8px;"></td>
+        <td valign="middle" style="padding:12px 8px 12px 16px;font-family:Arial,Helvetica,sans-serif;"><div style="font-size:30px;line-height:34px;font-weight:600;color:#e9f0ff;letter-spacing:-0.5px;white-space:nowrap;">{{stat_tinte}}</div><div style="padding-top:6px;font-size:16px;line-height:22px;color:#cedbf6;white-space:nowrap;">Szkodniki i choroby</div></td>
+      </tr></table>
+    </td>
+    <td class="stack" width="50%" valign="top" style="padding:0 0 5px 3px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" class="c4" style="background-color:#000000;border-radius:6px 6px 40px 6px;"><tr>
+        <td width="88" height="110" valign="middle" style="padding:12px 0 12px 14px;"><img src="{{assets_url}}/icon-date.png" width="88" height="88" alt="" style="width:88px;height:88px;border-radius:8px;"></td>
+        <td valign="middle" style="padding:12px 8px 12px 16px;font-family:Arial,Helvetica,sans-serif;"><div style="font-size:24px;line-height:27px;font-weight:600;color:#e9f0ff;letter-spacing:-0.5px;">Dane<br>aktualne</div><div style="padding-top:6px;font-size:15px;line-height:21px;color:#cedbf6;white-space:nowrap;">Z oficjalnych źródeł<br><strong style="font-weight:600;color:#e9f0ff;">MRiRW, UE</strong></div></td>
+      </tr></table>
+    </td>
+  </tr>
+  </table>
+</td></tr>
+
+<!-- ===== OFERTA (zdjecie winnicy jako tlo) ===== -->
+<tr><td class="foot-bg" background="{{assets_url}}/hero-vie.jpg" bgcolor="#cedbf6" valign="top" style="background-color:#cedbf6;background-image:url('{{assets_url}}/hero-vie.jpg');background-size:100% auto;background-position:center bottom;background-repeat:no-repeat;">
+<!--[if gte mso 9]><v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:600px;height:820px;"><v:fill type="frame" src="{{assets_url}}/hero-vie.jpg" color="#cedbf6" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr><td align="center" class="px h2 t-main" style="padding:96px 40px 0;font-family:Arial,Helvetica,sans-serif;font-size:34px;line-height:42px;font-weight:400;color:#111111;letter-spacing:-0.5px;">{{second_headline}}</td></tr>
+  <tr><td align="center" class="px t-body" style="padding:14px 40px 0;font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:28px;font-weight:400;color:#3b3f4a;">{{second_text}}</td></tr>
+  <tr><td class="px" style="padding:36px 40px 56px;">
+    <!-- Offer card -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" class="r40" style="background-color:#ffffff;border-radius:40px;">
+    <tr><td style="padding:24px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="{{offer_tag_bg}}" style="background-color:{{offer_tag_bg}};border-radius:999px;padding:6px 12px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:20px;font-weight:500;color:#111111;">{{offer_tag}}</td></tr></table>
+      <div style="padding-top:16px;font-family:Arial,Helvetica,sans-serif;font-size:30px;line-height:36px;font-weight:700;color:#111111;">{{offer_title}}</div>
+      <div style="padding-top:8px;font-family:Arial,Helvetica,sans-serif;font-size:20px;line-height:26px;font-weight:700;color:#111111;">{{offer_save}}</div>
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;font-weight:400;color:#3b3f4a;">{{offer_calc}}</div>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:26px;">
+{{bullets}}
+      </table>
+    </td></tr>
+    </table>
+  </td></tr>
+</table>
+<!--[if gte mso 9]></v:textbox></v:rect><![endif]-->
+</td></tr>
+
+<!-- ===== FOOTER ===== -->
+<tr><td align="center" class="px" style="padding:36px 40px 0;">
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"><tr>
+    <td class="stack lbl ctr t-body" valign="middle" style="padding-right:24px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:28px;color:#3b3f4a;white-space:nowrap;">Obserwuj nas też na:</td>
+    <td class="stack" valign="middle" align="center"><table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"><tr>
+      <td style="padding:0 8px;"><a href="{{url_linkedin}}"><img class="lt" src="{{assets_url}}/linkedin.png" width="24" height="24" alt="LinkedIn" style="width:24px;height:24px;"><!--[if !mso]><!--><img class="dk" src="{{assets_url}}/linkedin-white.png" width="24" height="24" alt="LinkedIn" style="display:none;max-height:0;overflow:hidden;width:24px;height:24px;"><!--<![endif]--></a></td>
+      <td style="padding:0 8px;"><a href="{{url_facebook}}"><img class="lt" src="{{assets_url}}/facebook.png" width="24" height="24" alt="Facebook" style="width:24px;height:24px;"><!--[if !mso]><!--><img class="dk" src="{{assets_url}}/facebook-white.png" width="24" height="24" alt="Facebook" style="display:none;max-height:0;overflow:hidden;width:24px;height:24px;"><!--<![endif]--></a></td>
+      <td style="padding:0 8px;"><a href="{{url_instagram}}"><img class="lt" src="{{assets_url}}/instagram.png" width="24" height="24" alt="Instagram" style="width:24px;height:24px;"><!--[if !mso]><!--><img class="dk" src="{{assets_url}}/instagram-white.png" width="24" height="24" alt="Instagram" style="display:none;max-height:0;overflow:hidden;width:24px;height:24px;"><!--<![endif]--></a></td>
+    </tr></table></td>
+  </tr></table>
+</td></tr>
+<tr><td align="center" style="padding:28px 40px 0;"><a href="{{site_url}}" style="text-decoration:none;"><img class="lt" src="{{assets_url}}/logo.png" width="170" height="33" alt="AgroSphere" style="width:170px;height:auto;margin:0 auto;"><!--[if !mso]><!--><img class="dk" src="{{assets_url}}/logo-white.png" width="170" height="33" alt="AgroSphere" style="display:none;max-height:0;overflow:hidden;width:170px;height:auto;margin:0 auto;"><!--<![endif]--></a></td></tr>
+<tr><td align="center" class="px t-muted" style="padding:24px 40px 48px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#5a6478;">Otrzymujesz tę wiadomość, ponieważ adres {{email}} został zapisany na listę oczekujących AgroSphere.<br>{{company_line}} &middot; <a href="{{unsubscribe_url}}" style="color:#5a6478;text-decoration:underline;">Wypisz się</a></td></tr>
+
+</table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td></tr>
+</table>
+</body>
+</html>
+`;

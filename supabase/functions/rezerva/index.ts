@@ -1,9 +1,11 @@
 // AgroSphere — înscrierea pe lista de așteptare („Rezerv loc”).
-//   POST { email, plan, sursa, ph_id, token, cui? }  → verifică tokenul Turnstile (anti-robot), apoi apelează rezerva_loc_srv
+//   POST { email, plan, sursa, ph_id, token, cui?, tara?, limba?, nip?, firma?, wojewodztwo? }  → verifică tokenul Turnstile (anti-robot), apoi apelează rezerva_loc_srv
 //   cu IP-ul omului (pentru limitele pe IP). Emailul de bun venit pleacă din triggerul existent pe lista_asteptare.
 //   Planuri: `ferma` și `partener` (campaniile de lansare); `pro` / `agronom` rămân acceptate pentru site-ul vechi.
 //   La `partener` CUI-ul e obligatoriu: verificăm cifra de control și firma la ANAF aici, pe server (nu ne bazăm pe pagină).
 //   Dacă ANAF nu răspunde, rezervarea trece cu firma „neverificată” și o verificăm mai târziu.
+//   Polonia (tara = "PL", site-ul /pl/): partenerul dă NIP (cifra de control verificată aici), numele firmei și voievodatul;
+//   nu există ANAF acolo, deci firma rămâne „neverificată” (o verificăm manual). Mesajele de eroare vin în limba paginii.
 // Secrete: TURNSTILE_SECRET (Edge Function Secrets). Fără el, înscrierile sunt refuzate (nu le lăsăm neverificate).
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { anafFirma, cuiCurat, cuiValid } from "./anaf.ts";
@@ -16,6 +18,28 @@ const CORS = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods
 const json = (status: number, body: unknown) => new Response(JSON.stringify(body), { status, headers: { ...CORS, "Content-Type": "application/json" } });
 const GAZDE = ["agrosphere.eu", "www.agrosphere.eu", "pesticid.info", "www.pesticid.info", "florinbc89.github.io"];
 
+const WOJ = ["dolnośląskie", "kujawsko-pomorskie", "lubelskie", "lubuskie", "łódzkie", "małopolskie", "mazowieckie", "opolskie", "podkarpackie",
+  "podlaskie", "pomorskie", "śląskie", "świętokrzyskie", "warmińsko-mazurskie", "wielkopolskie", "zachodniopomorskie"];
+/* NIP: 10 cifre, cifra de control cu ponderile 6,5,7,2,3,4,5,6,7 (mod 11); același calcul ca pe pagina /pl/ */
+function nipValid(n: string) {
+  if (!/^\d{10}$/.test(n)) return false;
+  const w = [6, 5, 7, 2, 3, 4, 5, 6, 7];
+  const s = w.reduce((a, k, i) => a + k * Number(n[i]), 0) % 11;
+  return s !== 10 && s === Number(n[9]);
+}
+const MESAJE: Record<string, { ro: string; pl: string }> = {
+  email: { ro: "email invalid", pl: "Adres e-mail nie wygląda na prawidłowy." },
+  plan: { ro: "plan invalid", pl: "Nieprawidłowy plan." },
+  cui: { ro: "CUI-ul nu pare corect.", pl: "NIP nie wygląda na prawidłowy. Sprawdź ostatnią cyfrę." },
+  firma: { ro: "Scrie numele firmei.", pl: "Wpisz nazwę firmy." },
+  wojewodztwo: { ro: "Alege județul.", pl: "Wybierz województwo." },
+  antibot: { ro: "Verificarea anti-robot nu a trecut.", pl: "Weryfikacja antyrobotowa nie powiodła się." },
+  cui_negasit: { ro: "Nu am găsit firma la ANAF. Verifică CUI-ul.", pl: "Nie znaleźliśmy firmy." },
+  firma_inactiva: { ro: "Firma apare inactivă la ANAF.", pl: "Firma jest nieaktywna." },
+  deja_rezervat: { ro: "Firma are deja un loc rezervat.", pl: "Ta firma ma już zarezerwowane miejsce." },
+  rate: { ro: "Prea multe înscrieri, încearcă din nou în câteva minute.", pl: "Zbyt wiele zapisów, spróbuj ponownie za kilka minut." },
+  server: { ro: "A apărut o eroare.", pl: "Wystąpił błąd." },
+};
 const ipDin = (req: Request) => (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || req.headers.get("cf-connecting-ip") || "";
 
 /* verificarea tokenului la Cloudflare; dacă Cloudflare nu răspunde deloc (rar), lăsăm cererea să treacă —
@@ -47,38 +71,45 @@ Deno.serve(async (req: Request) => {
   let b: Record<string, unknown>;
   try { b = await req.json(); } catch { return json(400, { error: "JSON invalid" }); }
   const email = String(b.email ?? "").trim(), plan = String(b.plan ?? "");
-  if (!email || email.length > 254) return json(400, { error: "email", message: "email invalid" });
-  if (!["ferma", "partener", "pro", "agronom"].includes(plan)) return json(400, { error: "plan", message: "plan invalid" });
-  const cui = plan === "partener" ? cuiCurat(b.cui) : "";
-  if (plan === "partener" && !cuiValid(cui)) return json(400, { error: "cui", message: "CUI-ul nu pare corect." });
+  const tara = String(b.tara ?? "").toUpperCase() === "PL" ? "PL" : "RO", limba = tara === "PL" ? "pl" : "ro";
+  const M = (cod: string) => MESAJE[cod]?.[limba] ?? MESAJE.server[limba];
+  if (!email || email.length > 254) return json(400, { error: "email", message: M("email") });
+  if (!["ferma", "partener", "pro", "agronom"].includes(plan)) return json(400, { error: "plan", message: M("plan") });
+  const cui = plan !== "partener" ? "" : tara === "PL" ? String(b.nip ?? b.cui ?? "").replace(/\D/g, "") : cuiCurat(b.cui);
+  if (plan === "partener" && !(tara === "PL" ? nipValid(cui) : cuiValid(cui))) return json(400, { error: "cui", message: M("cui") });
+  const firmaPl = String(b.firma ?? "").replace(/\s+/g, " ").trim().slice(0, 200), woj = String(b.wojewodztwo ?? "").trim().toLowerCase();
+  if (plan === "partener" && tara === "PL" && firmaPl.length < 2) return json(400, { error: "firma", message: M("firma") });
+  if (plan === "partener" && tara === "PL" && !WOJ.includes(woj)) return json(400, { error: "wojewodztwo", message: M("wojewodztwo") });
 
   const ip = ipDin(req);
   const v = await turnstile(b.token, ip, "rezerva");
   if (!v.ok) {
     if (v.coduri.includes("secret-lipsa")) console.error("TURNSTILE_SECRET lipsă");
-    return json(403, { error: "antibot", coduri: v.coduri, message: "Verificarea anti-robot nu a trecut." });
+    return json(403, { error: "antibot", coduri: v.coduri, message: M("antibot") });
   }
 
   // partener: datele firmei le luăm din ANAF (firmă inexistentă sau inactivă → refuzăm)
   const firma: Record<string, string | null> = {};
-  if (plan === "partener") {
+  if (plan === "partener" && tara === "PL") {
+    Object.assign(firma, { p_firma: firmaPl, p_judet: woj, p_anaf_stare: "neverificata" });
+  } else if (plan === "partener") {
     const f = await anafFirma(cui);
-    if (f === false) return json(400, { error: "cui_negasit", message: "Nu am găsit firma la ANAF. Verifică CUI-ul." });
-    if (f && !f.activa) return json(400, { error: "firma_inactiva", message: "Firma apare inactivă la ANAF." });
+    if (f === false) return json(400, { error: "cui_negasit", message: M("cui_negasit") });
+    if (f && !f.activa) return json(400, { error: "firma_inactiva", message: M("firma_inactiva") });
     Object.assign(firma, f ? { p_firma: f.denumire, p_judet: f.judet, p_caen: f.caen, p_anaf_stare: "activa" } : { p_anaf_stare: "neverificata" });
   }
 
   const r = await fetch(`${SB}/rest/v1/rpc/rezerva_loc_srv`, {
     method: "POST", headers: H,
-    body: JSON.stringify({ p_email: email, p_plan: plan, p_sursa: String(b.sursa ?? "site").slice(0, 60), p_ph_id: b.ph_id ? String(b.ph_id).slice(0, 80) : null, p_ip: ip || null, ...(plan === "partener" ? { p_cui: cui, ...firma } : {}) }),
+    body: JSON.stringify({ p_email: email, p_plan: plan, p_sursa: String(b.sursa ?? "site").slice(0, 60), p_ph_id: b.ph_id ? String(b.ph_id).slice(0, 80) : null, p_ip: ip || null, p_tara: tara, p_limba: limba, ...(plan === "partener" ? { p_cui: cui, ...firma } : {}) }),
   });
   if (r.ok) return json(200, { ok: true });
   const e = await r.json().catch(() => ({})) as { message?: string; code?: string };
   const m = String(e.message ?? "");
-  if (/loc deja rezervat/.test(m)) return json(409, { error: "deja_rezervat", message: "Firma are deja un loc rezervat." });
-  if (/prea multe/.test(m)) return json(429, { error: "rate", message: m });
-  if (/cui invalid/.test(m)) return json(400, { error: "cui", message: "CUI-ul nu pare corect." });
-  if (/email invalid|plan invalid/.test(m)) return json(400, { error: "email", message: m });
+  if (/loc deja rezervat/.test(m)) return json(409, { error: "deja_rezervat", message: M("deja_rezervat") });
+  if (/prea multe/.test(m)) return json(429, { error: "rate", message: limba === "pl" ? M("rate") : m });
+  if (/cui invalid/.test(m)) return json(400, { error: "cui", message: M("cui") });
+  if (/email invalid|plan invalid/.test(m)) return json(400, { error: "email", message: limba === "pl" ? M("email") : m });
   console.error("rezerva_loc_srv", r.status, m);
-  return json(500, { error: "server", message: "A apărut o eroare." });
+  return json(500, { error: "server", message: M("server") });
 });

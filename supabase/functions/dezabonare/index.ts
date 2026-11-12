@@ -30,7 +30,46 @@ function egal(a: string, b: string) {
   return d === 0;
 }
 
+/* versiunea /pl/ a site-ului trimite limba: "pl" → mesajele pentru om vin în poloneză (codurile `error` rămân aceleași) */
+const MESAJE_PL: Record<string, string> = {
+  "A apărut o eroare. Încearcă din nou.": "Wystąpił błąd. Spróbuj ponownie.",
+  "Acceptăm doar poze JPG, PNG și video MP4, MOV.": "Akceptujemy tylko zdjęcia JPG, PNG i filmy MP4, MOV.",
+  "Adresa de email nu pare validă.": "Adres e-mail nie wygląda na prawidłowy.",
+  "Ai trimis deja mai multe rapoarte. Încearcă din nou peste o oră.": "Wysłałeś już kilka zgłoszeń. Spróbuj ponownie za godzinę.",
+  "Alege un subiect.": "Wybierz temat.",
+  "Descrie problema în cel puțin 10 caractere.": "Opisz problem w co najmniej 10 znakach.",
+  "Descrierea poate avea maxim 2000 de caractere.": "Opis może mieć maksymalnie 2000 znaków.",
+  "Fișierele depășesc 50 MB în total.": "Pliki przekraczają łącznie 50 MB.",
+  "Linkul de dezabonare nu e complet.": "Link do wypisania się jest niepełny.",
+  "Linkul de dezabonare nu e valid. Folosește linkul din ultimul email primit.": "Link do wypisania się jest nieprawidłowy. Użyj linku z ostatniego otrzymanego e-maila.",
+  "Nu am putut pregăti încărcarea. Încearcă din nou.": "Nie udało się przygotować przesyłania. Spróbuj ponownie.",
+  "Nu am putut salva dezabonarea. Încearcă din nou.": "Nie udało się zapisać wypisania. Spróbuj ponownie.",
+  "Prea multe fișiere într-un timp scurt. Încearcă din nou mai târziu.": "Zbyt wiele plików w krótkim czasie. Spróbuj ponownie później.",
+  "Primim multe rapoarte acum. Încearcă din nou peste câteva minute.": "Otrzymujemy teraz wiele zgłoszeń. Spróbuj ponownie za kilka minut.",
+  "Verificarea anti-robot nu a trecut. Reîncarcă pagina și încearcă din nou.": "Weryfikacja antyrobotowa nie powiodła się. Odśwież stronę i spróbuj ponownie.",
+};
+function mesajPl(m: string) {
+  if (MESAJE_PL[m]) return MESAJE_PL[m];
+  let x = m.match(/^Fișierul e prea mare \(max\. ([\d.,]+) MB\)\.$/); if (x) return `Plik jest za duży (maks. ${x[1]} MB).`;
+  x = m.match(/^Poți atașa maxim (\d+) fișiere\.$/); if (x) return `Możesz dołączyć maksymalnie ${x[1]} plików.`;
+  return m;
+}
+async function inLimba(res: Response, limba: unknown): Promise<Response> {
+  if (limba !== "pl" || !(res.headers.get("Content-Type") ?? "").includes("application/json")) return res;
+  const j = await res.json().catch(() => null) as Record<string, unknown> | null;
+  if (!j || typeof j.mesaj !== "string") return new Response(JSON.stringify(j), { status: res.status, headers: res.headers });
+  return new Response(JSON.stringify({ ...j, mesaj: mesajPl(j.mesaj) }), { status: res.status, headers: res.headers });
+}
+
 Deno.serve(async (req: Request) => {
+  if (req.method !== "POST") return handle(req);
+  const corp = await req.text();
+  let limba: unknown = new URL(req.url).searchParams.get("limba");
+  try { limba = JSON.parse(corp).limba ?? limba; } catch { /* corp gol la one-click */ }
+  return inLimba(await handle(new Request(req.url, { method: "POST", headers: req.headers, body: corp })), limba);
+});
+
+async function handle(req: Request): Promise<Response> {
   if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS });
   if (req.method !== "POST") return json(405, { error: "POST only" });
   const url = new URL(req.url);
@@ -47,4 +86,4 @@ Deno.serve(async (req: Request) => {
   });
   if (!r.ok) return json(500, { error: "server", mesaj: "Nu am putut salva dezabonarea. Încearcă din nou." });
   return json(200, { ok: true });
-});
+}

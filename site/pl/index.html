@@ -93,7 +93,7 @@
             <h3>Kalkulator dawek</h3>
             <p class="calc-hint" id="c-hint">Ładowanie środków…</p>
           </div>
-          <label class="field has-input" id="f-bloc" style="display:none"><span class="col"><small>Blok fizyczny (APIA)</small><span class="val"><input id="c-bloc" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="ID bloku fizycznego (APIA)" maxlength="12"><button type="button" class="x" aria-label="Wyczyść blok fizyczny" hidden>×</button></span></span></label>
+          <label class="field has-input" id="f-bloc" style="display:none"><span class="col"><small>Działka</small><span class="val"><input id="c-bloc" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Numer działki" maxlength="12"><button type="button" class="x" aria-label="Wyczyść blok fizyczny" hidden>×</button></span></span></label>
           <div class="sel" id="s-produs">
             <label class="field has-input is-off" id="f-produs" for="c-produs">
               <span class="col"><small>Środek</small><span class="val"><input id="c-produs" type="text" autocomplete="off" spellcheck="false" placeholder="Ładowanie…" disabled role="combobox" aria-expanded="false" aria-controls="c-produs-list"><span class="txt" hidden></span><button type="button" class="x" aria-label="Wyczyść środek" hidden>×</button></span></span>
@@ -250,7 +250,7 @@
             <span class="tag lime">Early · <b>Pierwsze 100 gospodarstw</b></span>
             <div class="offer-head">
               <h3>6 miesięcy za darmo, niezależnie od wielkości gospodarstwa</h3>
-              <div class="save-box"><strong>Małe lub duże gospodarstwo</strong><span>według hektarów z APIA</span></div>
+              <div class="save-box"><strong>Małe lub duże gospodarstwo</strong><span>według hektarów z ARiMR</span></div>
             </div>
             <p class="intro">Pierwsze <b>100 gospodarstw</b> zapisanych otrzyma <b>6 miesięcy za darmo od startu pakietów</b>, a nie od zapisu. Bez karty płatniczej.</p>
             <ul class="perks">
@@ -285,8 +285,8 @@
             <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span><b>6 miesięcy za darmo</b> i bezpłatna weryfikacja dokumentów</span></li>
             <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span><b>Cena zablokowana na 12 miesięcy</b> potem: 59 €/miesiąc lub prowizja 3%</span></li>
             <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span>Odznaka <b>„Partner założyciel”</b> na profilu</span></li>
-            <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span>Ograniczona liczba miejsc na okręg: <b>2 dystrybutorów, 1 laboratorium, 1 serwis</b></span></li>
-            <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span><b>Łatwy dostęp</b> do rolników w Rumunii</span></li>
+            <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span>Ograniczona liczba miejsc na województwo: <b>2 dystrybutorów, 1 laboratorium, 1 serwis</b></span></li>
+            <li><img class="ck" src="/assets/check.svg" alt="" width="22" height="22"><span><b>Łatwy dostęp</b> do rolników w Polsce</span></li>
             </ul>
           </div>
           <form class="reserve has-cui" novalidate data-plan="partener">
@@ -295,10 +295,13 @@
             </label>
             <div class="cui-wrap">
               <label class="field cui" for="cui-partener">
-                <span class="col"><small>CUI</small><input type="text" name="cui" id="cui-partener" placeholder="np. RO 12345678" autocomplete="off" inputmode="numeric" autocapitalize="characters" spellcheck="false" maxlength="14" role="combobox" aria-expanded="false" aria-controls="cui-lista" aria-autocomplete="list" aria-describedby="cui-stare"></span>
+                <span class="col"><small>NIP</small><input type="text" name="nip" id="cui-partener" placeholder="np. 123-456-32-18" autocomplete="off" inputmode="numeric" spellcheck="false" maxlength="16" aria-describedby="cui-stare"></span>
                 <span class="cui-ic" aria-hidden="true"></span>
               </label>
-              <div class="cui-dd" id="cui-lista" role="listbox" aria-label="Firma znaleziona po CUI" hidden></div>
+            </div>
+            <div class="pl-firma">
+              <label class="field" for="firma-partener"><span class="col"><small>Nazwa firmy</small><input type="text" name="firma" id="firma-partener" placeholder="Pełna nazwa firmy" autocomplete="organization" maxlength="200"></span></label>
+              <label class="field" for="woj-partener"><span class="col"><small>Województwo</small><select name="wojewodztwo" id="woj-partener" required><option value="">Wybierz województwo</option><option value="dolnośląskie">dolnośląskie</option><option value="kujawsko-pomorskie">kujawsko-pomorskie</option><option value="lubelskie">lubelskie</option><option value="lubuskie">lubuskie</option><option value="łódzkie">łódzkie</option><option value="małopolskie">małopolskie</option><option value="mazowieckie">mazowieckie</option><option value="opolskie">opolskie</option><option value="podkarpackie">podkarpackie</option><option value="podlaskie">podlaskie</option><option value="pomorskie">pomorskie</option><option value="śląskie">śląskie</option><option value="świętokrzyskie">świętokrzyskie</option><option value="warmińsko-mazurskie">warmińsko-mazurskie</option><option value="wielkopolskie">wielkopolskie</option><option value="zachodniopomorskie">zachodniopomorskie</option></select></span><i class="chev" aria-hidden="true"></i></label>
             </div>
             <p class="cui-stare" id="cui-stare" role="status" aria-live="polite"></p>
             <button class="btn-cta" type="submit" disabled><span>Rezerwuję miejsce</span><svg class="arr" width="23" height="23" viewBox="0 0 23 23" fill="none" aria-hidden="true"><path d="M3.11328 11.5C3.11328 11.897 3.43508 12.2188 3.83203 12.2188L17.4301 12.2188L12.9071 16.7418C12.6264 17.0225 12.6264 17.4775 12.9071 17.7582C13.1878 18.0389 13.6429 18.0389 13.9236 17.7582L19.6736 12.0082C19.8084 11.8734 19.8841 11.6906 19.8841 11.5C19.8841 11.3094 19.8084 11.1266 19.6736 10.9918L13.9236 5.24177C13.6429 4.96108 13.1878 4.96108 12.9071 5.24177C12.6264 5.52246 12.6264 5.97754 12.9071 6.25823L17.4301 10.7813L3.83203 10.7813C3.43508 10.7813 3.11328 11.103 3.11328 11.5Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"/></svg></button>
@@ -306,7 +309,7 @@
               <span class="tag tip">Masz zarezerwowane miejsce partnera założyciela</span>
               <p>Wysłaliśmy szczegóły na <b data-done-email></b></p>
             </div>
-            <p class="cui-note">Nazwę firmy, okręg i rodzaj działalności pobieramy z ANAF na podstawie CUI. Każda firma może zarezerwować tylko jedno miejsce.</p>
+            <p class="cui-note">Podaj NIP, nazwę firmy i województwo — dane firmy sprawdzimy ręcznie. Każda firma może zarezerwować tylko jedno miejsce.</p>
             <p class="legal-note">Będziesz dostawać e-maile o starcie i możesz zrezygnować w każdej chwili. <a href="/pl/confidentialitate/">Polityka prywatności</a></p>
             <p class="form-msg" role="status" aria-live="polite"></p>
           </form>
